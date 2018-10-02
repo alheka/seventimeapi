@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>API Reference</title>
+    <title>Seven Time API Reference</title>
 
     <style>
       .highlight table td { padding: 5px; }
@@ -201,7 +201,7 @@
       <script src="javascripts/all.js"></script>
   </head>
 
-  <body class="index" data-languages="[&quot;shell&quot;,&quot;ruby&quot;,&quot;python&quot;,&quot;javascript&quot;]">
+  <body class="index" data-languages="[&quot;shell&quot;,&quot;javascript&quot;]">
     <a href="#" id="nav-button">
       <span>
         NAV
@@ -212,8 +212,6 @@
       <img src="images/logo.png" class="logo" alt="Logo" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
-              <a href="#" data-language-name="ruby">ruby</a>
-              <a href="#" data-language-name="python">python</a>
               <a href="#" data-language-name="javascript">javascript</a>
         </div>
         <div class="search">
@@ -228,16 +226,16 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
-            <a href="#kittens" class="toc-h1 toc-link" data-title="Kittens">Kittens</a>
+            <a href="#customers" class="toc-h1 toc-link" data-title="Customers">Customers</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-all-kittens" class="toc-h2 toc-link" data-title="Get All Kittens">Get All Kittens</a>
+                    <a href="#get-customers" class="toc-h2 toc-link" data-title="Get Customers">Get Customers</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-kitten" class="toc-h2 toc-link" data-title="Get a Specific Kitten">Get a Specific Kitten</a>
+                    <a href="#get-a-specific-customer" class="toc-h2 toc-link" data-title="Get a Specific Customer">Get a Specific Customer</a>
                   </li>
                   <li>
-                    <a href="#delete-a-specific-kitten" class="toc-h2 toc-link" data-title="Delete a Specific Kitten">Delete a Specific Kitten</a>
+                    <a href="#create-a-customer" class="toc-h2 toc-link" data-title="Create a Customer">Create a Customer</a>
                   </li>
               </ul>
           </li>
@@ -246,88 +244,141 @@
           </li>
       </ul>
         <ul class="toc-footer">
-            <li><a href='#'>Sign Up for a Developer Key</a></li>
-            <li><a href='https://github.com/lord/slate'>Documentation Powered by Slate</a></li>
+            <li><a href="https://seventime.se">Seven Time</a></li>
         </ul>
     </div>
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.</p>
+<p>Welcome to the Seven Time API! You can use our API to access Seven Time API endpoints, currently limited to customers.</p>
 
-<p>We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
-
-<p>This example API documentation page was created with <a href="https://github.com/lord/slate">Slate</a>. Feel free to edit it and use it as a base for your own API&#39;s documentation.</p>
+<p>You can view code examples for Shell and JavaScript in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
 </blockquote>
-<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
+curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Send Client-Secret in the header. Sample with the request library */</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span> 
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
-curl <span class="s2">"api_endpoint_here"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+   <span class="c1">// ....</span>
+<span class="p">});</span>
 
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
 </code></pre>
 <blockquote>
-<p>Make sure to replace <code>meowmeowmeow</code> with your API key.</p>
+<p>Make sure to replace <code>thisismysecretkey</code> with your API key.</p>
 </blockquote>
 
-<p>Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our <a href="http://example.com/developers">developer portal</a>.</p>
+<p>Seven Time uses API keys to allow access to the API. You can get a new Seven Time API key in <strong>&quot;Settings -&gt; Integrations -&gt; API&quot;</strong> in Seven Time. </p>
 
-<p>Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:</p>
+<p>Seven Time expects the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
-<p><code>Authorization: meowmeowmeow</code></p>
+<p><code>Client-Secret: thisismysecretkey</code></p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>thisismysecretkey</code> with your personal API key.
 </aside>
-<h1 id='kittens'>Kittens</h1><h2 id='get-all-kittens'>Get All Kittens</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h1 id='customers'>Customers</h1><h2 id='get-customers'>Get Customers</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/1/customers"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/1/customers/?"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">kittens</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">();</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>  
+<span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Fluffums"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"calico"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bb26376c42fb99275000080"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"vatNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SE556596075301"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"organizationNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"556596-0753"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"support@seventime.se"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0431-360050"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Västra Karup"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"269 74"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Glimmingevägen 18"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tommy Hellström"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"billingSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"useSeparateBillingAddress"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"useSeparateBillingEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"invoiceEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"invoiceDeliveryType"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"defaultEmailSubject"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isConstructionCompany"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isROTCustomer"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isRUTCustomer"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"typeOfProperty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"propertyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"housingSocietyNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"apartmentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"personalNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"deductionDistribution"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"itemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.40862768612862976"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tommy Hellström"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"personalNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"555555-5555"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"distributionPercent"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bb2683d3a0fdb697e000080"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"expenseDiscount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expenseCustomProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"markupPercentSupplierInvoice"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"priceListName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"billingMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"pricePerHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"paymentDays"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves all kittens.</p>
+<p>This endpoint retrieves customers, a maximum of 100 customers will be returned.</p>
 <h3 id='http-request'>HTTP Request</h3>
-<p><code>GET http://example.com/api/kittens</code></p>
+<p><code>GET https://app.seventime.se/api/1/customers</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
+<p>E.g. <code>https://app.seventime.se/api/1/customers/?organizationNumber=555555-5555</code> </p>
+
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -336,51 +387,128 @@ You must replace <code>meowmeowmeow</code> with your personal API key.
 </tr>
 </thead><tbody>
 <tr>
-<td>include_cats</td>
-<td>false</td>
-<td>If set to true, the result will also include cats.</td>
+<td>name</td>
+<td></td>
+<td>If specified, customers that match the parameter will be included.</td>
 </tr>
 <tr>
-<td>available</td>
-<td>true</td>
-<td>If set to false, the result will include kittens that have already been adopted.</td>
+<td>customerNumber</td>
+<td></td>
+<td>If specified, customers that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>organizationNumber</td>
+<td></td>
+<td>If specified, customers that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>city</td>
+<td></td>
+<td>If specified, customers that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>sortBy</td>
+<td></td>
+<td>If specified, a sort will be made on the specified parameter</td>
+</tr>
+<tr>
+<td>sortDirection</td>
+<td></td>
+<td>&quot;ascending&quot; or &quot;descending&quot;. If specified and sortBy is specified the sort order will be ascending or descending</td>
 </tr>
 </tbody></table>
 
-<aside class="success">
+<!--<aside class="success">
 Remember — a happy kitten is an authenticated kitten!
-</aside>
-<h2 id='get-a-specific-kitten'>Get a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+</aside>-->
+<h2 id='get-a-specific-customer'>Get a Specific Customer</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/1/customers/5bb26376c42fb99275000080"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/1/customers/5bb26376c42fb99275000080"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Max"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"fluffiness"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"cuteness"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bb26376c42fb99275000080"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"vatNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SE556596075301"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organizationNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"556596-0753"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"support@seventime.se"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0431-360050"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Västra Karup"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"269 74"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Glimmingevägen 18"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tommy Hellström"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"billingSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"useSeparateBillingAddress"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"useSeparateBillingEmail"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceEmail"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceDeliveryType"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"defaultEmailSubject"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isConstructionCompany"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isROTCustomer"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isRUTCustomer"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"typeOfProperty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"propertyDescription"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"housingSocietyNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"apartmentNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"personalNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"deductionDistribution"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"itemId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.40862768612862976"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tommy Hellström"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"personalNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"555555-5555"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"distributionPercent"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bb2683d3a0fdb697e000080"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"expenseDiscount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"expenseCustomProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"markupPercentSupplierInvoice"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"priceListName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"billingMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"pricePerHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentDays"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific kitten.</p>
+<p>This endpoint retrieves a specific customer.</p>
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
 <h3 id='http-request-2'>HTTP Request</h3>
-<p><code>GET http://example.com/kittens/&lt;ID&gt;</code></p>
+<p><code>GET https://app.seventime.se/api/1/customers/&lt;_id&gt;</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
 <table><thead>
 <tr>
@@ -389,55 +517,309 @@ Remember — a happy kitten is an authenticated kitten!
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to retrieve</td>
+<td>_id</td>
+<td>The _id of the customer to retrieve</td>
 </tr>
 </tbody></table>
-<h2 id='delete-a-specific-kitten'>Delete a Specific Kitten</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'kittn'</span>
+<h2 id='create-a-customer'>Create a Customer</h2><pre class="highlight shell tab-shell"><code>  curl -X POST <span class="s2">"https://app.seventime.se/api/1/customers/"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -d <span class="s2">"name=Tommy Hellström&amp;address=Glimmingevägen 18&amp;zipCode=269 74&amp;city=Västra Karup&amp;phone=0431-360050&amp;email=support@seventime.se&amp;organizationNumber=555555-5555"</span> 
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">formData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Tommy Hellström'</span><span class="p">,</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'Glimmingevägen 18'</span><span class="p">,</span>
+  <span class="na">zipCode</span><span class="p">:</span> <span class="s1">'269 74'</span><span class="p">,</span>
+  <span class="na">city</span><span class="p">:</span> <span class="s1">'Västra Karup'</span><span class="p">,</span>
+  <span class="na">phone</span><span class="p">:</span> <span class="s1">'0431-360050'</span><span class="p">,</span>
+  <span class="na">email</span><span class="p">:</span> <span class="s1">'support@seventime.se'</span><span class="p">,</span>
+  <span class="na">organizationNumber</span><span class="p">:</span> <span class="s1">'555555-5555'</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="no">Kittn</span><span class="o">::</span><span class="no">APIClient</span><span class="p">.</span><span class="nf">authorize!</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="p">.</span><span class="nf">kittens</span><span class="p">.</span><span class="nf">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">kittn</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.seventime.se/api/1/customers'</span><span class="p">,</span>
+  <span class="na">form</span><span class="p">:</span> <span class="nx">formData</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="nx">clientSecret</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"x-www-form-urlencoded"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
 
-<span class="n">api</span> <span class="o">=</span> <span class="n">kittn</span><span class="o">.</span><span class="n">authorize</span><span class="p">(</span><span class="s">'meowmeowmeow'</span><span class="p">)</span>
-<span class="n">api</span><span class="o">.</span><span class="n">kittens</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl <span class="s2">"http://example.com/api/kittens/2"</span>
-  -X DELETE
-  -H <span class="s2">"Authorization: meowmeowmeow"</span>
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kr">const</span> <span class="nx">kittn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'kittn'</span><span class="p">);</span>
-
-<span class="kd">let</span> <span class="nx">api</span> <span class="o">=</span> <span class="nx">kittn</span><span class="p">.</span><span class="nx">authorize</span><span class="p">(</span><span class="s1">'meowmeowmeow'</span><span class="p">);</span>
-<span class="kd">let</span> <span class="nx">max</span> <span class="o">=</span> <span class="nx">api</span><span class="p">.</span><span class="nx">kittens</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"ERROR! Unable to create customer: "</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
 </code></pre>
 <blockquote>
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"deleted"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">":("</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5bb26376c42fb99275000080"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organizationNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"555555-5555"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"support@seventime.se"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0431-360050"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Västra Karup"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"269 74"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Glimmingevägen 18"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tommy Hellström"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"billingSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"deductionDistribution"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-10-01T18:12:06.025Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"__v"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a specific kitten.</p>
+<p>This endpoint creates a specific customer.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
-<p><code>DELETE http://example.com/kittens/&lt;ID&gt;</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<p><code>POST https://app.seventime.se/api/1/customers/&lt;_id&gt;</code></p>
+<h3 id='post-parameters'>POST Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>The ID of the kitten to delete</td>
+<td>name</td>
+<td>String</td>
+<td>Yes</td>
+<td>Name of the customer</td>
+</tr>
+<tr>
+<td>customerNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Customer number. If specified it has to be unique otherwise an error will be returned. If not specified it will be set automatically.</td>
+</tr>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>No</td>
+<td>Address</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>String</td>
+<td>No</td>
+<td>Address 2</td>
+</tr>
+<tr>
+<td>zipCode</td>
+<td>String</td>
+<td>No</td>
+<td>Zip code</td>
+</tr>
+<tr>
+<td>city</td>
+<td>String</td>
+<td>No</td>
+<td>City</td>
+</tr>
+<tr>
+<td>country</td>
+<td>String</td>
+<td>No</td>
+<td>Country code</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>String</td>
+<td>No</td>
+<td>Phone number</td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>No</td>
+<td>Email address</td>
+</tr>
+<tr>
+<td>organizationNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Organization number or Personal number</td>
+</tr>
+<tr>
+<td>vatNumber</td>
+<td>String</td>
+<td>No</td>
+<td>VAT number</td>
+</tr>
+<tr>
+<td>paymentDays</td>
+<td>Number</td>
+<td>No</td>
+<td>Payment days for the user</td>
+</tr>
+<tr>
+<td>billingSettings</td>
+<td>Object</td>
+<td>No</td>
+<td>Contains attributes specific for billing. See below for details.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Attributes for billingSettings</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>useSeparateBillingAddress</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Should an alternative billing address be used?</td>
+</tr>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>No</td>
+<td>Used if useSeparateBillingAddress is true</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>String</td>
+<td>No</td>
+<td>Used if useSeparateBillingAddress is true</td>
+</tr>
+<tr>
+<td>zipCode</td>
+<td>String</td>
+<td>No</td>
+<td>Used if useSeparateBillingAddress is true</td>
+</tr>
+<tr>
+<td>city</td>
+<td>String</td>
+<td>No</td>
+<td>Used if useSeparateBillingAddress is true</td>
+</tr>
+<tr>
+<td>useSeparateBillingEmail</td>
+<td>Boolean</td>
+<td>No</td>
+<td>If &#39;invoiceEmail&#39; should be used</td>
+</tr>
+<tr>
+<td>invoiceEmail</td>
+<td>String</td>
+<td>No</td>
+<td>Used for invoices if useSeparateBillingEmail is true</td>
+</tr>
+<tr>
+<td>invoiceDeliveryType</td>
+<td>Number</td>
+<td>No</td>
+<td>Empty or 0 = Email, 10 = Postal letter, 20 = Svefaktura</td>
+</tr>
+<tr>
+<td>defaultEmailSubject</td>
+<td>String</td>
+<td>No</td>
+<td>Default email subject for invoices</td>
+</tr>
+<tr>
+<td>isConstructionCompany</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Is construction company</td>
+</tr>
+<tr>
+<td>isROTCustomer</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Is ROT customer</td>
+</tr>
+<tr>
+<td>isRUTCustomer</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Is RUT customer</td>
+</tr>
+<tr>
+<td>typeOfProperty</td>
+<td>Number</td>
+<td>No</td>
+<td>1 = Detached property, 2 = Condominium</td>
+</tr>
+<tr>
+<td>propertyDescription</td>
+<td>String</td>
+<td>No</td>
+<td>Swedish: Fastighetsbeteckning</td>
+</tr>
+<tr>
+<td>housingSocietyNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Swedish: Orgnr för bostadsrättsförening</td>
+</tr>
+<tr>
+<td>apartmentNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Swedish: Lägenhetsnummer</td>
+</tr>
+<tr>
+<td>deductionDistribution</td>
+<td>Array</td>
+<td>No</td>
+<td>Array of DeductionItem&#39;s. See below for details.</td>
+</tr>
+</tbody></table>
+
+<p><strong>Attributes for DeductionItem</strong> </p>
+
+<p>DeductionItem is used to distribute ROT / RUT work    </p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>userName</td>
+<td>String</td>
+<td>Yes</td>
+<td>Full name of person</td>
+</tr>
+<tr>
+<td>personalNumber</td>
+<td>String</td>
+<td>Yes</td>
+<td>Personal number</td>
+</tr>
+<tr>
+<td>distributionPercent</td>
+<td>Number</td>
+<td>Yes</td>
+<td>1-100</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
+<!--
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
 </aside>
+-->
 
-<p>The Kittn API uses the following error codes:</p>
+<p>The Seven Time API uses the following error codes:</p>
 
 <table><thead>
 <tr>
@@ -455,31 +837,11 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The kitten requested is hidden for administrators only.</td>
+<td>Forbidden -- The resource requested is hidden for administrators only.</td>
 </tr>
 <tr>
 <td>404</td>
-<td>Not Found -- The specified kitten could not be found.</td>
-</tr>
-<tr>
-<td>405</td>
-<td>Method Not Allowed -- You tried to access a kitten with an invalid method.</td>
-</tr>
-<tr>
-<td>406</td>
-<td>Not Acceptable -- You requested a format that isn&#39;t json.</td>
-</tr>
-<tr>
-<td>410</td>
-<td>Gone -- The kitten requested has been removed from our servers.</td>
-</tr>
-<tr>
-<td>418</td>
-<td>I&#39;m a teapot.</td>
-</tr>
-<tr>
-<td>429</td>
-<td>Too Many Requests -- You&#39;re requesting too many kittens! Slow down!</td>
+<td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
 <td>500</td>
@@ -491,12 +853,12 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 </tbody></table>
 
+<p>When applicable the error message will be available in the response as <code>errorMessage</code>. </p>
+
       </div>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
-                <a href="#" data-language-name="ruby">ruby</a>
-                <a href="#" data-language-name="python">python</a>
                 <a href="#" data-language-name="javascript">javascript</a>
           </div>
       </div>
