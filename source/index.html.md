@@ -887,6 +887,91 @@ Parameter | Default | Description
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
+## Create User
+
+```shell
+  curl -X POST "https://app.seventime.se/api/1/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "firstName=Tommy&lastName=Hellström&email=tommy@nummer7.se&userName=TommyH&userRolesId=1" 
+```
+
+```javascript
+let formData = {
+  firstName: 'Tommy',
+  lastName: 'Hellström',
+  email: 'tommy@nummer7.se',
+  userName: 'TommyH',
+  userRoleId: 1,
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/users',
+  form: formData,
+  json: true,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+  "email": "tommy@nummer7.se",
+  "personalNumber": "",
+  "employeeNumber": "",
+  "userName": "TommyH",
+  "workPhone": "",
+  "cellPhone": "",
+  "createdDate": "2020-11-17T14:42:31.533Z",
+  "modifiedDate": "2020-11-17T14:42:31.533Z",
+  "userRoleId": 1,
+  "isActive": false,
+  "isActivated": false,
+  "language": "SV"
+}
+
+```
+
+This endpoint creates a user.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/workOrders/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+firstName          | String   | Yes | First name of the user
+lastName           | String   | Yes | Last name of the user
+email              | String   | Yes | Email of the user
+userName           | String   | Yes | Username
+userRoleId         | String   | Yes | User role id
+employeeNumber     | String   | No  | EmployeeNumber
+workPhone          | String   | No  | Work phone number
+cellPhone          | String   | No  | Cell phone number
+isActive           | Boolean  | No  | Should the user be active?
+isActivated        | Boolean  | No  | Should the user be activated?
+password           | String   | No  | Password of the user
+language           | String   | No  | Language of the user as a country code (e.g SV for Swedish). If not specified, this will we set to SV.
+
+
 # Departments
 
 ## Get Departments
@@ -1022,7 +1107,7 @@ curl "https://app.seventime.se/api/1/projects" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projects/?projectNumber=3314";
+let url = "https://app.seventime.se/api/1/projects/?";
 let options = {
   url: url,
   headers: {
@@ -1044,109 +1129,109 @@ request(options, function(error, response, body) {
 
 ```json
 [
-    {
-        "_id": "5f924f4f533f102af78f95b6",
-        "permissions": {
-            "permUsers": [],
-            "permRoles": [],
-            "permissionFlag": 1
-        },
-        "tags": [],
-        "name": "Från offert 20200811",
-        "projectNumber": "3314",
-        "projectStatus": 50,
-        "projectStatusRef": "5c8739d3205457b98b9883d4",
-        "projectType": null,
-        "projectTypeName": null,
-        "billingMethod": "FIXED_PRICE",
-        "pricePerHour": 0,
-        "fixedPrice": 0,
-        "fixedPriceInvoiced": false,
-        "fixedPriceLeftToInvoice": 0,
-        "fixedPriceExpenseItem": null,
-        "timeCategoryPriceList": null,
-        "estimatedTime": 0,
-        "recurringBudgetType": 10,
-        "recurringBudget": {
-            "budgetTime": 0,
-            "budgetAmount": 0,
-            "budgetType": 10
-        },
-        "resultUnit": null,
-        "resultUnitName": "",
-        "customer": "5763e05bcddce98e3b00004b",
-        "customerName": "Hellapps",
-        "contactPerson": null,
-        "contactPersonName": null,
-        "projectLeader": null,
-        "projectLeaderName": null,
-        "quote": "5b110ea19b27f5ef3f00007b",
-        "quoteNumber": "1058",
-        "department": null,
-        "departmentName": "",
-        "marking": "",
-        "yourOrderNumber": "1058",
-        "deliveryAddress": {
-            "name": "",
-            "address": "",
-            "address2": "",
-            "zipCode": "",
-            "city": "",
-            "country": "",
-            "phone": ""
-        },
-        "invoiceStatus": 0,
-        "notes": "",
-        "documents": [],
-        "startDate": null,
-        "endDate": null,
-        "budget": {
-            "typeOfBenefitCalc": 1,
-            "benefits": [],
-            "benefitTotal": 0,
-            "typeOfCostCalc": 1,
-            "costs": [],
-            "costTotal": 0
-        },
-        "budgetCalculation": {
-            "invoiceItems": [],
-            "totalBenefitAmount": 0,
-            "totalCostAmount": 0
-        },
-        "enableConstructionDiary": false,
-        "enablePaymentPlans": false,
-        "timeCategoryItems": [],
-        "expenseItemItems": [],
-        "staffLedger": {
-            "workPlaceIDNumber": "",
-            "developerName": "",
-            "developerOrgNumber": ""
-        },
-        "projectTimeNotification": {
-            "sent": false,
-            "notifyAtPercent": 0
-        },
-        "workRuleStartOfDay": null,
-        "workRuleEndOfDay": null,
-        "timeLogRegistrationMethods": [],
-        "timeShouldNotBeWorkTime": false,
-        "enablePortalAccess": false,
-        "projectResources": [],
-        "checkLists": [],
-        "color": "FAFAFA",
-        "isActive": true,
-        "comments": [],
-        "customFields": [
-            {
-                "_id": "5f326f50433f102ff77f95d7",
-                "fieldId": "5c0e7342ce9a647150000083",
-                "value": "5c0e7342ce9a647150000085"
-            }
-        ],
-        "createdDate": "2020-08-11T10:13:36.001Z",
-        "modifiedDate": "2020-08-11T10:13:36.002Z",
-        "__v": 0
-    },
+  {
+      "_id": "5f924f4f533f102af78f95b6",
+      "permissions": {
+          "permUsers": [],
+          "permRoles": [],
+          "permissionFlag": 1
+      },
+      "tags": [],
+      "name": "Från offert 20200811",
+      "projectNumber": "3314",
+      "projectStatus": 50,
+      "projectStatusRef": "5c8739d3205457b98b9883d4",
+      "projectType": null,
+      "projectTypeName": null,
+      "billingMethod": "FIXED_PRICE",
+      "pricePerHour": 0,
+      "fixedPrice": 0,
+      "fixedPriceInvoiced": false,
+      "fixedPriceLeftToInvoice": 0,
+      "fixedPriceExpenseItem": null,
+      "timeCategoryPriceList": null,
+      "estimatedTime": 0,
+      "recurringBudgetType": 10,
+      "recurringBudget": {
+          "budgetTime": 0,
+          "budgetAmount": 0,
+          "budgetType": 10
+      },
+      "resultUnit": null,
+      "resultUnitName": "",
+      "customer": "5763e05bcddce98e3b00004b",
+      "customerName": "Hellapps",
+      "contactPerson": null,
+      "contactPersonName": null,
+      "projectLeader": null,
+      "projectLeaderName": null,
+      "quote": "5b110ea19b27f5ef3f00007b",
+      "quoteNumber": "1058",
+      "department": null,
+      "departmentName": "",
+      "marking": "",
+      "yourOrderNumber": "1058",
+      "deliveryAddress": {
+          "name": "",
+          "address": "",
+          "address2": "",
+          "zipCode": "",
+          "city": "",
+          "country": "",
+          "phone": ""
+      },
+      "invoiceStatus": 0,
+      "notes": "",
+      "documents": [],
+      "startDate": null,
+      "endDate": null,
+      "budget": {
+          "typeOfBenefitCalc": 1,
+          "benefits": [],
+          "benefitTotal": 0,
+          "typeOfCostCalc": 1,
+          "costs": [],
+          "costTotal": 0
+      },
+      "budgetCalculation": {
+          "invoiceItems": [],
+          "totalBenefitAmount": 0,
+          "totalCostAmount": 0
+      },
+      "enableConstructionDiary": false,
+      "enablePaymentPlans": false,
+      "timeCategoryItems": [],
+      "expenseItemItems": [],
+      "staffLedger": {
+          "workPlaceIDNumber": "",
+          "developerName": "",
+          "developerOrgNumber": ""
+      },
+      "projectTimeNotification": {
+          "sent": false,
+          "notifyAtPercent": 0
+      },
+      "workRuleStartOfDay": null,
+      "workRuleEndOfDay": null,
+      "timeLogRegistrationMethods": [],
+      "timeShouldNotBeWorkTime": false,
+      "enablePortalAccess": false,
+      "projectResources": [],
+      "checkLists": [],
+      "color": "FAFAFA",
+      "isActive": true,
+      "comments": [],
+      "customFields": [
+          {
+              "_id": "5f326f50433f102ff77f95d7",
+              "fieldId": "5c0e7342ce9a647150000083",
+              "value": "5c0e7342ce9a647150000085"
+          }
+      ],
+      "createdDate": "2020-08-11T10:13:36.001Z",
+      "modifiedDate": "2020-08-11T10:13:36.002Z",
+      "__v": 0
+  }, 
   {
   // ...
   }
@@ -1585,22 +1670,27 @@ This endpoint creates a project.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-name               | String | Yes | Title of the work order
-projectNumber      | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
-projectStatusRef   | String | No  | Id of the status of the project
-customer           | String | No  | Id of the customer of the project
-contactPerson      | String | No  | Id of the contact person. This field requires that customer is specified and that the customer person belongs to that customer
-invoiceStatus      | Number | No  | Invoice status of the project. See below for available statuses
-projectLeader      | String | No  | Id of the user who should be the project leader
-projectType        | String | No  | Id of the project type
-department         | String | No  | Id of the department
-startDate          | String | No  | Start date of the project in the format YYYY-MM-DD
-endDate            | String | No  | End date of the project in the format YYYY-MM-DD
-notes              | String | No  | Notes to be included in the project
-resultUnit         | String | No  | Id of the result unit of the project
-billingMethod      | String | No  | Billing method of the project. See below for available billing methods
-
-
+name                    | String | Yes | Name of the project
+projectNumber           | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
+projectStatusRef        | String | No  | Id of the status of the project
+customer                | String | No  | Id of the customer of the project
+contactPerson           | String | No  | Id of the contact person. This field requires that customer is specified and that the customer person belongs to that customer
+invoiceStatus           | Number | No  | Invoice status of the project. See below for available statuses
+projectLeader           | String | No  | Id of the user who should be the project leader
+projectType             | String | No  | Id of the project type
+department              | String | No  | Id of the department
+startDate               | String | No  | Start date of the project in the format YYYY-MM-DD
+endDate                 | String | No  | End date of the project in the format YYYY-MM-DD
+notes                   | String | No  | Notes to be included in the project
+resultUnit              | String | No  | Id of the result unit of the project
+billingMethod           | String | No  | Billing method of the project. See below for available billing methods
+pricePerHour            | Number | No* | Required if billingMethod is set to HOURLY
+fixedPrice              | Number | No* | Required if billingMethod is set to FIXED_PRICE
+timeCategoryPriceList   | String | No* | Required if billingMethod is set to PRICELIST
+projectTags             | Array  | No  | Array containing ids of tags
+marking                 | String | No  | Marking on project
+yourOrderNumber         | String | No  | Your order number
+deliveryAddress         | Object | No  | Contains attributes for delivery address. See below for details
 
 
 **Invoice statuses for projects**
@@ -1613,28 +1703,30 @@ Code | Status
 20 | Partly invoiced
 30 | Fully invoiced
 
-**Billing methods for work orders**
+**Billing methods for projects**
 
 Code | Billing method
 --------- | ----------- 
-RUNNING             | Running price
-FIXED_PRICE         | Fixed price
-ACCORDING_TO_QUOTE  | Price will be set according to quote
+ACCORDING_TO_CUSTOMER   | This requires that the customer has a billing method set
+HOURLY                  | Hourly price
+PERUSER                 | The price will be set per user
+HOURLY_PER_TIMECATEGORY | Price will be set according to time category
+FIXED_PRICE             | Fixed price
+PRICELIST               | Price will be set according to a price list
 
 
 
-**Attributes for workAddress**
+**Attributes for deliveryAddress**
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-useOtherAddress             | Boolean | No | Should an alternative work address be used?
-name                        | String | No | Used if useSeparateBillingAddress is true 
-address                     | String | No | Used if useSeparateBillingAddress is true 
-address2                    | String | No | Used if useSeparateBillingAddress is true
-zipCode                     | String | No | Used if useSeparateBillingAddress is true
-city                        | String | No | Used if useSeparateBillingAddress is true
-country                     | String | No | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
-phone                       | String | No | Used if useSeparateBillingAddress is true
+name                        | String | No | Name of delivery recipient 
+address                     | String | No | Primary address
+address2                    | String | No | Secondary address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
+phone                       | String | No | Phone number
     
 # Work orders
 
@@ -1906,7 +1998,7 @@ curl "https://app.seventime.se/api/1/workOrderTags/" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrderTypes/";
+let url = "https://app.seventime.se/api/1/workOrderTags/";
 let options = {
   url: url,
   headers: {
@@ -1957,7 +2049,70 @@ Parameter | Default | Description
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
   
-  
+## Get Work order statuses 
+
+```shell
+curl "https://app.seventime.se/api/1/workOrderStatuses/" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/workOrderStatuses/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "582f7cabd16fdbe335041055",
+    "statusName": "Ej planerad",
+    "color": "FF5722",
+    "inProgressStatus": false,
+    "closedStatus": false,
+    "isActive": true,
+    "plannedStatus": false
+  },
+  {
+    // ...
+  }
+]
+```
+
+This endpoint retrieves work order statuses, a maximum of 100 statuses will be returned.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/workOrderStatuses/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
 ## Create a Work order
 
 
@@ -2138,5 +2293,72 @@ zipCode                     | String  | No  | Used if useSeparateBillingAddress 
 city                        | String  | No  | Used if useSeparateBillingAddress is true
 country                     | String  | No  | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
 phone                       | String  | No  | Used if useSeparateBillingAddress is true
+
+# Price lists
+
+## Get price lists
+
+```shell
+curl "https://app.seventime.se/api/1/priceLists" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/priceLists";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "58c1504a658fb5911d018f5f",
+    "name": "Grosslistan",
+    "isActive": true,
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves price lists, a maximum of 100 price lists will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/projects`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/1/projects/?projectNumber=3314`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+<!--<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>-->
+
 
 
