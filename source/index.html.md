@@ -4629,3 +4629,107 @@ This endpoint retrieves a specific expense item.
 Parameter | Description
 --------- | -----------
 _id | The _id of the expense item to retrieve
+
+
+## Create an Expense
+
+```shell
+  curl -X POST "https://app.seventime.se/api/1/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+```
+
+```javascript
+let formData = {
+  user: '51203146506d961c030791801',
+  expenseItem: '5de78aed1332719192362bed'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/expenses',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "_id": "5fbe684416625651d7f43257",
+  "timestamp": "2020-11-25T14:20:52.129Z",
+  "documents": [],
+  "createDate": "2020-11-25T14:20:52.129Z",
+  "bundledArticles": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "numberOfItems": 1,
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "expenseItem": "5de78aed1332719192362bed",
+  "articleNumber": "575733",
+  "name": "10-pack Reaktionsbollar",
+  "description": "Skivhantel av järn",
+  "distributor": "573c52cdf609f5692351914b",
+  "distributorName": "Lev 4",
+  "unit": "St",
+  "unitCost": 319,
+  "unitTaxPercent": 25,
+  "unitPrice": 426.66,
+  "unitPriceAfterDiscount": 426.66,
+  "discountPercent": 0,
+  "unitTax": 106.665,
+  "unitPriceInclTax": 533.325,
+  "totalTaxAmount": 106.665,
+  "totalAmount": 426.66,
+  "totalAmountAfterDiscount": 426.66,
+  "totalCost": 319,
+  "__v": 0 
+}
+
+```
+
+This endpoint creates an expense
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/expenses/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+user                | String | Yes | User id
+expenseItem         | String | Yes | Id of the expense item
+workOrder           | String | No  | Id of the work order
+customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
+project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
+distributor         | String | No  | Id of the distributor
+numberOfItems       | String | No  | Number of items
+unit                | String | No  | Unit of the number of items
+unitCost            | Number | No  | Cost per unit. If not specified, the cost on the expense item will be used
+unitPrice           | Number | No  | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price.
+discountPercent     | Number | No  | Discount percent on the unit price
+timestamp           | String | No  | Time stamp of expense
+description         | String | No  | Description of the expense
+isInvoiceable       | Boolean | No | Is the expense invoiceable?
+doReimburse         | Boolean | No | Is the expense an own expense?
+
+
+
+// Free text?
+
