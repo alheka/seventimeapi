@@ -576,7 +576,6 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-
 [
   { "_id": "5f48eb3e65d7ee4942c46eeb",
     "firstName": "Tommy",
@@ -4547,7 +4546,7 @@ description             |  | If specified, expense items that match the paramete
 parentExpenseItemName   |  | If specified, expense items that match the parameter will be included.
 isInvoiceable           |  | If specified, expense items that match the parameter will be included.
 isActive                |  | If specified, expense items that match the parameter will be included.
-favorite                |  | If specified, expenses that match the parameter will be included.
+favorite                |  | If specified, expense items that match the parameter will be included.
 sortBy                  |  | If specified, a sort will be made on the specified parameter
 sortDirection           |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -4587,7 +4586,7 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-  {
+{
   "_id": "5de78aed1332719192362bed",
   "description": "",
   "tax": 25,
@@ -4714,7 +4713,354 @@ This endpoint creates an expense
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 user                | String | Yes | User id
-expenseItem         | String | Yes | Id of the expense item
+expenseItem         | String | Yes*| Id of the expense item. Required if freetext for articles is not activated 
+name                | String | Yes*| Name of the article. Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled. 
+workOrder           | String | No  | Id of the work order
+customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
+project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
+distributor         | String | No  | Id of the distributor
+numberOfItems       | String | No  | Number of items
+unit                | String | No  | Unit of the number of items
+unitCost            | Number | No  | Cost per unit. If not specified, the cost on the expense item will be used
+unitPrice           | Number | No  | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price.
+discountPercent     | Number | No  | Discount percent on the unit price
+timestamp           | String | No  | Time stamp of expense
+description         | String | No  | Description of the expense
+isInvoiceable       | Boolean | No | Is the expense invoiceable?
+doReimburse         | Boolean | No | Is the expense an own expense?
+
+# Driver Journals
+## Get Driver Journals
+
+```shell
+curl "https://app.seventime.se/api/1/driverJournals" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/driverJournals/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5613c0eabed82c732b67914b",
+    "name": "",
+    "driverJournalItemType": "574ed84219e781253319275004d",
+    "driverJournalItemTypeName": "4 kr/km",
+    "car": null,
+    "carRegistrationNumber": "ABC123",
+    "description": "",
+    "user": "5f48eb3e65d7ee4942c46eeb",
+    "userName": "Tommy Hellström",
+    "customer": "5bb26376c42fb99275000080",
+    "customerName": "Hellapps AB",
+    "project": "5f924f4f533f102af78f95b6",
+    "projectName": "Tester",
+    "workOrder": "5bae34dca878bd790d02065g",
+    "workOrderTitle": "20160525",
+    "workOrderNumber": 1181,
+    "startAddress": "Glimmingevägen 18, Västra Karup",
+    "endAddress": "Hamngatan 1, Malmö",
+    "travelPurpose": ".",
+    "startOdometer": 156,
+    "endOdometer": 178,
+    "totalDistance": 22,
+    "price": 4,
+    "totalAmount": 88,
+    "isInvoiced": true,
+    "invoice": "5fab29b038bd334ab540ab53",
+    "modifiedDate": "2016-06-17T09:29:01.958Z",
+    "createDate": "2016-06-17T09:20:46.845Z",
+    "isInvoiceable": true,
+    "timestamp": "2016-06-17T09:20:10.254Z",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves driver journals, a maximum of 100 driver journals will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/driverJournals`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+projectName                 |  | If specified, driver journals that match the parameter will be included.
+customerName                |  | If specified, driver journals that match the parameter will be included.
+driverJournalItemTypeName   |  | If specified, driver journals that match the parameter will be included.
+isInvoiceable               |  | If specified, driver journals that match the parameter will be included.
+workOrderTitle              |  | If specified, driver journals that match the parameter will be included.
+workOrderNumber             |  | If specified, driver journals that match the parameter will be included.
+carRegistrationNumber       |  | If specified, driver journals that match the parameter will be included.
+startAddress                |  | If specified, driver journals that match the parameter will be included.
+endAddress                  |  | If specified, driver journals that match the parameter will be included.
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+<!--<aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside>-->
+
+
+## Get a Specific Driver Journal
+
+```shell
+curl "https://app.seventime.se/api/1/driverJournals/5613c0eabed82c732b67914b" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/driverJournals/5613c0eabed82c732b67914b";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "isInvoiceable": true,
+  "_id": "5613c0eabed82c732b67914b",
+  "name": "",
+  "driverJournalItemType": "574ed84219e781253319275004d",
+  "driverJournalItemTypeName": "4 kr/km",
+  "car": null,
+  "carRegistrationNumber": "ABC123",
+  "description": "",
+  "user": "5f48eb3e65d7ee4942c46eeb",
+  "userName": "Tommy Hellström",
+  "customer": "5bb26376c42fb99275000080",
+  "customerName": "Hellapps AB",
+  "project": "5f924f4f533f102af78f95b6",
+  "projectName": "Tester",
+  "workOrder": "5bae34dca878bd790d02065g",
+  "workOrderTitle": "20160525",
+  "workOrderNumber": 1181,
+  "startAddress": "Glimmingevägen 18, Västra Karup",
+  "endAddress": "Hamngatan 1, Malmö",
+  "travelPurpose": ".",
+  "startOdometer": 156,
+  "endOdometer": 178,
+  "totalDistance": 22,
+  "price": 4,
+  "totalAmount": 88,
+  "isInvoiced": true,
+  "invoice": "5fab29b038bd334ab540ab53",
+  "modifiedDate": "2016-06-17T09:29:01.958Z",
+  "createDate": "2016-06-17T09:20:46.845Z",
+  "timestamp": "2016-06-17T09:20:10.254Z",
+  "__v": 0
+}
+```
+
+This endpoint retrieves a specific driver journal.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/driverJournals/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the driver journal to retrieve
+
+## Get Driver Journals
+
+```shell
+curl "https://app.seventime.se/api/1/driverJournalTypes" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/driverJournalTypes/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+  
+    "_id": "5e5ef41f0d87d3262bc0176",
+    "name": "Diesel - ej skt.fri",
+    "articleNumber": "45",
+    "cost": 0.5,
+    "price": 0.65,
+    "isInvoiceable": true,
+    "isDefault": false,
+    "salaryCompensationType": 20,
+    "salaryType": "5e5cd96da2f5b43254aa1f1e",
+    "salaryTypeName": "Milersättning för diesel",
+    "createDate": "2020-03-03T09:14:11.750Z",
+    "isActive": true,
+    "__v": 0,
+    "salaryCode": "9172"
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves driver journals types, a maximum of 100 driver journals types will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/driverJournalTypes`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Create an Driver Journal
+
+```shell
+  curl -X POST "https://app.seventime.se/api/1/driverJournals/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+```
+
+```javascript
+let formData = {
+  user: '51203146506d961c030791801',
+  expenseItem: '5de78aed1332719192362bed'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/expenses',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "_id": "5fbe684416625651d7f43257",
+  "timestamp": "2020-11-25T14:20:52.129Z",
+  "documents": [],
+  "createDate": "2020-11-25T14:20:52.129Z",
+  "bundledArticles": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "numberOfItems": 1,
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "expenseItem": "5de78aed1332719192362bed",
+  "articleNumber": "575733",
+  "name": "10-pack Reaktionsbollar",
+  "description": "Skivhantel av järn",
+  "distributor": "573c52cdf609f5692351914b",
+  "distributorName": "Lev 4",
+  "unit": "St",
+  "unitCost": 319,
+  "unitTaxPercent": 25,
+  "unitPrice": 426.66,
+  "unitPriceAfterDiscount": 426.66,
+  "discountPercent": 0,
+  "unitTax": 106.665,
+  "unitPriceInclTax": 533.325,
+  "totalTaxAmount": 106.665,
+  "totalAmount": 426.66,
+  "totalAmountAfterDiscount": 426.66,
+  "totalCost": 319,
+  "__v": 0 
+}
+
+```
+
+This endpoint creates an expense
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/expenses/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+user                | String | Yes | User id
+expenseItem         | String | Yes*| Id of the expense item. Required if freetext for articles is not activated
+name                | String | Yes*| Name of the article. Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled.
 workOrder           | String | No  | Id of the work order
 customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
 project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
@@ -4730,6 +5076,4 @@ isInvoiceable       | Boolean | No | Is the expense invoiceable?
 doReimburse         | Boolean | No | Is the expense an own expense?
 
 
-
-// Free text?
 
