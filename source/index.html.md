@@ -2343,11 +2343,9 @@ This endpoint retrieves price lists, a maximum of 100 price lists will be return
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projects`
+`GET https://app.seventime.se/api/1/priceLists`
 
 ### Query Parameters
-
-E.g. `https://app.seventime.se/api/1/projects/?projectNumber=3314`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -2355,9 +2353,58 @@ sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+## Get a Specific Price List
+
+```shell
+curl "https://app.seventime.se/api/1/priceLists/58c1504a658fb5911d018f5f" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/priceLists/58c1504a658fb5911d018f5f";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "_id": "57bc187159a73f312300009d",
+  "isActive": true,
+  "systemAccount": "5112826056d961c030000001",
+  "name": "ÅF-prislista",
+  "__v": 0
+}
+```
+
+This endpoint retrieves a specific price list.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/priceLists/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the price list to retrieve
 
 # Invoices
 
@@ -4713,8 +4760,8 @@ This endpoint creates an expense
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 user                | String | Yes | User id
-expenseItem         | String | Yes*| Id of the expense item. Required if freetext for articles is not activated 
-name                | String | Yes*| Name of the article. Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled. 
+expenseItem         | String | Yes*| Id of the expense item. *Required if freetext for articles is not activated 
+name                | String | Yes*| Name of the article. *Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled. 
 workOrder           | String | No  | Id of the work order
 customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
 project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
@@ -4907,7 +4954,7 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the driver journal to retrieve
 
-## Get Driver Journals
+## Get Driver Journals Types
 
 ```shell
 curl "https://app.seventime.se/api/1/driverJournalTypes" \
@@ -4986,12 +5033,18 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 ```javascript
 let formData = {
-  user: '51203146506d961c030791801',
-  expenseItem: '5de78aed1332719192362bed'
+  user: '5f48eb3e65d7ee4942c46eeb',
+  carRegistrationNumber: 'ABC123',
+  driverJournalItemType: '5e5ef41f0d87d3262bc0176',
+  startAddress: 'Address start, V Karup',
+  endAddress: 'Address end, Båstad',
+  travelPurpose: 'Delivery',
+  startOdometer: '45',
+  endOdometer: '60',
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/expenses',
+  url: 'https://app.seventime.se/api/1/driverJournals',
   form: formData,
   headers: {
     "Client-Secret": clientSecret,
@@ -5013,67 +5066,620 @@ request.post(options, function (error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json 
-{ 
+{
   "isInvoiceable": true,
-  "_id": "5fbe684416625651d7f43257",
-  "timestamp": "2020-11-25T14:20:52.129Z",
-  "documents": [],
-  "createDate": "2020-11-25T14:20:52.129Z",
-  "bundledArticles": [],
-  "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
-  "numberOfItems": 1,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "expenseItem": "5de78aed1332719192362bed",
-  "articleNumber": "575733",
-  "name": "10-pack Reaktionsbollar",
-  "description": "Skivhantel av järn",
-  "distributor": "573c52cdf609f5692351914b",
-  "distributorName": "Lev 4",
-  "unit": "St",
-  "unitCost": 319,
-  "unitTaxPercent": 25,
-  "unitPrice": 426.66,
-  "unitPriceAfterDiscount": 426.66,
-  "discountPercent": 0,
-  "unitTax": 106.665,
-  "unitPriceInclTax": 533.325,
-  "totalTaxAmount": 106.665,
-  "totalAmount": 426.66,
-  "totalAmountAfterDiscount": 426.66,
-  "totalCost": 319,
+  "_id": '5fc619b96294735fc421d77a',
+  "timestamp": '2020-12-01T10:23:53.370Z',
+  "createDate": '2020-12-01T10:23:53.370Z',
+  "modifiedDate": '2020-12-01T10:23:53.370Z',
+  "systemAccount": '5112826056d961c030000001',
+  "user": '5f48eb3e65d7ee4942c46eeb',
+  "userName": 'Tommy Hellström',
+  "carRegistrationNumber": 'ABC123',
+  "driverJournalItemType": '5e5ef41f0d87d3262bc0176',
+  "driverJournalItemTypeName": 'Diesel - ej skt.fri',
+  "startAddress": 'Address start, V Karup',
+  "endAddress": 'Address end, Båstad',
+  "travelPurpose": 'Delivery',
+  "startOdometer": 45,
+  "endOdometer": 60,
+  "totalDistance": 15,
+  "isSalaryCompensated": false,
+  "price": 0,
+  "totalAmount": 0,
+  "cost": 0,
+  "totalCost": 0,
   "__v": 0 
 }
-
 ```
 
 This endpoint creates an expense
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/expenses/`
+`POST https://app.seventime.se/api/1/driverJournals/`
 
 ### POST Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-user                | String | Yes | User id
-expenseItem         | String | Yes*| Id of the expense item. Required if freetext for articles is not activated
-name                | String | Yes*| Name of the article. Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled.
-workOrder           | String | No  | Id of the work order
-customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
-project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
-distributor         | String | No  | Id of the distributor
-numberOfItems       | String | No  | Number of items
-unit                | String | No  | Unit of the number of items
-unitCost            | Number | No  | Cost per unit. If not specified, the cost on the expense item will be used
-unitPrice           | Number | No  | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price.
-discountPercent     | Number | No  | Discount percent on the unit price
-timestamp           | String | No  | Time stamp of expense
-description         | String | No  | Description of the expense
-isInvoiceable       | Boolean | No | Is the expense invoiceable?
-doReimburse         | Boolean | No | Is the expense an own expense?
+user                    | String | Yes | User id
+vehicle                 | String | Yes*| Id of the vehicle. *Required if carRegistrationNumber is not specified
+carRegistrationNumber   | String | Yes*| Car registration number. *Required if vehicle is not specified. This will not be used if vehicle is specified
+driverJournalItemType   | String | Yes | Type of trip
+startAddress            | String | Yes | Start address of the driver journal
+endAddress              | String | Yes | End address of the driver journal
+travelPurpose           | String | Yes | Errand/position/Company/Contact person
+startOdometer           | Number | Yes | Odometer reading at the start
+endOdometer             | Number | Yes | Odometer reading at the end
+customer                | String | No  | Id of the customer
+project                 | String | No  | Id of the project
+workOrder               | String | No  | Id of the work order. If project is specified, the work order must belong to the project. The customer from the work order will be used on the driver journal
+price                   | Number | No  | Price/km
+cost                    | Number | No  | Cost/km
+description             | String | No  | Description or notes on the driver journal
+isInvoiceable           | Boolean | No | Is the driver jounal invoiceable?
+isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated?
+
+
+# Vehicles
+## Get Vehicles
+
+```shell
+curl "https://app.seventime.se/api/1/vehicles" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/vehicles/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "55782f0382da2f85430284d",
+    "name": "Audi Q8",
+    "registrationNumber": "ABC123",
+    "isActive": true,
+    "createDate": "2016-06-08T14:45:42.546Z",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves vehicles, a maximum of 100 vehicles will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/vehicles`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a Specific Vehicles
+
+```shell
+curl "https://app.seventime.se/api/1/vehicles/55782f0382da2f85430284d" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/vehicles/55782f0382da2f85430284d";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "_id": "55782f0382da2f85430284d",
+  "name": "Audi Q8",
+  "registrationNumber": "ABC123",
+  "isActive": true,
+  "createDate": "2016-06-07T13:20:04.346Z",
+  "__v": 0
+}
+
+```
+
+This endpoint retrieves a specific vehicle.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/vehicle/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the vehicle to retrieve
+
+# Distributors
+## Get Distributors
+
+```shell
+curl "https://app.seventime.se/api/1/distributors" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/distributors/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5f6b2e6af24d5df55b69277",
+    "name": "UE lev 20200923",
+    "distributorNumber": "20",
+    "address": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": "",
+    "email": "",
+    "organizationNumber": "",
+    "notes": "",
+    "purchaseOrderEmail": "",
+    "ourCustomerNumber": "",
+    "paymentDays": 30,
+    "hasSelfBilling": true,
+    "selfBillingSettings": {
+      "invoiceDeduction": 5,
+      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+      "invoiceNumberSeries": "UELEV23",
+      "invoiceCounter": 1,
+      "emailForSelfBilling": "tommy@seventime.se"
+    },
+    "isActive": true,
+    "isSubContractor": true,
+    "createdDate": "2020-09-23T13:19:42.450Z",
+    "modifiedDate": "2020-09-23T13:19:42.450Z",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves distributors, a maximum of 100 distributors will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/distributors`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a Specific Distributor
+
+```shell
+curl "https://app.seventime.se/api/1/distributors/5f6b2e6af24d5df55b69277" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/distributors/5f6b2e6af24d5df55b69277";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "selfBillingSettings": {
+    "invoiceDeduction": 5,
+    "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+    "invoiceNumberSeries": "UELEV23",
+    "invoiceCounter": 1,
+    "emailForSelfBilling": "tommy@seventime.se"
+  },
+  "_id": "5f6b2e6af24d5df55b69277",
+  "name": "UE lev 20200923",
+  "distributorNumber": "20",
+  "address": "",
+  "zipCode": "",
+  "city": "",
+  "country": "",
+  "phone": "",
+  "email": "",
+  "organizationNumber": "",
+  "notes": "",
+  "purchaseOrderEmail": "",
+  "ourCustomerNumber": "",
+  "paymentDays": 30,
+  "hasSelfBilling": true,
+  "isActive": true,
+  "isSubContractor": true,
+  "createdDate": "2020-09-23T13:19:42.450Z",
+  "modifiedDate": "2020-09-23T13:19:42.450Z",
+  "systemAccount": "5112826056d961c030000001",
+  "__v": 0
+}
+```
+
+This endpoint retrieves a specific distributor.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/distributors/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the distributor to retrieve
+
+# Purchase Orders
+## Get Purchase Orders
+
+```shell
+curl "https://app.seventime.se/api/1/purchaseOrders" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/purchaseOrders/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "59d6041d5551819581034002",
+    "purchaseOrderNumber": "1009",
+    "purchaseOrderName": "Beställning",
+    "purchaseOrderInfoName": "ererer",
+    "language": "SV",
+    "headerText": "Vi önskar att beställa följande.",
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
+    "footerInfoText": "",
+    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+    "createdByUserName": "Tommy Hellström",
+    "ourReference": "5f48eb3e65d7ee4942c46eeb",
+    "ourReferenceName": "Tommy Hellström",
+    "approvedBy": null,
+    "distributor": "5f6b2e6af24d5df55b69277",
+    "distributorName": "Alheka",
+    "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+    "distributorVAT": "",
+    "ourCustomerNumber": "123456",
+    "contactPersonDistributor": null,
+    "contactPersonDistributorName": null,
+    "project": null,
+    "projectName": null,
+    "workOrder": null,
+    "workOrderName": "",
+    "workOrderNumber": "0",
+    "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
+    "totalAmount": 1000,
+    "totalTaxAmount": 250,
+    "totalAmountInclTax": 1250,
+    "taxPercent": 25,
+    "totalCost": 0,
+    "currencyCode": "SEK",
+    "currencyRate": 1,
+    "purchaseOrderStatus": 4,
+    "archived": false,
+    "archivedDate": null,
+    "sentDate": "2017-09-11T13:31:08.972Z",
+    "confirmationDate": "2017-09-11T13:31:41.071Z",
+    "desiredDeliveryDate": null,
+    "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
+    "paymentDays": 30,
+    "marking": "",
+    "deliveryAttention": "",
+    "deliveryPhone": "",
+    "publicLink": "l0qMb5V9L1uVMDHqBZ",
+    "approvedByName": null,
+    "invoiceAddress": {
+      "address": "Glimmingevägen 18",
+      "address2": "",
+      "zipCode": "12345",
+      "city": "V Karup",
+      "country": "",
+      "email": "",
+      "name": "Hellapps"
+    },
+    "deliveryAddress": {
+      "name": "",
+      "address": "",
+      "address2": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": ""
+    },
+    "documents": [],
+    "purchaseOrderLogEntries": [
+      {
+        "_id": "5f48eb3e65d7ee4942c46eeb",
+        "logType": 5,
+        "description": "",
+        "user": "5112826056d961c030000002",
+        "userName": "Tommy Hellström",
+        "logDate": "2017-09-11T13:31:08.972Z"
+      },
+      {
+      // ...
+      }
+    ],
+    "invoiceItems": [
+      {
+      // ...
+      }
+    ],
+    "createDate": "2017-09-11T13:31:08.963Z",
+    "__v": 0,
+    "projectNumber": "183897"
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves purchase orders, a maximum of 100 purchase orders will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/purchaseOrders`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+purchaseOrderStatus                 |  | If specified, purchase orders that match the parameter will be included.
+purchaseOrderNumber                 |  | If specified, purchase orders that match the parameter will be included.
+purchaseOrderInfoName               |  | If specified, purchase orders that match the parameter will be included.
+distributorNamedistributorName      |  | If specified, purchase orders that match the parameter will be included.
+projectName                         |  | If specified, purchase orders that match the parameter will be included.
+workOrderName                       |  | If specified, purchase orders that match the parameter will be included.
+workOrderNumber                     |  | If specified, purchase orders that match the parameter will be included.
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a Specific Purchase Order
+
+```shell
+curl "https://app.seventime.se/api/1/purchaseOrders/59d6041d5551819581034002" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/purchaseOrders/59d6041d5551819581034002";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "deliveryAddress": {
+    "name": "",
+    "address": "",
+    "address2": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": ""
+  },
+  "invoiceAddress": {
+    "address": "Glimmingevägen 18",
+    "address2": "",
+    "zipCode": "12345",
+    "city": "V Karup",
+    "country": "",
+    "email": "",
+    "name": "Hellapps"
+  },
+  "_id": "59d6041d5551819581034002",
+  "purchaseOrderNumber": "1009",
+  "purchaseOrderName": "Beställning",
+  "purchaseOrderInfoName": "ererer",
+  "language": "SV",
+  "headerText": "Vi önskar att beställa följande.",
+  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
+  "footerInfoText": "",
+  "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+  "createdByUserName": "Tommy Hellström",
+  "ourReference": "5f48eb3e65d7ee4942c46eeb",
+  "ourReferenceName": "Tommy Hellström",
+  "approvedBy": null,
+  "distributor": "5f6b2e6af24d5df55b69277",
+  "distributorName": "Alheka",
+  "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+  "distributorVAT": "",
+  "ourCustomerNumber": "123456",
+  "contactPersonDistributor": null,
+  "contactPersonDistributorName": null,
+  "project": null,
+  "projectName": null,
+  "workOrder": null,
+  "workOrderName": "",
+  "workOrderNumber": "0",
+  "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
+  "totalAmount": 1000,
+  "totalTaxAmount": 250,
+  "totalAmountInclTax": 1250,
+  "taxPercent": 25,
+  "totalCost": 0,
+  "currencyCode": "SEK",
+  "currencyRate": 1,
+  "purchaseOrderStatus": 4,
+  "archived": false,
+  "archivedDate": null,
+  "sentDate": "2017-09-11T13:31:08.972Z",
+  "confirmationDate": "2017-09-11T13:31:41.071Z",
+  "desiredDeliveryDate": null,
+  "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
+  "paymentDays": 30,
+  "marking": "",
+  "deliveryAttention": "",
+  "deliveryPhone": "",
+  "publicLink": "l0qNw5V8L1uVMqoDRqbZ",
+  "approvedByName": null,
+  "documents": [],
+  "purchaseOrderLogEntries": [
+    {
+      "logDate": "2017-09-11T13:31:08.972Z",
+      "_id": "59b6901c1598211831000063",
+      "logType": 5,
+      "description": "",
+      "user": "5f48eb3e65d7ee4942c46eeb",
+      "userName": "Tommy Hellström"
+    },
+    {
+    // ...
+    }
+  ],
+  "invoiceItems": [
+    {
+    // ...
+    }
+  ],
+  "createDate": "2017-09-11T13:31:08.963Z",
+  "__v": 0,
+  "projectNumber": "183897"
+}
+
+```
+
+This endpoint retrieves a specific purchase order.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/purchaseOrders/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the purchase order to retrieve
+
+
+// TODO: quote, result unit. Fixa så att systemAccount inte returneras i FindOne
 
 
 
