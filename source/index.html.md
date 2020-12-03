@@ -886,6 +886,67 @@ Parameter | Default | Description
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
+## Get User Work Types
+
+```shell
+curl "https://app.seventime.se/api/1/userWorkTypes/" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/userWorkTypes/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5f442181e62efdb4a3a7d9c6d",
+    "name": "Programmerare",
+    "pricePerHour": 555,
+    "__v": 0
+  },
+  {
+    // ...
+  }
+]
+```
+
+This endpoint retrieves user roles, a maximum of 100 user roles will be returned.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/userRoles/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
 ## Create User
 
 ```shell
@@ -968,7 +1029,7 @@ cellPhone          | String   | No  | Cell phone number
 isActive           | Boolean  | No  | Should the user be active?
 isActivated        | Boolean  | No  | Should the user be activated?
 password           | String   | No  | Password of the user
-language           | String   | No  | Language of the user as a country code (e.g SV for Swedish). If not specified, this will we set to SV.
+language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
 
 
 # Departments
@@ -5662,7 +5723,6 @@ request(options, function(error, response, body) {
   "__v": 0,
   "projectNumber": "183897"
 }
-
 ```
 
 This endpoint retrieves a specific purchase order.
@@ -5678,8 +5738,915 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the purchase order to retrieve
 
+## Create Purchase Order
+// TODO: skapa beställning
 
-// TODO: quote, result unit. Fixa så att systemAccount inte returneras i FindOne
+# Result Unit
+## Get Result Units
+
+```shell
+curl "https://app.seventime.se/api/1/resultUnits" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/resultUnits/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "57076abe8010bd22792004b",
+    "name": "Kontor Syd",
+    "code": "Syd",
+    "isActive": true,
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves purchase orders, a maximum of 100 result units will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/resultUnits`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a Specific Result Unit
+
+```shell
+curl "https://app.seventime.se/api/1/resultUnits/57076abe8010bd22792004b" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/resultUnits/57076abe8010bd22792004b";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "_id": "57076abe8010bd22792004b",
+  "name": "Kontor Syd",
+  "code": "Syd",
+  "isActive": true,
+  "__v": 0
+}
+```
+
+This endpoint retrieves a specific result unit.
 
 
+### HTTP Request
 
+`GET https://app.seventime.se/api/1/resultUnits/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the result unit to retrieve
+
+# Quote
+## Get Quotes
+
+```shell
+curl "https://app.seventime.se/api/1/quotes" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/quotes/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5c33891321361d7d5235d294",
+    "quoteNumber": "1054",
+    "quoteType": 0,
+    "quoteName": "Prisindikation",
+    "quoteInfoName": "",
+    "quoteCategory": null,
+    "quoteCategoryName": null,
+    "language": "SV",
+    "description": null,
+    "headerText": null,
+    "footerInfoText": null,
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
+    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+    "createdByUserName": "Tommy Hellström",
+    "ourReference": "5f48eb3e65d7ee4942c46eeb",
+    "ourReferenceName": "Tommy Hellström",
+    "salesAgent": "5f48eb3e65d7ee4942c46eeb",
+    "salesAgentName": "Tommy Hellström",
+    "customer": "5bb26376c42fb99275000080",
+    "customerName": "Hellapps",
+    "customerNumber": "44312",
+    "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
+    "customerVAT": "",
+    "contactPerson": null,
+    "contactPersonName": null,
+    "project": null,
+    "projectName": null,
+    "workOrder": null,
+    "workOrderName": "",
+    "workOrderNumber": "",
+    "quoteDate": "2019-01-07T17:13:55.271Z",
+    "validToDate": "2019-02-06T17:13:55.383Z",
+    "discountInPercent": 0,
+    "totalAmount": 500,
+    "totalTaxAmount": 125,
+    "totalAmountInclTax": 625,
+    "taxPercent": 25,
+    "totalCost": 0,
+    "useQuoteValue": false,
+    "quoteValue": 0,
+    "useQuoteCost": false,
+    "quoteCost": 0,
+    "currencyCode": "SEK",
+    "currencyRate": 1,
+    "quoteStatus": 3,
+    "archived": false,
+    "archivedDate": null,
+    "deliveryDate": null,
+    "deliveryDateEnd": null,
+    "sentDate": "2019-01-07T17:15:10.109Z",
+    "acceptedDate": "2019-01-07T00:00:00.000Z",
+    "rejectedDate": null,
+    "invoice": null,
+    "invoiceNumber": "",
+    "invoicedDate": null,
+    "priceList": null,
+    "priceListName": "",
+    "marking": "",
+    "houseDeductionBasisAmount": 0,
+    "houseDeductionAmount": 0,
+    "enableQuoteConditions": false,
+    "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
+    "multipleTaxesOnRows": false,
+    "showPriceInclTaxesOnRows": true,
+    "confirmationDate": null,
+    "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
+    "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
+    "confirmationTitle": "Orderbekräftelse",
+    "publicLink": "ObLBZZ0wDWcjlx7Be516",
+    "useBudgetCalculation": false,
+    "quoteAcceptReason": null,
+    "quoteAcceptReasonName": null,
+    "quoteDeclineReason": null,
+    "quoteDeclineReasonName": null,
+    "notes": "",
+    "openNotificationSent": false,
+    "quoteTemplate": "5b7dd2ba41cb2a725326s80",
+    "stockReservationIsDone": false,
+    "quoteElements": [
+      {
+        "_id": "5b7ada8bc41cb2341681",
+        "content": {
+          "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
+          "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
+        },
+        "backgroundColor": "FAFAFA",
+        "bottomMargin": 20,
+        "topMargin": 20,
+        "elementTypeId": 1000,
+        "itemId": "0.1735729354019433"
+      },
+      {
+        "_id": "5c25fd4e818921172d237086",
+        "content": {
+          "invoiceItems": [
+            {
+              "stockLocation": "5bbd3a49dda7dbc37293680",
+              "editMode": true,
+              "selectedFlag": false,
+              "houseWorkTypeOfWork": 0,
+              "houseWorkFlag": false,
+              "totalCost": 0,
+              "totalAmountInclTax": 0,
+              "totalTaxAmount": 0,
+              "totalAmount": 500,
+              "taxPercent": 25,
+              "discountPercent": 0,
+              "supplementChargePercent": 0,
+              "discountInPercent": 0,
+              "unitCost": 0,
+              "unit": "Styck",
+              "priceListName": null,
+              "priceList": null,
+              "unitPrice": 100,
+              "numberOfItems": "5",
+              "machineName": "",
+              "machine": null,
+              "driverJournalItemTypeName": "",
+              "driverJournalItemType": null,
+              "expenseItemName": "Seven Time - 5 användare - #2",
+              "expenseItem": "5de78aed1332719192362bed",
+              "categoryName": "",
+              "timeCategory": null,
+              "itemType": "expense",
+              "createDate": null,
+              "articleNumber": "203",
+              "itemOrder": 1024,
+              "itemId": "0.29956387071628154",
+              "description": "",
+              "name": "",
+              "_id": null
+            }
+          ],
+          "totalAmount": 500,
+          "totalTaxAmount": 125,
+          "totalAmountInclTax": 625,
+          "taxPercent": 25,
+          "totalCost": 0,
+          "houseDeductionBasisAmount": 0,
+          "houseDeductionAmount": 0,
+          "selectableRows": false,
+          "showOnlyTotalPrice": false,
+          "hiddenColumns": [
+            "articleNumber"
+          ]
+        },
+        "backgroundColor": "FAFAFA",
+        "bottomMargin": 20,
+        "topMargin": 20,
+        "elementTypeId": 1200,
+        "itemId": "0.086780107201752"
+      },
+      {
+        "_id": "5b7a808bc41361d87a3",
+        "content": {
+          "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
+          "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
+        },
+        "backgroundColor": "FAFAFA",
+        "bottomMargin": 20,
+        "topMargin": 20,
+        "elementTypeId": 1000,
+        "itemId": "0.047508293157285886"
+      }
+    ],
+    "budgetCalculation": {
+      "invoiceItems": [],
+      "totalBenefitAmount": 0,
+      "totalCostAmount": 0
+    },
+    "houseProperties": {
+      "typeOfProperty": 1,
+      "propertyDescription": "",
+      "housingSocietyNumber": "",
+      "apartmentNumber": "",
+      "maxDeductionAmount": 50000,
+      "personalNumber": "",
+      "deductionDistribution": []
+    },
+    "deliveryAddress": {
+      "name": "",
+      "address": "",
+      "address2": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": ""
+    },
+    "documents": [],
+    "quoteLogEntries": [
+      {
+        "_id": "5c33831c3512857d5cd6195",
+        "logDate": "2019-01-07T17:15:08.533Z",
+        "userName": "Tommy Hellström",
+        "user": "5112826056d961c030000002",
+        "description": "",
+        "logType": 1,
+        "entryId": "mZjaXWo2oRTr"
+      },
+      {
+      // ...
+      }
+    ],
+    "invoiceItems": [],
+    "createDate": "2019-01-07T17:15:08.532Z",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves quotes, a maximum of 100 quotes will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/quotes`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+quoteName                           |  | If specified, quotes that match the parameter will be included.
+quoteNumber                         |  | If specified, quotes that match the parameter will be included.
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a Specific Quote
+
+```shell
+curl "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+  {
+  "_id": "5c33891321361d7d5235d294",
+  "quoteNumber": "1054",
+  "quoteType": 0,
+  "quoteName": "Prisindikation",
+  "quoteInfoName": "",
+  "quoteCategory": null,
+  "quoteCategoryName": null,
+  "language": "SV",
+  "description": null,
+  "headerText": null,
+  "footerInfoText": null,
+  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
+  "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+  "createdByUserName": "Tommy Hellström",
+  "ourReference": "5f48eb3e65d7ee4942c46eeb",
+  "ourReferenceName": "Tommy Hellström",
+  "salesAgent": "5f48eb3e65d7ee4942c46eeb",
+  "salesAgentName": "Tommy Hellström",
+  "customer": "5bb26376c42fb99275000080",
+  "customerName": "Hellapps",
+  "customerNumber": "44312",
+  "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
+  "customerVAT": "",
+  "contactPerson": null,
+  "contactPersonName": null,
+  "project": null,
+  "projectName": null,
+  "workOrder": null,
+  "workOrderName": "",
+  "workOrderNumber": "",
+  "quoteDate": "2019-01-07T17:13:55.271Z",
+  "validToDate": "2019-02-06T17:13:55.383Z",
+  "discountInPercent": 0,
+  "totalAmount": 500,
+  "totalTaxAmount": 125,
+  "totalAmountInclTax": 625,
+  "taxPercent": 25,
+  "totalCost": 0,
+  "useQuoteValue": false,
+  "quoteValue": 0,
+  "useQuoteCost": false,
+  "quoteCost": 0,
+  "currencyCode": "SEK",
+  "currencyRate": 1,
+  "quoteStatus": 3,
+  "archived": false,
+  "archivedDate": null,
+  "deliveryDate": null,
+  "deliveryDateEnd": null,
+  "sentDate": "2019-01-07T17:15:10.109Z",
+  "acceptedDate": "2019-01-07T00:00:00.000Z",
+  "rejectedDate": null,
+  "invoice": null,
+  "invoiceNumber": "",
+  "invoicedDate": null,
+  "priceList": null,
+  "priceListName": "",
+  "marking": "",
+  "houseDeductionBasisAmount": 0,
+  "houseDeductionAmount": 0,
+  "enableQuoteConditions": false,
+  "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
+  "multipleTaxesOnRows": false,
+  "showPriceInclTaxesOnRows": true,
+  "confirmationDate": null,
+  "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
+  "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
+  "confirmationTitle": "Orderbekräftelse",
+  "publicLink": "ObLBZZ0wDWcjlx7Be516",
+  "useBudgetCalculation": false,
+  "quoteAcceptReason": null,
+  "quoteAcceptReasonName": null,
+  "quoteDeclineReason": null,
+  "quoteDeclineReasonName": null,
+  "notes": "",
+  "openNotificationSent": false,
+  "quoteTemplate": "5b7dd2ba41cb2a725326s80",
+  "stockReservationIsDone": false,
+  "quoteElements": [
+    {
+      "_id": "5b7ada8bc41cb2341681",
+      "content": {
+        "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
+        "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
+      },
+      "backgroundColor": "FAFAFA",
+      "bottomMargin": 20,
+      "topMargin": 20,
+      "elementTypeId": 1000,
+      "itemId": "0.1735729354019433"
+    },
+    {
+      "_id": "5c25fd4e818921172d237086",
+      "content": {
+        "invoiceItems": [
+          {
+            "stockLocation": "5bbd3a49dda7dbc37293680",
+            "editMode": true,
+            "selectedFlag": false,
+            "houseWorkTypeOfWork": 0,
+            "houseWorkFlag": false,
+            "totalCost": 0,
+            "totalAmountInclTax": 0,
+            "totalTaxAmount": 0,
+            "totalAmount": 500,
+            "taxPercent": 25,
+            "discountPercent": 0,
+            "supplementChargePercent": 0,
+            "discountInPercent": 0,
+            "unitCost": 0,
+            "unit": "Styck",
+            "priceListName": null,
+            "priceList": null,
+            "unitPrice": 100,
+            "numberOfItems": "5",
+            "machineName": "",
+            "machine": null,
+            "driverJournalItemTypeName": "",
+            "driverJournalItemType": null,
+            "expenseItemName": "Seven Time - 5 användare - #2",
+            "expenseItem": "5de78aed1332719192362bed",
+            "categoryName": "",
+            "timeCategory": null,
+            "itemType": "expense",
+            "createDate": null,
+            "articleNumber": "203",
+            "itemOrder": 1024,
+            "itemId": "0.29956387071628154",
+            "description": "",
+            "name": "",
+            "_id": null
+          }
+        ],
+        "totalAmount": 500,
+        "totalTaxAmount": 125,
+        "totalAmountInclTax": 625,
+        "taxPercent": 25,
+        "totalCost": 0,
+        "houseDeductionBasisAmount": 0,
+        "houseDeductionAmount": 0,
+        "selectableRows": false,
+        "showOnlyTotalPrice": false,
+        "hiddenColumns": [
+          "articleNumber"
+        ]
+      },
+      "backgroundColor": "FAFAFA",
+      "bottomMargin": 20,
+      "topMargin": 20,
+      "elementTypeId": 1200,
+      "itemId": "0.086780107201752"
+    },
+    {
+      "_id": "5b7a808bc41361d87a3",
+      "content": {
+        "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
+        "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
+      },
+      "backgroundColor": "FAFAFA",
+      "bottomMargin": 20,
+      "topMargin": 20,
+      "elementTypeId": 1000,
+      "itemId": "0.047508293157285886"
+    }
+  ],
+  "budgetCalculation": {
+    "invoiceItems": [],
+    "totalBenefitAmount": 0,
+    "totalCostAmount": 0
+  },
+  "houseProperties": {
+    "typeOfProperty": 1,
+    "propertyDescription": "",
+    "housingSocietyNumber": "",
+    "apartmentNumber": "",
+    "maxDeductionAmount": 50000,
+    "personalNumber": "",
+    "deductionDistribution": []
+  },
+  "deliveryAddress": {
+    "name": "",
+    "address": "",
+    "address2": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": ""
+  },
+  "documents": [],
+  "quoteLogEntries": [
+    {
+      "_id": "5c33831c3512857d5cd6195",
+      "logDate": "2019-01-07T17:15:08.533Z",
+      "userName": "Tommy Hellström",
+      "user": "5112826056d961c030000002",
+      "description": "",
+      "logType": 1,
+      "entryId": "mZjaXWo2oRTr"
+    },
+    {
+      // ...
+    }
+  ],
+  "invoiceItems": [],
+  "createDate": "2019-01-07T17:15:08.532Z",
+  "__v": 0
+}
+```
+
+This endpoint retrieves a specific quote.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/quotes/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the quote to retrieve
+
+## Get Quote Templates
+
+```shell
+curl "https://app.seventime.se/api/1/quoteTemplates" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/quoteTemplates/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5fb02816ed7ed72d9d936a0fa",
+    "columnContents": [
+      "This is a new footer!<br><br>"
+    ],
+    "templateName": "Standard utan sektioner",
+    "quoteType": 0,
+    "language": "",
+    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+    "createdByUserName": "Tommy Hellström",
+    "createDate": "2020-11-09T13:31:10.929Z",
+    "documents": [],
+    "quoteElements": [
+      {
+        "_id": "5b7a808bc41cb2a725000081",
+        "itemId": "0.2991772478801382",
+        "elementTypeId": 1400,
+        "topMargin": 20,
+        "bottomMargin": 20,
+        "backgroundColor": "FAFAFA",
+        "content": null
+      }
+    ],
+    "overrideFooter": false,
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>This is a new footer!<br><br></td></tr></table>",
+    "footerNumOfCols": 1,
+    "overrideLogoAndAddress": false,
+    "logo": [
+      {
+        "_id": "5f6b5b15468263005f22404f3",
+        "createDate": "2020-09-23T14:26:29.655Z",
+        "modifiedDate": "2020-09-23T14:26:29.655Z",
+        "name": "logo-med-beskrivande-text-caps-black-text-w300.png",
+        "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/5112826056d961c030000001/quoteTemplates/5f6b45ac31d0496b82642951/logo/logo-med-beskrivande-text-caps-black-text-w300.png?AWSAccessKeyId=AKIAIS4KY6NEYJKCBSGA&Expires=1605360649&Signature=kVutB84nfsqrmqCpHsAL3AGX4q8%3D",
+        "contentType": "image/png",
+        "size": 6765,
+        "user": "5f48eb3e65d7ee4942c46eeb",
+        "userName": "Tommy Hellström",
+      }
+    ],
+    "logotypeWidth": 200,
+    "logoPosition": "left",
+    "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves quote templates, a maximum of 100 quote templates will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/quoteTemplates`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get Quote Templates
+
+```shell
+curl "https://app.seventime.se/api/1/quoteCategories" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/quoteCategories/?";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "58a678badc33073a42e02802",
+    "isActive": true,
+    "__v": 0,
+    "quoteCategoryName": "Utbildning"
+  },
+  {
+  // ...
+  }
+]
+```
+
+This endpoint retrieves quote categories, a maximum of 100 quote categories will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/quoteCategories`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Create a Quote
+## Create a Customer
+
+
+```shell
+  curl -X POST "https://app.seventime.se/api/1/customers/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
+```
+
+```javascript
+let formData = {
+  name: 'Tommy Hellström',
+  address: 'Glimmingevägen 18',
+  zipCode: '269 74',
+  city: 'Västra Karup',
+  phone: '0431-360050',
+  email: 'support@seventime.se',
+  organizationNumber: '555555-5555'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/customers',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create customer: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5bb26376c42fb99275000080",
+  "customerNumber": "733352",
+  "organizationNumber": "555555-5555",
+  "email": "support@seventime.se",
+  "phone": "0431-360050",
+  "city": "Västra Karup",
+  "zipCode": "269 74",
+  "address": "Glimmingevägen 18",
+  "name": "Tommy Hellström",
+  "documents": [],
+  "billingSettings": {
+    "deductionDistribution": []
+  },
+  "modifiedDate": "2018-10-01T18:12:06.025Z",
+  "createdDate": "2018-10-01T18:12:06.025Z",
+  "__v": 0,
+  "isActive": true
+```
+
+This endpoint creates a specific customer.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/quotes/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+customer                  | String | Yes | Id of the customer
+user                      | String | Yes | Id of the user
+quoteStatus               | Number | Yes | Quote status. See below for details
+quoteTemplate             | String | Yes | Id of the quote template
+language                  | String | Yes | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
+quoteName                 | String | No | Name of the quote. If not specified, the name will be set according to the settings
+quoteNumber               | Number | No | Number of the quote. If specified, there cannot be another quote with this number. If not specified, this will be set automatically
+quoteDate                 | String | No | Quote date. If not specified, the current date will be set
+validToDate               | String | No | Valid to date. If not specified, the current date + 1 day will be set
+quoteType                 | String | No | Quote type. 0 for Normal, 1 for ROT and 2 for RUT
+quoteCategory             | String | No | Id of the quote category
+salesAgent                | String | No | Id of the sales agent
+yourOrderNumber           | Number | No | Your order number
+marking                   | String | No | Marking on the quote
+deliveryAddress           | String | No | Contains attributes specific for delivery address. See below for details.
+contactPerson             | String | No | Id of the contact person
+description               | String | No | Description of the quote
+priceList                 | String | No | Price list to the used on the quote
+deliveryDate              | String | No | End of delivery date interval
+deliveryDateEnd           | String | No | End of delivery date interval
+ourReference              | String | No | Id of the user to be used as our reference
+quoteInfoName             | String | No | Quote info name. This will not be shown on the quote
+multipleTaxesOnRows       | Boolean | No | Should the rows use different tax rates?
+showPriceInclTaxesOnRows  | Boolean | No | Should the price on the quote rows include taxes?
+useQuoteValue             | Boolean | No | Should it be possible to specify quote value?
+quoteValue                | String  | No | Quote value. Only used if useQuoteValue is true
+useQuoteCost              | Boolean | No | Should it be possible to specify quote cost?
+quoteCost                 | String  | No | Quote cost. Only used if useQuoteCost is true
+headerText                | String | No | Text to be shown in the header
+footerText                | String | No | Text to be shown in the footer
+footerInfoText            | String | No | Text to be shown in the footer info
+
+**Valid quote statuses**
+
+Code | Description
+--------- | -----------
+1                      | Draft 
+2                      | Sent 
+3                      | Accepted 
+4                      | Not accepted 
+10                     | Opportunity 
+
+
+**Attributes for deliveryAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+name                        | String | No | Name of delivery recipient
+address                     | String | No | Primary address
+address2                    | String | No | Secondary address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
+phone                       | String | No | Phone number
