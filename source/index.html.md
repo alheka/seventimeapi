@@ -2993,7 +2993,7 @@ request.post(options, function (error, response, body) {
     var data = JSON.parse(body);
     console.log(data);
   } else {
-    console.error("ERROR! Unable to create work order: " + error);
+    console.error("ERROR! Unable to create invoice: " + error);
     console.error(body);
   }
 });
@@ -3151,7 +3151,7 @@ discountPercent       | Number | No  | Discount of the item
 taxPercent            | Number | No  | Tax percent of the item. Only used if multipleTaxesOnRows is true. This must be 0, 6, 12 or 25% and if not specified, this will be set to 25%.
 houseWorkTypeOfWork   | Number | No  | Type of work for the row. Used if invoiceType is 1 or 2. See below for details
 
-**Item types and type specified fields**
+**Item types**
 
 This table contains the different item types used in the field invoiceItems.itemTypes
 
@@ -4312,7 +4312,7 @@ request.post(options, function (error, response, body) {
     var data = JSON.parse(body);
     console.log(data);
   } else {
-    console.error("ERROR! Unable to create work order: " + error);
+    console.error("ERROR! Unable to create time log: " + error);
     console.error(body);
   }
 });
@@ -5809,7 +5809,195 @@ Parameter | Description
 _id | The _id of the purchase order to retrieve
 
 ## Create a Purchase Order
-// TODO: skapa beställning
+
+```shell
+  curl -X POST "https://app.seventime.se/api/1/purchaseOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "createdByUser=51718241fdb708f37959127&distributor=5f6b2e6af24d5df55b69277" 
+```
+
+```javascript
+let formData = {
+  createdByUser: '51718241fdb708f37959127',
+  distributor: '5f6b2e6af24d5df55b69277',
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/purchaseOrders',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create purchase order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "deliveryAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE" 
+    },
+    "invoiceAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE",
+      "email": "test@test.se" 
+    },
+  "_id": "5fca480e571eb873a64b97ec",
+  "createDate": "2020-12-04T14:30:38.164Z",
+  "invoiceItems": [],
+  "purchaseOrderLogEntries":
+    [ 
+      { "_id": "5fca480e571eb873a64b97ed",
+        "logType": 5,
+        "description": "",
+        "user": "51714655fbb708f379000003",
+        "userName": "Lucas Hellström",
+        "logDate": "2020-12-04T14:30:38.169Z" 
+       } 
+     ],
+  "documents": [],
+  "purchaseOrderName": "purchase Order 123",
+  "purchaseOrderInfoName": "purchase order info 123",
+  "deliveryAttention": "Tommy",
+  "deliveryPhone": "123947513",
+  "marking": "test mark",
+  "headerText": "header text",
+  "footerText": "footer text",
+  "footerInfoText": "footer info text",
+  "createdByUser": "51714655fbb708f379000003",
+  "createdByUserName": "Lucas Hellström",
+  "distributor": "5f6b4b6ef26b5d6f5a687207",
+  "distributorName": "UE lev 20200923",
+  "distributorAddress": "",
+  "distributorVAT": "",
+  "ourCustomerNumber": "",
+  "language": "EN",
+  "ourReference": "51714655fbb708f379000003",
+  "ourReferenceName": "Lucas Hellström",
+  "purchaseOrderStatus": 10,
+  "contactPersonDistributor": "5fca0baf099b1c3ada47b04e",
+  "contactPersonDistributorName": "dwd21",
+  "purchaseOrderDate": "2020-12-04T23:00:00.000Z",
+  "project": "5b20cce1d59a902e28000079",
+  "projectName": "Blåsippan",
+  "workOrder": "5fb3d3f6d2b1a732b1129213",
+  "workOrderNumber": "4922",
+  "workOrderName": "API test 4",
+  "desiredDeliveryDate": "2020-12-19T23:00:00.000Z",
+  "paymentDays": 5,
+  "publicLink": "D2ymDeLqBpsOZDdJNVnV",
+  "sentDate": "2020-12-04T14:30:38.169Z",
+  "purchaseOrderNumber": "1051",
+  "__v": 0 
+}
+```
+
+This endpoint creates a purchase order
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/purchaseOrders/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+createdByUser             | String | Yes | Id of the user who created the purchase order
+distributor               | String | Yes | Id of the distributor
+language                  | String | No | Language of the purchase order as a language code, e.g 'SV' for Swedish
+purchaseOrderName         | String | No | Name of the purchase order. If not specified, this will be set according to the settings
+purchaseOrderInfoName     | String | No | Name of the info box on the purchase order. This will not be shown on the purchase order when sent
+purchaseOrderStatus       | String | No | Purchase order status. See below for available statuses
+contactPersonDistributor  | String | No | Id of the contact person of the distributor
+purchaseOrderDate         | String | No | Purchase order date in the format 'YYYY-MM-DD'
+workOrder                 | String | No | Id of the work order. The work order will only be shown in the info box and not on the purchase order when sent
+project                   | String | No | Id of the project. The project will only be shown in the info box and not on the purchase order when sent
+desiredDeliveryDate       | String | No | Desired delivery date
+deliveryAddress           | Object | No | Contains attributes for delivery address. See below for details
+deliveryAttention         | String | No | Id of the delivery attention
+deliveryPhone             | String | No | Phone number of the delivery
+invoiceAddress            | Object | No | Contains attributes for invoice address. See below for details
+marking                   | String | No | Marking on the purchase order
+paymentDays               | Number | No | Number of payment days
+invoiceItems              | Array  | No | Array of objects which describe the invoice items on the purchase order. See below for details
+headerText                | String | No | Header text that will be shown above the invoice rows
+footerText                | String | No | Footer text that will be shown in the footer
+footerInfoText            | String | No | Fotter info text that will be shown below the invoice rows
+
+**Purchase order statuses**
+
+Code | Description
+--------- | ----------- 
+1   | Draft
+2   | Sent
+3   | Obliterated
+4   | Confirmed
+10  | Delivered
+
+
+**Attributes for deliveryAddress & invoiceAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+name                        | String | No | Name of delivery recipient
+address                     | String | No | Primary address
+address2                    | String | No | Secondary address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
+phone                       | String | No | Phone number
+
+
+
+**Attributes for invoiceItems**
+
+The field invoiceItems should be an array containing objects with the attributes shown below
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+itemType              | String | Yes | Item type of invoice row, see below for details
+expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
+timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
+numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
+unit                  | String | No  | Unit of the item
+unitPrice             | Number | No  | Unit price of the item
+pricePerHour          | Number | No  | Price per hour. Used for time log rows
+totalAmount           | Number | No  | Total amount. Used for onlyamount rows
+discountPercent       | Number | No  | Discount of the item
+
+**Item types**
+
+This table contains the different item types used in the field invoiceItems.itemTypes
+
+Item type |  Description
+--------- |-----------
+expense        | Expense row
+timeLog        | Time log row
+general        | Free-text row
+blank          | Blank row
+text           | Text row
+onlyamount     | Text+amount row
 
 # Result Unit
 ## Get Result Units
