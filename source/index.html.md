@@ -5377,6 +5377,7 @@ This endpoint retrieves distributors, a maximum of 100 distributors will be retu
 
 Parameter | Default | Description
 --------- | ------- | -----------
+name                        |  | If specified, distributors that match the parameter will be included.
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -5456,6 +5457,75 @@ This endpoint retrieves a specific distributor.
 Parameter | Description
 --------- | -----------
 _id | The _id of the distributor to retrieve
+
+
+## Get Distributor Contact Persons
+
+```shell
+curl "https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "_id": "5fca23df0317c3dae47b04a",
+    "name": "Kontaktperson 1",
+    "title": "",
+    "workPhone": "",
+    "cellPhone": "",
+    "email": "",
+    "distributor": "5f6b2e6af24d5df55b69277",
+    "distributorName": "UE lev 20200923",
+    "mainContact": false,
+    "isActive": true,
+    "createdDate": "2020-12-04T10:13:03.965Z",
+    "modifiedDate": "2020-12-04T10:13:03.965Z",
+    "__v": 0
+  },
+  {
+  // ...
+  }
+]
+
+```
+
+This endpoint retrieves distributor contact persons, a maximum of 100 contact persons will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+distributor                 |  | Id of the distributor. This field must be included
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 # Purchase Orders
 ## Get Purchase Orders
@@ -5738,7 +5808,7 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the purchase order to retrieve
 
-## Create Purchase Order
+## Create a Purchase Order
 // TODO: skapa beställning
 
 # Result Unit
