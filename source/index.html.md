@@ -1884,7 +1884,9 @@ Parameter | Default | Description
 --------- | ------- | -----------
 title |  | If specified, work orders that match the parameter will be included.
 workOrderNumber |  | If specified, work orders that match the parameter will be included.
-projectId |  | If specified, work orders that match the parameter will be included.
+project |  | If specified, work orders that match the parameter will be included.
+user |  | If specified, work orders that match the parameter will be included.
+customer |  | If specified, work orders that match the parameter will be included.
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -2168,10 +2170,7 @@ This endpoint retrieves work order statuses, a maximum of 100 statuses will be r
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters
 
 ## Create a Work order
 
@@ -4025,6 +4024,7 @@ This endpoint retrieves machines time logs, a maximum of 100 machine time logs w
 
 Parameter | Default | Description
 --------- | ------- | -----------
+user               |  | If specified, time logs that match the parameter will be included.
 customerName       |  | If specified, time logs that match the parameter will be included.
 projectName        |  | If specified, time logs that match the parameter will be included.
 taskTitle          |  | If specified, time logs that match the parameter will be included.
