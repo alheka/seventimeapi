@@ -58,6 +58,11 @@ Seven Time expects the API key to be included in all API requests to the server 
 You must replace <code>thisismysecretkey</code> with your personal API key.
 </aside>
 
+# Pagination
+## Limits
+## Page
+// TODO
+
 # Customers
 
 ## Get Customers
@@ -65,13 +70,14 @@ You must replace <code>thisismysecretkey</code> with your personal API key.
 
 ```shell
 curl "https://app.seventime.se/api/1/customers" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page=2"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/customers/?";
+let url = "https://app.seventime.se/api/1/customers/?&limit=10&page=2";
 let options = {
   url: url,
   headers: {
@@ -92,9 +98,130 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5bb26376c42fb99275000080",
+{
+  "meta": {
+    "totalResources": 33,
+    "totalPages": 4,
+    "currentPage": 2
+  },
+  "data": [
+    {
+      "_id": "571f61330c7f498a2d0001a4",
+      "customerNumber": "733352",
+      "vatNumber": "SE556596075301",
+      "organizationNumber": "556596-0753",
+      "email": "support@seventime.se",
+      "phone": "0431-360050",
+      "city": "Västra Karup",
+      "zipCode": "269 74",
+      "address": "Glimmingevägen 18",
+      "name": "Tommy Hellström",
+      "documents": [],
+      "billingSettings": {
+        "useSeparateBillingAddress": false,
+        "address": "",
+        "address2": "",
+        "zipCode": "",
+        "city": "",
+        "useSeparateBillingEmail": false,
+        "invoiceEmail": "",
+        "invoiceDeliveryType": 0,
+        "defaultEmailSubject": "",
+        "isConstructionCompany": false,
+        "isROTCustomer": true,
+        "isRUTCustomer": false,
+        "typeOfProperty": 1,
+        "propertyDescription": "",
+        "housingSocietyNumber": "",
+        "apartmentNumber": "",
+        "personalNumber": "",
+        "deductionDistribution": [
+          {
+            "itemId": "0.40862768612862976",
+            "userName": "Tommy Hellström",
+            "personalNumber": "555555-5555",
+            "distributionPercent": 100,
+            "_id": "5bb2683d3a0fdb697e000080"
+          }
+        ],
+        "expenseDiscount": 0,
+        "expenseCustomProfitMargin": 0,
+        "markupPercentSupplierInvoice": -1000,
+        "priceList": null,
+        "priceListName": ""
+      },
+      "modifiedDate": "2018-10-01T18:12:06.025Z",
+      "createdDate": "2018-10-01T18:12:06.025Z",
+      "__v": 0,
+      "address2": "",
+      "country": "",
+      "billingMethod": "",
+      "pricePerHour": 0,
+      "paymentDays": 20,
+      "notes": "",
+      "isActive": true
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves customers, a maximum of 500 customers will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/customers`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/1/customers/?organizationNumber=555555-5555`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name                |  | If specified, customers that match the parameter will be included.
+customerNumber      |    | If specified, customers that match the parameter will be included.
+organizationNumber  |  | If specified, customers that match the parameter will be included.
+city                |  | If specified, customers that match the parameter will be included.
+sortBy              |  | If specified, a sort will be made on the specified parameter
+sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a Specific Customer
+
+```shell
+curl "https://app.seventime.se/api/1/customers/571f61330c7f498a2d0001a4" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/customers/571f61330c7f498a2d0001a4";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "_id": "571f61330c7f498a2d0001a4",
     "customerNumber": "733352",
     "vatNumber": "SE556596075301",
     "organizationNumber": "556596-0753",
@@ -148,131 +275,13 @@ request(options, function(error, response, body) {
     "paymentDays": 20,
     "notes": "",
     "isActive": true
-  },
-  {
-    // ...
   }
-]
-```
-
-This endpoint retrieves customers, a maximum of 100 customers will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/1/customers`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/1/customers/?organizationNumber=555555-5555`
-
-Parameter | Default | Description
---------- | ------- | -----------
-name |  | If specified, customers that match the parameter will be included.
-customerNumber |  | If specified, customers that match the parameter will be included.
-organizationNumber |  | If specified, customers that match the parameter will be included.
-city |  | If specified, customers that match the parameter will be included.
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
-
-## Get a Specific Customer
-
-```shell
-curl "https://app.seventime.se/api/1/customers/5bb26376c42fb99275000080" \
-  -H "Client-Secret: thisismysecretkey"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/1/customers/5bb26376c42fb99275000080";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey"
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "_id": "5bb26376c42fb99275000080",
-  "customerNumber": "733352",
-  "vatNumber": "SE556596075301",
-  "organizationNumber": "556596-0753",
-  "email": "support@seventime.se",
-  "phone": "0431-360050",
-  "city": "Västra Karup",
-  "zipCode": "269 74",
-  "address": "Glimmingevägen 18",
-  "name": "Tommy Hellström",
-  "documents": [],
-  "billingSettings": {
-    "useSeparateBillingAddress": false,
-    "address": "",
-    "address2": "",
-    "zipCode": "",
-    "city": "",
-    "useSeparateBillingEmail": false,
-    "invoiceEmail": "",
-    "invoiceDeliveryType": 0,
-    "defaultEmailSubject": "",
-    "isConstructionCompany": false,
-    "isROTCustomer": true,
-    "isRUTCustomer": false,
-    "typeOfProperty": 1,
-    "propertyDescription": "",
-    "housingSocietyNumber": "",
-    "apartmentNumber": "",
-    "personalNumber": "",
-    "deductionDistribution": [
-      {
-        "itemId": "0.40862768612862976",
-        "userName": "Tommy Hellström",
-        "personalNumber": "555555-5555",
-        "distributionPercent": 100,
-        "_id": "5bb2683d3a0fdb697e000080"
-      }
-    ],
-    "expenseDiscount": 0,
-    "expenseCustomProfitMargin": 0,
-    "markupPercentSupplierInvoice": -1000,
-    "priceList": null,
-    "priceListName": ""
-  },
-  "modifiedDate": "2018-10-01T18:12:06.025Z",
-  "createdDate": "2018-10-01T18:12:06.025Z",
-  "__v": 0,
-  "address2": "",
-  "country": "",
-  "billingMethod": "",
-  "pricePerHour": 0,
-  "paymentDays": 20,
-  "notes": "",
-  "isActive": true
 }
 ```
 
 This endpoint retrieves a specific customer.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -346,6 +355,7 @@ request.post(options, function (error, response, body) {
   "createdDate": "2018-10-01T18:12:06.025Z",
   "__v": 0,
   "isActive": true
+}
 ```
 
 This endpoint creates a specific customer.
@@ -413,13 +423,14 @@ distributionPercent   | Number | Yes | 1-100
 
 ```shell
 curl "https://app.seventime.se/api/1/contactPersons" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=1"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/contactPersons/?customerId=5bb26376c42fb99275000080";
+let url = "https://app.seventime.se/api/1/contactPersons/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -440,29 +451,37 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5fb7bcd0ab7bb01d4d798762",
-    "name": "Tommy",
-    "title": "Utvecklare",
-    "workPhone": "",
-    "cellPhone": "",
-    "email": "support@seventime.se",
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "Tommy Hellström",
-    "mainContact": true,
-    "isActive": true,
-    "createdDate": "2020-11-17T12:06:24.281Z",
-    "modifiedDate": "2020-11-17T12:06:24.281Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 3,
+    "totalPages": 1,
+    "currentPage": 1
   },
-  {
-    // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5fb7bcd0ab7bb01d4d798762",
+      "name": "Tommy",
+      "title": "Utvecklare",
+      "workPhone": "",
+      "cellPhone": "",
+      "email": "support@seventime.se",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Tommy Hellström",
+      "mainContact": true,
+      "isActive": true,
+      "createdDate": "2020-11-17T12:06:24.281Z",
+      "modifiedDate": "2020-11-17T12:06:24.281Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
+
 ```
 
-This endpoint retrieves contact persons, a maximum of 100 contact persons will be returned.
+This endpoint retrieves contact persons, a maximum of 500 contact persons will be returned.
 
 ### HTTP Request
 
@@ -474,9 +493,9 @@ E.g. `https://app.seventime.se/api/1/contactPersons/?customerId=5bb26376c42fb992
 
 Parameter | Default | Description
 --------- | ------- | -----------
-customerId | | The id of the customer which the contact persons belong to. This field is required
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+customerId      | | The id of the customer which the contact persons belong to. If not specified, all contact persons will be retrivied, regardless of which customer they belong to
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Get a Specific Contact Person
 
@@ -510,28 +529,26 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "5fb7bcd0ab7bb01d4d798762",
-  "name": "Tommy",
-  "title": "Utvecklare",
-  "workPhone": "",
-  "cellPhone": "",
-  "email": "support@seventime.se",
-  "customer": "5bb2775da1640a751f000082",
-  "customerName": "Tommy Hellström",
-  "mainContact": true,
-  "isActive": true,
-  "createdDate": "2020-11-17T12:06:24.281Z",
-  "modifiedDate": "2020-11-17T12:06:24.281Z",
-  "systemAccount": "5112826056d961c030000001",
-  "__v": 0
+  "data": {
+    "_id": "5fb7bcd0ab7bb01d4d798762",
+    "name": "Tommy",
+    "title": "Utvecklare",
+    "workPhone": "",
+    "cellPhone": "",
+    "email": "support@seventime.se",
+    "customer": "5bb2775da1640a751f000082",
+    "customerName": "Tommy Hellström",
+    "mainContact": true,
+    "isActive": true,
+    "createdDate": "2020-11-17T12:06:24.281Z",
+    "modifiedDate": "2020-11-17T12:06:24.281Z",
+    "systemAccount": "5112826056d961c030000001",
+    "__v": 0,
+  },
 }
 ```
 
 This endpoint retrieves a contact persons.
-
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
 
 ### HTTP Request
 
@@ -544,100 +561,18 @@ Parameter | Description
 _id | The _id of the contact person to retrieve
 
 # Users
-
 ## Get Users
 
 ```shell
-curl "https://app.seventime.se/api/1/users" \
-  -H "Client-Secret: thisismysecretkey"
+curl "https://app.seventime.se/api/1/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "&limit=100&3"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/users/?";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey"
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  { "_id": "5f48eb3e65d7ee4942c46eeb",
-    "firstName": "Tommy",
-    "lastName": "Hellström",
-    "email": "tommy@nummer7.se",
-    "personalNumber": "",
-    "employeeNumber": "",
-    "userName": "20200828",
-    "workPhone": "",
-    "cellPhone": "",
-    "createdDate": "2020-08-28T11:32:14.452Z",
-    "modifiedDate": "2020-08-28T11:33:36.675Z",
-    "userRoleId": 10,
-    "isActive": true,
-    "isActivated": true,
-    "language": "SV"
-  },
-  {
-    // ...
-  }
-]
-```
-
-This endpoint retrieves users, a maximum of 100 users will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/1/users`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/1/users/?name=Tommy Hellström`
-
-Parameter | Default | Description
---------- | ------- | -----------
-name |  | If specified, users that match the parameter will be included.
-personNumber |  | If specified, users that match the parameter will be included.
-department |  | If specified, users that match the parameter will be included.
-userRole |  | If specified, users that match the parameter will be included.
-isActive |  | If specified, users that match the parameter will be included. This must be a boolean
-isActivated |  | If specified, users that match the parameter will be included. This must be a boolean
-defaultSalaryType |  | If specified, users that match the parameter will be included.
-userSkills |  | If specified, users that match the parameter will be included.
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
-
-## Get a Specific User
-
-```shell
-curl "https://app.seventime.se/api/1/users/5f48eb3e65d7ee4942c46eeb" \
-  -H "Client-Secret: thisismysecretkey"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/1/users/5f48eb3e65d7ee4942c46eeb";
+let url = "https://app.seventime.se/api/1/users/?&limit=100&page=3";
 let options = {
   url: url,
   headers: {
@@ -659,29 +594,116 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "5112826056d961c030000002",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-  "email": "tommy@nummer7.se",
-  "personalNumber": "",
-  "employeeNumber": "2",
-  "userName": "tommy",
-  "workPhone": "0431-360050",
-  "cellPhone": "070-4580425",
-  "createdDate": "2013-02-06T16:18:40.588Z",
-  "modifiedDate": "2020-11-16T10:39:01.762Z",
-  "userRoleId": 30,
-  "isActive": true,
-  "isActivated": true,
-  "language": "EN"
+  "meta": {
+    "totalResources": 4712,
+    "totalPages": 48,
+    "currentPage": 3
+  },
+  "data": [
+    {
+      "_id": "5f48eb3e65d7ee4942c4602",
+      "firstName": "Tommy",
+      "lastName": "Hellström",
+      "email": "tommy@nummer7.se",
+      "personalNumber": "",
+      "employeeNumber": "",
+      "userName": "20200828",
+      "workPhone": "",
+      "cellPhone": "",
+      "createdDate": "2020-08-28T11:32:14.452Z",
+      "modifiedDate": "2020-08-28T11:33:36.675Z",
+      "userRoleId": 10,
+      "isActive": true,
+      "isActivated": true,
+      "language": "SV"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves users, a maximum of 500 users will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/users`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/1/users/?name=Tommy Hellström`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name              |  | If specified, users that match the parameter will be included.
+personNumber      |  | If specified, users that match the parameter will be included.
+department        |  | If specified, users that match the parameter will be included.
+userRole          |  | If specified, users that match the parameter will be included.
+isActive          |  | If specified, users that match the parameter will be included. This must be a boolean
+isActivated       |  | If specified, users that match the parameter will be included. This must be a boolean
+defaultSalaryType |  | If specified, users that match the parameter will be included.
+userSkills        |  | If specified, users that match the parameter will be included.
+sortBy            |  | If specified, a sort will be made on the specified parameter
+sortDirection     |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a Specific User
+
+```shell
+curl "https://app.seventime.se/api/1/users/59312765ad961c0318eb0a2" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/users/59312765ad961c0318eb0a2";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data":
+  {
+    "_id": "59312765ad961c0318eb0a2",
+    "firstName": "Tommy",
+    "lastName": "Hellström",
+    "email": "tommy@nummer7.se",
+    "personalNumber": "",
+    "employeeNumber": "2",
+    "userName": "tommy",
+    "workPhone": "0431-360050",
+    "cellPhone": "070-4580425",
+    "createdDate": "2013-02-06T16:18:40.588Z",
+    "modifiedDate": "2020-11-16T10:39:01.762Z",
+    "userRoleId": 30,
+    "isActive": true,
+    "isActivated": true,
+    "language": "EN"
+  }
 }
 ```
 
 This endpoint retrieves a specific user
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -724,22 +746,22 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "userRoleId": 1,
-    "userRoleName": "Administratör"
-  },
-  {
-    // ...
-  }
-]
+{
+  "data": [
+    {
+      "userRoleId": 1,
+      "userRoleName": "Administratör"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves user roles, a maximum of 100 user roles will be returned.
+This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -783,33 +805,33 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5834419c7a27db6932000052",
-    "name": "Övertid",
-    "description": "",
-    "code": "123",
-    "isAbsenceTimeType": false,
-    "isRuleType": false,
-    "absenceTimeCategory": null,
-    "absenceTimeCategoryName": "",
-    "__v": 0,
-    "unitType": "1",
-    "canBeRegistered": true,
-    "salaryAmount": 0,
-    "typeInSalarySystem": 10
-  },
-  {
-    // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "5834419c7a27db6932000052",
+      "name": "Övertid",
+      "description": "",
+      "code": "123",
+      "isAbsenceTimeType": false,
+      "isRuleType": false,
+      "absenceTimeCategory": null,
+      "absenceTimeCategoryName": "",
+      "__v": 0,
+      "unitType": "1",
+      "canBeRegistered": true,
+      "salaryAmount": 0,
+      "typeInSalarySystem": 10
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves user salary types, a maximum of 100 salary types will be returned.
+This endpoint retrieves user salary types, a maximum of 500 salary types will be returned.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -853,27 +875,24 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "59f9d1c53ffd5f932a000067",
-    "systemAccount": "5112826056d961c030000001",
-    "skillTitle": "Höga arbeten",
-    "__v": 0,
-    "requireEducations": [
-      "5a54ea1f7a7fe3c26200006e"
-    ]
-  },
-  {
-    // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "59f9d1c53ffd5f932a000067",
+      "skillTitle": "Höga arbeten",
+      "__v": 0,
+      "requireEducations": [
+        "5a54ea1f7a7fe3c26200006e"
+      ]
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves user skills, a maximum of 100 user skills will be returned.
-
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+This endpoint retrieves user skills, a maximum of 500 user skills will be returned.
 
 ### HTTP Request
 
@@ -917,24 +936,23 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5f442181e62efdb4a3a7d9c6d",
-    "name": "Programmerare",
-    "pricePerHour": 555,
-    "__v": 0
-  },
-  {
-    // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "5f442181e62efdb4a3a7d9c6d",
+      "name": "Programmerare",
+      "pricePerHour": 555,
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves user roles, a maximum of 100 user roles will be returned.
+This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
 
 ### HTTP Request
 
@@ -1066,22 +1084,29 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "59d05abdc471b72e4901079",
-    "name": "Utveckling",
-    "departmentNumber": "2",
-    "isActive": true,
-    "managerIds": [],
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 3,
+    "totalPages": 1,
+    "currentPage": 1
   },
-  {
-    // ...
-  }
-]
+  "data": [
+    {
+      "_id": "59d05abdc471b72e4901079",
+      "name": "Utveckling",
+      "departmentNumber": "2",
+      "isActive": true,
+      "managerIds": [],
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves departments, a maximum of 100 departments will be returned.
+This endpoint retrieves departments, a maximum of 500 departments will be returned.
 
 ### HTTP Request
 
@@ -1128,20 +1153,20 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "managerIds": [],
-  "_id": "59d05abdc471b72e4901079",
-  "name": "Utveckling",
-  "departmentNumber": "2",
-  "isActive": true,
-  "__v": 0
+  "data": {
+    "managerIds": [],
+    "_id": "59d05abdc471b72e4901079",
+    "name": "Utveckling",
+    "departmentNumber": "2",
+    "isActive": true,
+    "__v": 0
+  }
 }
 ```
 
 This endpoint retrieves a specific department.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -1161,13 +1186,14 @@ _id | The _id of the department to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/projects" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page=7"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projects/?";
+let url = "https://app.seventime.se/api/1/projects/?&limit=10&page=7";
 let options = {
   url: url,
   headers: {
@@ -1188,117 +1214,124 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5f924f4f533f102af78f95b6",
-    "permissions": {
-      "permUsers": [],
-      "permRoles": [],
-      "permissionFlag": 1
-    },
-    "tags": [],
-    "name": "Från offert 20200811",
-    "projectNumber": "3314",
-    "projectStatus": 50,
-    "projectStatusRef": "5c8739d3205457b98b9883d4",
-    "projectType": null,
-    "projectTypeName": null,
-    "billingMethod": "FIXED_PRICE",
-    "pricePerHour": 0,
-    "fixedPrice": 0,
-    "fixedPriceInvoiced": false,
-    "fixedPriceLeftToInvoice": 0,
-    "fixedPriceExpenseItem": null,
-    "timeCategoryPriceList": null,
-    "estimatedTime": 0,
-    "recurringBudgetType": 10,
-    "recurringBudget": {
-      "budgetTime": 0,
-      "budgetAmount": 0,
-      "budgetType": 10
-    },
-    "resultUnit": null,
-    "resultUnitName": "",
-    "customer": "5763e05bcddce98e3b00004b",
-    "customerName": "Hellapps",
-    "contactPerson": null,
-    "contactPersonName": null,
-    "projectLeader": null,
-    "projectLeaderName": null,
-    "quote": "5b110ea19b27f5ef3f00007b",
-    "quoteNumber": "1058",
-    "department": null,
-    "departmentName": "",
-    "marking": "",
-    "yourOrderNumber": "1058",
-    "deliveryAddress": {
-      "name": "",
-      "address": "",
-      "address2": "",
-      "zipCode": "",
-      "city": "",
-      "country": "",
-      "phone": ""
-    },
-    "invoiceStatus": 0,
-    "notes": "",
-    "documents": [],
-    "startDate": null,
-    "endDate": null,
-    "budget": {
-      "typeOfBenefitCalc": 1,
-      "benefits": [],
-      "benefitTotal": 0,
-      "typeOfCostCalc": 1,
-      "costs": [],
-      "costTotal": 0
-    },
-    "budgetCalculation": {
-      "invoiceItems": [],
-      "totalBenefitAmount": 0,
-      "totalCostAmount": 0
-    },
-    "enableConstructionDiary": false,
-    "enablePaymentPlans": false,
-    "timeCategoryItems": [],
-    "expenseItemItems": [],
-    "staffLedger": {
-      "workPlaceIDNumber": "",
-      "developerName": "",
-      "developerOrgNumber": ""
-    },
-    "projectTimeNotification": {
-      "sent": false,
-      "notifyAtPercent": 0
-    },
-    "workRuleStartOfDay": null,
-    "workRuleEndOfDay": null,
-    "timeLogRegistrationMethods": [],
-    "timeShouldNotBeWorkTime": false,
-    "enablePortalAccess": false,
-    "projectResources": [],
-    "checkLists": [],
-    "color": "FAFAFA",
-    "isActive": true,
-    "comments": [],
-    "customFields": [
-      {
-        "_id": "5f326f50433f102ff77f95d7",
-        "fieldId": "5c0e7342ce9a647150000083",
-        "value": "5c0e7342ce9a647150000085"
-      }
-    ],
-    "createdDate": "2020-08-11T10:13:36.001Z",
-    "modifiedDate": "2020-08-11T10:13:36.002Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 397,
+    "totalPages": 40,
+    "currentPage": 7
   },
-  {
-    // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5f924f4f533f102af78f95b6",
+      "permissions": {
+        "permUsers": [],
+        "permRoles": [],
+        "permissionFlag": 1
+      },
+      "tags": [],
+      "name": "Från offert 20200811",
+      "projectNumber": "3314",
+      "projectStatus": 50,
+      "projectStatusRef": "5c8739d3205457b98b9883d4",
+      "projectType": null,
+      "projectTypeName": null,
+      "billingMethod": "FIXED_PRICE",
+      "pricePerHour": 0,
+      "fixedPrice": 0,
+      "fixedPriceInvoiced": false,
+      "fixedPriceLeftToInvoice": 0,
+      "fixedPriceExpenseItem": null,
+      "timeCategoryPriceList": null,
+      "estimatedTime": 0,
+      "recurringBudgetType": 10,
+      "recurringBudget": {
+        "budgetTime": 0,
+        "budgetAmount": 0,
+        "budgetType": 10
+      },
+      "resultUnit": null,
+      "resultUnitName": "",
+      "customer": "5763e05bcddce98e3b00004b",
+      "customerName": "Hellapps",
+      "contactPerson": null,
+      "contactPersonName": null,
+      "projectLeader": null,
+      "projectLeaderName": null,
+      "quote": "5b110ea19b27f5ef3f00007b",
+      "quoteNumber": "1058",
+      "department": null,
+      "departmentName": "",
+      "marking": "",
+      "yourOrderNumber": "1058",
+      "deliveryAddress": {
+        "name": "",
+        "address": "",
+        "address2": "",
+        "zipCode": "",
+        "city": "",
+        "country": "",
+        "phone": ""
+      },
+      "invoiceStatus": 0,
+      "notes": "",
+      "documents": [],
+      "startDate": null,
+      "endDate": null,
+      "budget": {
+        "typeOfBenefitCalc": 1,
+        "benefits": [],
+        "benefitTotal": 0,
+        "typeOfCostCalc": 1,
+        "costs": [],
+        "costTotal": 0
+      },
+      "budgetCalculation": {
+        "invoiceItems": [],
+        "totalBenefitAmount": 0,
+        "totalCostAmount": 0
+      },
+      "enableConstructionDiary": false,
+      "enablePaymentPlans": false,
+      "timeCategoryItems": [],
+      "expenseItemItems": [],
+      "staffLedger": {
+        "workPlaceIDNumber": "",
+        "developerName": "",
+        "developerOrgNumber": ""
+      },
+      "projectTimeNotification": {
+        "sent": false,
+        "notifyAtPercent": 0
+      },
+      "workRuleStartOfDay": null,
+      "workRuleEndOfDay": null,
+      "timeLogRegistrationMethods": [],
+      "timeShouldNotBeWorkTime": false,
+      "enablePortalAccess": false,
+      "projectResources": [],
+      "checkLists": [],
+      "color": "FAFAFA",
+      "isActive": true,
+      "comments": [],
+      "customFields": [
+        {
+          "_id": "5f326f50433f102ff77f95d7",
+          "fieldId": "5c0e7342ce9a647150000083",
+          "value": "5c0e7342ce9a647150000085"
+        }
+      ],
+      "createdDate": "2020-08-11T10:13:36.001Z",
+      "modifiedDate": "2020-08-11T10:13:36.002Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves projects, a maximum of 100 projects will be returned.
+This endpoint retrieves projects, a maximum of 500 projects will be returned.
 
 ### HTTP Request
 
@@ -1310,15 +1343,13 @@ E.g. `https://app.seventime.se/api/1/projects/?projectNumber=3314`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-name |  | If specified, projects that match the parameter will be included.
-projectNumber |  | If specified, projects that match the parameter will be included.
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+name            |  | If specified, projects that match the parameter will be included.
+projectNumber   |  | If specified, projects that match the parameter will be included.
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 ## Get a Specific project
 
@@ -1352,117 +1383,117 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "recurringBudget": {
-    "budgetTime": 0,
-    "budgetAmount": 0,
-    "budgetType": 10
-  },
-  "deliveryAddress": {
-    "name": "",
-    "address": "",
-    "address2": "",
-    "zipCode": "",
-    "city": "",
-    "country": "",
-    "phone": ""
-  },
-  "budget": {
-    "typeOfBenefitCalc": 1,
-    "benefits": [],
-    "benefitTotal": 0,
-    "typeOfCostCalc": 1,
-    "costs": [],
-    "costTotal": 0
-  },
-  "budgetCalculation": {
-    "invoiceItems": [],
-    "totalBenefitAmount": 0,
-    "totalCostAmount": 0
-  },
-  "permissions": {
-    "permUsers": [],
-    "permRoles": [],
-    "permDepartments": [],
-    "permissionFlag": 1
-  },
-  "staffLedger": {
-    "workPlaceIDNumber": "",
-    "developerName": "",
-    "developerOrgNumber": ""
-  },
-  "projectTimeNotification": {
-    "sent": false,
-    "notifyAtPercent": 0
-  },
-  "tags": [],
-  "_id": "5f326f4f433f102ff77f95d6",
-  "name": "Från offert 20200811",
-  "projectNumber": "3314",
-  "projectStatus": 50,
-  "projectStatusRef": "5c8639c3205457b88d9897b2",
-  "projectType": null,
-  "projectTypeName": null,
-  "billingMethod": "FIXED_PRICE",
-  "pricePerHour": 0,
-  "fixedPrice": 0,
-  "fixedPriceInvoiced": false,
-  "fixedPriceLeftToInvoice": 0,
-  "fixedPriceExpenseItem": null,
-  "timeCategoryPriceList": null,
-  "estimatedTime": 0,
-  "recurringBudgetType": 10,
-  "resultUnit": null,
-  "resultUnitName": "",
-  "customer": "5763e05bcddce98e3b00004b",
-  "customerName": "Hellapps",
-  "contactPerson": null,
-  "contactPersonName": null,
-  "projectLeader": null,
-  "projectLeaderName": null,
-  "quote": "5b110ea19b27f5ef3f00007b",
-  "quoteNumber": "1058",
-  "department": null,
-  "departmentName": "",
-  "marking": "",
-  "yourOrderNumber": "1058",
-  "invoiceStatus": 0,
-  "notes": "",
-  "documents": [],
-  "startDate": null,
-  "endDate": null,
-  "enableConstructionDiary": false,
-  "enablePaymentPlans": false,
-  "timeCategoryItems": [],
-  "expenseItemItems": [],
-  "workRuleStartOfDay": null,
-  "workRuleEndOfDay": null,
-  "timeLogRegistrationMethods": [],
-  "timeShouldNotBeWorkTime": false,
-  "enablePortalAccess": false,
-  "projectResources": [],
-  "checkLists": [],
-  "color": "FAFAFA",
-  "isActive": true,
-  "comments": [],
-  "customFields": [
-    {
-      "_id": "5f326f50433f102ff77f95d7",
-      "fieldId": "5c0e7342ce9a647150000083",
-      "value": "5c0e7342ce9a647150000085"
-    }
-  ],
-  "createdDate": "2020-08-11T10:13:36.001Z",
-  "modifiedDate": "2020-08-11T10:13:36.002Z",
-  "systemAccount": "5112826056d961c030000001",
-  "__v": 0
+  "data": {
+    "recurringBudget": {
+      "budgetTime": 0,
+      "budgetAmount": 0,
+      "budgetType": 10
+    },
+    "deliveryAddress": {
+      "name": "",
+      "address": "",
+      "address2": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": ""
+    },
+    "budget": {
+      "typeOfBenefitCalc": 1,
+      "benefits": [],
+      "benefitTotal": 0,
+      "typeOfCostCalc": 1,
+      "costs": [],
+      "costTotal": 0
+    },
+    "budgetCalculation": {
+      "invoiceItems": [],
+      "totalBenefitAmount": 0,
+      "totalCostAmount": 0
+    },
+    "permissions": {
+      "permUsers": [],
+      "permRoles": [],
+      "permDepartments": [],
+      "permissionFlag": 1
+    },
+    "staffLedger": {
+      "workPlaceIDNumber": "",
+      "developerName": "",
+      "developerOrgNumber": ""
+    },
+    "projectTimeNotification": {
+      "sent": false,
+      "notifyAtPercent": 0
+    },
+    "tags": [],
+    "_id": "5f326f4f433f102ff77f95d6",
+    "name": "Från offert 20200811",
+    "projectNumber": "3314",
+    "projectStatus": 50,
+    "projectStatusRef": "5c8639c3205457b88d9897b2",
+    "projectType": null,
+    "projectTypeName": null,
+    "billingMethod": "FIXED_PRICE",
+    "pricePerHour": 0,
+    "fixedPrice": 0,
+    "fixedPriceInvoiced": false,
+    "fixedPriceLeftToInvoice": 0,
+    "fixedPriceExpenseItem": null,
+    "timeCategoryPriceList": null,
+    "estimatedTime": 0,
+    "recurringBudgetType": 10,
+    "resultUnit": null,
+    "resultUnitName": "",
+    "customer": "5763e05bcddce98e3b00004b",
+    "customerName": "Hellapps",
+    "contactPerson": null,
+    "contactPersonName": null,
+    "projectLeader": null,
+    "projectLeaderName": null,
+    "quote": "5b110ea19b27f5ef3f00007b",
+    "quoteNumber": "1058",
+    "department": null,
+    "departmentName": "",
+    "marking": "",
+    "yourOrderNumber": "1058",
+    "invoiceStatus": 0,
+    "notes": "",
+    "documents": [],
+    "startDate": null,
+    "endDate": null,
+    "enableConstructionDiary": false,
+    "enablePaymentPlans": false,
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "workRuleStartOfDay": null,
+    "workRuleEndOfDay": null,
+    "timeLogRegistrationMethods": [],
+    "timeShouldNotBeWorkTime": false,
+    "enablePortalAccess": false,
+    "projectResources": [],
+    "checkLists": [],
+    "color": "FAFAFA",
+    "isActive": true,
+    "comments": [],
+    "customFields": [
+      {
+        "_id": "5f326f50433f102ff77f95d7",
+        "fieldId": "5c0e7342ce9a647150000083",
+        "value": "5c0e7342ce9a647150000085"
+      }
+    ],
+    "createdDate": "2020-08-11T10:13:36.001Z",
+    "modifiedDate": "2020-08-11T10:13:36.002Z",
+    "systemAccount": "5112826056d961c030000001",
+    "__v": 0
+  }
 }
 ```
 
 This endpoint retrieves a specific project.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -1505,27 +1536,26 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5c8639c4704957d88b9894b1",
-    "statusName": "Avslutad",
-    "color": "468847",
-    "inProgressStatus": false,
-    "closedStatus": true,
-    "isActive": true
-  },
-  {
-    // ...
-  },
-
-]
+{
+  "data": [
+    {
+      "_id": "5c8639c4704957d88b9894b1",
+      "statusName": "Avslutad",
+      "color": "468847",
+      "inProgressStatus": false,
+      "closedStatus": true,
+      "isActive": true
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves project statuses, a maximum of 100 statuses will be returned.
+This endpoint retrieves project statuses.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -1569,25 +1599,24 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5b276a908e0273b743607182",
-    "projectTypeName": "Dev",
-    "isActive": true,
-    "__v": 0
-  },
-  {
-    // ...
-  },
-
-]
+{
+  "data": [
+    {
+      "_id": "5b276a908e0273b743607182",
+      "projectTypeName": "Dev",
+      "isActive": true,
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves project types, a maximum of 100 types will be returned.
+This endpoint retrieves project types.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -1631,24 +1660,23 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5fb2c736deb93b2713515684",
-    "tagName": "Viktigt",
-    "color": "673ab7"
-  },
-  {
-    // ...
-  },
-
-]
+{
+  "data": [
+    {
+      "_id": "5fb2c736deb93b2713515684",
+      "tagName": "Viktigt",
+      "color": "673ab7"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves project tags, a maximum of 100 tags will be returned.
+This endpoint retrieves project tags.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -1658,7 +1686,7 @@ This endpoint retrieves project tags, a maximum of 100 tags will be returned.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
+sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Create a Project
@@ -1714,8 +1742,7 @@ request.post(options, function (error, response, body) {
     checkLists: [],
     comments: [],
     customFields: [],
-    systemAccount: '5112826056d961c030000001',
-    name: 'API test 4',
+    name: 'App development',
     projectNumber: '12345786' 
 }
 ```
@@ -1788,20 +1815,20 @@ city                        | String | No | City
 country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
 phone                       | String | No | Phone number
 
-# Work orders
-
-## Get Work orders
+# Supplement Orders
+## Get Supplement Orders
 
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrders" \
-  -H "Client-Secret: thisismysecretkey"
+curl "https://app.seventime.se/api/1/supplementOrders" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "project=5f924f4f533f102af78f95b6"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrders/?";
+let url = "https://app.seventime.se/api/1/supplementOrders/?&project=5f924f4f533f102af78f95b6";
 let options = {
   url: url,
   headers: {
@@ -1822,55 +1849,360 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5bae34dca878bd790d02065g",
-    "workOrderNumber": 2901,
-    "createdByUserName": "Tommy Hellström",
-    "createdByUser": "5112826056d961c030000002",
-    "statusRef": "587f3157c73c0f6d9cea944f",
-    "status": 100,
-    "customerNumber": "511",
-    "customerName": "Abax Dörrsystem AB",
-    "customer": "571f61330c7f498a2d0001a4",
-    "estimatedTime": 0,
-    "endDate": "2017-10-12T16:00:00.000Z",
-    "startDate": "2017-10-10T07:00:00.000Z",
-    "description": "",
-    "title": "AO1",
-    "customFields": [],
-    "tags": [],
-    "workOrderUserWorkTypes": [],
-    "workOrderUserSkills": [],
-    "budgetCalculation": {
-      "invoiceItems": []
-    },
-    "invoiceRows": [],
-    "todoItems": [],
-    "reminders": [],
-    "checkLists": [],
-    "documents": [],
-    "locationCoordinates": [],
-    "workAddress": {
-      "useOtherAddress": false,
-      "address": "",
-      "zipCode": "",
-      "city": ""
-    },
-    "comments": [],
-    "partTimeResources": [],
-    "machines": [],
-    "users": [],
-    "createDate": "2018-09-28T13:17:16.785Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 1,
+    "totalPages": 1,
+    "currentPage": 1
   },
-  {
-    // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5ba5619ad77ca8791257284",
+      "title": "Discount",
+      "description": "",
+      "headerText": "",
+      "supplementOrderNumber": 1,
+      "supplementOrderType": 1,
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps AB",
+      "project": "5f924f4f533f102af78f95b6",
+      "projectName": "Blåsippan",
+      "projectNumber": "17058",
+      "totalAmount": 75,
+      "totalTaxAmount": 18.75,
+      "totalAmountInclTax": 94,
+      "taxPercent": 25,
+      "contractedAmount": 0,
+      "priceList": null,
+      "priceListName": "",
+      "billingMethod": "FIXED_PRICE",
+      "acceptedDate": null,
+      "acceptedWithSignature": false,
+      "signaturePath": "",
+      "deviation": null,
+      "deviationNumber": 0,
+      "publicLink": "B2R8LWK5bakDjEbdw7",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
+      "deviations": [],
+      "supplementOrderLogEntries": [
+        {
+          "logType": 1,
+          "description": "",
+          "user": "5f48eb3e65d7ee4942c46eeb",
+          "userName": "Tommy Hellström",
+          "_id": "5ba5619ad77ca8791257284",
+          "logDate": "2018-09-25T07:12:46.369Z"
+        },
+        {
+        // ...
+        }
+      ],
+      "documents": [],
+      "workOrderIds": [
+        "5bae34dca878bd790d02065g"
+      ],
+      "invoiceIds": [
+        "5f62c5281715836a4721b843",
+        "524f29251c112373a3421613"
+      ],
+      "invoiceItems": [
+        {
+          "_id": null,
+          "name": "",
+          "description": "",
+          "itemId": "0.9440031314948534",
+          "itemOrder": 1024,
+          "articleNumber": "203",
+          "itemType": "expense",
+          "timeCategory": null,
+          "categoryName": "",
+          "expenseItem": "5266af51d88751207100000e",
+          "expenseItemName": "Seven Time - 5 användare - #2",
+          "driverJournalItemType": null,
+          "driverJournalItemTypeName": "",
+          "machine": null,
+          "machineName": "",
+          "numberOfItems": 1,
+          "unitPrice": 100,
+          "priceList": null,
+          "priceListName": null,
+          "unit": "Styck",
+          "unitCost": 0,
+          "discountInPercent": 0,
+          "supplementChargePercent": -25,
+          "discountPercent": 0,
+          "taxPercent": 25,
+          "totalAmount": 75,
+          "totalTaxAmount": 0,
+          "totalAmountInclTax": 0,
+          "totalCost": 0,
+          "houseWorkFlag": false,
+          "houseWorkTypeOfWork": 0,
+          "selectedFlag": false,
+          "createDate": null
+        },
+        {
+        // ...
+        }
+      ],
+      "modifiedDate": null,
+      "createDate": "2018-09-25T07:12:46.369Z",
+      "status": 60,
+      "__v": 0
+    }
+  ]
+}
 ```
 
-This endpoint retrieves work orders, a maximum of 100 work orders will be returned.
+This endpoint retrieves supplement orders, a maximum of 500 supplement orders will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/supplementOrders/?&project=5f924f4f533f102af78f95b6`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+Project       |  | Id of the project that supplement orders will be retrieved from. This parameter is required
+sortBy        |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a Specific Supplement Order
+
+```shell
+curl "https://app.seventime.se/api/1/supplementOrders/5ba5619ad77ca8791257284" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/supplementOrders/5ba5619ad77ca8791257284";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+      "_id": "5ba5619ad77ca8791257284",
+      "title": "Discount",
+      "description": "",
+      "headerText": "",
+      "supplementOrderNumber": 1,
+      "supplementOrderType": 1,
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps AB",
+      "project": "5f924f4f533f102af78f95b6",
+      "projectName": "Blåsippan",
+      "projectNumber": "17058",
+      "totalAmount": 75,
+      "totalTaxAmount": 18.75,
+      "totalAmountInclTax": 94,
+      "taxPercent": 25,
+      "contractedAmount": 0,
+      "priceList": null,
+      "priceListName": "",
+      "billingMethod": "FIXED_PRICE",
+      "acceptedDate": null,
+      "acceptedWithSignature": false,
+      "signaturePath": "",
+      "deviation": null,
+      "deviationNumber": 0,
+      "publicLink": "B2R8LWK5bakDjEbdw7",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
+      "deviations": [],
+      "supplementOrderLogEntries": [
+        {
+          "logType": 1,
+          "description": "",
+          "user": "5f48eb3e65d7ee4942c46eeb",
+          "userName": "Tommy Hellström",
+          "_id": "5ba5619ad77ca8791257284",
+          "logDate": "2018-09-25T07:12:46.369Z"
+        },
+        {
+        // ...
+        }
+      ],
+      "documents": [],
+      "workOrderIds": [
+        "5bae34dca878bd790d02065g"
+      ],
+      "invoiceIds": [
+        "5f62c5281715836a4721b843",
+        "524f29251c112373a3421613"
+      ],
+      "invoiceItems": [
+        {
+          "_id": null,
+          "name": "",
+          "description": "",
+          "itemId": "0.9440031314948534",
+          "itemOrder": 1024,
+          "articleNumber": "203",
+          "itemType": "expense",
+          "timeCategory": null,
+          "categoryName": "",
+          "expenseItem": "5266af51d88751207100000e",
+          "expenseItemName": "Seven Time - 5 användare - #2",
+          "driverJournalItemType": null,
+          "driverJournalItemTypeName": "",
+          "machine": null,
+          "machineName": "",
+          "numberOfItems": 1,
+          "unitPrice": 100,
+          "priceList": null,
+          "priceListName": null,
+          "unit": "Styck",
+          "unitCost": 0,
+          "discountInPercent": 0,
+          "supplementChargePercent": -25,
+          "discountPercent": 0,
+          "taxPercent": 25,
+          "totalAmount": 75,
+          "totalTaxAmount": 0,
+          "totalAmountInclTax": 0,
+          "totalCost": 0,
+          "houseWorkFlag": false,
+          "houseWorkTypeOfWork": 0,
+          "selectedFlag": false,
+          "createDate": null
+        },
+        {
+        // ...
+        }
+      ],
+      "modifiedDate": null,
+      "createDate": "2018-09-25T07:12:46.369Z",
+      "status": 60,
+      "__v": 0
+   }
+}
+```
+
+This endpoint retrieves a specific supplement order.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/supplementOrder/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the supplement order to retrieve
+
+# Work orders
+## Get Work orders
+
+
+```shell
+curl "https://app.seventime.se/api/1/workOrders" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page3"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/workOrders/?&limit=10&page3";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 1772,
+    "totalPages": 355,
+    "currentPage": 34
+  },
+  "data": [
+    {
+      "_id": "5bae34dca878bd790d02065d",
+      "workOrderNumber": 2901,
+      "createdByUserName": "Tommy Hellström",
+      "createdByUser": "59312765ad961c0318eb0a2",
+      "statusRef": "587f3157c73c0f6d9cea944f",
+      "status": 100,
+      "customerNumber": "511",
+      "customerName": "Abax Dörrsystem AB",
+      "customer": "571f61330c7f498a2d0001a4",
+      "estimatedTime": 0,
+      "endDate": "2017-10-12T16:00:00.000Z",
+      "startDate": "2017-10-10T07:00:00.000Z",
+      "description": "",
+      "title": "AO1",
+      "customFields": [],
+      "tags": [],
+      "workOrderUserWorkTypes": [],
+      "workOrderUserSkills": [],
+      "budgetCalculation": {
+        "invoiceItems": []
+      },
+      "invoiceRows": [],
+      "todoItems": [],
+      "reminders": [],
+      "checkLists": [],
+      "documents": [],
+      "locationCoordinates": [],
+      "workAddress": {
+        "useOtherAddress": false,
+        "address": "",
+        "zipCode": "",
+        "city": ""
+      },
+      "comments": [],
+      "partTimeResources": [],
+      "machines": [],
+      "users": [],
+      "createDate": "2018-09-28T13:17:16.785Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves work orders, a maximum of 500 work orders will be returned.
 
 ### HTTP Request
 
@@ -1882,18 +2214,16 @@ E.g. `https://app.seventime.se/api/1/workOrders/?workOrderNumber=5555`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-title |  | If specified, work orders that match the parameter will be included.
+title           |  | If specified, work orders that match the parameter will be included.
 workOrderNumber |  | If specified, work orders that match the parameter will be included.
-project |  | If specified, work orders that match the parameter will be included.
-user |  | If specified, work orders that match the parameter will be included.
-customer |  | If specified, work orders that match the parameter will be included.
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+project         |  | If specified, work orders that match the parameter will be included.
+user            |  | If specified, work orders that match the parameter will be included.
+customer        |  | If specified, work orders that match the parameter will be included.
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 ## Get a Specific Work order
 
@@ -1927,55 +2257,55 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "workAddress": {
-    "useOtherAddress": false,
-    "address": "",
-    "zipCode": "",
-    "city": ""
-  },
-  "budgetCalculation": {
-    "invoiceItems": []
-  },
-  "locationCoordinates": [],
-  "tags": [],
-  "_id": "5bae34dca878bd790d02065g",
-  "workOrderNumber": 2901,
-  "createdByUserName": "Tommy Hellström",
-  "createdByUser": "5112826056d961c030000002",
-  "systemAccount": "5112826056d961c030000001",
-  "statusRef": "587f3157c73c0f6d9cea944f",
-  "status": 100,
-  "customerNumber": "511",
-  "customerName": "Abax Dörrsystem AB",
-  "customer": "571f61330c7f498a2d0001a4",
-  "estimatedTime": 0,
-  "endDate": "2017-10-12T16:00:00.000Z",
-  "startDate": "2017-10-10T07:00:00.000Z",
-  "description": "",
-  "title": "AO1",
-  "customFields": [],
-  "workOrderUserWorkTypes": [],
-  "workOrderUserSkills": [],
-  "invoiceRows": [],
-  "todoItems": [],
-  "reminders": [],
-  "checkLists": [],
-  "documents": [],
-  "comments": [],
-  "partTimeResources": [],
-  "machines": [],
-  "users": [],
-  "createDate": "2018-09-28T13:17:16.785Z",
-  "__v": 0,
-  "relations": []
+  "data": {
+    "workAddress": {
+      "useOtherAddress": false,
+      "address": "",
+      "zipCode": "",
+      "city": ""
+    },
+    "budgetCalculation": {
+      "invoiceItems": []
+    },
+    "locationCoordinates": [],
+    "tags": [],
+    "_id": "5bae34dca878bd790d02065g",
+    "workOrderNumber": 2901,
+    "createdByUserName": "Tommy Hellström",
+    "createdByUser": "59312765ad961c0318eb0a2",
+    "systemAccount": "5112826056d961c030000001",
+    "statusRef": "587f3157c73c0f6d9cea944f",
+    "status": 100,
+    "customerNumber": "511",
+    "customerName": "Abax Dörrsystem AB",
+    "customer": "571f61330c7f498a2d0001a4",
+    "estimatedTime": 0,
+    "endDate": "2017-10-12T16:00:00.000Z",
+    "startDate": "2017-10-10T07:00:00.000Z",
+    "description": "",
+    "title": "AO1",
+    "customFields": [],
+    "workOrderUserWorkTypes": [],
+    "workOrderUserSkills": [],
+    "invoiceRows": [],
+    "todoItems": [],
+    "reminders": [],
+    "checkLists": [],
+    "documents": [],
+    "comments": [],
+    "partTimeResources": [],
+    "machines": [],
+    "users": [],
+    "createDate": "2018-09-28T13:17:16.785Z",
+    "__v": 0,
+    "relations": []
+  }
 }
 ```
 
 This endpoint retrieves a specific work order.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -2018,26 +2348,25 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "58263d936a17605a25020043",
-    "isActive": true,
-    "workOrderTypeName": "Extra",
-    "__v": 0,
-    "color": "f44336"
-  },
-  {
-    // ...
-  },
-
-]
+{
+  "data": [
+    {
+      "_id": "58263d936a17605a25020043",
+      "isActive": true,
+      "workOrderTypeName": "Extra",
+      "__v": 0,
+      "color": "f44336"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves work order types, a maximum of 100 types will be returned.
+This endpoint retrieves work order types.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -2047,8 +2376,8 @@ This endpoint retrieves work order types, a maximum of 100 types will be returne
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Get work order tags
 
@@ -2081,24 +2410,23 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5df3a401f0690d1dbb3ec7bd",
-    "tagName": "1",
-    "color": "FAFAFA"
-  },
-  {
-    // ...
-  }
-
-]
+{
+  "data": [
+    {
+      "_id": "5df3a401f0690d1dbb3ec7bd",
+      "tagName": "1",
+      "color": "FAFAFA"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves work order tags, a maximum of 100 tags will be returned.
+This endpoint retrieves work order tags.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -2108,7 +2436,7 @@ This endpoint retrieves work order tags, a maximum of 100 tags will be returned.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
+sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Get Work order statuses
@@ -2142,27 +2470,27 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "582f7cabd16fdbe335041055",
-    "statusName": "Ej planerad",
-    "color": "FF5722",
-    "inProgressStatus": false,
-    "closedStatus": false,
-    "isActive": true,
-    "plannedStatus": false
-  },
-  {
-    // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "582f7cabd16fdbe335041055",
+      "statusName": "Ej planerad",
+      "color": "FF5722",
+      "inProgressStatus": false,
+      "closedStatus": false,
+      "isActive": true,
+      "plannedStatus": false
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves work order statuses, a maximum of 100 statuses will be returned.
+This endpoint retrieves work order statuses.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -2359,13 +2687,14 @@ phone                       | String  | No  | Used if useSeparateBillingAddress 
 
 ```shell
 curl "https://app.seventime.se/api/1/priceLists" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page=1"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/priceLists";
+let url = "https://app.seventime.se/api/1/priceLists/?&limit=10&page=1";
 let options = {
   url: url,
   headers: {
@@ -2386,20 +2715,27 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "58c1504a658fb5911d018f5f",
-    "name": "Grosslistan",
-    "isActive": true,
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 5,
+    "totalPages": 1,
+    "currentPage": 1
   },
-  {
-    // ...
-  }
-]
+  "data": [
+    {
+      "_id": "58c1504a658fb5911d018f5f",
+      "name": "Grosslistan",
+      "isActive": true,
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves price lists, a maximum of 100 price lists will be returned.
+This endpoint retrieves price lists, a maximum of 500 price lists will be returned.
 
 ### HTTP Request
 
@@ -2445,11 +2781,13 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "57bc187159a73f312300009d",
-  "isActive": true,
-  "systemAccount": "5112826056d961c030000001",
-  "name": "ÅF-prislista",
-  "__v": 0
+  "data": {
+    "_id": "57bc187159a73f312300009d",
+    "isActive": true,
+    "systemAccount": "5112826056d961c030000001",
+    "name": "ÅF-prislista",
+    "__v": 0
+  }
 }
 ```
 
@@ -2473,13 +2811,14 @@ _id | The _id of the price list to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/invoices" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=3&page=9"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/invoices/?";
+let url = "https://app.seventime.se/api/1/invoices/?&limit=3&page=9";
 let options = {
   url: url,
   headers: {
@@ -2500,165 +2839,172 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5fab29b038bd334ab540ab53",
-    "deliveryAddress": {
-    "name": "Kontoret",
-    "address": "Glimmingevägen 18",
-    "address2": "Testvägen 123",
-    "zipCode": "12345",
-    "city": "Västra Karup",
-    "country": "SE",
-    "phone": "12345-6798"
+{
+  "meta": {
+    "totalResources": 1987,
+    "totalPages": 663,
+    "currentPage": 9
   },
-    "houseProperties": {
-    "typeOfProperty": 1,
-    "propertyDescription": "property description test test",
-    "housingSocietyNumber": "",
-    "apartmentNumber": "",
-    "maxDeductionAmount": 100000,
-    "personalNumber": "",
-    "deductionDistribution": [
-      {
-        "_id": "5fae99b072aa334cb539ab7d",
-        "userName": "testUser",
-        "personalNumber": "12345",
-        "distributionPercent": 40
+  "data": [
+    {
+      "_id": "5fab29b038bd334ab540ab53",
+      "deliveryAddress": {
+        "name": "Kontoret",
+        "address": "Glimmingevägen 18",
+        "address2": "Testvägen 123",
+        "zipCode": "12345",
+        "city": "Västra Karup",
+        "country": "SE",
+        "phone": "12345-6798"
       },
-      {
+      "houseProperties": {
+        "typeOfProperty": 1,
+        "propertyDescription": "property description test test",
+        "housingSocietyNumber": "",
+        "apartmentNumber": "",
+        "maxDeductionAmount": 100000,
+        "personalNumber": "",
+        "deductionDistribution": [
+          {
+            "_id": "5fae99b072aa334cb539ab7d",
+            "userName": "testUser",
+            "personalNumber": "12345",
+            "distributionPercent": 40
+          },
+          {
+            // ...
+          }
+        ]
+      },
+      "workOrderIds": [
+        "5fa2b550c289ea64821ea37b"
+        // ...
+      ],
+      "tags": [
+        "5f742440d608b2201c3e7bab",
+        "5f74243ad608b2201c3e7ba9"
+      ],
+      "createDate": "2020-11-13T14:35:28.797Z",
+      "invoiceItems": [
+        {
+          "_id": "5fae99b072aa334cb539ab7b",
+          "createDate": "2020-11-13T14:35:28.795Z",
+          "houseWorkTypeOfWork": 1,
+          "name": "**Skivhantel i Gummi 10 Kg****",
+          "description": "Skivhantel av järn",
+          "expenseItem": "5de78ae9bb13565916362606",
+          "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
+          "itemType": "expense",
+          "numberOfItems": 1,
+          "unit": "St",
+          "unitCost": 319,
+          "totalCost": 319,
+          "discountPercent": 0,
+          "taxPercent": 0,
+          "unitPrice": 12345,
+          "totalAmount": 12345,
+          "totalTaxAmount": 0,
+          "totalAmountInclTax": 12345,
+          "itemId": "0.9281811863461673",
+          "itemOrder": 1024,
+          "houseWorkFlag": true
+        },
+        {
+          // ...
+        }
+      ],
+      "invoiceLogEntries": [
+        {
+          "_id": "5fae99b072aa334cb539ab7e",
+          "logDate": "2020-11-13T14:35:28.797Z",
+          "logType": 1,
+          "description": "",
+          "user": "51714655fbb708f379000003",
+          "userName": "Lucas Hellström",
+          "additionalData": ""
+        },
+        {
+          // ...
+        }
+      ],
+      "invoiceName": "Invoice",
+      "marking": "marking test",
+      "yourOrderNumber": "12345test test",
+      "notes": "invoice notes test test test",
+      "taxPercent": 12,
+      "invoiceStatus": 2,
+      "invoiceDate": "2020-11-04T23:00:00.000Z",
+      "createdByUser": "51714655fbb708f379000003",
+      "createdByUserName": "Lucas Hellström",
+      "customer": "5cc05b6a4e595e684effc134",
+      "customerName": "Hellapps AB",
+      "dueDate": "2020-12-04T23:00:00.000Z",
+      "language": "EN",
+      "project": "5b20cce1d59a902e28000079",
+      "projectName": "Blåsippan",
+      "contactPerson": "5af95e6b1e56d1623800027d",
+      "contactPersonName": "Bj�rn Romansoff",
+      "ourReference": "518ff209d5af991b1c000003",
+      "ourReferenceName": "Felix Hellström",
+      "workOrder": "5fa2b550c289ea64821ea37b",
+      "workOrderNumber": "4843",
+      "invoiceType": 1,
+      "resultUnit": "5784ff52fc71ce243d00004b",
+      "resultUnitName": "Kontor Nord",
+      "priceList": "57bc187159a73f312300009e",
+      "priceListName": "Kundlista Inkl moms",
+      "multipleTaxesOnRows": true,
+      "currencyCode": "SEK",
+      "totalAmount": 16549,
+      "totalTaxAmount": 327.24,
+      "totalAmountInclTax": 16876,
+      "totalAmountRounding": -0.24,
+      "sentDate": "2020-11-13T14:35:28.798Z",
+      "invoiceNumber": "24481",
+      "OCRNumber": "2448173",
+      "__v": 0,
+      "archived": false,
+      "archivedDate": null,
+      "creditForInvoice": null,
+      "creditForInvoiceNumber": "",
+      "creditInvoice": null,
+      "creditInvoiceNumber": "",
+      "currencyRate": 1,
+      "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+      "customerEmail": "tommy@nummer7.se",
+      "customerNumber": "3028",
+      "customerOrgNo": "",
+      "customerVAT": "",
+      "description": null,
+      "discountInPercent": 0,
+      "exportedToEconomy": false,
+      "footerInfoText": null,
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
+      "headerText": null,
+      "houseDeductionAmount": 0,
+      "houseDeductionBasisAmount": 0,
+      "isCreditInvoice": false,
+      "isCredited": false,
+      "partiallyPaid": false,
+      "paymentDate": null,
+      "paymentPlan": null,
+      "paymentPlanRowId": "",
+      "quote": null,
+      "quoteNumber": "",
+      "reminderDate": null,
+      "showPriceInclTaxesOnRows": false,
+      "supplementOrder": null,
+      "supplementOrderNumber": "",
+      "totalCost": 4720
+    },
+    {
       // ...
-      }
-    ]
-  },
-  "workOrderIds": [
-    "5fa2b550c289ea64821ea37b",
-    // ...
-  ],
-  "tags": [
-    "5f742440d608b2201c3e7bab",
-    "5f74243ad608b2201c3e7ba9"
-  ],
-  "createDate": "2020-11-13T14:35:28.797Z",
-  "invoiceItems": [
-    {
-      "_id": "5fae99b072aa334cb539ab7b",
-      "createDate": "2020-11-13T14:35:28.795Z",
-      "houseWorkTypeOfWork": 1,
-      "name": "**Skivhantel i Gummi 10 Kg****",
-      "description": "Skivhantel av järn",
-      "expenseItem": "5de78ae9bb13565916362606",
-      "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
-      "itemType": "expense",
-      "numberOfItems": 1,
-      "unit": "St",
-      "unitCost": 319,
-      "totalCost": 319,
-      "discountPercent": 0,
-      "taxPercent": 0,
-      "unitPrice": 12345,
-      "totalAmount": 12345,
-      "totalTaxAmount": 0,
-      "totalAmountInclTax": 12345,
-      "itemId": "0.9281811863461673",
-      "itemOrder": 1024,
-      "houseWorkFlag": true
-    },
-    {
-    // ...
     }
-  ],
-  "invoiceLogEntries": [
-    {
-      "_id": "5fae99b072aa334cb539ab7e",
-      "logDate": "2020-11-13T14:35:28.797Z",
-      "logType": 1,
-      "description": "",
-      "user": "51714655fbb708f379000003",
-      "userName": "Lucas Hellström",
-      "additionalData": ""
-    },
-    {
-    // ...
-    }
-  ],
-  "invoiceName": "Invoice",
-  "marking": "marking test",
-  "yourOrderNumber": "12345test test",
-  "notes": "invoice notes test test test",
-  "taxPercent": 12,
-  "invoiceStatus": 2,
-  "invoiceDate": "2020-11-04T23:00:00.000Z",
-  "createdByUser": "51714655fbb708f379000003",
-  "createdByUserName": "Lucas Hellström",
-  "customer": "5cc05b6a4e595e684effc134",
-  "customerName": "Hellapps AB",
-  "dueDate": "2020-12-04T23:00:00.000Z",
-  "language": "EN",
-  "project": "5b20cce1d59a902e28000079",
-  "projectName": "Blåsippan",
-  "contactPerson": "5af95e6b1e56d1623800027d",
-  "contactPersonName": "Bj�rn Romansoff",
-  "ourReference": "518ff209d5af991b1c000003",
-  "ourReferenceName": "Felix Hellström",
-  "workOrder": "5fa2b550c289ea64821ea37b",
-  "workOrderNumber": "4843",
-  "invoiceType": 1,
-  "resultUnit": "5784ff52fc71ce243d00004b",
-  "resultUnitName": "Kontor Nord",
-  "priceList": "57bc187159a73f312300009e",
-  "priceListName": "Kundlista Inkl moms",
-  "multipleTaxesOnRows": true,
-  "currencyCode": "SEK",
-  "totalAmount": 16549,
-  "totalTaxAmount": 327.24,
-  "totalAmountInclTax": 16876,
-  "totalAmountRounding": -0.24,
-  "sentDate": "2020-11-13T14:35:28.798Z",
-  "invoiceNumber": "24481",
-  "OCRNumber": "2448173",
-  "__v": 0,
-  "archived": false,
-  "archivedDate": null,
-  "creditForInvoice": null,
-  "creditForInvoiceNumber": "",
-  "creditInvoice": null,
-  "creditInvoiceNumber": "",
-  "currencyRate": 1,
-  "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-  "customerEmail": "tommy@nummer7.se",
-  "customerNumber": "3028",
-  "customerOrgNo": "",
-  "customerVAT": "",
-  "description": null,
-  "discountInPercent": 0,
-  "exportedToEconomy": false,
-  "footerInfoText": null,
-  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
-  "headerText": null,
-  "houseDeductionAmount": 0,
-  "houseDeductionBasisAmount": 0,
-  "isCreditInvoice": false,
-  "isCredited": false,
-  "partiallyPaid": false,
-  "paymentDate": null,
-  "paymentPlan": null,
-  "paymentPlanRowId": "",
-  "quote": null,
-  "quoteNumber": "",
-  "reminderDate": null,
-  "showPriceInclTaxesOnRows": false,
-  "supplementOrder": null,
-  "supplementOrderNumber": "",
-  "totalCost": 4720
-  },
-  {
-  // ...
-  }
-]
+  ]
+}
 ```
 
-This endpoint retrieves invoices, a maximum of 100 invoices will be returned.
+This endpoint retrieves invoices, a maximum of 500 invoices will be returned.
 
 ### HTTP Request
 
@@ -2670,16 +3016,14 @@ E.g. `https://app.seventime.se/api/1/invoices/?invoiceNumber=24481`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-invoiceNumber |  | If specified, invoices that match the parameter will be included.
-OCRNumber |  | If specified, invoices that match the parameter will be included.
-customerNumber |  | If specified, invoices that match the parameter will be included.
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+invoiceNumber       |  | If specified, invoices that match the parameter will be included.
+OCRNumber           |  | If specified, invoices that match the parameter will be included.
+customerNumber      |  | If specified, invoices that match the parameter will be included.
+sortBy              |  | If specified, a sort will be made on the specified parameter
+sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 ## Get a Specific Invoice
 
@@ -2713,187 +3057,186 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "deliveryAddress": {
-    "name": "Kontoret",
-    "address": "Glimmingevägen 18",
-    "address2": "Testvägen 123",
-    "zipCode": "12345",
-    "city": "Västra Karup",
-    "country": "SE",
-    "phone": "12345-6798"
-  },
-  "houseProperties": {
-    "typeOfProperty": 1,
-    "propertyDescription": "property description test test",
-    "housingSocietyNumber": "",
-    "apartmentNumber": "",
-    "maxDeductionAmount": 100000,
-    "personalNumber": "",
-    "deductionDistribution": [
+  "data": {
+    "deliveryAddress": {
+      "name": "Kontoret",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE",
+      "phone": "12345-6798"
+    },
+    "houseProperties": {
+      "typeOfProperty": 1,
+      "propertyDescription": "property description test test",
+      "housingSocietyNumber": "",
+      "apartmentNumber": "",
+      "maxDeductionAmount": 100000,
+      "personalNumber": "",
+      "deductionDistribution": [
+        {
+          "_id": "5fae99b072aa334cb539ab7d",
+          "userName": "testUser",
+          "personalNumber": "12345",
+          "distributionPercent": 40
+        },
+        {
+          // ...
+        }
+      ]
+    },
+    "timeLogIds": [],
+    "expenseIds": [],
+    "driverJournalIds": [],
+    "machineTimeLogIds": [],
+    "supplierInvoiceIds": [],
+    "workOrderIds": [
+      "5fa2b550c289ea64821ea37b"
+    ],
+    "externalSystemExport": [],
+    "tags": [
+      "5f742440d608b2201c3e7bab",
+      "5f74243ad608b2201c3e7ba9"
+    ],
+    "_id": "5fae99b072aa334cb539ab73",
+    "createDate": "2020-11-13T14:35:28.797Z",
+    "invoiceItems": [
       {
-        "_id": "5fae99b072aa334cb539ab7d",
-        "userName": "testUser",
-        "personalNumber": "12345",
-        "distributionPercent": 40
+        "createDate": "2020-11-13T14:35:28.795Z",
+        "_id": "5fae99b072aa334cb539ab7b",
+        "houseWorkTypeOfWork": 1,
+        "name": "**Skivhantel i Gummi 10 Kg****",
+        "description": "Skivhantel av järn",
+        "expenseItem": "5de78ae9bb13565916362606",
+        "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
+        "itemType": "expense",
+        "numberOfItems": 1,
+        "unit": "St",
+        "unitCost": 319,
+        "totalCost": 319,
+        "discountPercent": 0,
+        "taxPercent": 0,
+        "unitPrice": 12345,
+        "totalAmount": 12345,
+        "totalTaxAmount": 0,
+        "totalAmountInclTax": 12345,
+        "itemId": "0.9281811863461673",
+        "itemOrder": 1024,
+        "houseWorkFlag": true
       },
       {
-      // ...
+        // ...  
       }
-    ]
-  },
-  "timeLogIds": [],
-  "expenseIds": [],
-  "driverJournalIds": [],
-  "machineTimeLogIds": [],
-  "supplierInvoiceIds": [],
-  "workOrderIds": [
-    "5fa2b550c289ea64821ea37b"
-  ],
-  "externalSystemExport": [],
-  "tags": [
-    "5f742440d608b2201c3e7bab",
-    "5f74243ad608b2201c3e7ba9"
-  ],
-  "_id": "5fae99b072aa334cb539ab73",
-  "createDate": "2020-11-13T14:35:28.797Z",
-  "invoiceItems": [
-    {
-      "createDate": "2020-11-13T14:35:28.795Z",
-      "_id": "5fae99b072aa334cb539ab7b",
-      "houseWorkTypeOfWork": 1,
-      "name": "**Skivhantel i Gummi 10 Kg****",
-      "description": "Skivhantel av järn",
-      "expenseItem": "5de78ae9bb13565916362606",
-      "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
-      "itemType": "expense",
-      "numberOfItems": 1,
-      "unit": "St",
-      "unitCost": 319,
-      "totalCost": 319,
-      "discountPercent": 0,
-      "taxPercent": 0,
-      "unitPrice": 12345,
-      "totalAmount": 12345,
-      "totalTaxAmount": 0,
-      "totalAmountInclTax": 12345,
-      "itemId": "0.9281811863461673",
-      "itemOrder": 1024,
-      "houseWorkFlag": true
-    },
-    {
-    // ...  
-    }
-  ],
-  "documents": [],
-  "invoiceLogEntries": [
-    {
-      "logDate": "2020-11-13T14:35:28.797Z",
-      "_id": "5fae99b072aa334cb539ab7e",
-      "logType": 1,
-      "description": "",
-      "user": "51714655fbb708f379000003",
-      "userName": "Lucas Hellström",
-      "additionalData": ""
-    },
-    {
-    // ...
-    }
-  ],
-  "partialPayments": [],
-  "checkLists": [],
-  "supplementOrders": [],
-  "customFields": [
-    {
-      "_id": "5fb5217e4ea82f3df5febbcf",
-      "fieldId": "5f67af2796bce73d3a61ff39",
-      "value": {
-        "distributorId": null,
-        "distributorName": ""
+    ],
+    "documents": [],
+    "invoiceLogEntries": [
+      {
+        "logDate": "2020-11-13T14:35:28.797Z",
+        "_id": "5fae99b072aa334cb539ab7e",
+        "logType": 1,
+        "description": "",
+        "user": "51714655fbb708f379000003",
+        "userName": "Lucas Hellström",
+        "additionalData": ""
+      },
+      {
+        // ...
       }
-    }
-  ],
-  "invoiceName": "Invoice",
-  "marking": "marking test",
-  "yourOrderNumber": "12345test test",
-  "notes": "invoice notes test test test",
-  "taxPercent": 12,
-  "invoiceStatus": 2,
-  "invoiceDate": "2020-11-04T23:00:00.000Z",
-  "createdByUser": "51714655fbb708f379000003",
-  "createdByUserName": "Lucas Hellström",
-  "customer": "5cc05b6a4e595e684effc134",
-  "customerName": "Hellapps AB",
-  "dueDate": "2020-12-04T23:00:00.000Z",
-  "language": "EN",
-  "project": "5b20cce1d59a902e28000079",
-  "projectName": "Blåsippan",
-  "contactPerson": "5af95e6b1e56d1623800027d",
-  "contactPersonName": "Bj�rn Romansoff",
-  "ourReference": "518ff209d5af991b1c000003",
-  "ourReferenceName": "Felix Hellström",
-  "workOrder": "5fa2b550c289ea64821ea37b",
-  "workOrderNumber": "4843",
-  "invoiceType": 1,
-  "resultUnit": "5784ff52fc71ce243d00004b",
-  "resultUnitName": "Kontor Nord",
-  "priceList": "57bc187159a73f312300009e",
-  "priceListName": "Kundlista Inkl moms",
-  "multipleTaxesOnRows": true,
-  "currencyCode": "SEK",
-  "totalAmount": 16549,
-  "totalTaxAmount": 327.24,
-  "totalAmountInclTax": 16876,
-  "totalAmountRounding": -0.24,
-  "sentDate": "2020-11-13T14:35:28.798Z",
-  "invoiceNumber": "24481",
-  "OCRNumber": "2448173",
-  "__v": 0,
-  "archived": false,
-  "archivedDate": null,
-  "creditForInvoice": null,
-  "creditForInvoiceNumber": "",
-  "creditInvoice": null,
-  "creditInvoiceNumber": "",
-  "currencyRate": 1,
-  "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-  "customerEmail": "tommy@nummer7.se",
-  "customerNumber": "3028",
-  "customerOrgNo": "",
-  "customerVAT": "",
-  "description": null,
-  "discountInPercent": 0,
-  "exportedToEconomy": false,
-  "footerInfoText": null,
-  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
-  "headerText": null,
-  "houseDeductionAmount": 0,
-  "houseDeductionBasisAmount": 0,
-  "isCreditInvoice": false,
-  "isCredited": false,
-  "partiallyPaid": false,
-  "paymentDate": null,
-  "paymentPlan": null,
-  "paymentPlanRowId": "",
-  "quote": null,
-  "quoteNumber": "",
-  "reminderDate": null,
-  "showPriceInclTaxesOnRows": false,
-  "supplementOrder": null,
-  "supplementOrderNumber": "",
-  "totalCost": 4720
+    ],
+    "partialPayments": [],
+    "checkLists": [],
+    "supplementOrders": [],
+    "customFields": [
+      {
+        "_id": "5fb5217e4ea82f3df5febbcf",
+        "fieldId": "5f67af2796bce73d3a61ff39",
+        "value": {
+          "distributorId": null,
+          "distributorName": ""
+        }
+      }
+    ],
+    "invoiceName": "Invoice",
+    "marking": "marking test",
+    "yourOrderNumber": "12345test test",
+    "notes": "invoice notes test test test",
+    "taxPercent": 12,
+    "invoiceStatus": 2,
+    "invoiceDate": "2020-11-04T23:00:00.000Z",
+    "createdByUser": "51714655fbb708f379000003",
+    "createdByUserName": "Lucas Hellström",
+    "customer": "5cc05b6a4e595e684effc134",
+    "customerName": "Hellapps AB",
+    "dueDate": "2020-12-04T23:00:00.000Z",
+    "language": "EN",
+    "project": "5b20cce1d59a902e28000079",
+    "projectName": "Blåsippan",
+    "contactPerson": "5af95e6b1e56d1623800027d",
+    "contactPersonName": "Bj�rn Romansoff",
+    "ourReference": "518ff209d5af991b1c000003",
+    "ourReferenceName": "Felix Hellström",
+    "workOrder": "5fa2b550c289ea64821ea37b",
+    "workOrderNumber": "4843",
+    "invoiceType": 1,
+    "resultUnit": "5784ff52fc71ce243d00004b",
+    "resultUnitName": "Kontor Nord",
+    "priceList": "57bc187159a73f312300009e",
+    "priceListName": "Kundlista Inkl moms",
+    "multipleTaxesOnRows": true,
+    "currencyCode": "SEK",
+    "totalAmount": 16549,
+    "totalTaxAmount": 327.24,
+    "totalAmountInclTax": 16876,
+    "totalAmountRounding": -0.24,
+    "sentDate": "2020-11-13T14:35:28.798Z",
+    "invoiceNumber": "24481",
+    "OCRNumber": "2448173",
+    "__v": 0,
+    "archived": false,
+    "archivedDate": null,
+    "creditForInvoice": null,
+    "creditForInvoiceNumber": "",
+    "creditInvoice": null,
+    "creditInvoiceNumber": "",
+    "currencyRate": 1,
+    "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+    "customerEmail": "tommy@nummer7.se",
+    "customerNumber": "3028",
+    "customerOrgNo": "",
+    "customerVAT": "",
+    "description": null,
+    "discountInPercent": 0,
+    "exportedToEconomy": false,
+    "footerInfoText": null,
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
+    "headerText": null,
+    "houseDeductionAmount": 0,
+    "houseDeductionBasisAmount": 0,
+    "isCreditInvoice": false,
+    "isCredited": false,
+    "partiallyPaid": false,
+    "paymentDate": null,
+    "paymentPlan": null,
+    "paymentPlanRowId": "",
+    "quote": null,
+    "quoteNumber": "",
+    "reminderDate": null,
+    "showPriceInclTaxesOnRows": false,
+    "supplementOrder": null,
+    "supplementOrderNumber": "",
+    "totalCost": 4720
+  }
 }
-
 ```
 
 This endpoint retrieves a specific invoice.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/invoice/<_id>`
+`GET https://app.seventime.se/api/1/invoices/<_id>`
 
 ### URL Parameters
 
@@ -2932,24 +3275,23 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5f742440d608b2201c3e7bab",
-    "tagName": "Att granska",
-    "color": "f44336"
-  },
-  {
-  // ...
-  }
-]
-
+{
+  "data": [
+    {
+      "_id": "5f742440d608b2201c3e7bab",
+      "tagName": "Att granska",
+      "color": "f44336"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves invoice tags, a maximum of 100 tags will be returned.
+This endpoint retrieves invoice tags.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -2959,8 +3301,8 @@ This endpoint retrieves invoice tags, a maximum of 100 tags will be returned.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Create an Invoice
 
@@ -3190,18 +3532,18 @@ Code |  Invoice type | Description
 22       | RUT | Repair of appliances
 
 # Supplier invoices
-
 ## Get supplier invoices
 
 ```shell
 curl "https://app.seventime.se/api/1/supplierInvoices/?" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=10"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/supplierInvoices/?";
+let url = "https://app.seventime.se/api/1/supplierInvoices/?&limit=5&page=10";
 let options = {
   url: url,
   headers: {
@@ -3222,8 +3564,165 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
+{
+  "meta": {
+    "totalResources": 29,
+    "totalPages": 10,
+    "currentPage": 1
+  },
+  "data": [
+    {
+      "_id": "5f62c5281715836a4721b843",
+      "isInvoiceable": false,
+      "isInvoiced": false,
+      "selfBillingTimeLogIds": [
+        "5f5f6881241b6f02a6b20705",
+        "5f5f6881241b6f02a6b2070b"
+      ],
+      "selfBillingExpenseIds": [
+        "5f5f8c6a5b2317286eb838ab",
+        "5f5f8c6a5b2317286eb838a8"
+      ],
+      "invoiceItems": [
+        {
+          "_id": "5f60c501271935b91231a941",
+          "createDate": "2020-09-15T13:44:06.569Z",
+          "articleNumber": "",
+          "description": "Beredskap normal",
+          "itemId": "0.949579694947744",
+          "itemOrder": 1024,
+          "unitCost": 550,
+          "unitPrice": 550,
+          "numberOfItems": 4,
+          "totalAmount": 2200,
+          "unit": "st",
+          "taxPercent": 25,
+          "totalAmountInclTax": 2750,
+          "totalTaxAmount": 550,
+          "totalCost": 2090,
+          "itemType": "time",
+          "timeCategory": "5e81d33db3f1cb30a8ef5514",
+          "categoryName": "Beredskap normal"
+        },
+        {
+          // ...
+        }
+      ],
+      "documents": [],
+      "distributor": "5f48eb7105b8ed6932c19eb9",
+      "distributorName": "20200828",
+      "yourReference": "Tommy Hellström",
+      "createDate": "2020-09-15T13:44:06.566Z",
+      "invoiceDate": "2020-09-15T13:44:06.566Z",
+      "paymentDate": null,
+      "totalAmount": 7681.7,
+      "totalTaxAmount": 1920.425,
+      "totalAmountInclTax": 9533.925,
+      "taxPercent": 25,
+      "taxType": 1,
+      "markupPercent": 0,
+      "currencyCode": "SEK",
+      "currencyRate": 1,
+      "OCR": "",
+      "economySystemStatus": 0,
+      "expensesCreatedFromInvoiceItems": false,
+      "notes": "Självfaktura",
+      "isCreditInvoice": false,
+      "creditForInvoiceNumber": "",
+      "isBooked": false,
+      "economySystemRef": "",
+      "importedFrom": "",
+      "supplierInvoiceStatus": 5,
+      "workOrder": "5f4df1793751c0916156ed5",
+      "workOrderTitle": "Återkommande 20200116 - 234556565656",
+      "workOrderNumber": 4737,
+      "project": null,
+      "projectName": null,
+      "supplementOrderId": null,
+      "supplementOrderNumber": null,
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "SevenTime",
+      "department": null,
+      "departmentName": "",
+      "supplementOrder": false,
+      "invoice": null,
+      "invoiceNumber": "9316",
+      "isSelfBillingInvoice": true,
+      "selfBillingInvoiceStatus": 1,
+      "exportedToEconomy": false,
+      "selfBillingInvoice": "5f5f23fd7161761b55422c",
+      "selfBillingInvoiceNumber": "24272",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
+      "footerInfoText": "Text under...",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves supplier invoices, a maximum of 500 supplier invoices will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/supplierInvoices`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/1/supplierInvoices/?supplierInvoiceNumber=9316`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+supplierInvoiceNumber    |  | If specified, supplier invoices that match the parameter will be included.
+supplierInvoiceStatus    |  | If specified, supplier invoices that match the parameter will be included.
+projectName              |  | If specified, supplier invoices that match the parameter will be included.
+customerName             |  | If specified, supplier invoices that match the parameter will be included.
+workOrderTitle           |  | If specified, supplier invoices that match the parameter will be included.
+workOrderNumber          |  | If specified, supplier invoices that match the parameter will be included.
+distributorName          |  | If specified, supplier invoices that match the parameter will be included.
+fromInvoiceDate          |  | If specified, supplier invoices that match the parameter will be included.
+toInvoiceDate            |  | If specified, supplier invoices that match the parameter will be included.
+isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
+sortBy                   |  | If specified, a sort will be made on the specified parameter
+sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+
+## Get a Specific Supplier Invoice
+
+```shell
+curl "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
     "_id": "5f62c5281715836a4721b843",
     "isInvoiceable": false,
     "isInvoiced": false,
@@ -3257,7 +3756,7 @@ request(options, function(error, response, body) {
         "categoryName": "Beredskap normal"
       },
       {
-      // ...
+        // ...
       }
     ],
     "documents": [],
@@ -3307,165 +3806,13 @@ request(options, function(error, response, body) {
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
     "footerInfoText": "Text under...",
     "__v": 0
-  },
-  {
-  // ...
   }
-]
-```
-
-This endpoint retrieves supplier invoices, a maximum of 100 supplier invoices will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/1/supplierInvoices`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/1/supplierInvoices/?supplierInvoiceNumber=9316`
-
-Parameter | Default | Description
---------- | ------- | -----------
-supplierInvoiceNumber    |  | If specified, supplier invoices that match the parameter will be included.
-supplierInvoiceStatus    |  | If specified, supplier invoices that match the parameter will be included.
-projectName              |  | If specified, supplier invoices that match the parameter will be included.
-customerName             |  | If specified, supplier invoices that match the parameter will be included.
-workOrderTitle           |  | If specified, supplier invoices that match the parameter will be included.
-workOrderNumber          |  | If specified, supplier invoices that match the parameter will be included.
-distributorName          |  | If specified, supplier invoices that match the parameter will be included.
-fromInvoiceDate          |  | If specified, supplier invoices that match the parameter will be included.
-toInvoiceDate            |  | If specified, supplier invoices that match the parameter will be included.
-isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
-sortBy                   |  | If specified, a sort will be made on the specified parameter
-sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
-
-## Get a Specific Supplier Invoice
-
-```shell
-curl "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843" \
-  -H "Client-Secret: thisismysecretkey"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey"
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "_id": "5f62c5281715836a4721b843",
-  "isInvoiceable": false,
-  "isInvoiced": false,
-  "selfBillingTimeLogIds": [
-    "5f5f6881241b6f02a6b20705",
-    "5f5f6881241b6f02a6b2070b"
-  ],
-  "selfBillingExpenseIds": [
-    "5f5f8c6a5b2317286eb838ab",
-    "5f5f8c6a5b2317286eb838a8"
-  ],
-  "invoiceItems": [
-    {
-      "_id": "5f60c501271935b91231a941",
-      "createDate": "2020-09-15T13:44:06.569Z",
-      "articleNumber": "",
-      "description": "Beredskap normal",
-      "itemId": "0.949579694947744",
-      "itemOrder": 1024,
-      "unitCost": 550,
-      "unitPrice": 550,
-      "numberOfItems": 4,
-      "totalAmount": 2200,
-      "unit": "st",
-      "taxPercent": 25,
-      "totalAmountInclTax": 2750,
-      "totalTaxAmount": 550,
-      "totalCost": 2090,
-      "itemType": "time",
-      "timeCategory": "5e81d33db3f1cb30a8ef5514",
-      "categoryName": "Beredskap normal"
-    },
-    {
-      // ...
-    }
-  ],
-  "documents": [],
-  "distributor": "5f48eb7105b8ed6932c19eb9",
-  "distributorName": "20200828",
-  "yourReference": "Tommy Hellström",
-  "createDate": "2020-09-15T13:44:06.566Z",
-  "invoiceDate": "2020-09-15T13:44:06.566Z",
-  "paymentDate": null,
-  "totalAmount": 7681.7,
-  "totalTaxAmount": 1920.425,
-  "totalAmountInclTax": 9533.925,
-  "taxPercent": 25,
-  "taxType": 1,
-  "markupPercent": 0,
-  "currencyCode": "SEK",
-  "currencyRate": 1,
-  "OCR": "",
-  "economySystemStatus": 0,
-  "expensesCreatedFromInvoiceItems": false,
-  "notes": "Självfaktura",
-  "isCreditInvoice": false,
-  "creditForInvoiceNumber": "",
-  "isBooked": false,
-  "economySystemRef": "",
-  "importedFrom": "",
-  "supplierInvoiceStatus": 5,
-  "workOrder": "5f4df1793751c0916156ed5",
-  "workOrderTitle": "Återkommande 20200116 - 234556565656",
-  "workOrderNumber": 4737,
-  "project": null,
-  "projectName": null,
-  "supplementOrderId": null,
-  "supplementOrderNumber": null,
-  "customer": "5bb26376c42fb99275000080",
-  "customerName": "SevenTime",
-  "department": null,
-  "departmentName": "",
-  "supplementOrder": false,
-  "invoice": null,
-  "invoiceNumber": "9316",
-  "isSelfBillingInvoice": true,
-  "selfBillingInvoiceStatus": 1,
-  "exportedToEconomy": false,
-  "selfBillingInvoice": "5f5f23fd7161761b55422c",
-  "selfBillingInvoiceNumber": "24272",
-  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
-  "footerInfoText": "Text under...",
-  "__v": 0
 }
 ```
 
 This endpoint retrieves a specific supplier invoice.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -3477,23 +3824,162 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the supplier invoice to retrieve
 
+## Create a Supplier Invoice
 
+```shell
+  curl -X POST "https://app.seventime.se/api/1/supplierInvoices/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "supplierInvoiceNumber=9162&createdByUser=5f48eb3e65d7ee4942c46eeb&distributor=5f6b2e6af24d5df55b69277&totalAmountInclTax=100000" 
+```
 
+```javascript
+let formData = {
+  supplierInvoiceNumber: 9162,
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
+  distributor: '5f6b2e6af24d5df55b69277',
+  totalAmountInclTax: 100000
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/supplierInvoices',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create supplier invoice: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "selfBillingTimeLogIds": [],
+  "selfBillingExpenseIds": [],
+  "_id": "5fd0619c7391b561bda0a7",
+  "invoiceItems": [],
+  "documents": [],
+  "supplierInvoiceLogEntries": [ 
+    { 
+      "_id": "5fdd142c621b21a10129",
+      "logType": 1,
+      "description": "",
+      "user": "5f48eb3e65d7ee4942c46eeb",
+      "userName": "Tommy Hellström",
+      "logDate": "2020-12-09T12":43":51.516Z" 
+    } 
+  ],
+  "markupPercent": 0,
+  "distributor": "5f6b2e6af24d5df55b69277",
+  "distributorName": "Hellapps AB",
+  "supplierInvoiceNumber": "9162",
+  "invoiceDate": "2020-12-09T12:43:51.515Z",
+  "dueDate": "2020-12-09T12:43:51.515Z",
+  "totalAmountInclTax": 100000,
+  "taxPercent": 25,
+  "totalAmount": 80000,
+  "totalTaxAmount": 20000,
+  "totalAmountToInvoice": 80000,
+  "supplierInvoiceStatus": 1,
+  "createDate": "2020-12-09T12:43:51.515Z",
+  "__v": 0 
+}
+```
+
+This endpoint creates a supplier invoice
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/supplierInvoices/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+supplierInvoiceNumber     | Number | Yes | Number of  the supplier invoice
+createdByUser             | String | Yes | Id of the user who created the invoice
+distributor               | String | Yes | Id of the distributor
+totalAmountInclTax        | Number | Yes | Total amount incl. tax on the supplier invoice
+customer                  | String | No | Id of the customer
+project                   | String | No | Id of the project
+workOrder                 | String | No | Id of the work order. The work order must belong to the specified project
+resultUnit                | String | No | Id of the result unit
+supplierInvoiceStatus     | Number | No | Status of the supplier invoice. 1 for 'Registered', 5 for 'Draft', 7 for 'Sent' and 10 for 'Invoiced'
+taxPercent                | Number | No | Tax on the supplier invoice as a percentage. Ex: 25 for 25% tax
+markupPercent             | Number | No | Markup on the supplier invoice as a percentage. Ex: 10 for 10% markup
+invoiceDate               | String | No | Invoice date in the format 'YYYY-MM-DD'
+dueDate                   | String | No | Due date in the format 'YYYY-MM-DD'
+exportedToEconomy         | Boolean| No | Is the supplier invoice exported to a economy system?
+OCR                       | Number | No | OCR number of the invoice
+currencyCode              | String | No | Currency code to be used on the supplier invoice
+currencyRate              | Number | No*| Currency rate between SEK and the selected currency. *Required if currencyCode is not 'SEK'. This will always be set to 1 if currencyCode is 'SEK'
+supplementOrder           | Boolean| No | Should the supplier invoice be a supplement order? This is only available if the project or work order is set to use a fixed price
+supplementOrderId         | String | No | Id of the supplement order
+ourReference              | String | No | Our reference
+yourReference             | String | No | Your reference
+notes                     | String | No | Notes on the supplier invoice
+isInvoiceable             | Boolean| No | Is the supplier invoice invoiceable?
+invoiceItems              | Array  | No | Array containing objects with invoice items. See below for details.
+
+**Attributes for invoiceItems**
+
+The field invoiceItems should be an array containing objects with the attributes shown below
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+itemType              | String | Yes | Item type of invoice row, see below for details
+expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
+timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
+machine               | String | No* | Id of the machine. *Required if itemType is machineTimeLog
+driverJournalItemType | String | No* | Id of the driver journal. *Required if itemType is driverJournal
+numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
+unit                  | String | No  | Unit of the item
+unitCost              | Number | No  | Purchase price of the item
+unitPrice             | Number | No  | Unit price of the item
+pricePerHour          | Number | No  | Price per hour. Used for time log rows
+totalAmount           | Number | No  | Total amount. Used for onlyamount rows
+discountPercent       | Number | No  | Discount of the item
+
+**Item types**
+
+This table contains the different item types used in the field invoiceItems.itemTypes
+
+Item type |  Description
+--------- |-----------
+expense        | Expense row
+timeLog        | Time log row
+general        | Free-text row
+blank          | Blank row
+text           | Text row
+onlyamount     | Text+amount row
+machineTimeLog | Machine time log row
+driverJournal  | Driver journal row
 
 # Machines
-
 ## Get Machines
 
 
 ```shell
 curl "https://app.seventime.se/api/1/machines" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page=2"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machines/?";
+let url = "https://app.seventime.se/api/1/machines/?&limit=10&page=2";
 let options = {
   url: url,
   headers: {
@@ -3514,60 +4000,67 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5a4bc02e40a13d7179005920",
-    "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
-    "hoursUsed": 5193,
-    "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
-    "mileage": 10122.7,
-    "isActive": true,
-    "createdByUserName": "Tommy Hellström",
-    "createdByUser": "5113986056b831a915810002",
-    "hoursCanBeRegistered": true,
-    "canBePlanned": true,
-    "isInvoiceable": true,
-    "serialNumber": "846821",
-    "machineModel": "ME500",
-    "machineNumber": "21",
-    "machineName": "EWR150E-21",
-    "trackunitData": {
-      "id": "1135803"
-    },
-    "modifiedDate": "2020-09-27T12:06:19.225Z",
-    "createDate": "2018-01-02T17:37:02.629Z",
-    "machineLog": [],
-    "documents": [],
-    "__v": 1,
-    "articleNumber": "",
-    "machineType": null,
-    "machineTypeName": "",
-    "machineGroup": "",
-    "purchaseDate": null,
-    "serviceable": false,
-    "serviceIntervalInKm": 0,
-    "serviceIntervalInHours": 0,
-    "serviceIntervalInMonths": 0,
-    "mileageLastService": 0,
-    "hoursLastService": 0,
-    "lastServiceDate": null,
-    "unitPrice": 0,
-    "unitCost": 0,
-    "distributor": null,
-    "distributorName": "",
-    "customFields": [],
-    "debitManualRegistrationPrices": [],
-    "debitMinimiPrices": [],
-    "debitSchedulePrices": [],
-    "isSupplementForMachines": []
+{
+  "meta": {
+    "totalResources": 30,
+    "totalPages": 3,
+    "currentPage": 2
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5a4bc02e40a13d7179005920",
+      "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
+      "hoursUsed": 5193,
+      "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
+      "mileage": 10122.7,
+      "isActive": true,
+      "createdByUserName": "Tommy Hellström",
+      "createdByUser": "5113986056b831a915810002",
+      "hoursCanBeRegistered": true,
+      "canBePlanned": true,
+      "isInvoiceable": true,
+      "serialNumber": "846821",
+      "machineModel": "ME500",
+      "machineNumber": "21",
+      "machineName": "EWR150E-21",
+      "trackunitData": {
+        "id": "1135803"
+      },
+      "modifiedDate": "2020-09-27T12:06:19.225Z",
+      "createDate": "2018-01-02T17:37:02.629Z",
+      "machineLog": [],
+      "documents": [],
+      "__v": 1,
+      "articleNumber": "",
+      "machineType": null,
+      "machineTypeName": "",
+      "machineGroup": "",
+      "purchaseDate": null,
+      "serviceable": false,
+      "serviceIntervalInKm": 0,
+      "serviceIntervalInHours": 0,
+      "serviceIntervalInMonths": 0,
+      "mileageLastService": 0,
+      "hoursLastService": 0,
+      "lastServiceDate": null,
+      "unitPrice": 0,
+      "unitCost": 0,
+      "distributor": null,
+      "distributorName": "",
+      "customFields": [],
+      "debitManualRegistrationPrices": [],
+      "debitMinimiPrices": [],
+      "debitSchedulePrices": [],
+      "isSupplementForMachines": []
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves machines, a maximum of 100 machines will be returned.
+This endpoint retrieves machines, a maximum of 500 machines will be returned.
 
 ### HTTP Request
 
@@ -3589,9 +4082,7 @@ sortBy           |  | If specified, a sort will be made on the specified paramet
 sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 ## Get a Specific Machine
 
@@ -3625,59 +4116,59 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "trackunitData": {
-    "id": "1135803"
-  },
-  "machineLog": [],
-  "isSupplementForMachines": [],
-  "_id": "5a4bc02e40a13d7179005920",
-  "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
-  "hoursUsed": 5193,
-  "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
-  "mileage": 10122.7,
-  "isActive": true,
-  "systemAccount": "5112826056d961c030000001",
-  "createdByUserName": "Tommy Hellström",
-  "createdByUser": "5113986056b831a915810002",
-  "hoursCanBeRegistered": true,
-  "canBePlanned": true,
-  "isInvoiceable": true,
-  "serialNumber": "846821",
-  "machineModel": "ME500",
-  "machineNumber": "21",
-  "machineName": "EWR150E-21",
-  "modifiedDate": "2020-09-27T12:06:19.225Z",
-  "createDate": "2018-01-02T17:37:02.629Z",
-  "documents": [],
-  "__v": 1,
-  "articleNumber": "",
-  "machineType": null,
-  "machineTypeName": "",
-  "machineGroup": "",
-  "purchaseDate": null,
-  "serviceable": false,
-  "serviceIntervalInKm": 0,
-  "serviceIntervalInHours": 0,
-  "serviceIntervalInMonths": 0,
-  "mileageLastService": 0,
-  "hoursLastService": 0,
-  "lastServiceDate": null,
-  "unitPrice": 0,
-  "unitCost": 0,
-  "distributor": null,
-  "distributorName": "",
-  "customFields": [],
-  "debitManualRegistrationPrices": [],
-  "debitMinimiPrices": [],
-  "debitSchedulePrices": []
+  "data": {
+    "trackunitData": {
+      "id": "1135803"
+    },
+    "machineLog": [],
+    "isSupplementForMachines": [],
+    "_id": "5a4bc02e40a13d7179005920",
+    "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
+    "hoursUsed": 5193,
+    "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
+    "mileage": 10122.7,
+    "isActive": true,
+    "systemAccount": "5112826056d961c030000001",
+    "createdByUserName": "Tommy Hellström",
+    "createdByUser": "5113986056b831a915810002",
+    "hoursCanBeRegistered": true,
+    "canBePlanned": true,
+    "isInvoiceable": true,
+    "serialNumber": "846821",
+    "machineModel": "ME500",
+    "machineNumber": "21",
+    "machineName": "EWR150E-21",
+    "modifiedDate": "2020-09-27T12:06:19.225Z",
+    "createDate": "2018-01-02T17:37:02.629Z",
+    "documents": [],
+    "__v": 1,
+    "articleNumber": "",
+    "machineType": null,
+    "machineTypeName": "",
+    "machineGroup": "",
+    "purchaseDate": null,
+    "serviceable": false,
+    "serviceIntervalInKm": 0,
+    "serviceIntervalInHours": 0,
+    "serviceIntervalInMonths": 0,
+    "mileageLastService": 0,
+    "hoursLastService": 0,
+    "lastServiceDate": null,
+    "unitPrice": 0,
+    "unitCost": 0,
+    "distributor": null,
+    "distributorName": "",
+    "customFields": [],
+    "debitManualRegistrationPrices": [],
+    "debitMinimiPrices": [],
+    "debitSchedulePrices": []
+  }
 }
 ```
 
 This endpoint retrieves a specific machine.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -3720,26 +4211,25 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "57e89fbae191f8ba2b28420",
-    "name": "Fordon",
-    "isActive": true,
-    "createDate": "2017-10-19T12:50:50.361Z",
-    "__v": 0
-  },
-  {
-  // ...
-  }
-]
-
+{
+  "data": [
+    {
+      "_id": "57e89fbae191f8ba2b28420",
+      "name": "Fordon",
+      "isActive": true,
+      "createDate": "2017-10-19T12:50:50.361Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves machine types, a maximum of 100 types will be returned.
+This endpoint retrieves machine types.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -3756,7 +4246,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 # Machine Time Logs
 
 ## Get Machines Time Logs
-
+// TODO: fortsätt här med limit/page
 
 ```shell
 curl "https://app.seventime.se/api/1/machineTimeLogs" \
@@ -3825,7 +4315,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves machines time logs, a maximum of 100 machine time logs will be returned.
+This endpoint retrieves machines time logs, a maximum of 500 machine time logs will be returned.
 
 ### HTTP Request
 
@@ -3837,11 +4327,6 @@ Parameter | Default | Description
 --------- | ------- | -----------
 sortBy           |  | If specified, a sort will be made on the specified parameter
 sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
 
 
 ## Get a Specific Machine Time Log
@@ -3910,9 +4395,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves a specific machine time log.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -4014,7 +4497,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves machines time logs, a maximum of 100 machine time logs will be returned.
+This endpoint retrieves machines time logs, a maximum of 500 machine time logs will be returned.
 
 ### HTTP Request
 
@@ -4035,9 +4518,7 @@ sortBy             |  | If specified, a sort will be made on the specified param
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 
 ## Get a Specific Time Log
@@ -4125,9 +4606,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves a specific time log.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -4196,7 +4675,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves time categories, a maximum of 100 categories will be returned.
+This endpoint retrieves time categories, a maximum of 500 categories will be returned.
 
 ### HTTP Request
 
@@ -4210,9 +4689,7 @@ sortBy             |  | If specified, a sort will be made on the specified param
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 
 ## Get a Specific Time Category
@@ -4268,9 +4745,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves a specific time category.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -4458,7 +4933,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves expenses, a maximum of 100 expenses will be returned.
+This endpoint retrieves expenses, a maximum of 500 expenses will be returned.
 
 ### HTTP Request
 
@@ -4476,9 +4951,7 @@ distributorName    |  | If specified, expenses that match the parameter will be 
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 
 ## Get a Specific Expense
@@ -4560,9 +5033,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves a specific expense.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -4637,7 +5108,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves expense items, a maximum of 100 expense items will be returned.
+This endpoint retrieves expense items, a maximum of 500 expense items will be returned.
 
 ### HTTP Request
 
@@ -4658,9 +5129,7 @@ favorite                |  | If specified, expense items that match the paramete
 sortBy                  |  | If specified, a sort will be made on the specified parameter
 sortDirection           |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 
 ## Get a Specific Expense Item
@@ -4723,9 +5192,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves a specific expense item.
 
-<!--
-<aside class="warning">Inside HTML code blocks like this one, you can"t use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
--->
+
 
 ### HTTP Request
 
@@ -4909,7 +5376,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves driver journals, a maximum of 100 driver journals will be returned.
+This endpoint retrieves driver journals, a maximum of 500 driver journals will be returned.
 
 ### HTTP Request
 
@@ -4931,9 +5398,7 @@ endAddress                  |  | If specified, driver journals that match the pa
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-<!--<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>-->
+
 
 
 ## Get a Specific Driver Journal
@@ -5070,7 +5535,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves driver journals types, a maximum of 100 driver journals types will be returned.
+This endpoint retrieves driver journals types, a maximum of 500 driver journals types will be returned.
 
 ### HTTP Request
 
@@ -5230,7 +5695,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves vehicles, a maximum of 100 vehicles will be returned.
+This endpoint retrieves vehicles, a maximum of 500 vehicles will be returned.
 
 ### HTTP Request
 
@@ -5367,7 +5832,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves distributors, a maximum of 100 distributors will be returned.
+This endpoint retrieves distributors, a maximum of 500 distributors will be returned.
 
 ### HTTP Request
 
@@ -5513,7 +5978,7 @@ request(options, function(error, response, body) {
 
 ```
 
-This endpoint retrieves distributor contact persons, a maximum of 100 contact persons will be returned.
+This endpoint retrieves distributor contact persons, a maximum of 500 contact persons will be returned.
 
 ### HTTP Request
 
@@ -5631,7 +6096,7 @@ request(options, function(error, response, body) {
         "_id": "5f48eb3e65d7ee4942c46eeb",
         "logType": 5,
         "description": "",
-        "user": "5112826056d961c030000002",
+        "user": "59312765ad961c0318eb0a2",
         "userName": "Tommy Hellström",
         "logDate": "2017-09-11T13:31:08.972Z"
       },
@@ -5654,7 +6119,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves purchase orders, a maximum of 100 purchase orders will be returned.
+This endpoint retrieves purchase orders, a maximum of 500 purchase orders will be returned.
 
 ### HTTP Request
 
@@ -6045,7 +6510,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves purchase orders, a maximum of 100 result units will be returned.
+This endpoint retrieves purchase orders, a maximum of 500 result units will be returned.
 
 ### HTTP Request
 
@@ -6339,7 +6804,7 @@ request(options, function(error, response, body) {
         "_id": "5c33831c3512857d5cd6195",
         "logDate": "2019-01-07T17:15:08.533Z",
         "userName": "Tommy Hellström",
-        "user": "5112826056d961c030000002",
+        "user": "59312765ad961c0318eb0a2",
         "description": "",
         "logType": 1,
         "entryId": "mZjaXWo2oRTr"
@@ -6358,7 +6823,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves quotes, a maximum of 100 quotes will be returned.
+This endpoint retrieves quotes, a maximum of 500 quotes will be returned.
 
 ### HTTP Request
 
@@ -6599,7 +7064,7 @@ request(options, function(error, response, body) {
       "_id": "5c33831c3512857d5cd6195",
       "logDate": "2019-01-07T17:15:08.533Z",
       "userName": "Tommy Hellström",
-      "user": "5112826056d961c030000002",
+      "user": "59312765ad961c0318eb0a2",
       "description": "",
       "logType": 1,
       "entryId": "mZjaXWo2oRTr"
@@ -6710,7 +7175,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves quote templates, a maximum of 100 quote templates will be returned.
+This endpoint retrieves quote templates, a maximum of 500 quote templates will be returned.
 
 ### HTTP Request
 
@@ -6723,7 +7188,7 @@ Parameter | Default | Description
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get Quote Templates
+## Get Quote Categories
 
 ```shell
 curl "https://app.seventime.se/api/1/quoteCategories" \
@@ -6767,7 +7232,7 @@ request(options, function(error, response, body) {
 ]
 ```
 
-This endpoint retrieves quote categories, a maximum of 100 quote categories will be returned.
+This endpoint retrieves quote categories, a maximum of 500 quote categories will be returned.
 
 ### HTTP Request
 
@@ -6780,131 +7245,5 @@ Parameter | Default | Description
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Create a Quote
-## Create a Customer
 
-
-```shell
-  curl -X POST "https://app.seventime.se/api/1/customers/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -d "name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
-```
-
-```javascript
-let formData = {
-  name: 'Tommy Hellström',
-  address: 'Glimmingevägen 18',
-  zipCode: '269 74',
-  city: 'Västra Karup',
-  phone: '0431-360050',
-  email: 'support@seventime.se',
-  organizationNumber: '555555-5555'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/1/customers',
-  form: formData,
-  headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
-  }
-};
-
-request.post(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
-  } else {
-    console.error("ERROR! Unable to create customer: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "_id": "5bb26376c42fb99275000080",
-  "customerNumber": "733352",
-  "organizationNumber": "555555-5555",
-  "email": "support@seventime.se",
-  "phone": "0431-360050",
-  "city": "Västra Karup",
-  "zipCode": "269 74",
-  "address": "Glimmingevägen 18",
-  "name": "Tommy Hellström",
-  "documents": [],
-  "billingSettings": {
-    "deductionDistribution": []
-  },
-  "modifiedDate": "2018-10-01T18:12:06.025Z",
-  "createdDate": "2018-10-01T18:12:06.025Z",
-  "__v": 0,
-  "isActive": true
-```
-
-This endpoint creates a specific customer.
-
-### HTTP Request
-
-`POST https://app.seventime.se/api/1/quotes/`
-
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-customer                  | String | Yes | Id of the customer
-user                      | String | Yes | Id of the user
-quoteStatus               | Number | Yes | Quote status. See below for details
-quoteTemplate             | String | Yes | Id of the quote template
-language                  | String | Yes | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
-quoteName                 | String | No | Name of the quote. If not specified, the name will be set according to the settings
-quoteNumber               | Number | No | Number of the quote. If specified, there cannot be another quote with this number. If not specified, this will be set automatically
-quoteDate                 | String | No | Quote date. If not specified, the current date will be set
-validToDate               | String | No | Valid to date. If not specified, the current date + 1 day will be set
-quoteType                 | String | No | Quote type. 0 for Normal, 1 for ROT and 2 for RUT
-quoteCategory             | String | No | Id of the quote category
-salesAgent                | String | No | Id of the sales agent
-yourOrderNumber           | Number | No | Your order number
-marking                   | String | No | Marking on the quote
-deliveryAddress           | String | No | Contains attributes specific for delivery address. See below for details.
-contactPerson             | String | No | Id of the contact person
-description               | String | No | Description of the quote
-priceList                 | String | No | Price list to the used on the quote
-deliveryDate              | String | No | End of delivery date interval
-deliveryDateEnd           | String | No | End of delivery date interval
-ourReference              | String | No | Id of the user to be used as our reference
-quoteInfoName             | String | No | Quote info name. This will not be shown on the quote
-multipleTaxesOnRows       | Boolean | No | Should the rows use different tax rates?
-showPriceInclTaxesOnRows  | Boolean | No | Should the price on the quote rows include taxes?
-useQuoteValue             | Boolean | No | Should it be possible to specify quote value?
-quoteValue                | String  | No | Quote value. Only used if useQuoteValue is true
-useQuoteCost              | Boolean | No | Should it be possible to specify quote cost?
-quoteCost                 | String  | No | Quote cost. Only used if useQuoteCost is true
-headerText                | String | No | Text to be shown in the header
-footerText                | String | No | Text to be shown in the footer
-footerInfoText            | String | No | Text to be shown in the footer info
-
-**Valid quote statuses**
-
-Code | Description
---------- | -----------
-1                      | Draft 
-2                      | Sent 
-3                      | Accepted 
-4                      | Not accepted 
-10                     | Opportunity 
-
-
-**Attributes for deliveryAddress**
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-name                        | String | No | Name of delivery recipient
-address                     | String | No | Primary address
-address2                    | String | No | Secondary address
-zipCode                     | String | No | Zip code
-city                        | String | No | City
-country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
-phone                       | String | No | Phone number
+// TODO: paging, limits etc
