@@ -58,10 +58,12 @@ Seven Time expects the API key to be included in all API requests to the server 
 You must replace <code>thisismysecretkey</code> with your personal API key.
 </aside>
 
-# Pagination
+# Search //TODO
+Searches that returns a large number of results are paged
 ## Limits
-## Page
-// TODO
+Default 100, min 1, max 500
+## Pagination
+min 1
 
 # Customers
 
@@ -4246,17 +4248,17 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 # Machine Time Logs
 
 ## Get Machines Time Logs
-// TODO: fortsätt här med limit/page
 
 ```shell
 curl "https://app.seventime.se/api/1/machineTimeLogs" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=2&page=27"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machineTimeLogs/?";
+let url = "https://app.seventime.se/api/1/machineTimeLogs/?&limit=2&page=27";
 let options = {
   url: url,
   headers: {
@@ -4277,42 +4279,49 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "59ef428433092a4536000066",
-    "time": 12,
-    "invoiceableTime": 12,
-    "description": "12",
-    "internalDescription": "",
-    "attestedBy": null,
-    "invoice": null,
-    "machine": "59e75917ae561db738700451",
-    "machineName": "Grävare",
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
-    "department": "58b30abde244b75d46501274",
-    "departmentName": "Utveckling",
-    "customer": null,
-    "customerName": null,
-    "project": null,
-    "projectName": null,
-    "workOrder": null,
-    "workOrderTitle": "",
-    "workOrderNumber": 0,
-    "pricePerHour": 0,
-    "price": 0,
-    "cost": 0,
-    "createDate": "2017-10-24T13:39:16.764Z",
-    "isInvoiced": false,
-    "isInvoiceable": true,
-    "status": 1,
-    "timestamp": "2017-10-24T13:39:06.144Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 55,
+    "totalPages": 28,
+    "currentPage": 27
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "59ef428433092a4536000066",
+      "time": 12,
+      "invoiceableTime": 12,
+      "description": "12",
+      "internalDescription": "",
+      "attestedBy": null,
+      "invoice": null,
+      "machine": "59e75917ae561db738700451",
+      "machineName": "Grävare",
+      "user": "51203146506d961c030791801",
+      "userName": "Tommy Hellström",
+      "department": "58b30abde244b75d46501274",
+      "departmentName": "Utveckling",
+      "customer": null,
+      "customerName": null,
+      "project": null,
+      "projectName": null,
+      "workOrder": null,
+      "workOrderTitle": "",
+      "workOrderNumber": 0,
+      "pricePerHour": 0,
+      "price": 0,
+      "cost": 0,
+      "createDate": "2017-10-24T13:39:16.764Z",
+      "isInvoiced": false,
+      "isInvoiceable": true,
+      "status": 1,
+      "timestamp": "2017-10-24T13:39:06.144Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves machines time logs, a maximum of 500 machine time logs will be returned.
@@ -4361,35 +4370,37 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "status": 1,
-  "isInvoiceable": true,
-  "isInvoiced": false,
-  "_id": "5a4bc02e40a13d7179005920",
-  "time": 12,
-  "invoiceableTime": 12,
-  "description": "12",
-  "internalDescription": "",
-  "attestedBy": null,
-  "invoice": null,
-  "machine": "59e75917ae561db738700451",
-  "machineName": "Grävare",
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "department": "58b30abde244b75d46501274",
-  "departmentName": "Utveckling",
-  "customer": null,
-  "customerName": null,
-  "project": null,
-  "projectName": null,
-  "workOrder": null,
-  "workOrderTitle": "",
-  "workOrderNumber": 0,
-  "pricePerHour": 0,
-  "price": 0,
-  "cost": 0,
-  "createDate": "2017-10-24T13:39:16.764Z",
-  "timestamp": "2017-10-24T13:39:06.144Z",
-  "__v": 0
+  "data": {
+    "status": 1,
+    "isInvoiceable": true,
+    "isInvoiced": false,
+    "_id": "5a4bc02e40a13d7179005920",
+    "time": 12,
+    "invoiceableTime": 12,
+    "description": "12",
+    "internalDescription": "",
+    "attestedBy": null,
+    "invoice": null,
+    "machine": "59e75917ae561db738700451",
+    "machineName": "Grävare",
+    "user": "51203146506d961c030791801",
+    "userName": "Tommy Hellström",
+    "department": "58b30abde244b75d46501274",
+    "departmentName": "Utveckling",
+    "customer": null,
+    "customerName": null,
+    "project": null,
+    "projectName": null,
+    "workOrder": null,
+    "workOrderTitle": "",
+    "workOrderNumber": 0,
+    "pricePerHour": 0,
+    "price": 0,
+    "cost": 0,
+    "createDate": "2017-10-24T13:39:16.764Z",
+    "timestamp": "2017-10-24T13:39:06.144Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -4414,13 +4425,14 @@ _id | The _id of the machine time log to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/timeLogs" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=3&page=1"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/timeLogs/?";
+let url = "https://app.seventime.se/api/1/timeLogs/?&limit=3&page=1";
 let options = {
   url: url,
   headers: {
@@ -4441,60 +4453,67 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "514959f8733259db7591000c",
-    "__v": 1,
-    "allDay": false,
-    "cost": 10690.5824,
-    "createDate": "2013-03-16T11:39:36.437Z",
-    "customer": null,
-    "description": "",
-    "endTimestamp": "2013-03-16T11:39:35.000Z",
-    "isWorkTime": true,
-    "project": null,
-    "status": 1,
-    "time": 41.18577972222222,
-    "timeCategory": null,
-    "timestamp": "2013-03-14T18:28:26.193Z",
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
-    "invoiceableTime": 41.18577972222222,
-    "customFields": [],
-    "isInvoiceable": true,
-    "isInvoiced": false,
-    "machineTimePrices": [],
-    "machineTimeSupplements": [],
-    "realTimestamp": "2020-08-27T07:52:57.685Z",
-    "startLocation": {
-      "coordinates": [],
-      "type": "Point"
-    },
-    "stopLocation": {
-      "coordinates": [],
-      "type": "Point"
-    },
-    "unSocialHoursCosts": [
-      {
-        "_id": "5f57385dbe6f05476e59e603",
-        "salaryType": "58cb7f24e9c363d0b0a06298a",
-        "salaryTypeName": "OB kväll",
-        "costPerHour": 150,
-        "time": 6
-      },
-      {
-        "_id": "5f57385dbe6f05476e59e816",
-        "salaryType": "58cb7f24e9c363d0b0a06298a",
-        "salaryTypeName": "OB kväll",
-        "costPerHour": 150,
-        "time": 10.5261325
-      }
-    ]
+{
+  "meta": {
+    "totalResources": 1182,
+    "totalPages": 394,
+    "currentPage": 1
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "514959f8733259db7591000c",
+      "__v": 1,
+      "allDay": false,
+      "cost": 10690.5824,
+      "createDate": "2013-03-16T11:39:36.437Z",
+      "customer": null,
+      "description": "",
+      "endTimestamp": "2013-03-16T11:39:35.000Z",
+      "isWorkTime": true,
+      "project": null,
+      "status": 1,
+      "time": 41.18577972222222,
+      "timeCategory": null,
+      "timestamp": "2013-03-14T18:28:26.193Z",
+      "user": "51203146506d961c030791801",
+      "userName": "Tommy Hellström",
+      "invoiceableTime": 41.18577972222222,
+      "customFields": [],
+      "isInvoiceable": true,
+      "isInvoiced": false,
+      "machineTimePrices": [],
+      "machineTimeSupplements": [],
+      "realTimestamp": "2020-08-27T07:52:57.685Z",
+      "startLocation": {
+        "coordinates": [],
+        "type": "Point"
+      },
+      "stopLocation": {
+        "coordinates": [],
+        "type": "Point"
+      },
+      "unSocialHoursCosts": [
+        {
+          "_id": "5f57385dbe6f05476e59e603",
+          "salaryType": "58cb7f24e9c363d0b0a06298a",
+          "salaryTypeName": "OB kväll",
+          "costPerHour": 150,
+          "time": 6
+        },
+        {
+          "_id": "5f57385dbe6f05476e59e816",
+          "salaryType": "58cb7f24e9c363d0b0a06298a",
+          "salaryTypeName": "OB kväll",
+          "costPerHour": 150,
+          "time": 10.5261325
+        }
+      ]
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves machines time logs, a maximum of 500 machine time logs will be returned.
@@ -4553,55 +4572,56 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "startLocation": {
-    "type": "Point",
-    "coordinates": []
-  },
-  "stopLocation": {
-    "type": "Point",
-    "coordinates": []
-  },
-  "allDay": false,
-  "status": 1,
-  "isInvoiceable": true,
-  "isInvoiced": false,
-  "_id": "514959f8733259db7591000c",
-  "__v": 1,
-  "cost": 10690.5824,
-  "createDate": "2013-03-16T11:39:36.437Z",
-  "customer": null,
-  "description": "",
-  "endTimestamp": "2013-03-16T11:39:35.000Z",
-  "isWorkTime": true,
-  "project": null,
-  "time": 41.18577972222222,
-  "timeCategory": null,
-  "timestamp": "2013-03-14T18:28:26.193Z",
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "invoiceableTime": 41.18577972222222,
-  "customFields": [],
-  "machineTimePrices": [],
-  "machineTimeSupplements": [],
-  "realTimestamp": "2020-08-27T07:52:57.685Z",
-  "unSocialHoursCosts": [
-    {
-      "_id": "5f57385dbe6f05476e59e603",
-      "salaryType": "58cb7f24e9c363d0b0a06298a",
-      "salaryTypeName": "OB kväll",
-      "costPerHour": 150,
-      "time": 6
+  "data": {
+    "startLocation": {
+      "type": "Point",
+      "coordinates": []
     },
-    {
-      "_id": "5f57385dbe6f05476e59e816",
-      "salaryType": "58cb8f2e9c663d0e0a00005a",
-      "salaryTypeName": "OB kväll",
-      "costPerHour": 150,
-      "time": 10.5261325
-    }
-  ]
+    "stopLocation": {
+      "type": "Point",
+      "coordinates": []
+    },
+    "allDay": false,
+    "status": 1,
+    "isInvoiceable": true,
+    "isInvoiced": false,
+    "_id": "514959f8733259db7591000c",
+    "__v": 1,
+    "cost": 10690.5824,
+    "createDate": "2013-03-16T11:39:36.437Z",
+    "customer": null,
+    "description": "",
+    "endTimestamp": "2013-03-16T11:39:35.000Z",
+    "isWorkTime": true,
+    "project": null,
+    "time": 41.18577972222222,
+    "timeCategory": null,
+    "timestamp": "2013-03-14T18:28:26.193Z",
+    "user": "51203146506d961c030791801",
+    "userName": "Tommy Hellström",
+    "invoiceableTime": 41.18577972222222,
+    "customFields": [],
+    "machineTimePrices": [],
+    "machineTimeSupplements": [],
+    "realTimestamp": "2020-08-27T07:52:57.685Z",
+    "unSocialHoursCosts": [
+      {
+        "_id": "5f57385dbe6f05476e59e603",
+        "salaryType": "58cb7f24e9c363d0b0a06298a",
+        "salaryTypeName": "OB kväll",
+        "costPerHour": 150,
+        "time": 6
+      },
+      {
+        "_id": "5f57385dbe6f05476e59e816",
+        "salaryType": "58cb8f2e9c663d0e0a00005a",
+        "salaryTypeName": "OB kväll",
+        "costPerHour": 150,
+        "time": 10.5261325
+      }
+    ]
+  }
 }
-
 ```
 
 This endpoint retrieves a specific time log.
@@ -4650,32 +4670,34 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "58cd3c4771b8a3c347041207",
-    "name": "Semester",
-    "description": "",
-    "isAbsenceType": true,
-    "isUnsocialHour": false,
-    "isInvoiceable": true,
-    "pricePerHour": 0,
-    "articleNumber": "040",
-    "isWorkTime": true,
-    "isActive": true,
-    "__v": 0,
-    "color": "FF9800",
-    "isVacation": true,
-    "presenceCode": "",
-    "requirePreAttest": true,
-    "isMachineTime": false
-  },
-  {
-  // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "58cd3c4771b8a3c347041207",
+      "name": "Semester",
+      "description": "",
+      "isAbsenceType": true,
+      "isUnsocialHour": false,
+      "isInvoiceable": true,
+      "pricePerHour": 0,
+      "articleNumber": "040",
+      "isWorkTime": true,
+      "isActive": true,
+      "__v": 0,
+      "color": "FF9800",
+      "isVacation": true,
+      "presenceCode": "",
+      "requirePreAttest": true,
+      "isMachineTime": false
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves time categories, a maximum of 500 categories will be returned.
+This endpoint retrieves time categories.
 
 ### HTTP Request
 
@@ -4724,22 +4746,24 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "58cd3c4771b8a3c347041207",
-  "name": "Semester",
-  "description": "",
-  "isAbsenceType": true,
-  "isUnsocialHour": false,
-  "isInvoiceable": true,
-  "pricePerHour": 0,
-  "articleNumber": "040",
-  "isWorkTime": true,
-  "isActive": true,
-  "__v": 0,
-  "color": "FF9800",
-  "isVacation": true,
-  "presenceCode": "",
-  "requirePreAttest": true,
-  "isMachineTime": false
+  "data": {
+    "_id": "58cd3c4771b8a3c347041207",
+    "name": "Semester",
+    "description": "",
+    "isAbsenceType": true,
+    "isUnsocialHour": false,
+    "isInvoiceable": true,
+    "pricePerHour": 0,
+    "articleNumber": "040",
+    "isWorkTime": true,
+    "isActive": true,
+    "__v": 0,
+    "color": "FF9800",
+    "isVacation": true,
+    "presenceCode": "",
+    "requirePreAttest": true,
+    "isMachineTime": false
+  }
 }
 ```
 
@@ -4855,13 +4879,14 @@ isInvoiceable       | Boolean | No  | Your order number
 
 ```shell
 curl "https://app.seventime.se/api/1/expenses" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=2&page=3"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenses/?";
+let url = "https://app.seventime.se/api/1/expenses/?&limit=2&page=3";
 let options = {
   url: url,
   headers: {
@@ -4882,55 +4907,62 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "53ad291839f16d23a6414604d2",
-    "__v": 0,
-    "attestedBy": null,
-    "createDate": "2014-06-27T08:11:15.954Z",
-    "customer": null,
-    "customerName": "",
-    "description": "",
-    "documents": [],
-    "expenseItem": "52d92f32d5fcf8941893174ab",
-    "isAttested": false,
-    "isInvoiceable": true,
-    "isInvoiced": false,
-    "name": "Arbetsordermodul2",
-    "numberOfItems": 1,
-    "project": "516fad2b265135db78024621§",
-    "projectName": "Glimminge",
-    "supplementOrder": false,
-    "timestamp": "2014-06-27T00:00:00.000Z",
-    "totalAmount": 20,
-    "totalAmountAfterDiscount": 20,
-    "totalAmountInclTax": 25,
-    "totalTaxAmount": 5,
-    "unit": "st",
-    "unitCost": 20,
-    "unitPrice": 20,
-    "unitPriceInclTax": 25,
-    "unitTax": 5,
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
-    "workOrder": null,
-    "workOrderNumber": 0,
-    "workOrderTitle": "",
-    "unitPriceAfterDiscount": 20,
-    "discountPercent": 0,
-    "unitTaxPercent": 25,
-    "doReimburse": false,
-    "salaryCompilation": null,
-    "verificationNumber": "",
-    "distributor": null,
-    "distributorName": "",
-    "totalCost": 20,
-    "articleNumber": "208"
+{
+  "meta": {
+    "totalResources": 622,
+    "totalPages": 311,
+    "currentPage": 3
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "53ad291839f16d23a6414604d2",
+      "__v": 0,
+      "attestedBy": null,
+      "createDate": "2014-06-27T08:11:15.954Z",
+      "customer": null,
+      "customerName": "",
+      "description": "",
+      "documents": [],
+      "expenseItem": "52d92f32d5fcf8941893174ab",
+      "isAttested": false,
+      "isInvoiceable": true,
+      "isInvoiced": false,
+      "name": "Arbetsordermodul2",
+      "numberOfItems": 1,
+      "project": "516fad2b265135db78024621§",
+      "projectName": "Glimminge",
+      "supplementOrder": false,
+      "timestamp": "2014-06-27T00:00:00.000Z",
+      "totalAmount": 20,
+      "totalAmountAfterDiscount": 20,
+      "totalAmountInclTax": 25,
+      "totalTaxAmount": 5,
+      "unit": "st",
+      "unitCost": 20,
+      "unitPrice": 20,
+      "unitPriceInclTax": 25,
+      "unitTax": 5,
+      "user": "51203146506d961c030791801",
+      "userName": "Tommy Hellström",
+      "workOrder": null,
+      "workOrderNumber": 0,
+      "workOrderTitle": "",
+      "unitPriceAfterDiscount": 20,
+      "discountPercent": 0,
+      "unitTaxPercent": 25,
+      "doReimburse": false,
+      "salaryCompilation": null,
+      "verificationNumber": "",
+      "distributor": null,
+      "distributorName": "",
+      "totalCost": 20,
+      "articleNumber": "208"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves expenses, a maximum of 500 expenses will be returned.
@@ -4986,48 +5018,50 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "53ad291839f16d23a6414604d2",
-  "__v": 0,
-  "attestedBy": null,
-  "createDate": "2014-06-27T08:11:15.954Z",
-  "customer": null,
-  "customerName": "",
-  "description": "",
-  "documents": [],
-  "expenseItem": "52d92f32d5fcf8941893174ab",
-  "isAttested": false,
-  "isInvoiceable": true,
-  "isInvoiced": false,
-  "name": "Arbetsordermodul2",
-  "numberOfItems": 1,
-  "project": "516fad2b265135db78024621§",
-  "projectName": "Glimminge",
-  "supplementOrder": false,
-  "timestamp": "2014-06-27T00:00:00.000Z",
-  "totalAmount": 20,
-  "totalAmountAfterDiscount": 20,
-  "totalAmountInclTax": 25,
-  "totalTaxAmount": 5,
-  "unit": "st",
-  "unitCost": 20,
-  "unitPrice": 20,
-  "unitPriceInclTax": 25,
-  "unitTax": 5,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "workOrder": null,
-  "workOrderNumber": 0,
-  "workOrderTitle": "",
-  "unitPriceAfterDiscount": 20,
-  "discountPercent": 0,
-  "unitTaxPercent": 25,
-  "doReimburse": false,
-  "salaryCompilation": null,
-  "verificationNumber": "",
-  "distributor": null,
-  "distributorName": "",
-  "totalCost": 20,
-  "articleNumber": "208"
+  "data": {
+    "_id": "53ad291839f16d23a6414604d2",
+    "__v": 0,
+    "attestedBy": null,
+    "createDate": "2014-06-27T08:11:15.954Z",
+    "customer": null,
+    "customerName": "",
+    "description": "",
+    "documents": [],
+    "expenseItem": "52d92f32d5fcf8941893174ab",
+    "isAttested": false,
+    "isInvoiceable": true,
+    "isInvoiced": false,
+    "name": "Arbetsordermodul2",
+    "numberOfItems": 1,
+    "project": "516fad2b265135db78024621§",
+    "projectName": "Glimminge",
+    "supplementOrder": false,
+    "timestamp": "2014-06-27T00:00:00.000Z",
+    "totalAmount": 20,
+    "totalAmountAfterDiscount": 20,
+    "totalAmountInclTax": 25,
+    "totalTaxAmount": 5,
+    "unit": "st",
+    "unitCost": 20,
+    "unitPrice": 20,
+    "unitPriceInclTax": 25,
+    "unitTax": 5,
+    "user": "51203146506d961c030791801",
+    "userName": "Tommy Hellström",
+    "workOrder": null,
+    "workOrderNumber": 0,
+    "workOrderTitle": "",
+    "unitPriceAfterDiscount": 20,
+    "discountPercent": 0,
+    "unitTaxPercent": 25,
+    "doReimburse": false,
+    "salaryCompilation": null,
+    "verificationNumber": "",
+    "distributor": null,
+    "distributorName": "",
+    "totalCost": 20,
+    "articleNumber": "208"
+  }
 }
 ```
 
@@ -5049,13 +5083,14 @@ _id | The _id of the expense to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/expenseItems" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=10&page=176"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenseItems/?";
+let url = "https://app.seventime.se/api/1/expenseItems/?&limit=10&page=176";
 let options = {
   url: url,
   headers: {
@@ -5076,36 +5111,43 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5de78aed1332719192362bed",
-    "description": "",
-    "tax": 25,
-    "articleNumber": "601310",
-    "name": "10-pack Reaktionsbollar",
-    "unitPrice": 295.59,
-    "unitCost": 221,
-    "unit": "St",
-    "isInvoiceable": true,
-    "isCategory": false,
-    "parentExpenseItem": null,
-    "parentExpenseItemName": "",
-    "createDate": "2019-12-04T10:31:06.603Z",
-    "bundledArticles": [],
-    "alwaysReimburse": false,
-    "isActive": true,
-    "categoryGroupNumber": "",
-    "articleGroupNumber": "",
-    "distributor": null,
-    "distributorName": "",
-    "isInventoryItem": false,
-    "__v": 0,
-    "unitPriceInclTax": 369.48749999999995
+{
+  "meta": {
+    "totalResources": 19478,
+    "totalPages": 1948,
+    "currentPage": 176
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5de78aed1332719192362bed",
+      "description": "",
+      "tax": 25,
+      "articleNumber": "601310",
+      "name": "10-pack Reaktionsbollar",
+      "unitPrice": 295.59,
+      "unitCost": 221,
+      "unit": "St",
+      "isInvoiceable": true,
+      "isCategory": false,
+      "parentExpenseItem": null,
+      "parentExpenseItemName": "",
+      "createDate": "2019-12-04T10:31:06.603Z",
+      "bundledArticles": [],
+      "alwaysReimburse": false,
+      "isActive": true,
+      "categoryGroupNumber": "",
+      "articleGroupNumber": "",
+      "distributor": null,
+      "distributorName": "",
+      "isInventoryItem": false,
+      "__v": 0,
+      "unitPriceInclTax": 369.48749999999995
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves expense items, a maximum of 500 expense items will be returned.
@@ -5164,29 +5206,31 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "5de78aed1332719192362bed",
-  "description": "",
-  "tax": 25,
-  "articleNumber": "601310",
-  "name": "10-pack Reaktionsbollar",
-  "unitPrice": 295.59,
-  "unitCost": 221,
-  "unit": "St",
-  "isInvoiceable": true,
-  "isCategory": false,
-  "parentExpenseItem": null,
-  "parentExpenseItemName": "",
-  "createDate": "2019-12-04T10:31:06.603Z",
-  "bundledArticles": [],
-  "alwaysReimburse": false,
-  "isActive": true,
-  "categoryGroupNumber": "",
-  "articleGroupNumber": "",
-  "distributor": null,
-  "distributorName": "",
-  "isInventoryItem": false,
-  "__v": 0,
-  "unitPriceInclTax": 369.48749999999995
+  "data": {
+    "_id": "5de78aed1332719192362bed",
+    "description": "",
+    "tax": 25,
+    "articleNumber": "601310",
+    "name": "10-pack Reaktionsbollar",
+    "unitPrice": 295.59,
+    "unitCost": 221,
+    "unit": "St",
+    "isInvoiceable": true,
+    "isCategory": false,
+    "parentExpenseItem": null,
+    "parentExpenseItemName": "",
+    "createDate": "2019-12-04T10:31:06.603Z",
+    "bundledArticles": [],
+    "alwaysReimburse": false,
+    "isActive": true,
+    "categoryGroupNumber": "",
+    "articleGroupNumber": "",
+    "distributor": null,
+    "distributorName": "",
+    "isInventoryItem": false,
+    "__v": 0,
+    "unitPriceInclTax": 369.48749999999995
+  }
 }
 ```
 
@@ -5309,13 +5353,14 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 
 ```shell
 curl "https://app.seventime.se/api/1/driverJournals" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=2"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/driverJournals/?";
+let url = "https://app.seventime.se/api/1/driverJournals/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
@@ -5336,44 +5381,51 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5613c0eabed82c732b67914b",
-    "name": "",
-    "driverJournalItemType": "574ed84219e781253319275004d",
-    "driverJournalItemTypeName": "4 kr/km",
-    "car": null,
-    "carRegistrationNumber": "ABC123",
-    "description": "",
-    "user": "5f48eb3e65d7ee4942c46eeb",
-    "userName": "Tommy Hellström",
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "Hellapps AB",
-    "project": "5f924f4f533f102af78f95b6",
-    "projectName": "Tester",
-    "workOrder": "5bae34dca878bd790d02065g",
-    "workOrderTitle": "20160525",
-    "workOrderNumber": 1181,
-    "startAddress": "Glimmingevägen 18, Västra Karup",
-    "endAddress": "Hamngatan 1, Malmö",
-    "travelPurpose": ".",
-    "startOdometer": 156,
-    "endOdometer": 178,
-    "totalDistance": 22,
-    "price": 4,
-    "totalAmount": 88,
-    "isInvoiced": true,
-    "invoice": "5fab29b038bd334ab540ab53",
-    "modifiedDate": "2016-06-17T09:29:01.958Z",
-    "createDate": "2016-06-17T09:20:46.845Z",
-    "isInvoiceable": true,
-    "timestamp": "2016-06-17T09:20:10.254Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 87,
+    "totalPages": 18,
+    "currentPage": 2
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5613c0eabed82c732b67914b",
+      "name": "",
+      "driverJournalItemType": "574ed84219e781253319275004d",
+      "driverJournalItemTypeName": "4 kr/km",
+      "car": null,
+      "carRegistrationNumber": "ABC123",
+      "description": "",
+      "user": "5f48eb3e65d7ee4942c46eeb",
+      "userName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps AB",
+      "project": "5f924f4f533f102af78f95b6",
+      "projectName": "Tester",
+      "workOrder": "5bae34dca878bd790d02065g",
+      "workOrderTitle": "20160525",
+      "workOrderNumber": 1181,
+      "startAddress": "Glimmingevägen 18, Västra Karup",
+      "endAddress": "Hamngatan 1, Malmö",
+      "travelPurpose": ".",
+      "startOdometer": 156,
+      "endOdometer": 178,
+      "totalDistance": 22,
+      "price": 4,
+      "totalAmount": 88,
+      "isInvoiced": true,
+      "invoice": "5fab29b038bd334ab540ab53",
+      "modifiedDate": "2016-06-17T09:29:01.958Z",
+      "createDate": "2016-06-17T09:20:46.845Z",
+      "isInvoiceable": true,
+      "timestamp": "2016-06-17T09:20:10.254Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves driver journals, a maximum of 500 driver journals will be returned.
@@ -5433,37 +5485,39 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "isInvoiceable": true,
-  "_id": "5613c0eabed82c732b67914b",
-  "name": "",
-  "driverJournalItemType": "574ed84219e781253319275004d",
-  "driverJournalItemTypeName": "4 kr/km",
-  "car": null,
-  "carRegistrationNumber": "ABC123",
-  "description": "",
-  "user": "5f48eb3e65d7ee4942c46eeb",
-  "userName": "Tommy Hellström",
-  "customer": "5bb26376c42fb99275000080",
-  "customerName": "Hellapps AB",
-  "project": "5f924f4f533f102af78f95b6",
-  "projectName": "Tester",
-  "workOrder": "5bae34dca878bd790d02065g",
-  "workOrderTitle": "20160525",
-  "workOrderNumber": 1181,
-  "startAddress": "Glimmingevägen 18, Västra Karup",
-  "endAddress": "Hamngatan 1, Malmö",
-  "travelPurpose": ".",
-  "startOdometer": 156,
-  "endOdometer": 178,
-  "totalDistance": 22,
-  "price": 4,
-  "totalAmount": 88,
-  "isInvoiced": true,
-  "invoice": "5fab29b038bd334ab540ab53",
-  "modifiedDate": "2016-06-17T09:29:01.958Z",
-  "createDate": "2016-06-17T09:20:46.845Z",
-  "timestamp": "2016-06-17T09:20:10.254Z",
-  "__v": 0
+  "data": {
+    "isInvoiceable": true,
+    "_id": "5613c0eabed82c732b67914b",
+    "name": "",
+    "driverJournalItemType": "574ed84219e781253319275004d",
+    "driverJournalItemTypeName": "4 kr/km",
+    "car": null,
+    "carRegistrationNumber": "ABC123",
+    "description": "",
+    "user": "5f48eb3e65d7ee4942c46eeb",
+    "userName": "Tommy Hellström",
+    "customer": "5bb26376c42fb99275000080",
+    "customerName": "Hellapps AB",
+    "project": "5f924f4f533f102af78f95b6",
+    "projectName": "Tester",
+    "workOrder": "5bae34dca878bd790d02065g",
+    "workOrderTitle": "20160525",
+    "workOrderNumber": 1181,
+    "startAddress": "Glimmingevägen 18, Västra Karup",
+    "endAddress": "Hamngatan 1, Malmö",
+    "travelPurpose": ".",
+    "startOdometer": 156,
+    "endOdometer": 178,
+    "totalDistance": 22,
+    "price": 4,
+    "totalAmount": 88,
+    "isInvoiced": true,
+    "invoice": "5fab29b038bd334ab540ab53",
+    "modifiedDate": "2016-06-17T09:29:01.958Z",
+    "createDate": "2016-06-17T09:20:46.845Z",
+    "timestamp": "2016-06-17T09:20:10.254Z",
+    "__v": 0
+  }
 }
 ```
 
@@ -5511,28 +5565,29 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-  
-    "_id": "5e5ef41f0d87d3262bc0176",
-    "name": "Diesel - ej skt.fri",
-    "articleNumber": "45",
-    "cost": 0.5,
-    "price": 0.65,
-    "isInvoiceable": true,
-    "isDefault": false,
-    "salaryCompensationType": 20,
-    "salaryType": "5e5cd96da2f5b43254aa1f1e",
-    "salaryTypeName": "Milersättning för diesel",
-    "createDate": "2020-03-03T09:14:11.750Z",
-    "isActive": true,
-    "__v": 0,
-    "salaryCode": "9172"
-  },
-  {
-  // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "5e5ef41f0d87d3262bc0176",
+      "name": "Diesel - ej skt.fri",
+      "articleNumber": "45",
+      "cost": 0.5,
+      "price": 0.65,
+      "isInvoiceable": true,
+      "isDefault": false,
+      "salaryCompensationType": 20,
+      "salaryType": "5e5cd96da2f5b43254aa1f1e",
+      "salaryTypeName": "Milersättning för diesel",
+      "createDate": "2020-03-03T09:14:11.750Z",
+      "isActive": true,
+      "__v": 0,
+      "salaryCode": "9172"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves driver journals types, a maximum of 500 driver journals types will be returned.
@@ -5549,7 +5604,7 @@ sortBy                      |  | If specified, a sort will be made on the specif
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Create an Driver Journal
+## Create a Driver Journal
 
 ```shell
   curl -X POST "https://app.seventime.se/api/1/driverJournals/" \
@@ -5619,7 +5674,7 @@ request.post(options, function (error, response, body) {
 }
 ```
 
-This endpoint creates an expense
+This endpoint creates a driver journal
 
 ### HTTP Request
 
@@ -5653,13 +5708,14 @@ isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated
 
 ```shell
 curl "https://app.seventime.se/api/1/vehicles" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=2"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/vehicles/?";
+let url = "https://app.seventime.se/api/1/vehicles/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
@@ -5680,19 +5736,26 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "55782f0382da2f85430284d",
-    "name": "Audi Q8",
-    "registrationNumber": "ABC123",
-    "isActive": true,
-    "createDate": "2016-06-08T14:45:42.546Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 28,
+    "totalPages": 6,
+    "currentPage": 2
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "55782f0382da2f85430284d",
+      "name": "Audi Q8",
+      "registrationNumber": "ABC123",
+      "isActive": true,
+      "createDate": "2016-06-08T14:45:42.546Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves vehicles, a maximum of 500 vehicles will be returned.
@@ -5741,14 +5804,15 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "55782f0382da2f85430284d",
-  "name": "Audi Q8",
-  "registrationNumber": "ABC123",
-  "isActive": true,
-  "createDate": "2016-06-07T13:20:04.346Z",
-  "__v": 0
+  "data": {
+    "_id": "55782f0382da2f85430284d",
+    "name": "Audi Q8",
+    "registrationNumber": "ABC123",
+    "isActive": true,
+    "createDate": "2016-06-07T13:20:04.346Z",
+    "__v": 0
+  }
 }
-
 ```
 
 This endpoint retrieves a specific vehicle.
@@ -5769,13 +5833,14 @@ _id | The _id of the vehicle to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/distributors" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=3"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/distributors/?";
+let url = "https://app.seventime.se/api/1/distributors/?&limit=5&page=3";
 let options = {
   url: url,
   headers: {
@@ -5796,40 +5861,47 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5f6b2e6af24d5df55b69277",
-    "name": "UE lev 20200923",
-    "distributorNumber": "20",
-    "address": "",
-    "zipCode": "",
-    "city": "",
-    "country": "",
-    "phone": "",
-    "email": "",
-    "organizationNumber": "",
-    "notes": "",
-    "purchaseOrderEmail": "",
-    "ourCustomerNumber": "",
-    "paymentDays": 30,
-    "hasSelfBilling": true,
-    "selfBillingSettings": {
-      "invoiceDeduction": 5,
-      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
-      "invoiceNumberSeries": "UELEV23",
-      "invoiceCounter": 1,
-      "emailForSelfBilling": "tommy@seventime.se"
-    },
-    "isActive": true,
-    "isSubContractor": true,
-    "createdDate": "2020-09-23T13:19:42.450Z",
-    "modifiedDate": "2020-09-23T13:19:42.450Z",
-    "__v": 0
+{
+  "meta": {
+    "totalResources": 16,
+    "totalPages": 4,
+    "currentPage": 3
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "5f6b2e6af24d5df55b69277",
+      "name": "UE lev 20200923",
+      "distributorNumber": "20",
+      "address": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": "",
+      "email": "",
+      "organizationNumber": "",
+      "notes": "",
+      "purchaseOrderEmail": "",
+      "ourCustomerNumber": "",
+      "paymentDays": 30,
+      "hasSelfBilling": true,
+      "selfBillingSettings": {
+        "invoiceDeduction": 5,
+        "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+        "invoiceNumberSeries": "UELEV23",
+        "invoiceCounter": 1,
+        "emailForSelfBilling": "tommy@seventime.se"
+      },
+      "isActive": true,
+      "isSubContractor": true,
+      "createdDate": "2020-09-23T13:19:42.450Z",
+      "modifiedDate": "2020-09-23T13:19:42.450Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves distributors, a maximum of 500 distributors will be returned.
@@ -5879,34 +5951,36 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "selfBillingSettings": {
-    "invoiceDeduction": 5,
-    "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
-    "invoiceNumberSeries": "UELEV23",
-    "invoiceCounter": 1,
-    "emailForSelfBilling": "tommy@seventime.se"
-  },
-  "_id": "5f6b2e6af24d5df55b69277",
-  "name": "UE lev 20200923",
-  "distributorNumber": "20",
-  "address": "",
-  "zipCode": "",
-  "city": "",
-  "country": "",
-  "phone": "",
-  "email": "",
-  "organizationNumber": "",
-  "notes": "",
-  "purchaseOrderEmail": "",
-  "ourCustomerNumber": "",
-  "paymentDays": 30,
-  "hasSelfBilling": true,
-  "isActive": true,
-  "isSubContractor": true,
-  "createdDate": "2020-09-23T13:19:42.450Z",
-  "modifiedDate": "2020-09-23T13:19:42.450Z",
-  "systemAccount": "5112826056d961c030000001",
-  "__v": 0
+  "data": {
+    "selfBillingSettings": {
+      "invoiceDeduction": 5,
+      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+      "invoiceNumberSeries": "UELEV23",
+      "invoiceCounter": 1,
+      "emailForSelfBilling": "tommy@seventime.se"
+    },
+    "_id": "5f6b2e6af24d5df55b69277",
+    "name": "UE lev 20200923",
+    "distributorNumber": "20",
+    "address": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": "",
+    "email": "",
+    "organizationNumber": "",
+    "notes": "",
+    "purchaseOrderEmail": "",
+    "ourCustomerNumber": "",
+    "paymentDays": 30,
+    "hasSelfBilling": true,
+    "isActive": true,
+    "isSubContractor": true,
+    "createdDate": "2020-09-23T13:19:42.450Z",
+    "modifiedDate": "2020-09-23T13:19:42.450Z",
+    "systemAccount": "5112826056d961c030000001",
+    "__v": 0
+  }
 }
 ```
 
@@ -5955,27 +6029,28 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5fca23df0317c3dae47b04a",
-    "name": "Kontaktperson 1",
-    "title": "",
-    "workPhone": "",
-    "cellPhone": "",
-    "email": "",
-    "distributor": "5f6b2e6af24d5df55b69277",
-    "distributorName": "UE lev 20200923",
-    "mainContact": false,
-    "isActive": true,
-    "createdDate": "2020-12-04T10:13:03.965Z",
-    "modifiedDate": "2020-12-04T10:13:03.965Z",
-    "__v": 0
-  },
-  {
-  // ...
-  }
-]
-
+{
+  "data": [
+    {
+      "_id": "5fca23df0317c3dae47b04a",
+      "name": "Kontaktperson 1",
+      "title": "",
+      "workPhone": "",
+      "cellPhone": "",
+      "email": "",
+      "distributor": "5f6b2e6af24d5df55b69277",
+      "distributorName": "UE lev 20200923",
+      "mainContact": false,
+      "isActive": true,
+      "createdDate": "2020-12-04T10:13:03.965Z",
+      "modifiedDate": "2020-12-04T10:13:03.965Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves distributor contact persons, a maximum of 500 contact persons will be returned.
@@ -5997,13 +6072,14 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 ```shell
 curl "https://app.seventime.se/api/1/purchaseOrders" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=2&page=5"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/purchaseOrders/?";
+let url = "https://app.seventime.se/api/1/purchaseOrders/?&limit=2&page=5";
 let options = {
   url: url,
   headers: {
@@ -6024,99 +6100,106 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "59d6041d5551819581034002",
-    "purchaseOrderNumber": "1009",
-    "purchaseOrderName": "Beställning",
-    "purchaseOrderInfoName": "ererer",
-    "language": "SV",
-    "headerText": "Vi önskar att beställa följande.",
-    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
-    "footerInfoText": "",
-    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-    "createdByUserName": "Tommy Hellström",
-    "ourReference": "5f48eb3e65d7ee4942c46eeb",
-    "ourReferenceName": "Tommy Hellström",
-    "approvedBy": null,
-    "distributor": "5f6b2e6af24d5df55b69277",
-    "distributorName": "Alheka",
-    "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-    "distributorVAT": "",
-    "ourCustomerNumber": "123456",
-    "contactPersonDistributor": null,
-    "contactPersonDistributorName": null,
-    "project": null,
-    "projectName": null,
-    "workOrder": null,
-    "workOrderName": "",
-    "workOrderNumber": "0",
-    "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
-    "totalAmount": 1000,
-    "totalTaxAmount": 250,
-    "totalAmountInclTax": 1250,
-    "taxPercent": 25,
-    "totalCost": 0,
-    "currencyCode": "SEK",
-    "currencyRate": 1,
-    "purchaseOrderStatus": 4,
-    "archived": false,
-    "archivedDate": null,
-    "sentDate": "2017-09-11T13:31:08.972Z",
-    "confirmationDate": "2017-09-11T13:31:41.071Z",
-    "desiredDeliveryDate": null,
-    "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
-    "paymentDays": 30,
-    "marking": "",
-    "deliveryAttention": "",
-    "deliveryPhone": "",
-    "publicLink": "l0qMb5V9L1uVMDHqBZ",
-    "approvedByName": null,
-    "invoiceAddress": {
-      "address": "Glimmingevägen 18",
-      "address2": "",
-      "zipCode": "12345",
-      "city": "V Karup",
-      "country": "",
-      "email": "",
-      "name": "Hellapps"
-    },
-    "deliveryAddress": {
-      "name": "",
-      "address": "",
-      "address2": "",
-      "zipCode": "",
-      "city": "",
-      "country": "",
-      "phone": ""
-    },
-    "documents": [],
-    "purchaseOrderLogEntries": [
-      {
-        "_id": "5f48eb3e65d7ee4942c46eeb",
-        "logType": 5,
-        "description": "",
-        "user": "59312765ad961c0318eb0a2",
-        "userName": "Tommy Hellström",
-        "logDate": "2017-09-11T13:31:08.972Z"
-      },
-      {
-      // ...
-      }
-    ],
-    "invoiceItems": [
-      {
-      // ...
-      }
-    ],
-    "createDate": "2017-09-11T13:31:08.963Z",
-    "__v": 0,
-    "projectNumber": "183897"
+{
+  "meta": {
+    "totalResources": 70,
+    "totalPages": 35,
+    "currentPage": 5
   },
-  {
-  // ...
-  }
-]
+  "data": [
+    {
+      "_id": "59d6041d5551819581034002",
+      "purchaseOrderNumber": "1009",
+      "purchaseOrderName": "Beställning",
+      "purchaseOrderInfoName": "ererer",
+      "language": "SV",
+      "headerText": "Vi önskar att beställa följande.",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
+      "footerInfoText": "",
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "ourReference": "5f48eb3e65d7ee4942c46eeb",
+      "ourReferenceName": "Tommy Hellström",
+      "approvedBy": null,
+      "distributor": "5f6b2e6af24d5df55b69277",
+      "distributorName": "Alheka",
+      "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+      "distributorVAT": "",
+      "ourCustomerNumber": "123456",
+      "contactPersonDistributor": null,
+      "contactPersonDistributorName": null,
+      "project": null,
+      "projectName": null,
+      "workOrder": null,
+      "workOrderName": "",
+      "workOrderNumber": "0",
+      "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
+      "totalAmount": 1000,
+      "totalTaxAmount": 250,
+      "totalAmountInclTax": 1250,
+      "taxPercent": 25,
+      "totalCost": 0,
+      "currencyCode": "SEK",
+      "currencyRate": 1,
+      "purchaseOrderStatus": 4,
+      "archived": false,
+      "archivedDate": null,
+      "sentDate": "2017-09-11T13:31:08.972Z",
+      "confirmationDate": "2017-09-11T13:31:41.071Z",
+      "desiredDeliveryDate": null,
+      "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
+      "paymentDays": 30,
+      "marking": "",
+      "deliveryAttention": "",
+      "deliveryPhone": "",
+      "publicLink": "l0qMb5V9L1uVMDHqBZ",
+      "approvedByName": null,
+      "invoiceAddress": {
+        "address": "Glimmingevägen 18",
+        "address2": "",
+        "zipCode": "12345",
+        "city": "V Karup",
+        "country": "",
+        "email": "",
+        "name": "Hellapps"
+      },
+      "deliveryAddress": {
+        "name": "",
+        "address": "",
+        "address2": "",
+        "zipCode": "",
+        "city": "",
+        "country": "",
+        "phone": ""
+      },
+      "documents": [],
+      "purchaseOrderLogEntries": [
+        {
+          "_id": "5f48eb3e65d7ee4942c46eeb",
+          "logType": 5,
+          "description": "",
+          "user": "59312765ad961c0318eb0a2",
+          "userName": "Tommy Hellström",
+          "logDate": "2017-09-11T13:31:08.972Z"
+        },
+        {
+          // ...
+        }
+      ],
+      "invoiceItems": [
+        {
+          // ...
+        }
+      ],
+      "createDate": "2017-09-11T13:31:08.963Z",
+      "__v": 0,
+      "projectNumber": "183897"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
 This endpoint retrieves purchase orders, a maximum of 500 purchase orders will be returned.
@@ -6171,92 +6254,94 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "deliveryAddress": {
-    "name": "",
-    "address": "",
-    "address2": "",
-    "zipCode": "",
-    "city": "",
-    "country": "",
-    "phone": ""
-  },
-  "invoiceAddress": {
-    "address": "Glimmingevägen 18",
-    "address2": "",
-    "zipCode": "12345",
-    "city": "V Karup",
-    "country": "",
-    "email": "",
-    "name": "Hellapps"
-  },
-  "_id": "59d6041d5551819581034002",
-  "purchaseOrderNumber": "1009",
-  "purchaseOrderName": "Beställning",
-  "purchaseOrderInfoName": "ererer",
-  "language": "SV",
-  "headerText": "Vi önskar att beställa följande.",
-  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
-  "footerInfoText": "",
-  "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-  "createdByUserName": "Tommy Hellström",
-  "ourReference": "5f48eb3e65d7ee4942c46eeb",
-  "ourReferenceName": "Tommy Hellström",
-  "approvedBy": null,
-  "distributor": "5f6b2e6af24d5df55b69277",
-  "distributorName": "Alheka",
-  "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-  "distributorVAT": "",
-  "ourCustomerNumber": "123456",
-  "contactPersonDistributor": null,
-  "contactPersonDistributorName": null,
-  "project": null,
-  "projectName": null,
-  "workOrder": null,
-  "workOrderName": "",
-  "workOrderNumber": "0",
-  "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
-  "totalAmount": 1000,
-  "totalTaxAmount": 250,
-  "totalAmountInclTax": 1250,
-  "taxPercent": 25,
-  "totalCost": 0,
-  "currencyCode": "SEK",
-  "currencyRate": 1,
-  "purchaseOrderStatus": 4,
-  "archived": false,
-  "archivedDate": null,
-  "sentDate": "2017-09-11T13:31:08.972Z",
-  "confirmationDate": "2017-09-11T13:31:41.071Z",
-  "desiredDeliveryDate": null,
-  "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
-  "paymentDays": 30,
-  "marking": "",
-  "deliveryAttention": "",
-  "deliveryPhone": "",
-  "publicLink": "l0qNw5V8L1uVMqoDRqbZ",
-  "approvedByName": null,
-  "documents": [],
-  "purchaseOrderLogEntries": [
-    {
-      "logDate": "2017-09-11T13:31:08.972Z",
-      "_id": "59b6901c1598211831000063",
-      "logType": 5,
-      "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström"
+  "data": {
+    "deliveryAddress": {
+      "name": "",
+      "address": "",
+      "address2": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": ""
     },
-    {
-    // ...
-    }
-  ],
-  "invoiceItems": [
-    {
-    // ...
-    }
-  ],
-  "createDate": "2017-09-11T13:31:08.963Z",
-  "__v": 0,
-  "projectNumber": "183897"
+    "invoiceAddress": {
+      "address": "Glimmingevägen 18",
+      "address2": "",
+      "zipCode": "12345",
+      "city": "V Karup",
+      "country": "",
+      "email": "",
+      "name": "Hellapps"
+    },
+    "_id": "59d6041d5551819581034002",
+    "purchaseOrderNumber": "1009",
+    "purchaseOrderName": "Beställning",
+    "purchaseOrderInfoName": "ererer",
+    "language": "SV",
+    "headerText": "Vi önskar att beställa följande.",
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
+    "footerInfoText": "",
+    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+    "createdByUserName": "Tommy Hellström",
+    "ourReference": "5f48eb3e65d7ee4942c46eeb",
+    "ourReferenceName": "Tommy Hellström",
+    "approvedBy": null,
+    "distributor": "5f6b2e6af24d5df55b69277",
+    "distributorName": "Alheka",
+    "distributorAddress": "Glimmingevägen 18<br>26974 Västra Karup",
+    "distributorVAT": "",
+    "ourCustomerNumber": "123456",
+    "contactPersonDistributor": null,
+    "contactPersonDistributorName": null,
+    "project": null,
+    "projectName": null,
+    "workOrder": null,
+    "workOrderName": "",
+    "workOrderNumber": "0",
+    "purchaseOrderDate": "2017-09-11T13:30:55.026Z",
+    "totalAmount": 1000,
+    "totalTaxAmount": 250,
+    "totalAmountInclTax": 1250,
+    "taxPercent": 25,
+    "totalCost": 0,
+    "currencyCode": "SEK",
+    "currencyRate": 1,
+    "purchaseOrderStatus": 4,
+    "archived": false,
+    "archivedDate": null,
+    "sentDate": "2017-09-11T13:31:08.972Z",
+    "confirmationDate": "2017-09-11T13:31:41.071Z",
+    "desiredDeliveryDate": null,
+    "expectedDeliveryDate": "2017-09-14T22:00:00.000Z",
+    "paymentDays": 30,
+    "marking": "",
+    "deliveryAttention": "",
+    "deliveryPhone": "",
+    "publicLink": "l0qNw5V8L1uVMqoDRqbZ",
+    "approvedByName": null,
+    "documents": [],
+    "purchaseOrderLogEntries": [
+      {
+        "logDate": "2017-09-11T13:31:08.972Z",
+        "_id": "59b6901c1598211831000063",
+        "logType": 5,
+        "description": "",
+        "user": "5f48eb3e65d7ee4942c46eeb",
+        "userName": "Tommy Hellström"
+      },
+      {
+        // ...
+      }
+    ],
+    "invoiceItems": [
+      {
+        // ...
+      }
+    ],
+    "createDate": "2017-09-11T13:31:08.963Z",
+    "__v": 0,
+    "projectNumber": "183897"
+  }
 }
 ```
 
@@ -6496,21 +6581,23 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "57076abe8010bd22792004b",
-    "name": "Kontor Syd",
-    "code": "Syd",
-    "isActive": true,
-    "__v": 0
-  },
-  {
-  // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "57076abe8010bd22792004b",
+      "name": "Kontor Syd",
+      "code": "Syd",
+      "isActive": true,
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves purchase orders, a maximum of 500 result units will be returned.
+This endpoint retrieves purchase orders.
 
 ### HTTP Request
 
@@ -6555,11 +6642,13 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "57076abe8010bd22792004b",
-  "name": "Kontor Syd",
-  "code": "Syd",
-  "isActive": true,
-  "__v": 0
+  "data": {
+    "_id": "57076abe8010bd22792004b",
+    "name": "Kontor Syd",
+    "code": "Syd",
+    "isActive": true,
+    "__v": 0
+  }
 }
 ```
 
@@ -6581,13 +6670,14 @@ _id | The _id of the result unit to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/1/quotes" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -d "limit=5&page=5"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/quotes/?";
+let url = "https://app.seventime.se/api/1/quotes/?&limit=5&page=5";
 let options = {
   url: url,
   headers: {
@@ -6608,8 +6698,276 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
+{
+  "meta": {
+    "totalResources": 195,
+    "totalPages": 98,
+    "currentPage": 5
+  },
+  "data": [
+    {
+      "_id": "5c33891321361d7d5235d294",
+      "quoteNumber": "1054",
+      "quoteType": 0,
+      "quoteName": "Prisindikation",
+      "quoteInfoName": "",
+      "quoteCategory": null,
+      "quoteCategoryName": null,
+      "language": "SV",
+      "description": null,
+      "headerText": null,
+      "footerInfoText": null,
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "ourReference": "5f48eb3e65d7ee4942c46eeb",
+      "ourReferenceName": "Tommy Hellström",
+      "salesAgent": "5f48eb3e65d7ee4942c46eeb",
+      "salesAgentName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps",
+      "customerNumber": "44312",
+      "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
+      "customerVAT": "",
+      "contactPerson": null,
+      "contactPersonName": null,
+      "project": null,
+      "projectName": null,
+      "workOrder": null,
+      "workOrderName": "",
+      "workOrderNumber": "",
+      "quoteDate": "2019-01-07T17:13:55.271Z",
+      "validToDate": "2019-02-06T17:13:55.383Z",
+      "discountInPercent": 0,
+      "totalAmount": 500,
+      "totalTaxAmount": 125,
+      "totalAmountInclTax": 625,
+      "taxPercent": 25,
+      "totalCost": 0,
+      "useQuoteValue": false,
+      "quoteValue": 0,
+      "useQuoteCost": false,
+      "quoteCost": 0,
+      "currencyCode": "SEK",
+      "currencyRate": 1,
+      "quoteStatus": 3,
+      "archived": false,
+      "archivedDate": null,
+      "deliveryDate": null,
+      "deliveryDateEnd": null,
+      "sentDate": "2019-01-07T17:15:10.109Z",
+      "acceptedDate": "2019-01-07T00:00:00.000Z",
+      "rejectedDate": null,
+      "invoice": null,
+      "invoiceNumber": "",
+      "invoicedDate": null,
+      "priceList": null,
+      "priceListName": "",
+      "marking": "",
+      "houseDeductionBasisAmount": 0,
+      "houseDeductionAmount": 0,
+      "enableQuoteConditions": false,
+      "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
+      "multipleTaxesOnRows": false,
+      "showPriceInclTaxesOnRows": true,
+      "confirmationDate": null,
+      "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
+      "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
+      "confirmationTitle": "Orderbekräftelse",
+      "publicLink": "ObLBZZ0wDWcjlx7Be516",
+      "useBudgetCalculation": false,
+      "quoteAcceptReason": null,
+      "quoteAcceptReasonName": null,
+      "quoteDeclineReason": null,
+      "quoteDeclineReasonName": null,
+      "notes": "",
+      "openNotificationSent": false,
+      "quoteTemplate": "5b7dd2ba41cb2a725326s80",
+      "stockReservationIsDone": false,
+      "quoteElements": [
+        {
+          "_id": "5b7ada8bc41cb2341681",
+          "content": {
+            "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
+            "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
+          },
+          "backgroundColor": "FAFAFA",
+          "bottomMargin": 20,
+          "topMargin": 20,
+          "elementTypeId": 1000,
+          "itemId": "0.1735729354019433"
+        },
+        {
+          "_id": "5c25fd4e818921172d237086",
+          "content": {
+            "invoiceItems": [
+              {
+                "stockLocation": "5bbd3a49dda7dbc37293680",
+                "editMode": true,
+                "selectedFlag": false,
+                "houseWorkTypeOfWork": 0,
+                "houseWorkFlag": false,
+                "totalCost": 0,
+                "totalAmountInclTax": 0,
+                "totalTaxAmount": 0,
+                "totalAmount": 500,
+                "taxPercent": 25,
+                "discountPercent": 0,
+                "supplementChargePercent": 0,
+                "discountInPercent": 0,
+                "unitCost": 0,
+                "unit": "Styck",
+                "priceListName": null,
+                "priceList": null,
+                "unitPrice": 100,
+                "numberOfItems": "5",
+                "machineName": "",
+                "machine": null,
+                "driverJournalItemTypeName": "",
+                "driverJournalItemType": null,
+                "expenseItemName": "Seven Time - 5 användare - #2",
+                "expenseItem": "5de78aed1332719192362bed",
+                "categoryName": "",
+                "timeCategory": null,
+                "itemType": "expense",
+                "createDate": null,
+                "articleNumber": "203",
+                "itemOrder": 1024,
+                "itemId": "0.29956387071628154",
+                "description": "",
+                "name": "",
+                "_id": null
+              }
+            ],
+            "totalAmount": 500,
+            "totalTaxAmount": 125,
+            "totalAmountInclTax": 625,
+            "taxPercent": 25,
+            "totalCost": 0,
+            "houseDeductionBasisAmount": 0,
+            "houseDeductionAmount": 0,
+            "selectableRows": false,
+            "showOnlyTotalPrice": false,
+            "hiddenColumns": [
+              "articleNumber"
+            ]
+          },
+          "backgroundColor": "FAFAFA",
+          "bottomMargin": 20,
+          "topMargin": 20,
+          "elementTypeId": 1200,
+          "itemId": "0.086780107201752"
+        },
+        {
+          "_id": "5b7a808bc41361d87a3",
+          "content": {
+            "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
+            "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
+          },
+          "backgroundColor": "FAFAFA",
+          "bottomMargin": 20,
+          "topMargin": 20,
+          "elementTypeId": 1000,
+          "itemId": "0.047508293157285886"
+        }
+      ],
+      "budgetCalculation": {
+        "invoiceItems": [],
+        "totalBenefitAmount": 0,
+        "totalCostAmount": 0
+      },
+      "houseProperties": {
+        "typeOfProperty": 1,
+        "propertyDescription": "",
+        "housingSocietyNumber": "",
+        "apartmentNumber": "",
+        "maxDeductionAmount": 50000,
+        "personalNumber": "",
+        "deductionDistribution": []
+      },
+      "deliveryAddress": {
+        "name": "",
+        "address": "",
+        "address2": "",
+        "zipCode": "",
+        "city": "",
+        "country": "",
+        "phone": ""
+      },
+      "documents": [],
+      "quoteLogEntries": [
+        {
+          "_id": "5c33831c3512857d5cd6195",
+          "logDate": "2019-01-07T17:15:08.533Z",
+          "userName": "Tommy Hellström",
+          "user": "59312765ad961c0318eb0a2",
+          "description": "",
+          "logType": 1,
+          "entryId": "mZjaXWo2oRTr"
+        },
+        {
+          // ...
+        }
+      ],
+      "invoiceItems": [],
+      "createDate": "2019-01-07T17:15:08.532Z",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves quotes, a maximum of 500 quotes will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/1/quotes`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+quoteName                           |  | If specified, quotes that match the parameter will be included.
+quoteNumber                         |  | If specified, quotes that match the parameter will be included.
+sortBy                              |  | If specified, a sort will be made on the specified parameter
+sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a Specific Quote
+
+```shell
+curl "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294" \
+  -H "Client-Secret: thisismysecretkey"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
     "_id": "5c33891321361d7d5235d294",
     "quoteNumber": "1054",
     "quoteType": 0,
@@ -6810,272 +7168,13 @@ request(options, function(error, response, body) {
         "entryId": "mZjaXWo2oRTr"
       },
       {
-      // ...
+        // ...
       }
     ],
     "invoiceItems": [],
     "createDate": "2019-01-07T17:15:08.532Z",
     "__v": 0
-  },
-  {
-  // ...
   }
-]
-```
-
-This endpoint retrieves quotes, a maximum of 500 quotes will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/1/quotes`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-quoteName                           |  | If specified, quotes that match the parameter will be included.
-quoteNumber                         |  | If specified, quotes that match the parameter will be included.
-sortBy                              |  | If specified, a sort will be made on the specified parameter
-sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get a Specific Quote
-
-```shell
-curl "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294" \
-  -H "Client-Secret: thisismysecretkey"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey"
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-  {
-  "_id": "5c33891321361d7d5235d294",
-  "quoteNumber": "1054",
-  "quoteType": 0,
-  "quoteName": "Prisindikation",
-  "quoteInfoName": "",
-  "quoteCategory": null,
-  "quoteCategoryName": null,
-  "language": "SV",
-  "description": null,
-  "headerText": null,
-  "footerInfoText": null,
-  "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
-  "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-  "createdByUserName": "Tommy Hellström",
-  "ourReference": "5f48eb3e65d7ee4942c46eeb",
-  "ourReferenceName": "Tommy Hellström",
-  "salesAgent": "5f48eb3e65d7ee4942c46eeb",
-  "salesAgentName": "Tommy Hellström",
-  "customer": "5bb26376c42fb99275000080",
-  "customerName": "Hellapps",
-  "customerNumber": "44312",
-  "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
-  "customerVAT": "",
-  "contactPerson": null,
-  "contactPersonName": null,
-  "project": null,
-  "projectName": null,
-  "workOrder": null,
-  "workOrderName": "",
-  "workOrderNumber": "",
-  "quoteDate": "2019-01-07T17:13:55.271Z",
-  "validToDate": "2019-02-06T17:13:55.383Z",
-  "discountInPercent": 0,
-  "totalAmount": 500,
-  "totalTaxAmount": 125,
-  "totalAmountInclTax": 625,
-  "taxPercent": 25,
-  "totalCost": 0,
-  "useQuoteValue": false,
-  "quoteValue": 0,
-  "useQuoteCost": false,
-  "quoteCost": 0,
-  "currencyCode": "SEK",
-  "currencyRate": 1,
-  "quoteStatus": 3,
-  "archived": false,
-  "archivedDate": null,
-  "deliveryDate": null,
-  "deliveryDateEnd": null,
-  "sentDate": "2019-01-07T17:15:10.109Z",
-  "acceptedDate": "2019-01-07T00:00:00.000Z",
-  "rejectedDate": null,
-  "invoice": null,
-  "invoiceNumber": "",
-  "invoicedDate": null,
-  "priceList": null,
-  "priceListName": "",
-  "marking": "",
-  "houseDeductionBasisAmount": 0,
-  "houseDeductionAmount": 0,
-  "enableQuoteConditions": false,
-  "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
-  "multipleTaxesOnRows": false,
-  "showPriceInclTaxesOnRows": true,
-  "confirmationDate": null,
-  "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
-  "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
-  "confirmationTitle": "Orderbekräftelse",
-  "publicLink": "ObLBZZ0wDWcjlx7Be516",
-  "useBudgetCalculation": false,
-  "quoteAcceptReason": null,
-  "quoteAcceptReasonName": null,
-  "quoteDeclineReason": null,
-  "quoteDeclineReasonName": null,
-  "notes": "",
-  "openNotificationSent": false,
-  "quoteTemplate": "5b7dd2ba41cb2a725326s80",
-  "stockReservationIsDone": false,
-  "quoteElements": [
-    {
-      "_id": "5b7ada8bc41cb2341681",
-      "content": {
-        "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
-        "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
-      },
-      "backgroundColor": "FAFAFA",
-      "bottomMargin": 20,
-      "topMargin": 20,
-      "elementTypeId": 1000,
-      "itemId": "0.1735729354019433"
-    },
-    {
-      "_id": "5c25fd4e818921172d237086",
-      "content": {
-        "invoiceItems": [
-          {
-            "stockLocation": "5bbd3a49dda7dbc37293680",
-            "editMode": true,
-            "selectedFlag": false,
-            "houseWorkTypeOfWork": 0,
-            "houseWorkFlag": false,
-            "totalCost": 0,
-            "totalAmountInclTax": 0,
-            "totalTaxAmount": 0,
-            "totalAmount": 500,
-            "taxPercent": 25,
-            "discountPercent": 0,
-            "supplementChargePercent": 0,
-            "discountInPercent": 0,
-            "unitCost": 0,
-            "unit": "Styck",
-            "priceListName": null,
-            "priceList": null,
-            "unitPrice": 100,
-            "numberOfItems": "5",
-            "machineName": "",
-            "machine": null,
-            "driverJournalItemTypeName": "",
-            "driverJournalItemType": null,
-            "expenseItemName": "Seven Time - 5 användare - #2",
-            "expenseItem": "5de78aed1332719192362bed",
-            "categoryName": "",
-            "timeCategory": null,
-            "itemType": "expense",
-            "createDate": null,
-            "articleNumber": "203",
-            "itemOrder": 1024,
-            "itemId": "0.29956387071628154",
-            "description": "",
-            "name": "",
-            "_id": null
-          }
-        ],
-        "totalAmount": 500,
-        "totalTaxAmount": 125,
-        "totalAmountInclTax": 625,
-        "taxPercent": 25,
-        "totalCost": 0,
-        "houseDeductionBasisAmount": 0,
-        "houseDeductionAmount": 0,
-        "selectableRows": false,
-        "showOnlyTotalPrice": false,
-        "hiddenColumns": [
-          "articleNumber"
-        ]
-      },
-      "backgroundColor": "FAFAFA",
-      "bottomMargin": 20,
-      "topMargin": 20,
-      "elementTypeId": 1200,
-      "itemId": "0.086780107201752"
-    },
-    {
-      "_id": "5b7a808bc41361d87a3",
-      "content": {
-        "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
-        "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
-      },
-      "backgroundColor": "FAFAFA",
-      "bottomMargin": 20,
-      "topMargin": 20,
-      "elementTypeId": 1000,
-      "itemId": "0.047508293157285886"
-    }
-  ],
-  "budgetCalculation": {
-    "invoiceItems": [],
-    "totalBenefitAmount": 0,
-    "totalCostAmount": 0
-  },
-  "houseProperties": {
-    "typeOfProperty": 1,
-    "propertyDescription": "",
-    "housingSocietyNumber": "",
-    "apartmentNumber": "",
-    "maxDeductionAmount": 50000,
-    "personalNumber": "",
-    "deductionDistribution": []
-  },
-  "deliveryAddress": {
-    "name": "",
-    "address": "",
-    "address2": "",
-    "zipCode": "",
-    "city": "",
-    "country": "",
-    "phone": ""
-  },
-  "documents": [],
-  "quoteLogEntries": [
-    {
-      "_id": "5c33831c3512857d5cd6195",
-      "logDate": "2019-01-07T17:15:08.533Z",
-      "userName": "Tommy Hellström",
-      "user": "59312765ad961c0318eb0a2",
-      "description": "",
-      "logType": 1,
-      "entryId": "mZjaXWo2oRTr"
-    },
-    {
-      // ...
-    }
-  ],
-  "invoiceItems": [],
-  "createDate": "2019-01-07T17:15:08.532Z",
-  "__v": 0
 }
 ```
 
@@ -7123,59 +7222,61 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "5fb02816ed7ed72d9d936a0fa",
-    "columnContents": [
-      "This is a new footer!<br><br>"
-    ],
-    "templateName": "Standard utan sektioner",
-    "quoteType": 0,
-    "language": "",
-    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-    "createdByUserName": "Tommy Hellström",
-    "createDate": "2020-11-09T13:31:10.929Z",
-    "documents": [],
-    "quoteElements": [
-      {
-        "_id": "5b7a808bc41cb2a725000081",
-        "itemId": "0.2991772478801382",
-        "elementTypeId": 1400,
-        "topMargin": 20,
-        "bottomMargin": 20,
-        "backgroundColor": "FAFAFA",
-        "content": null
-      }
-    ],
-    "overrideFooter": false,
-    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>This is a new footer!<br><br></td></tr></table>",
-    "footerNumOfCols": 1,
-    "overrideLogoAndAddress": false,
-    "logo": [
-      {
-        "_id": "5f6b5b15468263005f22404f3",
-        "createDate": "2020-09-23T14:26:29.655Z",
-        "modifiedDate": "2020-09-23T14:26:29.655Z",
-        "name": "logo-med-beskrivande-text-caps-black-text-w300.png",
-        "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/5112826056d961c030000001/quoteTemplates/5f6b45ac31d0496b82642951/logo/logo-med-beskrivande-text-caps-black-text-w300.png?AWSAccessKeyId=AKIAIS4KY6NEYJKCBSGA&Expires=1605360649&Signature=kVutB84nfsqrmqCpHsAL3AGX4q8%3D",
-        "contentType": "image/png",
-        "size": 6765,
-        "user": "5f48eb3e65d7ee4942c46eeb",
-        "userName": "Tommy Hellström",
-      }
-    ],
-    "logotypeWidth": 200,
-    "logoPosition": "left",
-    "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>",
-    "__v": 0
-  },
-  {
-  // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "5fb02816ed7ed72d9d936a0fa",
+      "columnContents": [
+        "This is a new footer!<br><br>"
+      ],
+      "templateName": "Standard utan sektioner",
+      "quoteType": 0,
+      "language": "",
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "createDate": "2020-11-09T13:31:10.929Z",
+      "documents": [],
+      "quoteElements": [
+        {
+          "_id": "5b7a808bc41cb2a725000081",
+          "itemId": "0.2991772478801382",
+          "elementTypeId": 1400,
+          "topMargin": 20,
+          "bottomMargin": 20,
+          "backgroundColor": "FAFAFA",
+          "content": null
+        }
+      ],
+      "overrideFooter": false,
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>This is a new footer!<br><br></td></tr></table>",
+      "footerNumOfCols": 1,
+      "overrideLogoAndAddress": false,
+      "logo": [
+        {
+          "_id": "5f6b5b15468263005f22404f3",
+          "createDate": "2020-09-23T14:26:29.655Z",
+          "modifiedDate": "2020-09-23T14:26:29.655Z",
+          "name": "logo-med-beskrivande-text-caps-black-text-w300.png",
+          "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/5112826056d961c030000001/quoteTemplates/5f6b45ac31d0496b82642951/logo/logo-med-beskrivande-text-caps-black-text-w300.png?AWSAccessKeyId=AKIAIS4KY6NEYJKCBSGA&Expires=1605360649&Signature=kVutB84nfsqrmqCpHsAL3AGX4q8%3D",
+          "contentType": "image/png",
+          "size": 6765,
+          "user": "5f48eb3e65d7ee4942c46eeb",
+          "userName": "Tommy Hellström"
+        }
+      ],
+      "logotypeWidth": 200,
+      "logoPosition": "left",
+      "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>",
+      "__v": 0
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves quote templates, a maximum of 500 quote templates will be returned.
+This endpoint retrieves quote templates.
 
 ### HTTP Request
 
@@ -7185,6 +7286,7 @@ This endpoint retrieves quote templates, a maximum of 500 quote templates will b
 
 Parameter | Default | Description
 --------- | ------- | -----------
+templateName                        |  | If specified, quote templates that match the parameter will be included.
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -7219,20 +7321,22 @@ request(options, function(error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "_id": "58a678badc33073a42e02802",
-    "isActive": true,
-    "__v": 0,
-    "quoteCategoryName": "Utbildning"
-  },
-  {
-  // ...
-  }
-]
+{
+  "data": [
+    {
+      "_id": "58a678badc33073a42e02802",
+      "isActive": true,
+      "__v": 0,
+      "quoteCategoryName": "Utbildning"
+    },
+    {
+      // ...
+    }
+  ]
+}
 ```
 
-This endpoint retrieves quote categories, a maximum of 500 quote categories will be returned.
+This endpoint retrieves quote categories.
 
 ### HTTP Request
 
@@ -7242,8 +7346,8 @@ This endpoint retrieves quote categories, a maximum of 500 quote categories will
 
 Parameter | Default | Description
 --------- | ------- | -----------
+quoteCategoryName                   |  | If specified, quote categories that match the parameter will be included.
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-// TODO: paging, limits etc
