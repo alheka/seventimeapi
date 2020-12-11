@@ -340,7 +340,7 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5bb26376c42fb99275000080",
+  "_id": "571f61330c7f498a2d0001a4",
   "customerNumber": "733352",
   "organizationNumber": "555555-5555",
   "email": "support@seventime.se",
@@ -382,8 +382,20 @@ email               | String | No | Email address
 organizationNumber  | String | No | Organization number or Personal number
 vatNumber           | String | No | VAT number
 paymentDays         | Number | No | Payment days for the user
+deliveryAddress     | String | No | Contains attributes specific for delivery. See below for details.
 billingSettings     | Object | No | Contains attributes specific for billing. See below for details.
 
+**Attributes for deliveryAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+name                        | String | No | Name on delivery address
+address                     | String | No | Primary delivery address
+address2                    | String | No | Secondary delivery address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country
+phone                       | String | No | Phone number
 
 **Attributes for billingSettings**
 
@@ -417,6 +429,145 @@ Parameter | Type | Required? | Description
 userName   | String| Yes | Full name of person
 personalNumber   | String| Yes | Personal number
 distributionPercent   | Number | Yes | 1-100
+
+## Update a Customer
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/1/customers/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=571f61330c7f498a2d0001a4&name=Seven Time AB&customerNumber=733352" 
+```
+
+```javascript
+let formData = {
+  _id: '571f61330c7f498a2d0001a4',
+  name: 'Seven Time AB',
+  customerNumber: '733352'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/customers',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+    console.log("Customer updated: " + body.name + ", _id: " + body._id);
+
+  } else {
+    console.error("ERROR! Unable to update customer: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "571f61330c7f498a2d0001a4",
+  "customerNumber": "733352",
+  "organizationNumber": "555555-5555",
+  "email": "support@seventime.se",
+  "phone": "0431-360050",
+  "city": "Västra Karup",
+  "zipCode": "269 74",
+  "address": "Glimmingevägen 18",
+  "name": "Seven Time AB",
+  "documents": [],
+  "billingSettings": {
+    "deductionDistribution": []
+  },
+  "modifiedDate": "2018-10-01T18:12:06.025Z",
+  "createdDate": "2018-10-01T18:12:06.025Z",
+  "__v": 0,
+  "isActive": true
+}
+Customer updated: Seven Time AB, _id: 571f61330c7f498a2d0001a4
+```
+
+This endpoint updates a specific customer.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/customers/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                 | String | Yes | Id of the customer
+name                | String | Yes | Name of the customer
+customerNumber      | String | Yes | Customer number. This has to be unique or the same as before the update
+address             | String | No | Address
+address2            | String | No | Address 2
+zipCode             | String | No | Zip code
+city                | String | No | City
+country             | String | No | Country code
+phone               | String | No | Phone number
+email               | String | No | Email address
+organizationNumber  | String | No | Organization number or Personal number
+vatNumber           | String | No | VAT number
+paymentDays         | Number | No | Payment days for the customer
+pricePerHour        | Number | No | Price for hour
+typeOfCustomer      | Number | No | Type of customer. 10 for company, 20 for private. Default is 10
+notes               | String | No | Notes
+isActive            | Boolean| No | Is the customer active? Default is true
+deliveryAddress     | Object | No | Contains attributes specific for delivery. See below for details.
+billingSettings     | Object | No | Contains attributes specific for billing. See below for details.
+
+**Attributes for deliveryAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+name                        | String | No | Name on delivery address
+address                     | String | No | Primary delivery address
+address2                    | String | No | Secondary delivery address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country
+phone                       | String | No | Phone number
+
+**Attributes for billingSettings**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+useSeparateBillingAddress   | Boolean | No | Should an alternative billing address be used?
+address                     | String | No | Used if useSeparateBillingAddress is true
+address2                    | String | No | Used if useSeparateBillingAddress is true
+zipCode                     | String | No | Used if useSeparateBillingAddress is true
+city                        | String | No | Used if useSeparateBillingAddress is true
+useSeparateBillingEmail     | Boolean | No | If 'invoiceEmail' should be used
+invoiceEmail                | String | No | Used for invoices if useSeparateBillingEmail is true
+invoiceDeliveryType         | Number | No | Empty or 0 = Email, 10 = Postal letter, 20 = Svefaktura
+defaultEmailSubject         | String | No | Default email subject for invoices
+isConstructionCompany       | Boolean | No | Is construction company
+isROTCustomer               | Boolean | No | Is ROT customer
+isRUTCustomer               | Boolean | No | Is RUT customer
+typeOfProperty              | Number | No | 1 = Detached property, 2 = Condominium
+propertyDescription         | String | No | Swedish: Fastighetsbeteckning
+housingSocietyNumber        | String | No | Swedish: Orgnr för bostadsrättsförening
+apartmentNumber             | String | No | Swedish: Lägenhetsnummer
+deductionDistribution       | Array | No | Array of DeductionItems. See below for details.
+
+
+**Attributes for DeductionItem**
+
+DeductionItem is used to distribute ROT / RUT work
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+userName   | String| Yes | Full name of person
+personalNumber   | String| Yes | Personal number
+distributionPercent   | Number | Yes | 1-100
+
+
 
 # Contact Persons
 
@@ -967,7 +1118,7 @@ Parameter | Default | Description
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Create User
+## Create a User
 
 ```shell
   curl -X POST "https://app.seventime.se/api/1/users/" \
@@ -1025,14 +1176,13 @@ request.post(options, function (error, response, body) {
   "isActivated": false,
   "language": "SV"
 }
-
 ```
 
 This endpoint creates a user.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/workOrders/`
+`POST https://app.seventime.se/api/1/users/`
 
 ### POST Parameters
 
@@ -1050,6 +1200,86 @@ isActive           | Boolean  | No  | Should the user be active?
 isActivated        | Boolean  | No  | Should the user be activated?
 password           | String   | No  | Password of the user
 language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
+
+## Update a User
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/1/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fb3e157f795553d05751946&firstName=Tommy&lastName=Hellström&userName=TommyH" 
+```
+
+```javascript
+let formData = {
+  _id: '5fb3e157f795553d05751946',
+  firstName: 'Tommy',
+  lastName: 'Hellström',
+  userName: 'TommyH'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/1/users',
+  form: formData,
+  headers: {
+    "Client-Secret": clientSecret,
+    "Content-Type": "x-www-form-urlencoded"
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+    console.log("User updated: " + body.firstName + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update user: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+  "email": "tommy@nummer7.se",
+  "userName": "TommyH",
+  "createdDate": "2020-11-17T14:42:31.533Z",
+  "modifiedDate": "2020-12-11T13:25:07.332Z",
+  "userRoleId": 1,
+  "isActive": true,
+  "isActivated": false,
+  "language": "SV"
+}
+User updated: Tommy, _id: 5fb3e157f795553d05751946
+```
+
+This endpoint updates a specific user.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/1/users/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+firstName          | String   | Yes | First name of the user
+lastName           | String   | Yes | Last name of the user
+email              | String   | Yes | Email of the user
+userName           | String   | Yes | Username
+userRoleId         | String   | Yes | User role id
+employeeNumber     | String   | No  | EmployeeNumber
+workPhone          | String   | No  | Work phone number
+cellPhone          | String   | No  | Cell phone number
+isActive           | Boolean  | No  | Should the user be active?
+isActivated        | Boolean  | No  | Should the user be activated?
+password           | String   | No  | Password of the user
+language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
+vacationDaysPerYear| Number   | No  | Number of vacation days per year
 
 
 # Departments
