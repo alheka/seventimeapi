@@ -65,13 +65,15 @@ Default 100, min 1, max 500
 ## Pagination
 min 1
 
+# Application/json/content-type
+
 # Customers
 
 ## Get Customers
 
 
 ```shell
-curl "https://app.seventime.se/api/1/customers" \
+curl "https://app.seventime.se/api/2/customers" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page=2"
 ```
@@ -79,7 +81,7 @@ curl "https://app.seventime.se/api/1/customers" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/customers/?&limit=10&page=2";
+let url = "https://app.seventime.se/api/2/customers/?&limit=10&page=2";
 let options = {
   url: url,
   headers: {
@@ -174,11 +176,11 @@ This endpoint retrieves customers, a maximum of 500 customers will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/customers`
+`GET https://app.seventime.se/api/2/customers`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/customers/?organizationNumber=555555-5555`
+E.g. `https://app.seventime.se/api/2/customers/?organizationNumber=555555-5555`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -193,14 +195,14 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 ## Get a Specific Customer
 
 ```shell
-curl "https://app.seventime.se/api/1/customers/571f61330c7f498a2d0001a4" \
+curl "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/customers/571f61330c7f498a2d0001a4";
+let url = "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4";
 let options = {
   url: url,
   headers: {
@@ -287,7 +289,7 @@ This endpoint retrieves a specific customer.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/customers/<_id>`
+`GET https://app.seventime.se/api/2/customers/<_id>`
 
 ### URL Parameters
 
@@ -300,13 +302,13 @@ _id | The _id of the customer to retrieve
 
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/customers/" \
+  curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   name: 'Tommy Hellström',
   address: 'Glimmingevägen 18',
   zipCode: '269 74',
@@ -317,18 +319,18 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/customers',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/customers',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create customer: " + error);
     console.error(body);
@@ -364,7 +366,7 @@ This endpoint creates a specific customer.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/customers/`
+`POST https://app.seventime.se/api/2/customers/`
 
 ### POST Parameters
 
@@ -433,24 +435,25 @@ distributionPercent   | Number | Yes | 1-100
 ## Update a Customer
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/1/customers/" \
+  curl -X PUT "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "_id=571f61330c7f498a2d0001a4&name=Seven Time AB&customerNumber=733352" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   _id: '571f61330c7f498a2d0001a4',
   name: 'Seven Time AB',
   customerNumber: '733352'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/customers',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/customers',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -489,16 +492,16 @@ request.put(options, function (error, response, body) {
   "__v": 0,
   "isActive": true
 }
-Customer updated: Seven Time AB, _id: 571f61330c7f498a2d0001a4
+"Customer updated: Seven Time AB, _id: 571f61330c7f498a2d0001a4"
 ```
 
 This endpoint updates a specific customer.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/customers/`
+`POST https://app.seventime.se/api/2/customers/`
 
-### POST Parameters
+### PUT Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -575,7 +578,7 @@ distributionPercent   | Number | Yes | 1-100
 
 
 ```shell
-curl "https://app.seventime.se/api/1/contactPersons" \
+curl "https://app.seventime.se/api/2/contactPersons" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=1"
 ```
@@ -583,7 +586,7 @@ curl "https://app.seventime.se/api/1/contactPersons" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/contactPersons/?&limit=5&page=1";
+let url = "https://app.seventime.se/api/2/contactPersons/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -638,11 +641,11 @@ This endpoint retrieves contact persons, a maximum of 500 contact persons will b
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/contactPersons`
+`GET https://app.seventime.se/api/2/contactPersons`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/contactPersons/?customerId=5bb26376c42fb99275000080`
+E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c42fb99275000080`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -653,14 +656,14 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Get a Specific Contact Person
 
 ```shell
-curl "https://app.seventime.se/api/1/contactPersons/5fb7bcd0ab7bb01d4d798762" \
+curl "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/contactPersons/5fb7bcd0ab7bb01d4d798762";
+let url = "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762";
 let options = {
   url: url,
   headers: {
@@ -705,7 +708,7 @@ This endpoint retrieves a contact persons.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/contactPersons/<_id>`
+`GET https://app.seventime.se/api/2/contactPersons/<_id>`
 
 ### URL Parameters
 
@@ -717,7 +720,7 @@ _id | The _id of the contact person to retrieve
 ## Get Users
 
 ```shell
-curl "https://app.seventime.se/api/1/users/" \
+curl "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "&limit=100&3"
 ```
@@ -725,7 +728,7 @@ curl "https://app.seventime.se/api/1/users/" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/users/?&limit=100&page=3";
+let url = "https://app.seventime.se/api/2/users/?&limit=100&page=3";
 let options = {
   url: url,
   headers: {
@@ -781,11 +784,11 @@ This endpoint retrieves users, a maximum of 500 users will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/users`
+`GET https://app.seventime.se/api/2/users`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/users/?name=Tommy Hellström`
+E.g. `https://app.seventime.se/api/2/users/?name=Tommy Hellström`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -804,14 +807,14 @@ sortDirection     |  | "ascending" or "descending". If specified and sortBy is s
 ## Get a Specific User
 
 ```shell
-curl "https://app.seventime.se/api/1/users/59312765ad961c0318eb0a2" \
+curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/users/59312765ad961c0318eb0a2";
+let url = "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2";
 let options = {
   url: url,
   headers: {
@@ -860,7 +863,7 @@ This endpoint retrieves a specific user
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/users/<_id>`
+`GET https://app.seventime.se/api/2/users/<_id>`
 
 ### URL Parameters
 
@@ -871,14 +874,14 @@ _id | The _id of the user to retrieve
 ## Get User Roles
 
 ```shell
-curl "https://app.seventime.se/api/1/userRoles/" \
+curl "https://app.seventime.se/api/2/userRoles/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/userRoles/";
+let url = "https://app.seventime.se/api/2/userRoles/";
 let options = {
   url: url,
   headers: {
@@ -918,7 +921,7 @@ This endpoint retrieves user roles, a maximum of 500 user roles will be returned
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/userRoles/`
+`GET https://app.seventime.se/api/2/userRoles/`
 
 ### URL Parameters
 
@@ -930,14 +933,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get User Salary types
 
 ```shell
-curl "https://app.seventime.se/api/1/defaultSalaryTypes/" \
+curl "https://app.seventime.se/api/2/defaultSalaryTypes/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/defaultSalaryTypes/";
+let url = "https://app.seventime.se/api/2/defaultSalaryTypes/";
 let options = {
   url: url,
   headers: {
@@ -988,7 +991,7 @@ This endpoint retrieves user salary types, a maximum of 500 salary types will be
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/defaultSalaryTypes/`
+`GET https://app.seventime.se/api/2/defaultSalaryTypes/`
 
 ### URL Parameters
 
@@ -1000,14 +1003,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get User Skills
 
 ```shell
-curl "https://app.seventime.se/api/1/userSkills/" \
+curl "https://app.seventime.se/api/2/userSkills/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/userSkills/";
+let url = "https://app.seventime.se/api/2/userSkills/";
 let options = {
   url: url,
   headers: {
@@ -1049,7 +1052,7 @@ This endpoint retrieves user skills, a maximum of 500 user skills will be return
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/userSkills/`
+`GET https://app.seventime.se/api/2/userSkills/`
 
 ### URL Parameters
 
@@ -1061,14 +1064,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get User Work Types
 
 ```shell
-curl "https://app.seventime.se/api/1/userWorkTypes/" \
+curl "https://app.seventime.se/api/2/userWorkTypes/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/userWorkTypes/";
+let url = "https://app.seventime.se/api/2/userWorkTypes/";
 let options = {
   url: url,
   headers: {
@@ -1109,7 +1112,7 @@ This endpoint retrieves user roles, a maximum of 500 user roles will be returned
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/userRoles/`
+`GET https://app.seventime.se/api/2/userRoles/`
 
 ### URL Parameters
 
@@ -1121,13 +1124,13 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Create a User
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/users/" \
+  curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "firstName=Tommy&lastName=Hellström&email=tommy@nummer7.se&userName=TommyH&userRolesId=1" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   firstName: 'Tommy',
   lastName: 'Hellström',
   email: 'tommy@nummer7.se',
@@ -1136,19 +1139,18 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/users',
-  form: formData,
-  json: true,
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
   headers: {
     'Client-Secret': clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create user: " + error);
     console.error(body);
@@ -1182,7 +1184,7 @@ This endpoint creates a user.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/users/`
+`POST https://app.seventime.se/api/2/users/`
 
 ### POST Parameters
 
@@ -1204,13 +1206,13 @@ language           | String   | No  | Language of the user as a language code (e
 ## Update a User
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/1/users/" \
+  curl -X PUT "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "_id=5fb3e157f795553d05751946&firstName=Tommy&lastName=Hellström&userName=TommyH" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   _id: '5fb3e157f795553d05751946',
   firstName: 'Tommy',
   lastName: 'Hellström',
@@ -1218,11 +1220,12 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/users',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1254,16 +1257,16 @@ request.put(options, function (error, response, body) {
   "isActivated": false,
   "language": "SV"
 }
-User updated: Tommy, _id: 5fb3e157f795553d05751946
+"User updated: Tommy, _id: 5fb3e157f795553d05751946"
 ```
 
 This endpoint updates a specific user.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/users/`
+`POST https://app.seventime.se/api/2/users/`
 
-### POST Parameters
+### PUT Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -1288,14 +1291,14 @@ vacationDaysPerYear| Number   | No  | Number of vacation days per year
 
 
 ```shell
-curl "https://app.seventime.se/api/1/departments" \
+curl "https://app.seventime.se/api/2/departments" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/departments/?";
+let url = "https://app.seventime.se/api/2/departments/?";
 let options = {
   url: url,
   headers: {
@@ -1342,11 +1345,11 @@ This endpoint retrieves departments, a maximum of 500 departments will be return
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/departments`
+`GET https://app.seventime.se/api/2/departments`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/departments/?`
+E.g. `https://app.seventime.se/api/2/departments/?`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -1356,14 +1359,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get a Specific Department
 
 ```shell
-curl "https://app.seventime.se/api/1/departments/59d05abdc471b72e4901079" \
+curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/departments/59d05abdc471b72e4901079";
+let url = "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079";
 let options = {
   url: url,
   headers: {
@@ -1402,7 +1405,7 @@ This endpoint retrieves a specific department.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/departments/<_id>`
+`GET https://app.seventime.se/api/2/departments/<_id>`
 
 ### URL Parameters
 
@@ -1417,7 +1420,7 @@ _id | The _id of the department to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/1/projects" \
+curl "https://app.seventime.se/api/2/projects" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page=7"
 ```
@@ -1425,7 +1428,7 @@ curl "https://app.seventime.se/api/1/projects" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projects/?&limit=10&page=7";
+let url = "https://app.seventime.se/api/2/projects/?&limit=10&page=7";
 let options = {
   url: url,
   headers: {
@@ -1567,11 +1570,11 @@ This endpoint retrieves projects, a maximum of 500 projects will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projects`
+`GET https://app.seventime.se/api/2/projects`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/projects/?projectNumber=3314`
+E.g. `https://app.seventime.se/api/2/projects/?projectNumber=3314`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -1586,14 +1589,14 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Get a Specific project
 
 ```shell
-curl "https://app.seventime.se/api/1/projects/5f924f4f533f102af78f95b6" \
+curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projects/5f924f4f533f102af78f95b6";
+let url = "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6";
 let options = {
   url: url,
   headers: {
@@ -1729,7 +1732,7 @@ This endpoint retrieves a specific project.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projects/<_id>`
+`GET https://app.seventime.se/api/2/projects/<_id>`
 
 ### URL Parameters
 
@@ -1740,14 +1743,14 @@ _id | The _id of the project to retrieve
 ## Get Project statuses
 
 ```shell
-curl "https://app.seventime.se/api/1/projectStatuses/" \
+curl "https://app.seventime.se/api/2/projectStatuses/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projectStatuses/";
+let url = "https://app.seventime.se/api/2/projectStatuses/";
 let options = {
   url: url,
   headers: {
@@ -1791,7 +1794,7 @@ This endpoint retrieves project statuses.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projectStatuses/`
+`GET https://app.seventime.se/api/2/projectStatuses/`
 
 ### URL Parameters
 
@@ -1803,14 +1806,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Project types
 
 ```shell
-curl "https://app.seventime.se/api/1/projectTypes/" \
+curl "https://app.seventime.se/api/2/projectTypes/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projectTypes/";
+let url = "https://app.seventime.se/api/2/projectTypes/";
 let options = {
   url: url,
   headers: {
@@ -1852,7 +1855,7 @@ This endpoint retrieves project types.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projectTypes/`
+`GET https://app.seventime.se/api/2/projectTypes/`
 
 ### URL Parameters
 
@@ -1864,14 +1867,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Project tags
 
 ```shell
-curl "https://app.seventime.se/api/1/projectTags/" \
+curl "https://app.seventime.se/api/2/projectTags/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/projectTags/";
+let url = "https://app.seventime.se/api/2/projectTags/";
 let options = {
   url: url,
   headers: {
@@ -1912,7 +1915,7 @@ This endpoint retrieves project tags.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/projectTags/`
+`GET https://app.seventime.se/api/2/projectTags/`
 
 ### URL Parameters
 
@@ -1925,31 +1928,31 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/projects/" \
+  curl -X POST "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "name=App development" 
 ```
 
 ```javascript
-const formData = {
+const jsonData = {
   name: 'App development',
 };
 
 const options = {
-  url: 'https://app.seventime.se/api/1/projects',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
-    console.error("ERROR! Unable to project: " + error);
+    console.error("ERROR! Unable to create project: " + error);
     console.error(body);
   }
 });
@@ -1983,7 +1986,7 @@ This endpoint creates a project.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/projects/name=App development`
+`POST https://app.seventime.se/api/2/projects/name=App development`
 
 ### POST Parameters
 
@@ -2047,12 +2050,91 @@ city                        | String | No | City
 country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
 phone                       | String | No | Phone number
 
+## Update a Project
+
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/projects/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "name=App development&customer=571f61330c7f498a2d0001a4" 
+```
+
+```javascript
+const jsonData = {
+  name: 'App development',
+  customer: '571f61330c7f498a2d0001a4'
+};
+
+const options = {
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+    console.log("Project updated: " + data.name + ", _id: " + data._id);
+  } else {
+    console.error("ERROR! Unable to update project: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "budget": { benefits": [], costs": [] },
+    "budgetCalculation": { invoiceItems": [] },
+    "permissions": { permUsers": [], permRoles": [], permDepartments": [] },
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "tags": [],
+    "createdDate": "2020-11-17T12:59:25.109Z",
+    "modifiedDate": "2020-11-17T12:59:25.109Z",
+    "documents": [],
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "timeLogRegistrationMethods": [],
+    "projectResources": [],
+    "checkLists": [],
+    "comments": [],
+    "customFields": [],
+    "name": "App development",
+    "projectNumber": "12345786",
+    "customer": "571f61330c7f498a2d0001a4",
+    "customerName": "Tommy Hellström"
+}
+"Project updated: App development, _id: 5fb3c92dd5472a243e9caa3b"
+```
+
+This endpoint updates a project.
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/projects/name=App development&customer=571f61330c7f498a2d0001a4`
+
+### PUT Parameters
+
+The table below shows the required fields. Other available fields can be found in the section 'Create a Project'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                     | String | Yes | Id of the project
+
+
 # Supplement Orders
 ## Get Supplement Orders
 
 
 ```shell
-curl "https://app.seventime.se/api/1/supplementOrders" \
+curl "https://app.seventime.se/api/2/supplementOrders" \
   -H "Client-Secret: thisismysecretkey" \
   -d "project=5f924f4f533f102af78f95b6"
 ```
@@ -2060,7 +2142,7 @@ curl "https://app.seventime.se/api/1/supplementOrders" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/supplementOrders/?&project=5f924f4f533f102af78f95b6";
+let url = "https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6";
 let options = {
   url: url,
   headers: {
@@ -2192,7 +2274,7 @@ This endpoint retrieves supplement orders, a maximum of 500 supplement orders wi
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/supplementOrders/?&project=5f924f4f533f102af78f95b6`
+`GET https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6`
 
 ### Query Parameters
 
@@ -2205,14 +2287,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get a Specific Supplement Order
 
 ```shell
-curl "https://app.seventime.se/api/1/supplementOrders/5ba5619ad77ca8791257284" \
+curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/supplementOrders/5ba5619ad77ca8791257284";
+let url = "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284";
 let options = {
   url: url,
   headers: {
@@ -2337,7 +2419,7 @@ This endpoint retrieves a specific supplement order.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/supplementOrder/<_id>`
+`GET https://app.seventime.se/api/2/supplementOrder/<_id>`
 
 ### URL Parameters
 
@@ -2345,12 +2427,12 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the supplement order to retrieve
 
-# Work orders
-## Get Work orders
+# Work Orders
+## Get Work Orders
 
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrders" \
+curl "https://app.seventime.se/api/2/workOrders" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page3"
 ```
@@ -2358,7 +2440,7 @@ curl "https://app.seventime.se/api/1/workOrders" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrders/?&limit=10&page3";
+let url = "https://app.seventime.se/api/2/workOrders/?&limit=10&page3";
 let options = {
   url: url,
   headers: {
@@ -2438,11 +2520,11 @@ This endpoint retrieves work orders, a maximum of 500 work orders will be return
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/workOrders`
+`GET https://app.seventime.se/api/2/workOrders`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/workOrders/?workOrderNumber=5555`
+E.g. `https://app.seventime.se/api/2/workOrders/?workOrderNumber=5555`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -2460,14 +2542,14 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Get a Specific Work order
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrders/5bae34dca878bd790d02065g" \
+curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrders/5bae34dca878bd790d02065g";
+let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g";
 let options = {
   url: url,
   headers: {
@@ -2541,7 +2623,7 @@ This endpoint retrieves a specific work order.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/workOrders/<_id>`
+`GET https://app.seventime.se/api/2/workOrders/<_id>`
 
 ### URL Parameters
 
@@ -2552,14 +2634,14 @@ _id | The _id of the work order to retrieve
 ## Get work order types
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrderTypes/" \
+curl "https://app.seventime.se/api/2/workOrderTypes/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrderTypes/";
+let url = "https://app.seventime.se/api/2/workOrderTypes/";
 let options = {
   url: url,
   headers: {
@@ -2602,7 +2684,7 @@ This endpoint retrieves work order types.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/workOrderTypes/`
+`GET https://app.seventime.se/api/2/workOrderTypes/`
 
 ### URL Parameters
 
@@ -2614,14 +2696,14 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Get work order tags
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrderTags/" \
+curl "https://app.seventime.se/api/2/workOrderTags/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrderTags/";
+let url = "https://app.seventime.se/api/2/workOrderTags/";
 let options = {
   url: url,
   headers: {
@@ -2662,7 +2744,7 @@ This endpoint retrieves work order tags.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/workOrderTags/`
+`GET https://app.seventime.se/api/2/workOrderTags/`
 
 ### URL Parameters
 
@@ -2674,14 +2756,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Work order statuses
 
 ```shell
-curl "https://app.seventime.se/api/1/workOrderStatuses/" \
+curl "https://app.seventime.se/api/2/workOrderStatuses/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/workOrderStatuses/";
+let url = "https://app.seventime.se/api/2/workOrderStatuses/";
 let options = {
   url: url,
   headers: {
@@ -2726,7 +2808,7 @@ This endpoint retrieves work order statuses.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/workOrderStatuses/`
+`GET https://app.seventime.se/api/2/workOrderStatuses/`
 
 ### URL Parameters
 
@@ -2736,31 +2818,31 @@ No parameters
 
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/workOrders/" \
+  curl -X POST "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "title=Support&customer=571f61330c7f498a2d0001a4&createdByUser=5912626016d971c030916402" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   title: 'Support',
   customer: '571f61330c7f498a2d0001a4',
   createdByUser: '5912626016d971c030916402'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/customers',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create work order: " + error);
     console.error(body);
@@ -2813,7 +2895,7 @@ This endpoint creates a work order.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/workOrders/`
+`POST https://app.seventime.se/api/2/workOrders/`
 
 ### POST Parameters
 
@@ -2822,7 +2904,6 @@ Parameter | Type | Required? | Description
 title               | String | Yes | Title of the work order
 customer            | String | Yes | Customer id for the customer whom the work order should belong to
 createdByUser       | String | Yes | Id of the user who created the work order
-workOrderNumber     | String | No | Work order number. If specified it has to be unique otherwise an error will be returned. If not specified it will be set automatically.
 statusRef           | String | No | Id of the status of the work order.
 Project             | String | No | Project id for the project which the work order should belong to
 startDate           | String | No | Start date for the work order. The format must be YYYY-MM-DD HH:MM
@@ -2913,12 +2994,132 @@ city                        | String  | No  | Used if useSeparateBillingAddress 
 country                     | String  | No  | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
 phone                       | String  | No  | Used if useSeparateBillingAddress is true
 
+## Update a Work order
+
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "id=5fb8517e1bcaad1cd2cd3f9c&modifiedByUser=5f48eb3e65d7ee4942c4602" 
+```
+
+```javascript
+let jsonData = {
+  id: '5fb8517e1bcaad1cd2cd3f9c',
+  modifiedByUser: '5f48eb3e65d7ee4942c4602',
+  title: 'Construction work'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Work Order updated: " + body.title + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "runningInvoiceSettings":
+   { 
+     "oneRowText": "Arbetsorder #{{workOrderNumber}} {{workOrderTitle}}",
+     "timeLogMachineSupplement": "nothing",
+     "timeLogCustomField": "nothing",
+     "includeDescription": true,
+     "includeDateRange": false,
+     "includeDate": true,
+     "includeUser": true,
+     "machineFromTimeLog": false,
+     "includeCategory": true,
+     "includeTask": false,
+     "includeWorkOrder": false,
+     "includeProject": false,
+     "formatType": "detailedFormat" 
+   },
+  "budgetCalculation": { invoiceItems": [] },
+  "locationCoordinates": [],
+  "tags": [],
+  "_id": "5fd7792cd6ec6e1f57bb8d8e",
+  "createDate": "2020-12-14T14:39:40.951Z",
+  "users": [],
+  "machines": [],
+  "partTimeResources": [],
+  "comments": [],
+  "documents": [],
+  "checkLists": [],
+  "reminders":
+   [ { "_id": "5321507b6054167625000065",
+       "reminderTimeType": 4,
+       "reminderTimeValue": 10,
+       "reminderType": 1,
+       "itemId": "0.2819101621862501" } ],
+  "todoItems": [],
+  "invoiceRows": [],
+  "workOrderUserSkills": [],
+  "workOrderUserWorkTypes": [],
+  "customFields": [],
+  "relations": [],
+  "title": "Construction work",
+  "estimatedTime": 0,
+  "description": "",
+  "marking": "",
+  "yourOrderNumber": "",
+  "customerName": "Hellapps",
+  "customer": "571f61330c7f498a2d0001a4",
+  "color": "FAFAFA",
+  "status": 100,
+  "statusRef": "582f7cabd16fdbe335041055",
+  "createdByUser": "5f48eb3e65d7ee4942c4602",
+  "createdByUserName": "Lucas Hellström!",
+  2workOrderNumber": 4942,
+  "__v": 0,
+  "completedByUser": null,
+  "completedByUserName": "",
+  "completedDate": null,
+  "inProgressByUser": null,
+  "inProgressByUserName": "",
+  "inProgressDate": null,
+  "modifiedByUser": "5f48eb3e65d7ee4942c4602",
+  "modifiedByUserName": "Lucas Hellström",
+  "modifiedDate": "2020-12-14T14:43:29.158Z" 
+}
+"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+```
+
+This endpoint updates a work order.
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/workOrders/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Work Order'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id               | String | Yes | Id of the work order
+
 # Price lists
 
 ## Get price lists
 
 ```shell
-curl "https://app.seventime.se/api/1/priceLists" \
+curl "https://app.seventime.se/api/2/priceLists" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page=1"
 ```
@@ -2926,7 +3127,7 @@ curl "https://app.seventime.se/api/1/priceLists" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/priceLists/?&limit=10&page=1";
+let url = "https://app.seventime.se/api/2/priceLists/?&limit=10&page=1";
 let options = {
   url: url,
   headers: {
@@ -2971,7 +3172,7 @@ This endpoint retrieves price lists, a maximum of 500 price lists will be return
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/priceLists`
+`GET https://app.seventime.se/api/2/priceLists`
 
 ### Query Parameters
 
@@ -2984,14 +3185,14 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get a Specific Price List
 
 ```shell
-curl "https://app.seventime.se/api/1/priceLists/58c1504a658fb5911d018f5f" \
+curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/priceLists/58c1504a658fb5911d018f5f";
+let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f";
 let options = {
   url: url,
   headers: {
@@ -3028,7 +3229,7 @@ This endpoint retrieves a specific price list.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/priceLists/<_id>`
+`GET https://app.seventime.se/api/2/priceLists/<_id>`
 
 ### URL Parameters
 
@@ -3042,7 +3243,7 @@ _id | The _id of the price list to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/1/invoices" \
+curl "https://app.seventime.se/api/2/invoices" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=3&page=9"
 ```
@@ -3050,7 +3251,7 @@ curl "https://app.seventime.se/api/1/invoices" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/invoices/?&limit=3&page=9";
+let url = "https://app.seventime.se/api/2/invoices/?&limit=3&page=9";
 let options = {
   url: url,
   headers: {
@@ -3240,11 +3441,11 @@ This endpoint retrieves invoices, a maximum of 500 invoices will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/invoices`
+`GET https://app.seventime.se/api/2/invoices`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/invoices/?invoiceNumber=24481`
+E.g. `https://app.seventime.se/api/2/invoices/?invoiceNumber=24481`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -3260,14 +3461,14 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 ## Get a Specific Invoice
 
 ```shell
-curl "https://app.seventime.se/api/1/invoices/5fab29b038bd334ab540ab53" \
+curl "https://app.seventime.se/api/2/invoices/5fab29b038bd334ab540ab53" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/invoices/5fae99b072aa334cb539ab73";
+let url = "https://app.seventime.se/api/2/invoices/5fae99b072aa334cb539ab73";
 let options = {
   url: url,
   headers: {
@@ -3468,7 +3669,7 @@ This endpoint retrieves a specific invoice.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/invoices/<_id>`
+`GET https://app.seventime.se/api/2/invoices/<_id>`
 
 ### URL Parameters
 
@@ -3479,14 +3680,14 @@ _id | The _id of the invoice to retrieve
 ## Get Invoice Tags
 
 ```shell
-curl "https://app.seventime.se/api/1/invoiceTags/" \
+curl "https://app.seventime.se/api/2/invoiceTags/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/invoiceTags/";
+let url = "https://app.seventime.se/api/2/invoiceTags/";
 let options = {
   url: url,
   headers: {
@@ -3527,7 +3728,7 @@ This endpoint retrieves invoice tags.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/invoiceTags/`
+`GET https://app.seventime.se/api/2/invoiceTags/`
 
 ### URL Parameters
 
@@ -3539,13 +3740,13 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Create an Invoice
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/invoices/" \
+  curl -X POST "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "invoiceStatus=2&customer=571f21058d7f618a2d037165&createdByUser=51718241fdb708f37959127&language=EN" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   invoiceStatus: 'Support',
   customer: '571f21058d7f618a2d037165',
   createdByUser: '51718241fdb708f37959127',
@@ -3553,11 +3754,12 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/invoices',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/invoices',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3638,7 +3840,7 @@ This endpoint creates an invoice
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/invoices/`
+`POST https://app.seventime.se/api/2/invoices/`
 
 ### POST Parameters
 
@@ -3767,7 +3969,7 @@ Code |  Invoice type | Description
 ## Get supplier invoices
 
 ```shell
-curl "https://app.seventime.se/api/1/supplierInvoices/?" \
+curl "https://app.seventime.se/api/2/supplierInvoices/?" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=10"
 ```
@@ -3775,7 +3977,7 @@ curl "https://app.seventime.se/api/1/supplierInvoices/?" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/supplierInvoices/?&limit=5&page=10";
+let url = "https://app.seventime.se/api/2/supplierInvoices/?&limit=5&page=10";
 let options = {
   url: url,
   headers: {
@@ -3899,11 +4101,11 @@ This endpoint retrieves supplier invoices, a maximum of 500 supplier invoices wi
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/supplierInvoices`
+`GET https://app.seventime.se/api/2/supplierInvoices`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/supplierInvoices/?supplierInvoiceNumber=9316`
+E.g. `https://app.seventime.se/api/2/supplierInvoices/?supplierInvoiceNumber=9316`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -3925,14 +4127,14 @@ sortDirection            |  | "ascending" or "descending". If specified and sort
 ## Get a Specific Supplier Invoice
 
 ```shell
-curl "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843" \
+curl "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/supplierInvoices/5f62c5281715836a4721b843";
+let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843";
 let options = {
   url: url,
   headers: {
@@ -4048,7 +4250,7 @@ This endpoint retrieves a specific supplier invoice.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/supplierInvoices/<_id>`
+`GET https://app.seventime.se/api/2/supplierInvoices/<_id>`
 
 ### URL Parameters
 
@@ -4059,13 +4261,13 @@ _id | The _id of the supplier invoice to retrieve
 ## Create a Supplier Invoice
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/supplierInvoices/" \
+  curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "supplierInvoiceNumber=9162&createdByUser=5f48eb3e65d7ee4942c46eeb&distributor=5f6b2e6af24d5df55b69277&totalAmountInclTax=100000" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   supplierInvoiceNumber: 9162,
   createdByUser: '5f48eb3e65d7ee4942c46eeb',
   distributor: '5f6b2e6af24d5df55b69277',
@@ -4073,11 +4275,12 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/supplierInvoices',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/supplierInvoices',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -4133,7 +4336,7 @@ This endpoint creates a supplier invoice
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/supplierInvoices/`
+`POST https://app.seventime.se/api/2/supplierInvoices/`
 
 ### POST Parameters
 
@@ -4203,7 +4406,7 @@ driverJournal  | Driver journal row
 
 
 ```shell
-curl "https://app.seventime.se/api/1/machines" \
+curl "https://app.seventime.se/api/2/machines" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page=2"
 ```
@@ -4211,7 +4414,7 @@ curl "https://app.seventime.se/api/1/machines" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machines/?&limit=10&page=2";
+let url = "https://app.seventime.se/api/2/machines/?&limit=10&page=2";
 let options = {
   url: url,
   headers: {
@@ -4296,11 +4499,11 @@ This endpoint retrieves machines, a maximum of 500 machines will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/machines`
+`GET https://app.seventime.se/api/2/machines`
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/1/machines/?machineNumber=21`
+E.g. `https://app.seventime.se/api/2/machines/?machineNumber=21`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -4319,14 +4522,14 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 ## Get a Specific Machine
 
 ```shell
-curl "https://app.seventime.se/api/1/machines/5a4bc02e40a13d7179005920" \
+curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machines/5a4bc02e40a13d7179005920";
+let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920";
 let options = {
   url: url,
   headers: {
@@ -4404,7 +4607,7 @@ This endpoint retrieves a specific machine.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/machine/<_id>`
+`GET https://app.seventime.se/api/2/machine/<_id>`
 
 ### URL Parameters
 
@@ -4415,14 +4618,14 @@ _id | The _id of the machine to retrieve
 ## Get Machine Types
 
 ```shell
-curl "https://app.seventime.se/api/1/machineTypes/" \
+curl "https://app.seventime.se/api/2/machineTypes/" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machineTypes/";
+let url = "https://app.seventime.se/api/2/machineTypes/";
 let options = {
   url: url,
   headers: {
@@ -4465,7 +4668,7 @@ This endpoint retrieves machine types.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/machineTypes/`
+`GET https://app.seventime.se/api/2/machineTypes/`
 
 ### URL Parameters
 
@@ -4480,7 +4683,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Machines Time Logs
 
 ```shell
-curl "https://app.seventime.se/api/1/machineTimeLogs" \
+curl "https://app.seventime.se/api/2/machineTimeLogs" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=2&page=27"
 ```
@@ -4488,7 +4691,7 @@ curl "https://app.seventime.se/api/1/machineTimeLogs" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machineTimeLogs/?&limit=2&page=27";
+let url = "https://app.seventime.se/api/2/machineTimeLogs/?&limit=2&page=27";
 let options = {
   url: url,
   headers: {
@@ -4558,7 +4761,7 @@ This endpoint retrieves machines time logs, a maximum of 500 machine time logs w
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/machineTimeLogs`
+`GET https://app.seventime.se/api/2/machineTimeLogs`
 
 ### Query Parameters
 
@@ -4571,14 +4774,14 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 ## Get a Specific Machine Time Log
 
 ```shell
-curl "https://app.seventime.se/api/1/machines/5a4bc02e40a13d7179005920" \
+curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/machines/5a4bc02e40a13d7179005920";
+let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920";
 let options = {
   url: url,
   headers: {
@@ -4640,7 +4843,7 @@ This endpoint retrieves a specific machine time log.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/machineTimeLog/<_id>`
+`GET https://app.seventime.se/api/2/machineTimeLog/<_id>`
 
 ### URL Parameters
 
@@ -4654,7 +4857,7 @@ _id | The _id of the machine time log to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/1/timeLogs" \
+curl "https://app.seventime.se/api/2/timeLogs" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=3&page=1"
 ```
@@ -4662,7 +4865,7 @@ curl "https://app.seventime.se/api/1/timeLogs" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/timeLogs/?&limit=3&page=1";
+let url = "https://app.seventime.se/api/2/timeLogs/?&limit=3&page=1";
 let options = {
   url: url,
   headers: {
@@ -4750,7 +4953,7 @@ This endpoint retrieves machines time logs, a maximum of 500 machine time logs w
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/timeLogs`
+`GET https://app.seventime.se/api/2/timeLogs`
 
 ### Query Parameters
 
@@ -4773,14 +4976,14 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a Specific Time Log
 
 ```shell
-curl "https://app.seventime.se/api/1/timeLogs/514959f8733259db7591000c" \
+curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/timeLogs/514959f8733259db7591000c";
+let url = "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c";
 let options = {
   url: url,
   headers: {
@@ -4860,7 +5063,7 @@ This endpoint retrieves a specific time log.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/timeLogs/<_id>`
+`GET https://app.seventime.se/api/2/timeLogs/<_id>`
 
 ### URL Parameters
 
@@ -4872,14 +5075,14 @@ _id | The _id of the time log to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/1/timeCategories" \
+curl "https://app.seventime.se/api/2/timeCategories" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/timeCategories/?";
+let url = "https://app.seventime.se/api/2/timeCategories/?";
 let options = {
   url: url,
   headers: {
@@ -4931,7 +5134,7 @@ This endpoint retrieves time categories.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/timeCategories`
+`GET https://app.seventime.se/api/2/timeCategories`
 
 ### Query Parameters
 
@@ -4947,14 +5150,14 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a Specific Time Category
 
 ```shell
-curl "https://app.seventime.se/api/1/timeCategories/58cd3c4771b8a3c347041207" \
+curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/timeCategories/58cd3c4771b8a3c347041207";
+let url = "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207";
 let options = {
   url: url,
   headers: {
@@ -5003,7 +5206,7 @@ This endpoint retrieves a specific time category.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/timeCategories/<_id>`
+`GET https://app.seventime.se/api/2/timeCategories/<_id>`
 
 ### URL Parameters
 
@@ -5015,24 +5218,25 @@ _id | The _id of the time category to retrieve
 ## Create a Time Log
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/timeLogs/" \
+  curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "user=51203146506d961c030791801&timestamp=2020-06-05 12:00&time=5"
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   user: '51203146506d961c030791801',
   timestamp: '2020-06-05 12:00',
   time: '5'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/timeLogs',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/timeLogs',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5082,7 +5286,7 @@ This endpoint creates a time log
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/timeLogs/`
+`POST https://app.seventime.se/api/2/timeLogs/`
 
 ### POST Parameters
 
@@ -5108,7 +5312,7 @@ isInvoiceable       | Boolean | No  | Your order number
 ## Get Expenses
 
 ```shell
-curl "https://app.seventime.se/api/1/expenses" \
+curl "https://app.seventime.se/api/2/expenses" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=2&page=3"
 ```
@@ -5116,7 +5320,7 @@ curl "https://app.seventime.se/api/1/expenses" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenses/?&limit=2&page=3";
+let url = "https://app.seventime.se/api/2/expenses/?&limit=2&page=3";
 let options = {
   url: url,
   headers: {
@@ -5199,7 +5403,7 @@ This endpoint retrieves expenses, a maximum of 500 expenses will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/expenses`
+`GET https://app.seventime.se/api/2/expenses`
 
 ### Query Parameters
 
@@ -5219,14 +5423,14 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a Specific Expense
 
 ```shell
-curl "https://app.seventime.se/api/1/expenses/53ad291839f16d23a6414604d2" \
+curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenses/53ad291839f16d23a6414604d2";
+let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2";
 let options = {
   url: url,
   headers: {
@@ -5301,7 +5505,7 @@ This endpoint retrieves a specific expense.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/expenses/<_id>`
+`GET https://app.seventime.se/api/2/expenses/<_id>`
 
 ### URL Parameters
 
@@ -5312,7 +5516,7 @@ _id | The _id of the expense to retrieve
 ## Get Expenses Items
 
 ```shell
-curl "https://app.seventime.se/api/1/expenseItems" \
+curl "https://app.seventime.se/api/2/expenseItems" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=10&page=176"
 ```
@@ -5320,7 +5524,7 @@ curl "https://app.seventime.se/api/1/expenseItems" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenseItems/?&limit=10&page=176";
+let url = "https://app.seventime.se/api/2/expenseItems/?&limit=10&page=176";
 let options = {
   url: url,
   headers: {
@@ -5384,7 +5588,7 @@ This endpoint retrieves expense items, a maximum of 500 expense items will be re
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/expenses`
+`GET https://app.seventime.se/api/2/expenses`
 
 ### Query Parameters
 
@@ -5407,14 +5611,14 @@ sortDirection           |  | "ascending" or "descending". If specified and sortB
 ## Get a Specific Expense Item
 
 ```shell
-curl "https://app.seventime.se/api/1/expenseItems/5de78aed1332719192362bed" \
+curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/expenseItems/5de78aed1332719192362bed";
+let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed";
 let options = {
   url: url,
   headers: {
@@ -5470,7 +5674,7 @@ This endpoint retrieves a specific expense item.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/expenseItems/<_id>`
+`GET https://app.seventime.se/api/2/expenseItems/<_id>`
 
 ### URL Parameters
 
@@ -5482,23 +5686,24 @@ _id | The _id of the expense item to retrieve
 ## Create an Expense
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/expenses/" \
+  curl -X POST "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   user: '51203146506d961c030791801',
   expenseItem: '5de78aed1332719192362bed'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/expenses',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5555,7 +5760,7 @@ This endpoint creates an expense
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/expenses/`
+`POST https://app.seventime.se/api/2/expenses/`
 
 ### POST Parameters
 
@@ -5582,7 +5787,7 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 ## Get Driver Journals
 
 ```shell
-curl "https://app.seventime.se/api/1/driverJournals" \
+curl "https://app.seventime.se/api/2/driverJournals" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=2"
 ```
@@ -5590,7 +5795,7 @@ curl "https://app.seventime.se/api/1/driverJournals" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/driverJournals/?&limit=5&page=2";
+let url = "https://app.seventime.se/api/2/driverJournals/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
@@ -5662,7 +5867,7 @@ This endpoint retrieves driver journals, a maximum of 500 driver journals will b
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/driverJournals`
+`GET https://app.seventime.se/api/2/driverJournals`
 
 ### Query Parameters
 
@@ -5686,14 +5891,14 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get a Specific Driver Journal
 
 ```shell
-curl "https://app.seventime.se/api/1/driverJournals/5613c0eabed82c732b67914b" \
+curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/driverJournals/5613c0eabed82c732b67914b";
+let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b";
 let options = {
   url: url,
   headers: {
@@ -5756,7 +5961,7 @@ This endpoint retrieves a specific driver journal.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/driverJournals/<_id>`
+`GET https://app.seventime.se/api/2/driverJournals/<_id>`
 
 ### URL Parameters
 
@@ -5767,14 +5972,14 @@ _id | The _id of the driver journal to retrieve
 ## Get Driver Journals Types
 
 ```shell
-curl "https://app.seventime.se/api/1/driverJournalTypes" \
+curl "https://app.seventime.se/api/2/driverJournalTypes" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/driverJournalTypes/?";
+let url = "https://app.seventime.se/api/2/driverJournalTypes/?";
 let options = {
   url: url,
   headers: {
@@ -5824,7 +6029,7 @@ This endpoint retrieves driver journals types, a maximum of 500 driver journals 
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/driverJournalTypes`
+`GET https://app.seventime.se/api/2/driverJournalTypes`
 
 ### Query Parameters
 
@@ -5837,13 +6042,13 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Create a Driver Journal
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/driverJournals/" \
+  curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   user: '5f48eb3e65d7ee4942c46eeb',
   carRegistrationNumber: 'ABC123',
   driverJournalItemType: '5e5ef41f0d87d3262bc0176',
@@ -5855,11 +6060,12 @@ let formData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/driverJournals',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/driverJournals',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5908,7 +6114,7 @@ This endpoint creates a driver journal
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/driverJournals/`
+`POST https://app.seventime.se/api/2/driverJournals/`
 
 ### POST Parameters
 
@@ -5937,7 +6143,7 @@ isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated
 ## Get Vehicles
 
 ```shell
-curl "https://app.seventime.se/api/1/vehicles" \
+curl "https://app.seventime.se/api/2/vehicles" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=2"
 ```
@@ -5945,7 +6151,7 @@ curl "https://app.seventime.se/api/1/vehicles" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/vehicles/?&limit=5&page=2";
+let url = "https://app.seventime.se/api/2/vehicles/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
@@ -5992,7 +6198,7 @@ This endpoint retrieves vehicles, a maximum of 500 vehicles will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/vehicles`
+`GET https://app.seventime.se/api/2/vehicles`
 
 ### Query Parameters
 
@@ -6005,14 +6211,14 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get a Specific Vehicles
 
 ```shell
-curl "https://app.seventime.se/api/1/vehicles/55782f0382da2f85430284d" \
+curl "https://app.seventime.se/api/2/vehicles/55782f0382da2f85430284d" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/vehicles/55782f0382da2f85430284d";
+let url = "https://app.seventime.se/api/2/vehicles/55782f0382da2f85430284d";
 let options = {
   url: url,
   headers: {
@@ -6050,7 +6256,7 @@ This endpoint retrieves a specific vehicle.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/vehicle/<_id>`
+`GET https://app.seventime.se/api/2/vehicle/<_id>`
 
 ### URL Parameters
 
@@ -6062,7 +6268,7 @@ _id | The _id of the vehicle to retrieve
 ## Get Distributors
 
 ```shell
-curl "https://app.seventime.se/api/1/distributors" \
+curl "https://app.seventime.se/api/2/distributors" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=3"
 ```
@@ -6070,7 +6276,7 @@ curl "https://app.seventime.se/api/1/distributors" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/distributors/?&limit=5&page=3";
+let url = "https://app.seventime.se/api/2/distributors/?&limit=5&page=3";
 let options = {
   url: url,
   headers: {
@@ -6138,7 +6344,7 @@ This endpoint retrieves distributors, a maximum of 500 distributors will be retu
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/distributors`
+`GET https://app.seventime.se/api/2/distributors`
 
 ### Query Parameters
 
@@ -6152,14 +6358,14 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get a Specific Distributor
 
 ```shell
-curl "https://app.seventime.se/api/1/distributors/5f6b2e6af24d5df55b69277" \
+curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/distributors/5f6b2e6af24d5df55b69277";
+let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277";
 let options = {
   url: url,
   headers: {
@@ -6219,7 +6425,7 @@ This endpoint retrieves a specific distributor.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/distributors/<_id>`
+`GET https://app.seventime.se/api/2/distributors/<_id>`
 
 ### URL Parameters
 
@@ -6231,14 +6437,14 @@ _id | The _id of the distributor to retrieve
 ## Get Distributor Contact Persons
 
 ```shell
-curl "https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
+curl "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a";
+let url = "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a";
 let options = {
   url: url,
   headers: {
@@ -6287,7 +6493,7 @@ This endpoint retrieves distributor contact persons, a maximum of 500 contact pe
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a`
+`GET https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a`
 
 ### Query Parameters
 
@@ -6301,7 +6507,7 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get Purchase Orders
 
 ```shell
-curl "https://app.seventime.se/api/1/purchaseOrders" \
+curl "https://app.seventime.se/api/2/purchaseOrders" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=2&page=5"
 ```
@@ -6309,7 +6515,7 @@ curl "https://app.seventime.se/api/1/purchaseOrders" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/purchaseOrders/?&limit=2&page=5";
+let url = "https://app.seventime.se/api/2/purchaseOrders/?&limit=2&page=5";
 let options = {
   url: url,
   headers: {
@@ -6436,7 +6642,7 @@ This endpoint retrieves purchase orders, a maximum of 500 purchase orders will b
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/purchaseOrders`
+`GET https://app.seventime.se/api/2/purchaseOrders`
 
 ### Query Parameters
 
@@ -6455,14 +6661,14 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a Specific Purchase Order
 
 ```shell
-curl "https://app.seventime.se/api/1/purchaseOrders/59d6041d5551819581034002" \
+curl "https://app.seventime.se/api/2/purchaseOrders/59d6041d5551819581034002" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/purchaseOrders/59d6041d5551819581034002";
+let url = "https://app.seventime.se/api/2/purchaseOrders/59d6041d5551819581034002";
 let options = {
   url: url,
   headers: {
@@ -6580,7 +6786,7 @@ This endpoint retrieves a specific purchase order.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/purchaseOrders/<_id>`
+`GET https://app.seventime.se/api/2/purchaseOrders/<_id>`
 
 ### URL Parameters
 
@@ -6591,23 +6797,24 @@ _id | The _id of the purchase order to retrieve
 ## Create a Purchase Order
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/purchaseOrders/" \
+  curl -X POST "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -d "createdByUser=51718241fdb708f37959127&distributor=5f6b2e6af24d5df55b69277" 
 ```
 
 ```javascript
-let formData = {
+let jsonData = {
   createdByUser: '51718241fdb708f37959127',
   distributor: '5f6b2e6af24d5df55b69277',
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/purchaseOrders',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/purchaseOrders',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6697,7 +6904,7 @@ This endpoint creates a purchase order
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/purchaseOrders/`
+`POST https://app.seventime.se/api/2/purchaseOrders/`
 
 ### POST Parameters
 
@@ -6783,14 +6990,14 @@ onlyamount     | Text+amount row
 ## Get Result Units
 
 ```shell
-curl "https://app.seventime.se/api/1/resultUnits" \
+curl "https://app.seventime.se/api/2/resultUnits" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/resultUnits/?";
+let url = "https://app.seventime.se/api/2/resultUnits/?";
 let options = {
   url: url,
   headers: {
@@ -6831,7 +7038,7 @@ This endpoint retrieves purchase orders.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/resultUnits`
+`GET https://app.seventime.se/api/2/resultUnits`
 
 ### Query Parameters
 
@@ -6843,14 +7050,14 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a Specific Result Unit
 
 ```shell
-curl "https://app.seventime.se/api/1/resultUnits/57076abe8010bd22792004b" \
+curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/resultUnits/57076abe8010bd22792004b";
+let url = "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b";
 let options = {
   url: url,
   headers: {
@@ -6887,7 +7094,7 @@ This endpoint retrieves a specific result unit.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/resultUnits/<_id>`
+`GET https://app.seventime.se/api/2/resultUnits/<_id>`
 
 ### URL Parameters
 
@@ -6899,7 +7106,7 @@ _id | The _id of the result unit to retrieve
 ## Get Quotes
 
 ```shell
-curl "https://app.seventime.se/api/1/quotes" \
+curl "https://app.seventime.se/api/2/quotes" \
   -H "Client-Secret: thisismysecretkey" \
   -d "limit=5&page=5"
 ```
@@ -6907,7 +7114,7 @@ curl "https://app.seventime.se/api/1/quotes" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/quotes/?&limit=5&page=5";
+let url = "https://app.seventime.se/api/2/quotes/?&limit=5&page=5";
 let options = {
   url: url,
   headers: {
@@ -7154,7 +7361,7 @@ This endpoint retrieves quotes, a maximum of 500 quotes will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/quotes`
+`GET https://app.seventime.se/api/2/quotes`
 
 ### Query Parameters
 
@@ -7168,14 +7375,14 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a Specific Quote
 
 ```shell
-curl "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294" \
+curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/quotes/5c33891321361d7d5235d294";
+let url = "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294";
 let options = {
   url: url,
   headers: {
@@ -7413,7 +7620,7 @@ This endpoint retrieves a specific quote.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/quotes/<_id>`
+`GET https://app.seventime.se/api/2/quotes/<_id>`
 
 ### URL Parameters
 
@@ -7424,14 +7631,14 @@ _id | The _id of the quote to retrieve
 ## Get Quote Templates
 
 ```shell
-curl "https://app.seventime.se/api/1/quoteTemplates" \
+curl "https://app.seventime.se/api/2/quoteTemplates" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/quoteTemplates/?";
+let url = "https://app.seventime.se/api/2/quoteTemplates/?";
 let options = {
   url: url,
   headers: {
@@ -7510,7 +7717,7 @@ This endpoint retrieves quote templates.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/quoteTemplates`
+`GET https://app.seventime.se/api/2/quoteTemplates`
 
 ### Query Parameters
 
@@ -7523,14 +7730,14 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get Quote Categories
 
 ```shell
-curl "https://app.seventime.se/api/1/quoteCategories" \
+curl "https://app.seventime.se/api/2/quoteCategories" \
   -H "Client-Secret: thisismysecretkey"
 ```
 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/1/quoteCategories/?";
+let url = "https://app.seventime.se/api/2/quoteCategories/?";
 let options = {
   url: url,
   headers: {
@@ -7570,7 +7777,7 @@ This endpoint retrieves quote categories.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/1/quoteCategories`
+`GET https://app.seventime.se/api/2/quoteCategories`
 
 ### Query Parameters
 
