@@ -1268,21 +1268,13 @@ This endpoint updates a specific user.
 
 ### PUT Parameters
 
+The table below shows the required fields. Other available fields can be found in the section 'Create a User'.
+
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
+_id                | String   | Yes | Id of the user
 firstName          | String   | Yes | First name of the user
 lastName           | String   | Yes | Last name of the user
-email              | String   | Yes | Email of the user
-userName           | String   | Yes | Username
-userRoleId         | String   | Yes | User role id
-employeeNumber     | String   | No  | EmployeeNumber
-workPhone          | String   | No  | Work phone number
-cellPhone          | String   | No  | Cell phone number
-isActive           | Boolean  | No  | Should the user be active?
-isActivated        | Boolean  | No  | Should the user be activated?
-password           | String   | No  | Password of the user
-language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
-vacationDaysPerYear| Number   | No  | Number of vacation days per year
 
 
 # Departments
@@ -1962,23 +1954,23 @@ request.post(options, function (error, response, body) {
 
 ```json 
 { 
-    budget: { benefits: [], costs: [] },
-    budgetCalculation: { invoiceItems: [] },
-    permissions: { permUsers: [], permRoles: [], permDepartments: [] },
-    _id: '5fb3c92dd5472a243e9caa3b',
-    tags: [],
-    createdDate: '2020-11-17T12:59:25.109Z',
-    modifiedDate: '2020-11-17T12:59:25.109Z',
-    documents: [],
-    timeCategoryItems: [],
-    expenseItemItems: [],
-    timeLogRegistrationMethods: [],
-    projectResources: [],
-    checkLists: [],
-    comments: [],
-    customFields: [],
-    name: 'App development',
-    projectNumber: '12345786' 
+    "budget": { "benefits": [], "costs": [] },
+    "budgetCalculation": { "invoiceItems": [] },
+    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "tags": [],
+    "createdDate": "2020-11-17T12:59:25.109Z",
+    "modifiedDate": "2020-11-17T12:59:25.109Z",
+    "documents": [],
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "timeLogRegistrationMethods": [],
+    "projectResources": [],
+    "checkLists": [],
+    "comments": [],
+    "customFields": [],
+    "name": "App development",
+    "projectNumber": "12345786" 
 }
 ```
 
@@ -2056,11 +2048,12 @@ phone                       | String | No | Phone number
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "name=App development&customer=571f61330c7f498a2d0001a4" 
+  -d "_id=5fb3c92dd5472a243e9caa3b&name=App development&customer=571f61330c7f498a2d0001a4" 
 ```
 
 ```javascript
 const jsonData = {
+  _id: '5fb3c92dd5472a243e9caa3b',
   name: 'App development',
   customer: '571f61330c7f498a2d0001a4'
 };
@@ -2091,9 +2084,9 @@ request.put(options, function (error, response, body) {
 
 ```json 
 { 
-    "budget": { benefits": [], costs": [] },
-    "budgetCalculation": { invoiceItems": [] },
-    "permissions": { permUsers": [], permRoles": [], permDepartments": [] },
+    "budget": { "benefits": [], "costs": [] },
+    "budgetCalculation": { "invoiceItems": [] },
+    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
     "_id": "5fb3c92dd5472a243e9caa3b",
     "tags": [],
     "createdDate": "2020-11-17T12:59:25.109Z",
@@ -2109,7 +2102,7 @@ request.put(options, function (error, response, body) {
     "name": "App development",
     "projectNumber": "12345786",
     "customer": "571f61330c7f498a2d0001a4",
-    "customerName": "Tommy Hellström"
+    "customerName": "Hellapps AB"
 }
 "Project updated: App development, _id: 5fb3c92dd5472a243e9caa3b"
 ```
@@ -3000,12 +2993,12 @@ phone                       | String  | No  | Used if useSeparateBillingAddress 
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "id=5fb8517e1bcaad1cd2cd3f9c&modifiedByUser=5f48eb3e65d7ee4942c4602" 
+  -d "id=5fb8517e1bcaad1cd2cd3f9c&modifiedByUser=5f48eb3e65d7ee4942c4602&title=Construction work" 
 ```
 
 ```javascript
 let jsonData = {
-  id: '5fb8517e1bcaad1cd2cd3f9c',
+  _id: '5fb8517e1bcaad1cd2cd3f9c',
   modifiedByUser: '5f48eb3e65d7ee4942c4602',
   title: 'Construction work'
 };
@@ -3051,10 +3044,10 @@ request.put(options, function (error, response, body) {
      "includeProject": false,
      "formatType": "detailedFormat" 
    },
-  "budgetCalculation": { invoiceItems": [] },
+  "budgetCalculation": { "invoiceItems": [] },
   "locationCoordinates": [],
   "tags": [],
-  "_id": "5fd7792cd6ec6e1f57bb8d8e",
+  "_id": "5fb8517e1bcaad1cd2cd3f9c",
   "createDate": "2020-12-14T14:39:40.951Z",
   "users": [],
   "machines": [],
@@ -3063,7 +3056,7 @@ request.put(options, function (error, response, body) {
   "documents": [],
   "checkLists": [],
   "reminders":
-   [ { "_id": "5321507b6054167625000065",
+   [ { "_id": "5321507b60913275921",
        "reminderTimeType": 4,
        "reminderTimeValue": 10,
        "reminderType": 1,
@@ -3085,8 +3078,8 @@ request.put(options, function (error, response, body) {
   "status": 100,
   "statusRef": "582f7cabd16fdbe335041055",
   "createdByUser": "5f48eb3e65d7ee4942c4602",
-  "createdByUserName": "Lucas Hellström!",
-  2workOrderNumber": 4942,
+  "createdByUserName": "Lucas Hellström",
+  "workOrderNumber": 4942,
   "__v": 0,
   "completedByUser": null,
   "completedByUserName": "",
@@ -3113,6 +3106,7 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id               | String | Yes | Id of the work order
+modifiedByUser    | String | Yes | Id of the user who updated the work order
 
 # Price lists
 
@@ -3795,7 +3789,7 @@ request.post(options, function (error, response, body) {
     { "_id": "5fb64449b0cc9510a561dfe0",
        "logType": 1,
        "description": "",
-       "user": [Object],
+       "user": "5f48eb3e65d7ee4942c4602",
        "userName": "Lucas Hellström",
        "additionalData": "",
        "logDate": "2020-11-19T10:09:13.039Z" },
@@ -3815,10 +3809,7 @@ request.post(options, function (error, response, body) {
   "taxPercent": 25,
   "invoiceStatus": 2,
   "invoiceDate": "2020-11-19T10:09:13.033Z",
-  "createdByUser":
-   { 
-   // ...
-   },
+  "createdByUser": "5f48eb3e65d7ee4942c4602",
   "createdByUserName": "Lucas Hellström",
   "customer": "571f21058d7f618a2d037165",
   "customerName": "SevenTime",
@@ -3855,6 +3846,7 @@ dueDate             | String | No | Due date. Has to be in the format YYYY-MM-DD
 project             | String | No | Id of the project of the invoice
 marking             | String | No | Marking on the invoice
 yourOrderNumber     | String | No | Your order number
+invoiceStatus       | Number | No | Status of the invoice. 1 for 'Draft' and 2 for 'Sent'
 contactPerson       | String | No | Id of the contact person. This contact person has to belong to the selected customer
 ourReference        | Number | No | Id of the user that will be set as our reference.
 deliveryAddress     | Object | No | Contains attributes for delivery address. See below for details
@@ -3864,7 +3856,7 @@ invoiceType         | Number | No | Type of invoice. 0 for Normal, 1 for ROT, 2 
 houseProperties     | Object | No* | *Required if invoiceType is set to 1 or 2. See below for details
 priceList           | String | No | Id of the price list to be used. If specified, prices from the price list will be used for invoice items
 multipleTaxesOnRows | Boolean | No | Should it be possible to set different taxes on invoice items? If set to false, all invoice items will use the same tax percent
-taxPercent          | Number | No | Tax percent which will be used if multipleTaxesOnRows is set to false. This must be 0, 6, 12 or 25% and if not specified, this will be set to 25%.
+taxPercent          | Number | No | Tax percent which will be used if multipleTaxesOnRows is set to false. This must be 0, 6, 12 or 25% and if not specified will be set to 25%.
 currencyCode        | String | No | Currency code to be used on the invoice
 currencyRate        | Number | No | Currency rate between SEK and the selected currency
 notes               | String | No | Notes on the invoice
@@ -3964,6 +3956,124 @@ Code |  Invoice type | Description
 18       | RUT | Moving services
 19       | RUT | IT services
 22       | RUT | Repair of appliances
+
+## Update an Invoice
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/invoices/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=2&customer=571f21058d7f618a2d037165&createdByUser=51718241fdb708f37959127&language=EN" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb64449b0cc9510a561dfdf',
+  modifiedByUser: '51718241fdb708f37959127',
+  invoiceName: 'Invoice 2020-12',
+  customer: '571f21058d7f618a2d037165',
+  multipleTaxesOnRows: 'true',
+  taxPercent: 25,
+  invoiceItems: [{...}, ...]
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/invoices',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Invoice updated: " + body.invoiceName + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update invoice: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "timeLogIds": [],
+  "expenseIds": [],
+  "driverJournalIds": [],
+  "machineTimeLogIds": [],
+  "supplierInvoiceIds": [],
+  "workOrderIds": [],
+  "externalSystemExport": [],
+  "tags": [],
+  "_id": "5fb64449b0cc9510a561dfdf",
+  "createDate": "2020-11-19T10:09:13.039Z",
+  "invoiceItems": [{...}, ...],
+  "documents": [],
+  "invoiceLogEntries":
+   [ 
+    { "_id": "5fb64449b0cc9510a561dfe0",
+       "logType": 1,
+       "description": "",
+       "user": "5f48eb3e65d7ee4942c4602",
+       "userName": "Lucas Hellström",
+       "additionalData": "",
+       "logDate": "2020-11-19T10:09:13.039Z" },
+     { 
+     // ...
+     } 
+   ],
+  "partialPayments": [],
+  "checkLists": [],
+  "supplementOrders": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "invoiceName": "Invoice 2020-12",
+  "marking": "",
+  "yourOrderNumber": "",
+  "notes": "",
+  "taxPercent": 25,
+  "invoiceStatus": 2,
+  "invoiceDate": "2020-11-19T10:09:13.033Z",
+  "createdByUser": "5f48eb3e65d7ee4942c4602"
+  "createdByUserName": "Lucas Hellström",
+  "customer": "571f21058d7f618a2d037165",
+  "customerName": "HellApps AB",
+  "dueDate": "2020-12-09T22":59":59.999Z",
+  "language": "EN",
+  "invoiceType": 0,
+  "totalAmount": 0,
+  "totalTaxAmount": 0,
+  "totalAmountInclTax": 0,
+  "totalAmountRounding": 0,
+  "totalCost": 0,
+  "sentDate": "2020-11-19T10:09:13.040Z",
+  "invoiceNumber": "24511",
+  "OCRNumber": "2451177",
+}
+```
+
+This endpoint updates an invoice
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/invoices/`
+
+### PUT Parameters
+
+The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                     | String | Yes | Id of the invoice
+modifiedByUser          | String | Yes | Id of the user who modified the invoice
+multipleTaxesOnRows     | Boolean| Yes | Should it be possible to use different tax rates on invoice rows?
+taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
+invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
+
 
 # Supplier invoices
 ## Get supplier invoices
@@ -6085,19 +6195,19 @@ request.post(options, function (error, response, body) {
 ```json 
 {
   "isInvoiceable": true,
-  "_id": '5fc619b96294735fc421d77a',
-  "timestamp": '2020-12-01T10:23:53.370Z',
-  "createDate": '2020-12-01T10:23:53.370Z',
-  "modifiedDate": '2020-12-01T10:23:53.370Z',
-  "systemAccount": '5112826056d961c030000001',
-  "user": '5f48eb3e65d7ee4942c46eeb',
-  "userName": 'Tommy Hellström',
-  "carRegistrationNumber": 'ABC123',
-  "driverJournalItemType": '5e5ef41f0d87d3262bc0176',
-  "driverJournalItemTypeName": 'Diesel - ej skt.fri',
-  "startAddress": 'Address start, V Karup',
-  "endAddress": 'Address end, Båstad',
-  "travelPurpose": 'Delivery',
+  "_id": "5fc619b96294735fc421d77a",
+  "timestamp": "2020-12-01T10:23:53.370Z",
+  "createDate": "2020-12-01T10:23:53.370Z",
+  "modifiedDate": "2020-12-01T10:23:53.370Z",
+  "systemAccount": "5112826056d961c030000001",
+  "user": "5f48eb3e65d7ee4942c46eeb",
+  "userName": "Tommy Hellström",
+  "carRegistrationNumber": "ABC123",
+  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemTypeName": "Diesel - ej skt.fri",
+  "startAddress": "Address start, V Karup",
+  "endAddress": "Address end, Båstad",
+  "travelPurpose": "Delivery",
   "startOdometer": 45,
   "endOdometer": 60,
   "totalDistance": 15,
