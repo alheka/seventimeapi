@@ -5536,10 +5536,10 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
+    console.log("Time log updated: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to create time log: " + error);
+    console.error("ERROR! Unable to update time log: " + error);
     console.error(body);
   }
 });
@@ -5580,9 +5580,10 @@ This endpoint creates a time log
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/2/timeLogs/`
+`PUT https://app.seventime.se/api/2/timeLogs/`
 
-### POST Parameters
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Time Log'.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -6057,13 +6058,101 @@ project             | String | No  | Id of the project. If workOrder is specifie
 distributor         | String | No  | Id of the distributor
 numberOfItems       | String | No  | Number of items
 unit                | String | No  | Unit of the number of items
-unitCost            | Number | No  | Cost per unit. If not specified, the cost on the expense item will be used
-unitPrice           | Number | No  | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price.
-discountPercent     | Number | No  | Discount percent on the unit price
+unitCost            | Number | No* | Cost per unit. If not specified, the cost on the expense item will be used. *Required if expenseItem is not specified
+unitPrice           | Number | No* | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price. *Required if expenseItem is not specified
+discountPercent     | Number | No* | Discount percent on the unit price. *Required if expenseItem is not specified
+taxPercent          | Number | No* | Tax percent on the unit price. *Required if expenseItem is not specified
 timestamp           | String | No  | Time stamp of expense
 description         | String | No  | Description of the expense
 isInvoiceable       | Boolean | No | Is the expense invoiceable?
 doReimburse         | Boolean | No | Is the expense an own expense?
+
+## Update an Expense
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+```
+
+```javascript
+let jsonData = {
+  user: '51203146506d961c030791801',
+  expenseItem: '5de78aed1332719192362bed'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+  } else {
+    console.error("ERROR! Unable to create expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "_id": "5fbe684416625651d7f43257",
+  "timestamp": "2020-11-25T14:20:52.129Z",
+  "documents": [],
+  "createDate": "2020-11-25T14:20:52.129Z",
+  "bundledArticles": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "numberOfItems": 1,
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "expenseItem": "5de78aed1332719192362bed",
+  "articleNumber": "575733",
+  "name": "10-pack Reaktionsbollar",
+  "description": "Skivhantel av järn",
+  "distributor": "573c52cdf609f5692351914b",
+  "distributorName": "Lev 4",
+  "unit": "St",
+  "unitCost": 319,
+  "unitTaxPercent": 25,
+  "unitPrice": 426.66,
+  "unitPriceAfterDiscount": 426.66,
+  "discountPercent": 0,
+  "unitTax": 106.665,
+  "unitPriceInclTax": 533.325,
+  "totalTaxAmount": 106.665,
+  "totalAmount": 426.66,
+  "totalAmountAfterDiscount": 426.66,
+  "totalCost": 319,
+  "__v": 0 
+}
+
+```
+
+This endpoint updates an expense
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/expenses/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create an Expense'.
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id       | String | Yes | Id of the expense
+user      | String | Yes | Id of the user
 
 # Driver Journals
 ## Get Driver Journals
