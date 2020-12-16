@@ -4064,7 +4064,7 @@ This endpoint updates an invoice
 
 ### PUT Parameters
 
-The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
+The table below shows the required fields or fields that differ from 'Create an Invoice'. Other available fields can be found in the section 'Create an Invoice'.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -4073,6 +4073,7 @@ modifiedByUser          | String | Yes | Id of the user who modified the invoice
 multipleTaxesOnRows     | Boolean| Yes | Should it be possible to use different tax rates on invoice rows?
 taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
 invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
+invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
 
 
 # Supplier invoices
@@ -4510,6 +4511,96 @@ text           | Text row
 onlyamount     | Text+amount row
 machineTimeLog | Machine time log row
 driverJournal  | Driver journal row
+
+## Update a Supplier Invoice
+
+```shell
+  curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fd0619c7391b561bda0a7&modifiedByUser=5f48eb3e65d7ee4942c46eeb&supplierInvoiceStatus=7" 
+```
+
+```javascript
+let jsonData = {
+  _id: "5fd0619c7391b561bda0a7",
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
+  supplierInvoiceStatus: 10
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/supplierInvoices',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Supplier invoice updated: _id: " + body._id);
+
+  } else {
+    console.error("ERROR! Unable to update supplier invoice: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "selfBillingTimeLogIds": [],
+  "selfBillingExpenseIds": [],
+  "_id": "5fd0619c7391b561bda0a7",
+  "invoiceItems": [],
+  "documents": [],
+  "supplierInvoiceLogEntries": [ 
+    { 
+      "_id": "5fdd142c621b21a10129",
+      "logType": 1,
+      "description": "",
+      "user": "5f48eb3e65d7ee4942c46eeb",
+      "userName": "Tommy Hellström",
+      "logDate": "2020-12-09T12":43":51.516Z" 
+    } 
+  ],
+  "markupPercent": 0,
+  "distributor": "5f6b2e6af24d5df55b69277",
+  "distributorName": "Hellapps AB",
+  "supplierInvoiceNumber": "9162",
+  "invoiceDate": "2020-12-09T12:43:51.515Z",
+  "dueDate": "2020-12-09T12:43:51.515Z",
+  "totalAmountInclTax": 100000,
+  "taxPercent": 25,
+  "totalAmount": 80000,
+  "totalTaxAmount": 20000,
+  "totalAmountToInvoice": 80000,
+  "supplierInvoiceStatus": 10,
+  "createDate": "2020-12-09T12:43:51.515Z",
+  "__v": 0 
+}
+"Supplier invoice updated: _id: 5fd0619c7391b561bda0a7"
+```
+
+This endpoint updates a supplier invoice
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/supplierInvoices/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                 | String      | Yes | Id of the Supplier Invoice
+modifiedByUser      | String      | Yes | Id of the user who made the change
 
 # Machines
 ## Get Machines
@@ -5416,6 +5507,87 @@ description         | String | No  | Description/notes of the time log
 internalDescription | String | No  | Internal description/notes of the time log
 supplementOrder     | Boolean | No  | Is the time log a supplement order?
 isInvoiceable       | Boolean | No  | Your order number
+
+## Update a Time Log
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=51203146506d961c030791801&user=51203146506d961c030791801&timestamp=2020-10-7 07:00&endTimestamp=2020-10-7 15:00"
+```
+
+```javascript
+let jsonData = {
+  _id: '5fbcfe75ba9312280ef6523e',
+  user: '51203146506d961c030791801',
+  timestamp: '2020-10-07 07:00',
+  endTimestamp: '2020-10-07 15:00',
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/timeLogs',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    var data = JSON.parse(body);
+    console.log(data);
+  } else {
+    console.error("ERROR! Unable to create time log: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "startLocation": { type: 'Point', coordinates: [] },
+  "stopLocation": { type: 'Point', coordinates: [] },
+  "allDay": false,
+  "status": 1,
+  "isInvoiceable": true,
+  "isInvoiced": false,
+  "_id": "5fbcfe75ba9312280ef6523e",
+  "timestamp": "2020-10-07T06:00:00.000Z",
+  "realTimestamp": "2020-10-07T06:00:00.000Z",
+  "createDate": "2020-11-24T12:37:09.258Z",
+  "unSocialHoursCosts": [],
+  "customFields": [],
+  "machineTimePrices": [],
+  "machineTimeSupplements": [],
+  "systemAccount": "5112826056d961c030000001",
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "endTimestamp": "2020-10-07T014:00:00.000Z",
+  "realEndTimestamp": "2020-10-07T14:00:00.000Z",
+  "time": 8,
+  "invoiceableTime": 8,
+  "pricePerHour": 777,
+  "price": 777,
+  "__v": 0 
+}
+```
+
+This endpoint creates a time log
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/timeLogs/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id             | String | Yes | Id of the time log
+user            | String | Yes | Id of the user
 
 # Expenses 
 
