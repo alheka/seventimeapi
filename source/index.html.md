@@ -459,8 +459,7 @@ let options = {
 
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
     console.log("Customer updated: " + body.name + ", _id: " + body._id);
 
   } else {
@@ -1231,8 +1230,7 @@ let options = {
 
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
     console.log("User updated: " + body.firstName + ", _id: " + body._id);
   } else {
     console.error("ERROR! Unable to update user: " + error);
@@ -2070,8 +2068,7 @@ const options = {
 
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
     console.log("Project updated: " + data.name + ", _id: " + data._id);
   } else {
     console.error("ERROR! Unable to update project: " + error);
@@ -2273,7 +2270,7 @@ This endpoint retrieves supplement orders, a maximum of 500 supplement orders wi
 
 Parameter | Default | Description
 --------- | ------- | -----------
-Project       |  | Id of the project that supplement orders will be retrieved from. This parameter is required
+projectId     |  | Id of the project that supplement orders will be retrieved from. This parameter is required
 sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -3446,6 +3443,10 @@ Parameter | Default | Description
 invoiceNumber       |  | If specified, invoices that match the parameter will be included.
 OCRNumber           |  | If specified, invoices that match the parameter will be included.
 customerNumber      |  | If specified, invoices that match the parameter will be included.
+fromInvoiceDate     |  | If specified, invoices with invoice date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toInvoiceDate       |  | If specified, invoices with invoice date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+fromDueDate         |  | If specified, invoices with due date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDueDate           |  | If specified, invoices with due date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 sortBy              |  | If specified, a sort will be made on the specified parameter
 sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -3759,8 +3760,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create invoice: " + error);
     console.error(body);
@@ -4222,11 +4222,11 @@ Parameter | Default | Description
 --------- | ------- | -----------
 supplierInvoiceNumber    |  | If specified, supplier invoices that match the parameter will be included.
 supplierInvoiceStatus    |  | If specified, supplier invoices that match the parameter will be included.
-projectName              |  | If specified, supplier invoices that match the parameter will be included.
-customerName             |  | If specified, supplier invoices that match the parameter will be included.
-workOrderTitle           |  | If specified, supplier invoices that match the parameter will be included.
+project                  |  | If specified, supplier invoices that match the parameter will be included.
+customer                 |  | If specified, supplier invoices that match the parameter will be included.
+workOrder           |  | If specified, supplier invoices that match the parameter will be included.
 workOrderNumber          |  | If specified, supplier invoices that match the parameter will be included.
-distributorName          |  | If specified, supplier invoices that match the parameter will be included.
+distributor              |  | If specified, supplier invoices that match the parameter will be included.
 fromInvoiceDate          |  | If specified, supplier invoices that match the parameter will be included.
 toInvoiceDate            |  | If specified, supplier invoices that match the parameter will be included.
 isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
@@ -4397,8 +4397,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create supplier invoice: " + error);
     console.error(body);
@@ -4881,7 +4880,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 # Machine Time Logs
 
-## Get Machines Time Logs
+## Get Machine Time Logs
 
 ```shell
 curl "https://app.seventime.se/api/2/machineTimeLogs" \
@@ -4958,7 +4957,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves machines time logs, a maximum of 500 machine time logs will be returned.
+This endpoint retrieves machine time logs, a maximum of 500 machine time logs will be returned.
 
 ### HTTP Request
 
@@ -4968,6 +4967,8 @@ This endpoint retrieves machines time logs, a maximum of 500 machine time logs w
 
 Parameter | Default | Description
 --------- | ------- | -----------
+fromDate         |  | If specified, machine time logs registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDate           |  | If specified, machine time logs registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 sortBy           |  | If specified, a sort will be made on the specified parameter
 sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -5161,12 +5162,14 @@ This endpoint retrieves machines time logs, a maximum of 500 machine time logs w
 Parameter | Default | Description
 --------- | ------- | -----------
 user               |  | If specified, time logs that match the parameter will be included.
-customerName       |  | If specified, time logs that match the parameter will be included.
-projectName        |  | If specified, time logs that match the parameter will be included.
-taskTitle          |  | If specified, time logs that match the parameter will be included.
-categoryName       |  | If specified, time logs that match the parameter will be included.
-workOrderTitle     |  | If specified, time logs that match the parameter will be included.
+customer           |  | If specified, time logs that match the parameter will be included.
+project            |  | If specified, time logs that match the parameter will be included.
+task               |  | If specified, time logs that match the parameter will be included.
+category           |  | If specified, time logs that match the parameter will be included.
+workOrder          |  | If specified, time logs that match the parameter will be included.
 workOrderNumber    |  | If specified, time logs that match the parameter will be included.
+timestamp          |  | If specified, time logs that start after the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
+endTimestamp       |  | If specified, time logs that end before the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -5443,8 +5446,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create time log: " + error);
     console.error(body);
@@ -5694,9 +5696,11 @@ Parameter | Default | Description
 --------- | ------- | -----------
 name               |  | If specified, expenses that match the parameter will be included.
 articleNumber      |  | If specified, expenses that match the parameter will be included.
-customerName       |  | If specified, expenses that match the parameter will be included.
-projectName        |  | If specified, expenses that match the parameter will be included.
-distributorName    |  | If specified, expenses that match the parameter will be included.
+customer           |  | If specified, expenses that match the parameter will be included.
+project            |  | If specified, expenses that match the parameter will be included.
+distributor        |  | If specified, expenses that match the parameter will be included.
+fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -5992,8 +5996,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create expense: " + error);
     console.error(body);
@@ -6253,6 +6256,8 @@ workOrderNumber             |  | If specified, driver journals that match the pa
 carRegistrationNumber       |  | If specified, driver journals that match the parameter will be included.
 startAddress                |  | If specified, driver journals that match the parameter will be included.
 endAddress                  |  | If specified, driver journals that match the parameter will be included.
+fromDate                    |  | If specified, driver journals registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDate                      |  | If specified, driver journals registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -6442,8 +6447,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create expense: " + error);
     console.error(body);
@@ -6509,6 +6513,85 @@ description             | String | No  | Description or notes on the driver jour
 isInvoiceable           | Boolean | No | Is the driver jounal invoiceable?
 isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated?
 
+## Update a Driver Journal
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fc619b96294735fc421d77a&user=5f48eb3e65d7ee4942c46eeb"
+```
+
+```javascript
+let jsonData = {
+  _id: '5fc619b96294735fc421d77a',
+  user: '5f48eb3e65d7ee4942c46eeb'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/driverJournals',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Driver journal updated: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to create expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "isInvoiceable": true,
+  "_id": "5fc619b96294735fc421d77a",
+  "timestamp": "2020-12-01T10:23:53.370Z",
+  "createDate": "2020-12-01T10:23:53.370Z",
+  "modifiedDate": "2020-12-01T10:23:53.370Z",
+  "systemAccount": "5112826056d961c030000001",
+  "user": "5f48eb3e65d7ee4942c46eeb",
+  "userName": "Tommy Hellström",
+  "carRegistrationNumber": "ABC123",
+  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemTypeName": "Diesel - ej skt.fri",
+  "startAddress": "Address start, V Karup",
+  "endAddress": "Address end, Båstad",
+  "travelPurpose": "Delivery",
+  "startOdometer": 45,
+  "endOdometer": 60,
+  "totalDistance": 15,
+  "isSalaryCompensated": false,
+  "price": 0,
+  "totalAmount": 0,
+  "cost": 0,
+  "totalCost": 0,
+  "__v": 0 
+}
+"Driver journal updated: _id: 5fc619b96294735fc421d77a"
+```
+
+This endpoint updates a driver journal
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/driverJournals/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Driver Journal'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id       | String | Yes | Id of the driver journal
+user      | String | Yes | Id of the user
 
 # Vehicles
 ## Get Vehicles
@@ -7019,12 +7102,13 @@ This endpoint retrieves purchase orders, a maximum of 500 purchase orders will b
 
 Parameter | Default | Description
 --------- | ------- | -----------
-purchaseOrderStatus                 |  | If specified, purchase orders that match the parameter will be included.
-purchaseOrderNumber                 |  | If specified, purchase orders that match the parameter will be included.
+purchaseOrderName                   |  | If specified, purchase orders that match the parameter will be included.
 purchaseOrderInfoName               |  | If specified, purchase orders that match the parameter will be included.
-distributorNamedistributorName      |  | If specified, purchase orders that match the parameter will be included.
-projectName                         |  | If specified, purchase orders that match the parameter will be included.
-workOrderName                       |  | If specified, purchase orders that match the parameter will be included.
+purchaseOrderNumber                 |  | If specified, purchase orders that match the parameter will be included.
+purchaseOrderStatus                 |  | If specified, purchase orders that match the parameter will be included.
+distributor                         |  | If specified, purchase orders that match the parameter will be included.
+project                             |  | If specified, purchase orders that match the parameter will be included.
+workOrder                           |  | If specified, purchase orders that match the parameter will be included.
 workOrderNumber                     |  | If specified, purchase orders that match the parameter will be included.
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
@@ -7191,8 +7275,7 @@ let options = {
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
   } else {
     console.error("ERROR! Unable to create purchase order: " + error);
     console.error(body);
@@ -7356,6 +7439,129 @@ general        | Free-text row
 blank          | Blank row
 text           | Text row
 onlyamount     | Text+amount row
+
+## Update a Purchase Order
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/purchaseOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fca480e571eb873a64b97ec&modifiedByUser=51718241fdb708f37959127&paymentDays=10" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fca480e571eb873a64b97ec',
+  modifiedByUser: '51718241fdb708f37959127',
+  paymentDays: 10
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/purchaseOrders',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Purchase Order updated: " + body.purchaseOrderName +  ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update purchase order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "deliveryAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE" 
+    },
+    "invoiceAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE",
+      "email": "test@test.se" 
+    },
+  "_id": "5fca480e571eb873a64b97ec",
+  "createDate": "2020-12-04T14:30:38.164Z",
+  "invoiceItems": [],
+  "purchaseOrderLogEntries":
+    [ 
+      { "_id": "5fca480e571eb873a64b97ed",
+        "logType": 5,
+        "description": "",
+        "user": "51714655fbb708f379000003",
+        "userName": "Lucas Hellström",
+        "logDate": "2020-12-04T14:30:38.169Z" 
+       } 
+     ],
+  "documents": [],
+  "purchaseOrderName": "purchase Order 123",
+  "purchaseOrderInfoName": "purchase order info 123",
+  "deliveryAttention": "Tommy",
+  "deliveryPhone": "123947513",
+  "marking": "test mark",
+  "headerText": "header text",
+  "footerText": "footer text",
+  "footerInfoText": "footer info text",
+  "createdByUser": "51714655fbb708f379000003",
+  "createdByUserName": "Lucas Hellström",
+  "distributor": "5f6b4b6ef26b5d6f5a687207",
+  "distributorName": "UE lev 20200923",
+  "distributorAddress": "",
+  "distributorVAT": "",
+  "ourCustomerNumber": "",
+  "language": "EN",
+  "ourReference": "51714655fbb708f379000003",
+  "ourReferenceName": "Lucas Hellström",
+  "purchaseOrderStatus": 10,
+  "contactPersonDistributor": "5fca0baf099b1c3ada47b04e",
+  "contactPersonDistributorName": "dwd21",
+  "purchaseOrderDate": "2020-12-04T23:00:00.000Z",
+  "project": "5b20cce1d59a902e28000079",
+  "projectName": "Blåsippan",
+  "workOrder": "5fb3d3f6d2b1a732b1129213",
+  "workOrderNumber": "4922",
+  "workOrderName": "API test 4",
+  "desiredDeliveryDate": "2020-12-19T23:00:00.000Z",
+  "paymentDays": 10,
+  "publicLink": "D2ymDeLqBpsOZDdJNVnV",
+  "sentDate": "2020-12-04T14:30:38.169Z",
+  "purchaseOrderNumber": "1051",
+  "__v": 0 
+}
+"Purchase Order updated: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
+
+```
+
+This endpoint updates a purchase order
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/purchaseOrders/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Purchase Order'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                        | String | Yes | Id of the purchase order
+modifiedByUser             | String | Yes | Id of the user who modified the purchase order
 
 # Result Unit
 ## Get Result Units
@@ -7740,6 +7946,10 @@ Parameter | Default | Description
 --------- | ------- | -----------
 quoteName                           |  | If specified, quotes that match the parameter will be included.
 quoteNumber                         |  | If specified, quotes that match the parameter will be included.
+fromQuoteDate                       |  | If specified, invoices with quote date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toQuoteDate                         |  | If specified, invoices with quote date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+fromValidToDate                     |  | If specified, invoices with valid to date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toValidToDate                       |  | If specified, invoices with valid to date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 

@@ -58,37 +58,37 @@ Seven Time expects the API key to be included in all API requests to the server 
 You must replace <code>thisismysecretkey</code> with your personal API key.
 </aside>
 
-## Create a Supplier Invoice
+## Update a Purchase Order
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/1/supplierInvoices/" \
+  curl -X PUT "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "supplierInvoiceNumber=9162&createdByUser=5f48eb3e65d7ee4942c46eeb&distributor=5f6b2e6af24d5df55b69277&totalAmountInclTax=100000" 
+  -d "_id=5fca480e571eb873a64b97ec&modifiedByUser=51718241fdb708f37959127&paymentDays=10" 
 ```
 
 ```javascript
-let formData = {
-  supplierInvoiceNumber: 9162,
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  distributor: '5f6b2e6af24d5df55b69277',
-  totalAmountInclTax: 100000
+let jsonData = {
+  _id: '5fca480e571eb873a64b97ec',
+  modifiedByUser: '51718241fdb708f37959127',
+  paymentDays: 10
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/1/supplierInvoices',
-  form: formData,
+  url: 'https://app.seventime.se/api/2/purchaseOrders',
+  json: jsonData,
   headers: {
-    "Client-Secret": clientSecret,
-    "Content-Type": "x-www-form-urlencoded"
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
-    var data = JSON.parse(body);
-    console.log(data);
+    console.log(body);
+    console.log("Purchase Order updated: " + body.purchaseOrderName +  ", _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to create supplier invoice: " + error);
+    console.error("ERROR! Unable to update purchase order: " + error);
     console.error(body);
   }
 });
@@ -98,107 +98,86 @@ request.post(options, function (error, response, body) {
 
 ```json 
 { 
-  "isInvoiceable": true,
-  "selfBillingTimeLogIds": [],
-  "selfBillingExpenseIds": [],
-  "_id": "5fd0619c7391b561bda0a7",
+  "deliveryAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE" 
+    },
+    "invoiceAddress":
+    { "name": "test namn",
+      "address": "Glimmingevägen 18",
+      "address2": "Testvägen 123",
+      "zipCode": "12345",
+      "city": "Västra Karup",
+      "country": "SE",
+      "email": "test@test.se" 
+    },
+  "_id": "5fca480e571eb873a64b97ec",
+  "createDate": "2020-12-04T14:30:38.164Z",
   "invoiceItems": [],
+  "purchaseOrderLogEntries":
+    [ 
+      { "_id": "5fca480e571eb873a64b97ed",
+        "logType": 5,
+        "description": "",
+        "user": "51714655fbb708f379000003",
+        "userName": "Lucas Hellström",
+        "logDate": "2020-12-04T14:30:38.169Z" 
+       } 
+     ],
   "documents": [],
-  "supplierInvoiceLogEntries": [ 
-    { 
-      "_id": "5fdd142c621b21a10129",
-      "logType": 1,
-      "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström",
-      "logDate": "2020-12-09T12":43":51.516Z" 
-    } 
-  ],
-  "markupPercent": 0,
-  "distributor": "5f6b2e6af24d5df55b69277",
-  "distributorName": "Hellapps AB",
-  "supplierInvoiceNumber": "9162",
-  "invoiceDate": "2020-12-09T12:43:51.515Z",
-  "dueDate": "2020-12-09T12:43:51.515Z",
-  "totalAmountInclTax": 100000,
-  "taxPercent": 25,
-  "totalAmount": 80000,
-  "totalTaxAmount": 20000,
-  "totalAmountToInvoice": 80000,
-  "supplierInvoiceStatus": 1,
-  "createDate": "2020-12-09T12:43:51.515Z",
+  "purchaseOrderName": "purchase Order 123",
+  "purchaseOrderInfoName": "purchase order info 123",
+  "deliveryAttention": "Tommy",
+  "deliveryPhone": "123947513",
+  "marking": "test mark",
+  "headerText": "header text",
+  "footerText": "footer text",
+  "footerInfoText": "footer info text",
+  "createdByUser": "51714655fbb708f379000003",
+  "createdByUserName": "Lucas Hellström",
+  "distributor": "5f6b4b6ef26b5d6f5a687207",
+  "distributorName": "UE lev 20200923",
+  "distributorAddress": "",
+  "distributorVAT": "",
+  "ourCustomerNumber": "",
+  "language": "EN",
+  "ourReference": "51714655fbb708f379000003",
+  "ourReferenceName": "Lucas Hellström",
+  "purchaseOrderStatus": 10,
+  "contactPersonDistributor": "5fca0baf099b1c3ada47b04e",
+  "contactPersonDistributorName": "dwd21",
+  "purchaseOrderDate": "2020-12-04T23:00:00.000Z",
+  "project": "5b20cce1d59a902e28000079",
+  "projectName": "Blåsippan",
+  "workOrder": "5fb3d3f6d2b1a732b1129213",
+  "workOrderNumber": "4922",
+  "workOrderName": "API test 4",
+  "desiredDeliveryDate": "2020-12-19T23:00:00.000Z",
+  "paymentDays": 10,
+  "publicLink": "D2ymDeLqBpsOZDdJNVnV",
+  "sentDate": "2020-12-04T14:30:38.169Z",
+  "purchaseOrderNumber": "1051",
   "__v": 0 
 }
+"Purchase Order updated: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
+
 ```
 
-This endpoint creates a supplier invoice
+This endpoint updates a purchase order
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/1/supplierInvoices/`
+`PUT https://app.seventime.se/api/2/purchaseOrders/`
 
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-supplierInvoiceNumber     | Number | Yes | Number of  the supplier invoice
-createdByUser             | String | Yes | Id of the user who created the invoice
-distributor               | String | Yes | Id of the distributor
-totalAmountInclTax        | Number | Yes | Total amount incl. tax on the supplier invoice
-customer                  | String | No | Id of the customer
-project                   | String | No | Id of the project
-workOrder                 | String | No | Id of the work order. The work order must belong to the specified project
-resultUnit                | String | No | Id of the result unit
-supplierInvoiceStatus     | Number | No | Status of the supplier invoice. 1 for 'Registered', 5 for 'Draft', 7 for 'Sent' and 10 for 'Invoiced'
-taxPercent                | Number | No | Tax on the supplier invoice as a percentage. Ex: 25 for 25% tax
-markupPercent             | Number | No | Markup on the supplier invoice as a percentage. Ex: 10 for 10% markup
-invoiceDate               | String | No | Invoice date in the format 'YYYY-MM-DD'
-dueDate                   | String | No | Due date in the format 'YYYY-MM-DD'
-exportedToEconomy         | Boolean| No | Is the supplier invoice exported to a economy system?
-OCR                       | Number | No | OCR number of the invoice
-currencyCode              | String | No | Currency code to be used on the supplier invoice
-currencyRate              | Number | No*| Currency rate between SEK and the selected currency. *Required if currencyCode is not 'SEK'. This will always be set to 1 if currencyCode is 'SEK'
-supplementOrder           | Boolean| No | Should the supplier invoice be a supplement order? This is only available if the project or work order is set to use a fixed price
-supplementOrderId         | String | No | Id of the supplement order
-ourReference              | String | No | Our reference
-yourReference             | String | No | Your reference
-notes                     | String | No | Notes on the supplier invoice
-isInvoiceable             | Boolean| No | Is the supplier invoice invoiceable?
-invoiceItems              | Array  | No | Array containing objects with invoice items. See below for details.
-
-**Attributes for invoiceItems**
-
-The field invoiceItems should be an array containing objects with the attributes shown below
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Purchase Order'.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-itemType              | String | Yes | Item type of invoice row, see below for details
-expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
-timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
-machine               | String | No* | Id of the machine. *Required if itemType is machineTimeLog
-driverJournalItemType | String | No* | Id of the driver journal. *Required if itemType is driverJournal
-numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
-unit                  | String | No  | Unit of the item
-unitCost              | Number | No  | Purchase price of the item
-unitPrice             | Number | No  | Unit price of the item
-pricePerHour          | Number | No  | Price per hour. Used for time log rows
-totalAmount           | Number | No  | Total amount. Used for onlyamount rows
-discountPercent       | Number | No  | Discount of the item
-taxPercent            | Number | No  | Tax percent of the item. Only used if multipleTaxesOnRows is true. This must be 0, 6, 12 or 25% and if not specified, this will be set to 25%.
-houseWorkTypeOfWork   | Number | No  | Type of work for the row. Used if invoiceType is 1 or 2. See below for details
-
-**Item types**
-
-This table contains the different item types used in the field invoiceItems.itemTypes
-
-Item type |  Description
---------- |-----------
-expense        | Expense row
-timeLog        | Time log row
-general        | Free-text row
-blank          | Blank row
-text           | Text row
-onlyamount     | Text+amount row
-machineTimeLog | Machine time log row
-driverJournal  | Driver journal row
+_id                        | String | Yes | Id of the purchase order
+modifiedByUser             | String | Yes | Id of the user who modified the purchase order
 
