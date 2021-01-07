@@ -58,14 +58,29 @@ Seven Time expects the API key to be included in all API requests to the server 
 You must replace <code>thisismysecretkey</code> with your personal API key.
 </aside>
 
-# Search //TODO
-Searches that returns a large number of results are paged
-## Limits
-Default 100, min 1, max 500
-## Pagination
-min 1
+# Header fields
+In addition to the 'Client-Secret', a few fields are required in the Header:
 
-# Application/json/content-type
+- Content-type - Must be "application/json"
+- Accept - Must be "application/json"
+
+# Actions
+The Seven Time API supports three different actions:
+
+- get - used to retrieve data
+- push - used to create new items, e.g. new customers, users, etc.
+- put - used to update items, e.g. update an exisiting customer, user, etc.
+
+# Pagination
+Searches that returns a large number of results are paged due to performance reasons. These searches are limited by the parameter 'limit'. 
+
+This parameter limits the number of results that will be returned. By default, this limit is set to 100 but can be set as low as 1 and as high as 500.
+
+When the number of results exceed the given limit, the 'page' parameter has to be used. 
+
+## Example of 'limit' and 'page'
+A search returns 490 results and the limit is set to 100. To get the first 100 results, the parameter 'page' is set to 1. To get the next 100 results, 'page' is set to 2, etc.
+
 
 # Customers
 
@@ -192,7 +207,7 @@ sortBy              |  | If specified, a sort will be made on the specified para
 sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific Customer
+## Get a specific Customer
 
 ```shell
 curl "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4" \
@@ -501,73 +516,15 @@ This endpoint updates a specific customer.
 `POST https://app.seventime.se/api/2/customers/`
 
 ### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Customer'.
+
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String | Yes | Id of the customer
 name                | String | Yes | Name of the customer
-customerNumber      | String | Yes | Customer number. This has to be unique or the same as before the update
-address             | String | No | Address
-address2            | String | No | Address 2
-zipCode             | String | No | Zip code
-city                | String | No | City
-country             | String | No | Country code
-phone               | String | No | Phone number
-email               | String | No | Email address
-organizationNumber  | String | No | Organization number or Personal number
-vatNumber           | String | No | VAT number
-paymentDays         | Number | No | Payment days for the customer
-pricePerHour        | Number | No | Price for hour
-typeOfCustomer      | Number | No | Type of customer. 10 for company, 20 for private. Default is 10
-notes               | String | No | Notes
-isActive            | Boolean| No | Is the customer active? Default is true
-deliveryAddress     | Object | No | Contains attributes specific for delivery. See below for details.
-billingSettings     | Object | No | Contains attributes specific for billing. See below for details.
-
-**Attributes for deliveryAddress**
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-name                        | String | No | Name on delivery address
-address                     | String | No | Primary delivery address
-address2                    | String | No | Secondary delivery address
-zipCode                     | String | No | Zip code
-city                        | String | No | City
-country                     | String | No | Country
-phone                       | String | No | Phone number
-
-**Attributes for billingSettings**
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-useSeparateBillingAddress   | Boolean | No | Should an alternative billing address be used?
-address                     | String | No | Used if useSeparateBillingAddress is true
-address2                    | String | No | Used if useSeparateBillingAddress is true
-zipCode                     | String | No | Used if useSeparateBillingAddress is true
-city                        | String | No | Used if useSeparateBillingAddress is true
-useSeparateBillingEmail     | Boolean | No | If 'invoiceEmail' should be used
-invoiceEmail                | String | No | Used for invoices if useSeparateBillingEmail is true
-invoiceDeliveryType         | Number | No | Empty or 0 = Email, 10 = Postal letter, 20 = Svefaktura
-defaultEmailSubject         | String | No | Default email subject for invoices
-isConstructionCompany       | Boolean | No | Is construction company
-isROTCustomer               | Boolean | No | Is ROT customer
-isRUTCustomer               | Boolean | No | Is RUT customer
-typeOfProperty              | Number | No | 1 = Detached property, 2 = Condominium
-propertyDescription         | String | No | Swedish: Fastighetsbeteckning
-housingSocietyNumber        | String | No | Swedish: Orgnr för bostadsrättsförening
-apartmentNumber             | String | No | Swedish: Lägenhetsnummer
-deductionDistribution       | Array | No | Array of DeductionItems. See below for details.
-
-
-**Attributes for DeductionItem**
-
-DeductionItem is used to distribute ROT / RUT work
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-userName   | String| Yes | Full name of person
-personalNumber   | String| Yes | Personal number
-distributionPercent   | Number | Yes | 1-100
+customerNumber      | Number | Yes | Customer number. This has to be unique or the same as before the update
+modifiedByUser      | String | Yes | Id of the user who updated the customer
 
 
 
@@ -652,7 +609,7 @@ customerId      | | The id of the customer which the contact persons belong to. 
 sortBy          |  | If specified, a sort will be made on the specified parameter
 sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Contact Person
+## Get a specific Contact Person
 
 ```shell
 curl "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762" \
@@ -803,7 +760,7 @@ sortBy            |  | If specified, a sort will be made on the specified parame
 sortDirection     |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific User
+## Get a specific User
 
 ```shell
 curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
@@ -1346,7 +1303,7 @@ Parameter | Default | Description
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Department
+## Get a specific Department
 
 ```shell
 curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079" \
@@ -1576,7 +1533,7 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 
 
-## Get a Specific project
+## Get a specific project
 
 ```shell
 curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6" \
@@ -2274,7 +2231,7 @@ projectId     |  | Id of the project that supplement orders will be retrieved fr
 sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Supplement Order
+## Get a specific Supplement Order
 
 ```shell
 curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
@@ -2529,7 +2486,7 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 
 
-## Get a Specific Work order
+## Get a specific Work order
 
 ```shell
 curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
@@ -3173,7 +3130,7 @@ sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific Price List
+## Get a specific Price List
 
 ```shell
 curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
@@ -3453,7 +3410,7 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 
 
 
-## Get a Specific Invoice
+## Get a specific Invoice
 
 ```shell
 curl "https://app.seventime.se/api/2/invoices/5fab29b038bd334ab540ab53" \
@@ -4235,7 +4192,7 @@ sortDirection            |  | "ascending" or "descending". If specified and sort
 
 
 
-## Get a Specific Supplier Invoice
+## Get a specific Supplier Invoice
 
 ```shell
 curl "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843" \
@@ -4719,7 +4676,7 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 
 
 
-## Get a Specific Machine
+## Get a specific Machine
 
 ```shell
 curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
@@ -4973,7 +4930,7 @@ sortBy           |  | If specified, a sort will be made on the specified paramet
 sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific Machine Time Log
+## Get a specific Machine Time Log
 
 ```shell
 curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
@@ -5177,7 +5134,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 
 
 
-## Get a Specific Time Log
+## Get a specific Time Log
 
 ```shell
 curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c" \
@@ -5351,7 +5308,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 
 
 
-## Get a Specific Time Category
+## Get a specific Time Category
 
 ```shell
 curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207" \
@@ -5707,7 +5664,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 
 
 
-## Get a Specific Expense
+## Get a specific Expense
 
 ```shell
 curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
@@ -5895,7 +5852,7 @@ sortDirection           |  | "ascending" or "descending". If specified and sortB
 
 
 
-## Get a Specific Expense Item
+## Get a specific Expense Item
 
 ```shell
 curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
@@ -6264,7 +6221,7 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 
 
-## Get a Specific Driver Journal
+## Get a specific Driver Journal
 
 ```shell
 curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
@@ -6662,7 +6619,7 @@ sortBy                      |  | If specified, a sort will be made on the specif
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific Vehicles
+## Get a specific Vehicles
 
 ```shell
 curl "https://app.seventime.se/api/2/vehicles/55782f0382da2f85430284d" \
@@ -6809,7 +6766,7 @@ sortBy                      |  | If specified, a sort will be made on the specif
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a Specific Distributor
+## Get a specific Distributor
 
 ```shell
 curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
@@ -7113,7 +7070,7 @@ workOrderNumber                     |  | If specified, purchase orders that matc
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Purchase Order
+## Get a specific Purchase Order
 
 ```shell
 curl "https://app.seventime.se/api/2/purchaseOrders/59d6041d5551819581034002" \
@@ -7624,7 +7581,7 @@ Parameter | Default | Description
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Result Unit
+## Get a specific Result Unit
 
 ```shell
 curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b" \
@@ -7953,7 +7910,7 @@ toValidToDate                       |  | If specified, invoices with valid to da
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a Specific Quote
+## Get a specific Quote
 
 ```shell
 curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294" \
