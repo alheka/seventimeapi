@@ -76,7 +76,7 @@ Searches that returns a large number of results are paged due to performance rea
 
 This parameter limits the number of results that will be returned. By default, this limit is set to 100 but can be set as low as 1 and as high as 500.
 
-When the number of results exceed the given limit, the 'page' parameter has to be used. 
+When the number of results exceed the given limit, the 'page' parameter can be used to retrieve different intervals in the data.
 
 ## Example of 'limit' and 'page'
 A search returns 490 results and the limit is set to 100. To get the first 100 results, the parameter 'page' is set to 1. To get the next 100 results, 'page' is set to 2, etc.
