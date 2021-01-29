@@ -3819,6 +3819,8 @@ currencyRate        | Number | No | Currency rate between SEK and the selected c
 notes               | String | No | Notes on the invoice
 invoiceItems        | Array  | No | Array containing objects with invoice items. See below for details.
 tags                | Array  | No | Array of tag ids
+useFooterFromSettings| Boolean | No | Do you want to use the footer that's specified in the settings?
+footerText          | String | No | Footer text which will be used if useFooterFromSettings is set to false
 
 
 **Attributes for deliveryAddress**
