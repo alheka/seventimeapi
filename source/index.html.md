@@ -513,7 +513,7 @@ This endpoint updates a specific customer.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/2/customers/`
+`PUT https://app.seventime.se/api/2/customers/`
 
 ### PUT Parameters
 The table below shows the required fields. Other available fields can be found in the section 'Create a Customer'.
@@ -522,10 +522,67 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String | Yes | Id of the customer
-name                | String | Yes | Name of the customer
-customerNumber      | Number | Yes | Customer number. This has to be unique or the same as before the update
 modifiedByUser      | String | Yes | Id of the user who updated the customer
 
+## Delete a Customer
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/customers/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=571f61330c7f498a2d0001a4" 
+```
+
+```javascript
+let jsonData = {
+  _id: '571f61330c7f498a2d0001a4'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/customers',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Customer deleted: " + body.name + ", _id: " + body._id);
+
+  } else {
+    console.error("ERROR! Unable to delete customer: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "571f61330c7f498a2d0001a4",
+  "customerNumber": "733352",
+  "name": "Seven Time AB",
+}
+"Customer deleted: Seven Time AB, _id: 571f61330c7f498a2d0001a4"
+```
+
+This endpoint deletes a specific customer.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/customers/`
+
+### DELETE Parameters
+The table below shows the required fields.
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                 | String | Yes | Id of the customer
 
 
 # Contact Persons
@@ -1219,7 +1276,7 @@ This endpoint updates a specific user.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/2/users/`
+`PUT https://app.seventime.se/api/2/users/`
 
 ### PUT Parameters
 
@@ -1228,8 +1285,65 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String   | Yes | Id of the user
-firstName          | String   | Yes | First name of the user
-lastName           | String   | Yes | Last name of the user
+
+## Delete a User
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fb3e157f795553d05751946" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb3e157f795553d05751946'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("User deleted: " + body.firstName + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete user: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+}
+"User deleted: Tommy, _id: 5fb3e157f795553d05751946"
+```
+
+This endpoint deletes a specific user.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/users/`
+
+### DELETE Parameters
+
+The table below shows the required fields.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                | String   | Yes | Id of the user
 
 
 # Departments
@@ -1898,6 +2012,7 @@ const options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Project created: " + body.name + ", _id: " + body._id);
   } else {
     console.error("ERROR! Unable to create project: " + error);
     console.error(body);
@@ -1927,6 +2042,7 @@ request.post(options, function (error, response, body) {
     "name": "App development",
     "projectNumber": "12345786" 
 }
+"Project created: App development, _id: 5fb3c92dd5472a243e9caa3b"
 ```
 
 This endpoint creates a project.
@@ -1999,7 +2115,6 @@ phone                       | String | No | Phone number
 
 ## Update a Project
 
-
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
@@ -2026,7 +2141,7 @@ const options = {
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
-    console.log("Project updated: " + data.name + ", _id: " + data._id);
+    console.log("Project updated: " + body.name + ", _id: " + body._id);
   } else {
     console.error("ERROR! Unable to update project: " + error);
     console.error(body);
@@ -2070,6 +2185,67 @@ This endpoint updates a project.
 ### PUT Parameters
 
 The table below shows the required fields. Other available fields can be found in the section 'Create a Project'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                     | String | Yes | Id of the project
+
+
+## Delete a Project
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/projects/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fb3c92dd5472a243e9caa3b" 
+```
+
+```javascript
+const jsonData = {
+  _id: '5fb3c92dd5472a243e9caa3b',
+  deletedByUser: ''
+};
+
+const options = {
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Project deleted: " + body.name + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete project: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "name": "App development",
+    "projectNumber": "12345786",
+}
+"Project deleted: App development, _id: 5fb3c92dd5472a243e9caa3b"
+```
+
+This endpoint deletes a project.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/projects/name=App development&customer=571f61330c7f498a2d0001a4`
+
+### DELETE Parameters
+
+The table below shows the required fields.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -3718,6 +3894,7 @@ let options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Invoice created: _id: " + body._id);
   } else {
     console.error("ERROR! Unable to create invoice: " + error);
     console.error(body);
@@ -3782,6 +3959,7 @@ request.post(options, function (error, response, body) {
   "invoiceNumber": "24511",
   "OCRNumber": "2451177",
 }
+"Invoice created: _id: 5fb64449b0cc9510a561dfdf"
 ```
 
 This endpoint creates an invoice
@@ -4033,6 +4211,65 @@ multipleTaxesOnRows     | Boolean| Yes | Should it be possible to use different 
 taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
 invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
 invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
+
+## Delete an Invoice
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/invoices/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fb64449b0cc9510a561dfdf" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb64449b0cc9510a561dfdf',
+  deletedByUser: '51718241fdb708f37959127'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/invoices',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Invoice deleted: #" + body.invoiceNumber + ' ' + body.invoiceName);
+  } else {
+    console.error("ERROR! Unable to delete invoice: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fb64449b0cc9510a561dfdf",
+  "invoiceName": "Invoice",
+  "invoiceNumber": "24511",
+}
+"Invoice deleted: #24511 Invoice"
+```
+
+This endpoint deletes an invoice
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/invoices/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id       | String | Yes | Id of the invoice
+deletedByUser       | String | Yes | Id of the user whom deleted the invoice
 
 
 # Supplier invoices
@@ -4559,6 +4796,65 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String      | Yes | Id of the Supplier Invoice
 modifiedByUser      | String      | Yes | Id of the user who made the change
+
+## Delete a Supplier Invoice
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fd0619c7391b561bda0a7" 
+```
+
+```javascript
+let jsonData = {
+  _id: "5fd0619c7391b561bda0a7"
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/supplierInvoices',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Supplier invoice updated: _id: " + body._id + ', number: ' + body.supplierInvoiceNumber);
+
+  } else {
+    console.error("ERROR! Unable to delete supplier invoice: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fd0619c7391b561bda0a7",
+  "supplierInvoiceNumber": "9162",
+}
+"Supplier invoice deleted: _id: 5fd0619c7391b561bda0a7, number: 9162"
+```
+
+This endpoint deletes a supplier invoice
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/supplierInvoices/`
+
+### DELETE Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                 | String      | Yes | Id of the Supplier Invoice
 
 # Machines
 ## Get Machines
@@ -5956,6 +6252,7 @@ let options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Expense created: _id: " + body._id);
   } else {
     console.error("ERROR! Unable to create expense: " + error);
     console.error(body);
@@ -5998,7 +6295,7 @@ request.post(options, function (error, response, body) {
   "totalCost": 319,
   "__v": 0 
 }
-
+"Expense created: _id: 5fbe684416625651d7f43257"
 ```
 
 This endpoint creates an expense
@@ -6034,13 +6331,13 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+  -d "_id=5fbe684416625651d7f43257&user=51203146506d961c030791801"
 ```
 
 ```javascript
 let jsonData = {
-  user: '51203146506d961c030791801',
-  expenseItem: '5de78aed1332719192362bed'
+  _id: '5fbe684416625651d7f43257',
+  user: '51203146506d961c030791801'
 };
 
 let options = {
@@ -6056,8 +6353,9 @@ let options = {
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Expense updated: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to create expense: " + error);
+    console.error("ERROR! Unable to update expense: " + error);
     console.error(body);
   }
 });
@@ -6098,7 +6396,7 @@ request.put(options, function (error, response, body) {
   "totalCost": 319,
   "__v": 0 
 }
-
+"Expense updated: _id: 5fbe684416625651d7f43257"
 ```
 
 This endpoint updates an expense
@@ -6115,6 +6413,64 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id       | String | Yes | Id of the expense
 user      | String | Yes | Id of the user
+
+## Delete an Expense
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fbe684416625651d7f43257"
+```
+
+```javascript
+let jsonData = {
+  _id: "5fbe684416625651d7f43257",
+  deletedByUser: '51203146506d961c030791801'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Expense deleted: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fbe684416625651d7f43257"
+}
+"Expense deleted: _id: 5fbe684416625651d7f43257"
+```
+
+This endpoint deletes an expense
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/expenses/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                | String | Yes | Id of the expense
+deletedByUser                | String | Yes | Id of the user whom deleted the expense
+
 
 # Driver Journals
 ## Get Driver Journals
@@ -6407,9 +6763,10 @@ let options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Driver journal created: _id: " + body._id);
+
   } else {
-    console.error("ERROR! Unable to create expense: " + error);
-    console.error(body);
+    console.error("ERROR! Unable to create driver journal: " + error);
   }
 });
 ```
@@ -6442,6 +6799,7 @@ request.post(options, function (error, response, body) {
   "totalCost": 0,
   "__v": 0 
 }
+"Driver journal created: _id: 5fc619b96294735fc421d77a"
 ```
 
 This endpoint creates a driver journal
@@ -6501,7 +6859,7 @@ request.put(options, function (error, response, body) {
     console.log(body);
     console.log("Driver journal updated: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to create expense: " + error);
+    console.error("ERROR! Unable to update driver journal: " + error);
     console.error(body);
   }
 });
@@ -6551,6 +6909,62 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id       | String | Yes | Id of the driver journal
 user      | String | Yes | Id of the user
+
+## Delete a Driver Journal
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fc619b96294735fc421d77a"
+```
+
+```javascript
+let jsonData = {
+  _id: '5fc619b96294735fc421d77a'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/driverJournals',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Driver journal deleted: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete driver journal: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fc619b96294735fc421d77a",
+}
+"Driver journal updated: _id: 5fc619b96294735fc421d77a"
+```
+
+This endpoint deletes a driver journal
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/driverJournals/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                    | String | Yes | Id of the driver journal
+
 
 # Vehicles
 ## Get Vehicles
@@ -7235,6 +7649,7 @@ let options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Purchase Order updated: " + body.purchaseOrderName +  ", _id: " + body._id);
   } else {
     console.error("ERROR! Unable to create purchase order: " + error);
     console.error(body);
@@ -7311,6 +7726,7 @@ request.post(options, function (error, response, body) {
   "purchaseOrderNumber": "1051",
   "__v": 0 
 }
+"Purchase Order created: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
 ```
 
 This endpoint creates a purchase order
@@ -7424,7 +7840,7 @@ let options = {
   }
 };
 
-request.post(options, function (error, response, body) {
+request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
     console.log("Purchase Order updated: " + body.purchaseOrderName +  ", _id: " + body._id);
@@ -7521,6 +7937,65 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                        | String | Yes | Id of the purchase order
 modifiedByUser             | String | Yes | Id of the user who modified the purchase order
+
+## Delete a Purchase Order
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/purchaseOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=5fca480e571eb873a64b97ec" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fca480e571eb873a64b97ec'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/purchaseOrders',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Purchase Order deleted: " + body.purchaseOrderName +  ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete purchase order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fca480e571eb873a64b97ec",
+  "purchaseOrderName": "purchase Order 123",
+  "purchaseOrderNumber": "1051",
+}
+"Purchase Order deleted: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
+
+```
+
+This endpoint deletes a purchase order
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/purchaseOrders/`
+
+### DELETE Parameters
+The table below shows the required fields.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                        | String | Yes | Id of the purchase order
 
 # Result Unit
 ## Get Result Units
