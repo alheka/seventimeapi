@@ -319,11 +319,12 @@ _id | The _id of the customer to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
+  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
   name: 'Tommy Hellström',
   address: 'Glimmingevägen 18',
   zipCode: '269 74',
@@ -387,6 +388,7 @@ This endpoint creates a specific customer.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
+createdByUser       | String | Yes | Id of the user who created the customer
 name                | String | Yes | Name of the customer
 customerNumber      | String | No | Customer number. If specified it has to be unique otherwise an error will be returned. If not specified it will be set automatically.
 address             | String | No | Address
@@ -452,12 +454,13 @@ distributionPercent   | Number | Yes | 1-100
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=571f61330c7f498a2d0001a4&name=Seven Time AB&customerNumber=733352" 
+  -d "_id=571f61330c7f498a2d0001a4&modifiedByUser=5f48eb3e65d7ee4942c46eeb&name=Seven Time AB&customerNumber=733352" 
 ```
 
 ```javascript
 let jsonData = {
   _id: '571f61330c7f498a2d0001a4',
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
   name: 'Seven Time AB',
   customerNumber: '733352'
 };
@@ -577,8 +580,6 @@ This endpoint deletes a specific customer.
 `DELETE https://app.seventime.se/api/2/customers/`
 
 ### DELETE Parameters
-The table below shows the required fields.
-
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -1139,11 +1140,12 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ```shell
   curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "firstName=Tommy&lastName=Hellström&email=tommy@nummer7.se&userName=TommyH&userRolesId=1" 
+  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&firstName=Tommy&lastName=Hellström&email=tommy@nummer7.se&userName=TommyH&userRolesId=1" 
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
   firstName: 'Tommy',
   lastName: 'Hellström',
   email: 'tommy@nummer7.se',
@@ -1221,12 +1223,13 @@ language           | String   | No  | Language of the user as a language code (e
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb3e157f795553d05751946&firstName=Tommy&lastName=Hellström&userName=TommyH" 
+  -d "_id=5fb3e157f795553d05751946&modifiedByUser=5f48eb3e65d7ee4942c46eeb&firstName=Tommy&lastName=Hellström&userName=TommyH" 
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fb3e157f795553d05751946',
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
   firstName: 'Tommy',
   lastName: 'Hellström',
   userName: 'TommyH'
@@ -1285,6 +1288,7 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String   | Yes | Id of the user
+modifiedByUser     | String   | Yes | Id of the user who made the change
 
 ## Delete a User
 
@@ -1339,7 +1343,6 @@ This endpoint deletes a specific user.
 
 ### DELETE Parameters
 
-The table below shows the required fields.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -1991,11 +1994,12 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ```shell
   curl -X POST "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "name=App development" 
+  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&name=App development" 
 ```
 
 ```javascript
 const jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
   name: 'App development',
 };
 
@@ -2055,6 +2059,7 @@ This endpoint creates a project.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
+createdByUser           | String | Yes | Id of the user who created the project
 name                    | String | Yes | Name of the project
 projectNumber           | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
 projectStatusRef        | String | No  | Id of the status of the project
@@ -2124,6 +2129,7 @@ phone                       | String | No | Phone number
 ```javascript
 const jsonData = {
   _id: '5fb3c92dd5472a243e9caa3b',
+  modifiedByUser: '51718241fdb708f37959127',
   name: 'App development',
   customer: '571f61330c7f498a2d0001a4'
 };
@@ -2189,6 +2195,7 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                     | String | Yes | Id of the project
+modifiedByUser          | String | Yes | Id of the user who made the change
 
 
 ## Delete a Project
@@ -2202,7 +2209,7 @@ _id                     | String | Yes | Id of the project
 ```javascript
 const jsonData = {
   _id: '5fb3c92dd5472a243e9caa3b',
-  deletedByUser: ''
+  deletedByUser: '51718241fdb708f37959127'
 };
 
 const options = {
@@ -2245,11 +2252,11 @@ This endpoint deletes a project.
 
 ### DELETE Parameters
 
-The table below shows the required fields.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                     | String | Yes | Id of the project
+deletedByUser           | String | Yes | Id of the user who deleted the project
 
 
 # Supplement Orders
@@ -3025,7 +3032,7 @@ This endpoint creates a work order.
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 title               | String | Yes | Title of the work order
-customer            | String | Yes | Customer id for the customer whom the work order should belong to
+customer            | String | Yes | Customer id for the customer who the work order should belong to
 createdByUser       | String | Yes | Id of the user who created the work order
 statusRef           | String | No | Id of the status of the work order.
 Project             | String | No | Project id for the project which the work order should belong to
@@ -3237,6 +3244,66 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id               | String | Yes | Id of the work order
 modifiedByUser    | String | Yes | Id of the user who updated the work order
+
+## Delete a Work order
+
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/workOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "id=5fb8517e1bcaad1cd2cd3f9c&deletedByUser=5f48eb3e65d7ee4942c4602" 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb8517e1bcaad1cd2cd3f9c',
+  deletedByUser: '5f48eb3e65d7ee4942c4602'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Work Order deleted: " + body.title + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fb8517e1bcaad1cd2cd3f9c",
+  "title": "Construction work",
+  "workOrderNumber": 4942,
+}
+"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+```
+
+This endpoint deletes a work order.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/workOrders/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id               | String | Yes | Id of the work order
+deletedByUser    | String | Yes | Id of the user who deleted the work order
 
 # Price lists
 
@@ -3972,7 +4039,7 @@ This endpoint creates an invoice
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-customer            | String | Yes | Customer id for the customer whom the invoice should belong to
+customer            | String | Yes | Customer id for the customer who the invoice should belong to
 createdByUser       | String | Yes | Id of the user who created the invoice
 language            | String | Yes | Language of the invoice given as a language code, e.g. SV for Swedish
 name                | String | No | Name of the invoice. If not specified, this will be set to 'Invoice' translated to the selected language
@@ -4269,7 +4336,7 @@ This endpoint deletes an invoice
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id       | String | Yes | Id of the invoice
-deletedByUser       | String | Yes | Id of the user whom deleted the invoice
+deletedByUser       | String | Yes | Id of the user who deleted the invoice
 
 
 # Supplier invoices
@@ -4649,7 +4716,7 @@ This endpoint creates a supplier invoice
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 supplierInvoiceNumber     | Number | Yes | Number of  the supplier invoice
-createdByUser             | String | Yes | Id of the user who created the invoice
+createdByUser             | String | Yes | Id of the user who created the supplier invoice
 distributor               | String | Yes | Id of the distributor
 totalAmountInclTax        | Number | Yes | Total amount incl. tax on the supplier invoice
 customer                  | String | No | Id of the customer
@@ -4849,8 +4916,6 @@ This endpoint deletes a supplier invoice
 `DELETE https://app.seventime.se/api/2/supplierInvoices/`
 
 ### DELETE Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
-
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
@@ -5679,11 +5744,12 @@ _id | The _id of the time category to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "user=51203146506d961c030791801&timestamp=2020-06-05 12:00&time=5"
+  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801&timestamp=2020-06-05 12:00&time=5"
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
   user: '51203146506d961c030791801',
   timestamp: '2020-06-05 12:00',
   time: '5'
@@ -5750,7 +5816,8 @@ This endpoint creates a time log
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-user                | String | Yes | User id 
+createdByUser       | String | Yes | Id of the user who created the time log
+user                | String | Yes | Id of the user on the time log
 timestamp           | String | Yes | Starting date and time for the time log. This must be in the format 'YYYY-MM-DD HH-MM'
 endTimestamp        | String | No* | Starting date and time for the time log. This must be in the format 'YYYY-MM-DD HH-MM'. *This is required if field 'time' is not specified
 time                | String | No* | time of the timelog in hours. *This is required if field 'endTimestamp' is not specified
@@ -5770,12 +5837,13 @@ isInvoiceable       | Boolean | No  | Your order number
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=51203146506d961c030791801&user=51203146506d961c030791801&timestamp=2020-10-7 07:00&endTimestamp=2020-10-7 15:00"
+  -d "_id=51203146506d961c030791801&modifiedByUser=51718241fdb708f37959127&user=51203146506d961c030791801&timestamp=2020-10-7 07:00&endTimestamp=2020-10-7 15:00"
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fbcfe75ba9312280ef6523e',
+  modifiedByUser: '51718241fdb708f37959127',
   user: '51203146506d961c030791801',
   timestamp: '2020-10-07 07:00',
   endTimestamp: '2020-10-07 15:00',
@@ -5791,7 +5859,7 @@ let options = {
   }
 };
 
-request.post(options, function (error, response, body) {
+request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
     console.log("Time log updated: _id: " + body._id);
@@ -5831,9 +5899,10 @@ request.post(options, function (error, response, body) {
   "price": 777,
   "__v": 0 
 }
+"Time log updated: _id: 5fbcfe75ba9312280ef6523e"
 ```
 
-This endpoint creates a time log
+This endpoint updates a time log
 
 ### HTTP Request
 
@@ -5845,7 +5914,87 @@ The table below shows the required fields. Other available fields can be found i
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id             | String | Yes | Id of the time log
-user            | String | Yes | Id of the user
+modifiedByUser  | String | Yes | Id of the user who made the change
+user            | String | Yes | Id of the user on the time log
+
+## Delete a Time Log
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -d "_id=51203146506d961c030791801"
+```
+
+```javascript
+let jsonData = {
+  _id: '5fbcfe75ba9312280ef6523e'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/timeLogs',
+  json: jsonData,
+  headers: {
+    'Client-Secret': clientSecret,
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Time log deleted: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete time log: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "startLocation": { type: 'Point', coordinates: [] },
+  "stopLocation": { type: 'Point', coordinates: [] },
+  "allDay": false,
+  "status": 1,
+  "isInvoiceable": true,
+  "isInvoiced": false,
+  "_id": "5fbcfe75ba9312280ef6523e",
+  "timestamp": "2020-10-07T06:00:00.000Z",
+  "realTimestamp": "2020-10-07T06:00:00.000Z",
+  "createDate": "2020-11-24T12:37:09.258Z",
+  "unSocialHoursCosts": [],
+  "customFields": [],
+  "machineTimePrices": [],
+  "machineTimeSupplements": [],
+  "systemAccount": "5112826056d961c030000001",
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "endTimestamp": "2020-10-07T014:00:00.000Z",
+  "realEndTimestamp": "2020-10-07T14:00:00.000Z",
+  "time": 8,
+  "invoiceableTime": 8,
+  "pricePerHour": 777,
+  "price": 777,
+  "__v": 0 
+}
+"Time log deleted: _id: 5fbcfe75ba9312280ef6523e"
+```
+
+This endpoint deletes a time log
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/timeLogs/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id             | String | Yes | Id of the time log
+
 
 # Expenses 
 
@@ -6230,11 +6379,12 @@ _id | The _id of the expense item to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
   user: '51203146506d961c030791801',
   expenseItem: '5de78aed1332719192362bed'
 };
@@ -6308,7 +6458,8 @@ This endpoint creates an expense
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-user                | String | Yes | User id
+createdByUser       | String | Yes | Id of the user who created the expense
+user                | String | Yes | Id of the user on the expense
 expenseItem         | String | Yes*| Id of the expense item. *Required if freetext for articles is not activated 
 name                | String | Yes*| Name of the article. *Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled. 
 workOrder           | String | No  | Id of the work order
@@ -6331,12 +6482,13 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fbe684416625651d7f43257&user=51203146506d961c030791801"
+  -d "_id=5fbe684416625651d7f43257&modifiedByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801"
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fbe684416625651d7f43257',
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
   user: '51203146506d961c030791801'
 };
 
@@ -6411,8 +6563,9 @@ The table below shows the required fields. Other available fields can be found i
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-_id       | String | Yes | Id of the expense
-user      | String | Yes | Id of the user
+_id            | String | Yes | Id of the expense
+modifiedByUser | String | Yes | Id of the user who made the change
+user           | String | Yes | Id of the user on the expense
 
 ## Delete an Expense
 
@@ -6469,7 +6622,7 @@ This endpoint deletes an expense
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String | Yes | Id of the expense
-deletedByUser                | String | Yes | Id of the user whom deleted the expense
+deletedByUser                | String | Yes | Id of the user who deleted the expense
 
 
 # Driver Journals
@@ -6735,11 +6888,12 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ```shell
   curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+  -d "createdByUser=51203146506d961c030791801&user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '51203146506d961c030791801',
   user: '5f48eb3e65d7ee4942c46eeb',
   carRegistrationNumber: 'ABC123',
   driverJournalItemType: '5e5ef41f0d87d3262bc0176',
@@ -6812,7 +6966,8 @@ This endpoint creates a driver journal
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-user                    | String | Yes | User id
+createdByUser           | String | Yes | Id of the user who created the driver journal
+user                    | String | Yes | Id of the user on the driver journal
 vehicle                 | String | Yes*| Id of the vehicle. *Required if carRegistrationNumber is not specified
 carRegistrationNumber   | String | Yes*| Car registration number. *Required if vehicle is not specified. This will not be used if vehicle is specified
 driverJournalItemType   | String | Yes | Type of trip
@@ -6835,12 +6990,13 @@ isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fc619b96294735fc421d77a&user=5f48eb3e65d7ee4942c46eeb"
+  -d "_id=5fc619b96294735fc421d77a&modifiedByUser=51203146506d961c030791801&user=5f48eb3e65d7ee4942c46eeb"
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fc619b96294735fc421d77a',
+  modifiedByUser: '51203146506d961c030791801',
   user: '5f48eb3e65d7ee4942c46eeb'
 };
 
@@ -6907,8 +7063,9 @@ The table below shows the required fields. Other available fields can be found i
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-_id       | String | Yes | Id of the driver journal
-user      | String | Yes | Id of the user
+_id            | String | Yes | Id of the driver journal
+modifiedByUser | String | Yes | Id of the user who made the change
+user           | String | Yes | Id of the user
 
 ## Delete a Driver Journal
 
@@ -7991,7 +8148,6 @@ This endpoint deletes a purchase order
 `DELETE https://app.seventime.se/api/2/purchaseOrders/`
 
 ### DELETE Parameters
-The table below shows the required fields.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
