@@ -28,7 +28,8 @@ You can view code examples for Shell and JavaScript in the dark area to the righ
 ```shell
 # With shell, you can just pass the correct header with each request
 curl "api_endpoint_here" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -36,7 +37,9 @@ curl "api_endpoint_here" \
 
 let options = {
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -88,9 +91,9 @@ A search returns 490 results and the limit is set to 100. To get the first 100 r
 
 
 ```shell
-curl "https://app.seventime.se/api/2/customers" \
+curl "https://app.seventime.se/api/2/customers/?limit=10&page=2" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page=2"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -100,7 +103,9 @@ let url = "https://app.seventime.se/api/2/customers/?&limit=10&page=2";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -171,7 +176,7 @@ request(options, function(error, response, body) {
       },
       "modifiedDate": "2018-10-01T18:12:06.025Z",
       "createdDate": "2018-10-01T18:12:06.025Z",
-      "__v": 0,
+
       "address2": "",
       "country": "",
       "billingMethod": "",
@@ -221,7 +226,9 @@ let url = "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -286,7 +293,6 @@ request(options, function(error, response, body) {
     },
     "modifiedDate": "2018-10-01T18:12:06.025Z",
     "createdDate": "2018-10-01T18:12:06.025Z",
-    "__v": 0,
     "address2": "",
     "country": "",
     "billingMethod": "",
@@ -314,12 +320,11 @@ _id | The _id of the customer to retrieve
 
 
 ## Create a Customer
-
-
 ```shell
   curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&name=Tommy Hellström&address=Glimmingevägen 18&zipCode=269 74&city=Västra Karup&phone=0431-360050&email=support@seventime.se&organizationNumber=555555-5555" 
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","name":"Tommy Hellström","address":"Glimmingevägen 18","zipCode":"269 74","city":Västra Karup","phone":0431-360050","email":"support@seventime.se","organizationNumber":"555555-5555"}'
 ```
 
 ```javascript
@@ -338,7 +343,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/customers',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -373,7 +378,6 @@ request.post(options, function (error, response, body) {
   },
   "modifiedDate": "2018-10-01T18:12:06.025Z",
   "createdDate": "2018-10-01T18:12:06.025Z",
-  "__v": 0,
   "isActive": true
 }
 ```
@@ -454,7 +458,8 @@ distributionPercent   | Number | Yes | 1-100
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=571f61330c7f498a2d0001a4&modifiedByUser=5f48eb3e65d7ee4942c46eeb&name=Seven Time AB&customerNumber=733352" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"571f61330c7f498a2d0001a4","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","name":"Seven Time AB","customerNumber":"733352"}' 
 ```
 
 ```javascript
@@ -469,7 +474,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/customers',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -506,8 +511,7 @@ request.put(options, function (error, response, body) {
   },
   "modifiedDate": "2018-10-01T18:12:06.025Z",
   "createdDate": "2018-10-01T18:12:06.025Z",
-  "__v": 0,
-  "isActive": true
+  "isActive": true  
 }
 "Customer updated: Seven Time AB, _id: 571f61330c7f498a2d0001a4"
 ```
@@ -532,7 +536,8 @@ modifiedByUser      | String | Yes | Id of the user who updated the customer
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=571f61330c7f498a2d0001a4" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"571f61330c7f498a2d0001a4"}' 
 ```
 
 ```javascript
@@ -544,7 +549,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/customers',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -592,9 +597,9 @@ _id                 | String | Yes | Id of the customer
 
 
 ```shell
-curl "https://app.seventime.se/api/2/contactPersons" \
+curl "https://app.seventime.se/api/2/contactPersons/?limit=2&page=4" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=1"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -604,7 +609,9 @@ let url = "https://app.seventime.se/api/2/contactPersons/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -641,7 +648,6 @@ request(options, function(error, response, body) {
       "isActive": true,
       "createdDate": "2020-11-17T12:06:24.281Z",
       "modifiedDate": "2020-11-17T12:06:24.281Z",
-      "__v": 0
     },
     {
       // ...
@@ -681,7 +687,9 @@ let url = "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d79876
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -713,7 +721,6 @@ request(options, function(error, response, body) {
     "createdDate": "2020-11-17T12:06:24.281Z",
     "modifiedDate": "2020-11-17T12:06:24.281Z",
     "systemAccount": "5112826056d961c030000001",
-    "__v": 0,
   },
 }
 ```
@@ -734,9 +741,9 @@ _id | The _id of the contact person to retrieve
 ## Get Users
 
 ```shell
-curl "https://app.seventime.se/api/2/users/" \
+curl "https://app.seventime.se/api/2/users/?limit=10&page=1" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "&limit=100&3"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -746,7 +753,9 @@ let url = "https://app.seventime.se/api/2/users/?&limit=100&page=3";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -832,7 +841,9 @@ let url = "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -889,7 +900,8 @@ _id | The _id of the user to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/userRoles/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -899,7 +911,9 @@ let url = "https://app.seventime.se/api/2/userRoles/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -958,7 +972,9 @@ let url = "https://app.seventime.se/api/2/defaultSalaryTypes/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -986,7 +1002,6 @@ request(options, function(error, response, body) {
       "isRuleType": false,
       "absenceTimeCategory": null,
       "absenceTimeCategoryName": "",
-      "__v": 0,
       "unitType": "1",
       "canBeRegistered": true,
       "salaryAmount": 0,
@@ -1018,7 +1033,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/userSkills/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1028,7 +1044,9 @@ let url = "https://app.seventime.se/api/2/userSkills/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1050,7 +1068,6 @@ request(options, function(error, response, body) {
     {
       "_id": "59f9d1c53ffd5f932a000067",
       "skillTitle": "Höga arbeten",
-      "__v": 0,
       "requireEducations": [
         "5a54ea1f7a7fe3c26200006e"
       ]
@@ -1089,7 +1106,9 @@ let url = "https://app.seventime.se/api/2/userWorkTypes/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1112,7 +1131,6 @@ request(options, function(error, response, body) {
       "_id": "5f442181e62efdb4a3a7d9c6d",
       "name": "Programmerare",
       "pricePerHour": 555,
-      "__v": 0
     },
     {
       // ...
@@ -1140,7 +1158,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ```shell
   curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&firstName=Tommy&lastName=Hellström&email=tommy@nummer7.se&userName=TommyH&userRolesId=1" 
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","email":"tommy@nummer7.se","userName":"TommyH","userRolesId":1"}'
 ```
 
 ```javascript
@@ -1157,7 +1176,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/users',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -1223,7 +1242,8 @@ language           | String   | No  | Language of the user as a language code (e
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb3e157f795553d05751946&modifiedByUser=5f48eb3e65d7ee4942c46eeb&firstName=Tommy&lastName=Hellström&userName=TommyH" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3e157f795553d05751946","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","userName":"TommyH"}' 
 ```
 
 ```javascript
@@ -1239,7 +1259,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/users',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -1295,7 +1315,8 @@ modifiedByUser     | String   | Yes | Id of the user who made the change
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb3e157f795553d05751946" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3e157f795553d05751946"}' 
 ```
 
 ```javascript
@@ -1307,7 +1328,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/users',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -1356,7 +1377,8 @@ _id                | String   | Yes | Id of the user
 
 ```shell
 curl "https://app.seventime.se/api/2/departments" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1366,7 +1388,9 @@ let url = "https://app.seventime.se/api/2/departments/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1396,7 +1420,6 @@ request(options, function(error, response, body) {
       "departmentNumber": "2",
       "isActive": true,
       "managerIds": [],
-      "__v": 0
     },
     {
       // ...
@@ -1434,7 +1457,9 @@ let url = "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1458,7 +1483,6 @@ request(options, function(error, response, body) {
     "name": "Utveckling",
     "departmentNumber": "2",
     "isActive": true,
-    "__v": 0
   }
 }
 ```
@@ -1484,9 +1508,9 @@ _id | The _id of the department to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/2/projects" \
+curl "https://app.seventime.se/api/2/projects/?limit=10&page=7" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page=7"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1496,7 +1520,9 @@ let url = "https://app.seventime.se/api/2/projects/?&limit=10&page=7";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1621,7 +1647,6 @@ request(options, function(error, response, body) {
       ],
       "createdDate": "2020-08-11T10:13:36.001Z",
       "modifiedDate": "2020-08-11T10:13:36.002Z",
-      "__v": 0
     },
     {
       // ...
@@ -1664,7 +1689,9 @@ let url = "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1785,7 +1812,6 @@ request(options, function(error, response, body) {
     "createdDate": "2020-08-11T10:13:36.001Z",
     "modifiedDate": "2020-08-11T10:13:36.002Z",
     "systemAccount": "5112826056d961c030000001",
-    "__v": 0
   }
 }
 ```
@@ -1808,7 +1834,8 @@ _id | The _id of the project to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/projectStatuses/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1818,7 +1845,9 @@ let url = "https://app.seventime.se/api/2/projectStatuses/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1871,7 +1900,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/projectTypes/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1881,7 +1911,9 @@ let url = "https://app.seventime.se/api/2/projectTypes/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1904,7 +1936,6 @@ request(options, function(error, response, body) {
       "_id": "5b276a908e0273b743607182",
       "projectTypeName": "Dev",
       "isActive": true,
-      "__v": 0
     },
     {
       // ...
@@ -1932,7 +1963,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/projectTags/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1942,7 +1974,9 @@ let url = "https://app.seventime.se/api/2/projectTags/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -1989,12 +2023,11 @@ sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Create a Project
-
-
 ```shell
   curl -X POST "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&name=App development" 
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","name":"App development"}' 
 ```
 
 ```javascript
@@ -2007,7 +2040,7 @@ const options = {
   url: 'https://app.seventime.se/api/2/projects',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -2123,7 +2156,8 @@ phone                       | String | No | Phone number
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb3c92dd5472a243e9caa3b&name=App development&customer=571f61330c7f498a2d0001a4" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b","name":"App development","customer":"571f61330c7f498a2d0001a4"}' 
 ```
 
 ```javascript
@@ -2138,7 +2172,7 @@ const options = {
   url: 'https://app.seventime.se/api/2/projects',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -2203,7 +2237,8 @@ modifiedByUser          | String | Yes | Id of the user who made the change
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb3c92dd5472a243e9caa3b" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b"}' 
 ```
 
 ```javascript
@@ -2216,7 +2251,7 @@ const options = {
   url: 'https://app.seventime.se/api/2/projects',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -2262,11 +2297,10 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 # Supplement Orders
 ## Get Supplement Orders
 
-
 ```shell
-curl "https://app.seventime.se/api/2/supplementOrders" \
+curl "https://app.seventime.se/api/2/supplementOrders/?project=5f924f4f533f102af78f95b6" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "project=5f924f4f533f102af78f95b6"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2276,7 +2310,9 @@ let url = "https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2394,7 +2430,6 @@ request(options, function(error, response, body) {
       "modifiedDate": null,
       "createDate": "2018-09-25T07:12:46.369Z",
       "status": 60,
-      "__v": 0
     }
   ]
 }
@@ -2418,7 +2453,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2428,7 +2464,9 @@ let url = "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca87912572
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2540,7 +2578,6 @@ request(options, function(error, response, body) {
       "modifiedDate": null,
       "createDate": "2018-09-25T07:12:46.369Z",
       "status": 60,
-      "__v": 0
    }
 }
 ```
@@ -2560,11 +2597,10 @@ _id | The _id of the supplement order to retrieve
 # Work Orders
 ## Get Work Orders
 
-
 ```shell
-curl "https://app.seventime.se/api/2/workOrders" \
+curl "https://app.seventime.se/api/2/workOrders/?limit=10&page=3" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page3"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2574,7 +2610,9 @@ let url = "https://app.seventime.se/api/2/workOrders/?&limit=10&page3";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2637,7 +2675,6 @@ request(options, function(error, response, body) {
       "machines": [],
       "users": [],
       "createDate": "2018-09-28T13:17:16.785Z",
-      "__v": 0
     },
     {
       // ...
@@ -2673,7 +2710,8 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 ```shell
 curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2683,7 +2721,9 @@ let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2741,7 +2781,6 @@ request(options, function(error, response, body) {
     "machines": [],
     "users": [],
     "createDate": "2018-09-28T13:17:16.785Z",
-    "__v": 0,
     "relations": []
   }
 }
@@ -2765,7 +2804,8 @@ _id | The _id of the work order to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/workOrderTypes/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2775,7 +2815,9 @@ let url = "https://app.seventime.se/api/2/workOrderTypes/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2798,7 +2840,6 @@ request(options, function(error, response, body) {
       "_id": "58263d936a17605a25020043",
       "isActive": true,
       "workOrderTypeName": "Extra",
-      "__v": 0,
       "color": "f44336"
     },
     {
@@ -2827,7 +2868,8 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 ```shell
 curl "https://app.seventime.se/api/2/workOrderTags/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2837,7 +2879,9 @@ let url = "https://app.seventime.se/api/2/workOrderTags/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2887,7 +2931,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/workOrderStatuses/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -2897,7 +2942,9 @@ let url = "https://app.seventime.se/api/2/workOrderStatuses/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -2945,12 +2992,11 @@ This endpoint retrieves work order statuses.
 No parameters
 
 ## Create a Work order
-
-
 ```shell
   curl -X POST "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "title=Support&customer=571f61330c7f498a2d0001a4&createdByUser=5912626016d971c030916402" 
+  -H "Content-Type: application/json" \
+  -d '{"title":"Support","customer":"571f61330c7f498a2d0001a4","createdByUser":"5912626016d971c030916402"}' 
 ```
 
 ```javascript
@@ -2964,7 +3010,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/workOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -3130,7 +3176,8 @@ phone                       | String  | No  | Used if useSeparateBillingAddress 
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "id=5fb8517e1bcaad1cd2cd3f9c&modifiedByUser=5f48eb3e65d7ee4942c4602&title=Construction work" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb8517e1bcaad1cd2cd3f9c","modifiedByUser":"5f48eb3e65d7ee4942c4602","title":"Construction work"}' 
 ```
 
 ```javascript
@@ -3144,7 +3191,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/workOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   }
@@ -3217,7 +3264,6 @@ request.put(options, function (error, response, body) {
   "createdByUser": "5f48eb3e65d7ee4942c4602",
   "createdByUserName": "Lucas Hellström",
   "workOrderNumber": 4942,
-  "__v": 0,
   "completedByUser": null,
   "completedByUserName": "",
   "completedDate": null,
@@ -3246,12 +3292,11 @@ _id               | String | Yes | Id of the work order
 modifiedByUser    | String | Yes | Id of the user who updated the work order
 
 ## Delete a Work order
-
-
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/workOrders/" \
+  curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "id=5fb8517e1bcaad1cd2cd3f9c&deletedByUser=5f48eb3e65d7ee4942c4602" 
+  -H "Content-Type: application/json" \
+  -d '{"id":"5fb8517e1bcaad1cd2cd3f9c","deletedByUser":"5f48eb3e65d7ee4942c4602"}' 
 ```
 
 ```javascript
@@ -3264,7 +3309,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/workOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   }
@@ -3310,9 +3355,9 @@ deletedByUser    | String | Yes | Id of the user who deleted the work order
 ## Get price lists
 
 ```shell
-curl "https://app.seventime.se/api/2/priceLists" \
+curl "https://app.seventime.se/api/2/priceLists/?limit=10&page=1" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page=1"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -3322,7 +3367,9 @@ let url = "https://app.seventime.se/api/2/priceLists/?&limit=10&page=1";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3350,7 +3397,6 @@ request(options, function(error, response, body) {
       "_id": "58c1504a658fb5911d018f5f",
       "name": "Grosslistan",
       "isActive": true,
-      "__v": 0
     },
     {
       // ...
@@ -3377,7 +3423,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -3387,7 +3434,9 @@ let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3410,7 +3459,6 @@ request(options, function(error, response, body) {
     "isActive": true,
     "systemAccount": "5112826056d961c030000001",
     "name": "ÅF-prislista",
-    "__v": 0
   }
 }
 ```
@@ -3434,9 +3482,9 @@ _id | The _id of the price list to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/2/invoices" \
+curl "https://app.seventime.se/api/2/invoices/?limit=3&page=9" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=3&page=9"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -3446,7 +3494,9 @@ let url = "https://app.seventime.se/api/2/invoices/?&limit=3&page=9";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3586,7 +3636,6 @@ request(options, function(error, response, body) {
       "sentDate": "2020-11-13T14:35:28.798Z",
       "invoiceNumber": "24481",
       "OCRNumber": "2448173",
-      "__v": 0,
       "archived": false,
       "archivedDate": null,
       "creditForInvoice": null,
@@ -3657,7 +3706,8 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 
 ```shell
 curl "https://app.seventime.se/api/2/invoices/5fab29b038bd334ab540ab53" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -3667,7 +3717,9 @@ let url = "https://app.seventime.se/api/2/invoices/5fae99b072aa334cb539ab73";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3820,7 +3872,6 @@ request(options, function(error, response, body) {
     "sentDate": "2020-11-13T14:35:28.798Z",
     "invoiceNumber": "24481",
     "OCRNumber": "2448173",
-    "__v": 0,
     "archived": false,
     "archivedDate": null,
     "creditForInvoice": null,
@@ -3876,7 +3927,8 @@ _id | The _id of the invoice to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/invoiceTags/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -3886,7 +3938,9 @@ let url = "https://app.seventime.se/api/2/invoiceTags/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -3933,11 +3987,11 @@ sortBy          |  | If specified, a sort will be made on the specified paramete
 sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Create an Invoice
-
 ```shell
   curl -X POST "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "invoiceStatus=2&customer=571f21058d7f618a2d037165&createdByUser=51718241fdb708f37959127&language=EN" 
+  -H "Content-Type: application/json" \
+  -d '{"invoiceStatus":"2","customer":"571f21058d7f618a2d037165","createdByUser":"51718241fdb708f37959127","language":"EN"}' 
 ```
 
 ```javascript
@@ -3952,7 +4006,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/invoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4166,7 +4220,8 @@ Code |  Invoice type | Description
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=2&customer=571f21058d7f618a2d037165&createdByUser=51718241fdb708f37959127&language=EN" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb64449b0cc9510a561dfdf","customer":"571f21058d7f618a2d037165","createdByUser":"51718241fdb708f37959127","language":"EN"}' 
 ```
 
 ```javascript
@@ -4184,7 +4239,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/invoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4284,7 +4339,8 @@ invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'S
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fb64449b0cc9510a561dfdf" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb64449b0cc9510a561dfdf","deletedByUser":"51718241fdb708f37959127"}' 
 ```
 
 ```javascript
@@ -4297,7 +4353,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/invoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4343,9 +4399,9 @@ deletedByUser       | String | Yes | Id of the user who deleted the invoice
 ## Get supplier invoices
 
 ```shell
-curl "https://app.seventime.se/api/2/supplierInvoices/?" \
+curl "https://app.seventime.se/api/2/supplierInvoices/?limit=5&page=10" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=10"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -4355,7 +4411,9 @@ let url = "https://app.seventime.se/api/2/supplierInvoices/?&limit=5&page=10";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -4462,7 +4520,6 @@ request(options, function(error, response, body) {
       "selfBillingInvoiceNumber": "24272",
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
       "footerInfoText": "Text under...",
-      "__v": 0
     },
     {
       // ...
@@ -4502,7 +4559,8 @@ sortDirection            |  | "ascending" or "descending". If specified and sort
 
 ```shell
 curl "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -4512,7 +4570,9 @@ let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -4613,7 +4673,6 @@ request(options, function(error, response, body) {
     "selfBillingInvoiceNumber": "24272",
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
     "footerInfoText": "Text under...",
-    "__v": 0
   }
 }
 ```
@@ -4637,7 +4696,8 @@ _id | The _id of the supplier invoice to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "supplierInvoiceNumber=9162&createdByUser=5f48eb3e65d7ee4942c46eeb&distributor=5f6b2e6af24d5df55b69277&totalAmountInclTax=100000" 
+  -H "Content-Type: application/json" \
+  -d '{"supplierInvoiceNumber":"9162","createdByUser":"5f48eb3e65d7ee4942c46eeb","distributor":"5f6b2e6af24d5df55b69277","totalAmountInclTax":"100000"}' 
 ```
 
 ```javascript
@@ -4652,7 +4712,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/supplierInvoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4701,7 +4761,6 @@ request.post(options, function (error, response, body) {
   "totalAmountToInvoice": 80000,
   "supplierInvoiceStatus": 1,
   "createDate": "2020-12-09T12:43:51.515Z",
-  "__v": 0 
 }
 ```
 
@@ -4779,7 +4838,8 @@ driverJournal  | Driver journal row
 ```shell
   curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fd0619c7391b561bda0a7&modifiedByUser=5f48eb3e65d7ee4942c46eeb&supplierInvoiceStatus=7" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fd0619c7391b561bda0a7","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","supplierInvoiceStatus":"7"}' 
 ```
 
 ```javascript
@@ -4793,7 +4853,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/supplierInvoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4844,7 +4904,6 @@ request.put(options, function (error, response, body) {
   "totalAmountToInvoice": 80000,
   "supplierInvoiceStatus": 10,
   "createDate": "2020-12-09T12:43:51.515Z",
-  "__v": 0 
 }
 "Supplier invoice updated: _id: 5fd0619c7391b561bda0a7"
 ```
@@ -4869,7 +4928,8 @@ modifiedByUser      | String      | Yes | Id of the user who made the change
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fd0619c7391b561bda0a7" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fd0619c7391b561bda0a7"}' 
 ```
 
 ```javascript
@@ -4881,7 +4941,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/supplierInvoices',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -4926,9 +4986,9 @@ _id                 | String      | Yes | Id of the Supplier Invoice
 
 
 ```shell
-curl "https://app.seventime.se/api/2/machines" \
+curl "https://app.seventime.se/api/2/machines/?limit=10&page=2" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page=2"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -4985,7 +5045,6 @@ request(options, function(error, response, body) {
       "createDate": "2018-01-02T17:37:02.629Z",
       "machineLog": [],
       "documents": [],
-      "__v": 1,
       "articleNumber": "",
       "machineType": null,
       "machineTypeName": "",
@@ -5043,7 +5102,8 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 
 ```shell
 curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5053,7 +5113,9 @@ let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5096,7 +5158,6 @@ request(options, function(error, response, body) {
     "modifiedDate": "2020-09-27T12:06:19.225Z",
     "createDate": "2018-01-02T17:37:02.629Z",
     "documents": [],
-    "__v": 1,
     "articleNumber": "",
     "machineType": null,
     "machineTypeName": "",
@@ -5139,7 +5200,8 @@ _id | The _id of the machine to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/machineTypes/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5149,7 +5211,9 @@ let url = "https://app.seventime.se/api/2/machineTypes/";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5173,7 +5237,6 @@ request(options, function(error, response, body) {
       "name": "Fordon",
       "isActive": true,
       "createDate": "2017-10-19T12:50:50.361Z",
-      "__v": 0
     },
     {
       // ...
@@ -5203,9 +5266,9 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Machine Time Logs
 
 ```shell
-curl "https://app.seventime.se/api/2/machineTimeLogs" \
+curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=2&page=27" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=2&page=27"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5215,7 +5278,9 @@ let url = "https://app.seventime.se/api/2/machineTimeLogs/?&limit=2&page=27";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5268,7 +5333,6 @@ request(options, function(error, response, body) {
       "isInvoiceable": true,
       "status": 1,
       "timestamp": "2017-10-24T13:39:06.144Z",
-      "__v": 0
     },
     {
       // ...
@@ -5297,7 +5361,8 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 
 ```shell
 curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5307,7 +5372,9 @@ let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5354,7 +5421,6 @@ request(options, function(error, response, body) {
     "cost": 0,
     "createDate": "2017-10-24T13:39:16.764Z",
     "timestamp": "2017-10-24T13:39:06.144Z",
-    "__v": 0
   }
 }
 ```
@@ -5374,14 +5440,13 @@ Parameter | Description
 _id | The _id of the machine time log to retrieve
 
 # Time Logs
-
 ## Get Time Logs
 
 
 ```shell
-curl "https://app.seventime.se/api/2/timeLogs" \
+curl "https://app.seventime.se/api/2/timeLogs/?limit=3&page=1" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=3&page=1"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5391,7 +5456,9 @@ let url = "https://app.seventime.se/api/2/timeLogs/?&limit=3&page=1";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5417,7 +5484,6 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "514959f8733259db7591000c",
-      "__v": 1,
       "allDay": false,
       "cost": 10690.5824,
       "createDate": "2013-03-16T11:39:36.437Z",
@@ -5501,7 +5567,8 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 
 ```shell
 curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5511,7 +5578,9 @@ let url = "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5543,7 +5612,6 @@ request(options, function(error, response, body) {
     "isInvoiceable": true,
     "isInvoiced": false,
     "_id": "514959f8733259db7591000c",
-    "__v": 1,
     "cost": 10690.5824,
     "createDate": "2013-03-16T11:39:36.437Z",
     "customer": null,
@@ -5597,10 +5665,10 @@ _id | The _id of the time log to retrieve
 
 ## Get Time Categories
 
-
 ```shell
 curl "https://app.seventime.se/api/2/timeCategories" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5610,7 +5678,9 @@ let url = "https://app.seventime.se/api/2/timeCategories/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5640,7 +5710,6 @@ request(options, function(error, response, body) {
       "articleNumber": "040",
       "isWorkTime": true,
       "isActive": true,
-      "__v": 0,
       "color": "FF9800",
       "isVacation": true,
       "presenceCode": "",
@@ -5667,15 +5736,12 @@ Parameter | Default | Description
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-
-
-
-
 ## Get a specific Time Category
 
 ```shell
 curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -5685,7 +5751,9 @@ let url = "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34704120
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -5714,7 +5782,6 @@ request(options, function(error, response, body) {
     "articleNumber": "040",
     "isWorkTime": true,
     "isActive": true,
-    "__v": 0,
     "color": "FF9800",
     "isVacation": true,
     "presenceCode": "",
@@ -5744,7 +5811,8 @@ _id | The _id of the time category to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801&timestamp=2020-06-05 12:00&time=5"
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","timestamp":"2020-06-05 12:00","time":"5"}'
 ```
 
 ```javascript
@@ -5759,7 +5827,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/timeLogs',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -5802,7 +5870,6 @@ request.post(options, function (error, response, body) {
   "invoiceableTime": 5,
   "pricePerHour": 777,
   "price": 777,
-  "__v": 0 
 }
 ```
 
@@ -5837,7 +5904,8 @@ isInvoiceable       | Boolean | No  | Your order number
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=51203146506d961c030791801&modifiedByUser=51718241fdb708f37959127&user=51203146506d961c030791801&timestamp=2020-10-7 07:00&endTimestamp=2020-10-7 15:00"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"51203146506d961c030791801","modifiedByUser":"51718241fdb708f37959127","user":"51203146506d961c030791801","timestamp":"2020-10-7 07:00","endTimestamp":"2020-10-7 15:00"}'
 ```
 
 ```javascript
@@ -5853,7 +5921,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/timeLogs',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -5897,7 +5965,6 @@ request.put(options, function (error, response, body) {
   "invoiceableTime": 8,
   "pricePerHour": 777,
   "price": 777,
-  "__v": 0 
 }
 "Time log updated: _id: 5fbcfe75ba9312280ef6523e"
 ```
@@ -5922,7 +5989,8 @@ user            | String | Yes | Id of the user on the time log
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=51203146506d961c030791801"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"51203146506d961c030791801"}'
 ```
 
 ```javascript
@@ -5934,7 +6002,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/timeLogs',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -5978,7 +6046,6 @@ request.delete(options, function (error, response, body) {
   "invoiceableTime": 8,
   "pricePerHour": 777,
   "price": 777,
-  "__v": 0 
 }
 "Time log deleted: _id: 5fbcfe75ba9312280ef6523e"
 ```
@@ -6001,9 +6068,9 @@ _id             | String | Yes | Id of the time log
 ## Get Expenses
 
 ```shell
-curl "https://app.seventime.se/api/2/expenses" \
+curl "https://app.seventime.se/api/2/expenses/?limit=2&page=3" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=2&page=3"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6013,7 +6080,9 @@ let url = "https://app.seventime.se/api/2/expenses/?&limit=2&page=3";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6039,7 +6108,6 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "53ad291839f16d23a6414604d2",
-      "__v": 0,
       "attestedBy": null,
       "createDate": "2014-06-27T08:11:15.954Z",
       "customer": null,
@@ -6115,7 +6183,8 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 
 ```shell
 curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6125,7 +6194,9 @@ let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6145,7 +6216,6 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "53ad291839f16d23a6414604d2",
-    "__v": 0,
     "attestedBy": null,
     "createDate": "2014-06-27T08:11:15.954Z",
     "customer": null,
@@ -6207,9 +6277,9 @@ _id | The _id of the expense to retrieve
 ## Get Expenses Items
 
 ```shell
-curl "https://app.seventime.se/api/2/expenseItems" \
+curl "https://app.seventime.se/api/2/expenseItems/?limit=10&page=176" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=10&page=176"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6219,7 +6289,9 @@ let url = "https://app.seventime.se/api/2/expenseItems/?&limit=10&page=176";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6265,7 +6337,6 @@ request(options, function(error, response, body) {
       "distributor": null,
       "distributorName": "",
       "isInventoryItem": false,
-      "__v": 0,
       "unitPriceInclTax": 369.48749999999995
     },
     {
@@ -6303,7 +6374,8 @@ sortDirection           |  | "ascending" or "descending". If specified and sortB
 
 ```shell
 curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6313,7 +6385,9 @@ let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed"
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6353,7 +6427,6 @@ request(options, function(error, response, body) {
     "distributor": null,
     "distributorName": "",
     "isInventoryItem": false,
-    "__v": 0,
     "unitPriceInclTax": 369.48749999999995
   }
 }
@@ -6379,7 +6452,8 @@ _id | The _id of the expense item to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
 ```
 
 ```javascript
@@ -6393,7 +6467,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/expenses',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -6443,7 +6517,6 @@ request.post(options, function (error, response, body) {
   "totalAmount": 426.66,
   "totalAmountAfterDiscount": 426.66,
   "totalCost": 319,
-  "__v": 0 
 }
 "Expense created: _id: 5fbe684416625651d7f43257"
 ```
@@ -6482,7 +6555,8 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fbe684416625651d7f43257&modifiedByUser=5f48eb3e65d7ee4942c46eeb&user=51203146506d961c030791801"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fbe684416625651d7f43257","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801"}'
 ```
 
 ```javascript
@@ -6496,7 +6570,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/expenses',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -6546,7 +6620,6 @@ request.put(options, function (error, response, body) {
   "totalAmount": 426.66,
   "totalAmountAfterDiscount": 426.66,
   "totalCost": 319,
-  "__v": 0 
 }
 "Expense updated: _id: 5fbe684416625651d7f43257"
 ```
@@ -6572,7 +6645,8 @@ user           | String | Yes | Id of the user on the expense
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fbe684416625651d7f43257"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fbe684416625651d7f43257"}'
 ```
 
 ```javascript
@@ -6585,7 +6659,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/expenses',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -6629,9 +6703,9 @@ deletedByUser                | String | Yes | Id of the user who deleted the exp
 ## Get Driver Journals
 
 ```shell
-curl "https://app.seventime.se/api/2/driverJournals" \
+curl "https://app.seventime.se/api/2/driverJournals/limit=5&page=2" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=2"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6641,7 +6715,9 @@ let url = "https://app.seventime.se/api/2/driverJournals/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6696,7 +6772,6 @@ request(options, function(error, response, body) {
       "createDate": "2016-06-17T09:20:46.845Z",
       "isInvoiceable": true,
       "timestamp": "2016-06-17T09:20:10.254Z",
-      "__v": 0
     },
     {
       // ...
@@ -6736,7 +6811,8 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 ```shell
 curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6746,7 +6822,9 @@ let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6795,7 +6873,6 @@ request(options, function(error, response, body) {
     "modifiedDate": "2016-06-17T09:29:01.958Z",
     "createDate": "2016-06-17T09:20:46.845Z",
     "timestamp": "2016-06-17T09:20:10.254Z",
-    "__v": 0
   }
 }
 ```
@@ -6817,7 +6894,8 @@ _id | The _id of the driver journal to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/driverJournalTypes" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -6827,7 +6905,9 @@ let url = "https://app.seventime.se/api/2/driverJournalTypes/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -6859,7 +6939,6 @@ request(options, function(error, response, body) {
       "salaryTypeName": "Milersättning för diesel",
       "createDate": "2020-03-03T09:14:11.750Z",
       "isActive": true,
-      "__v": 0,
       "salaryCode": "9172"
     },
     {
@@ -6888,7 +6967,8 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ```shell
   curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=51203146506d961c030791801&user=51203146506d961c030791801&expenseItem=5de78aed1332719192362bed"
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"51203146506d961c030791801","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
 ```
 
 ```javascript
@@ -6908,7 +6988,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -6951,7 +7031,6 @@ request.post(options, function (error, response, body) {
   "totalAmount": 0,
   "cost": 0,
   "totalCost": 0,
-  "__v": 0 
 }
 "Driver journal created: _id: 5fc619b96294735fc421d77a"
 ```
@@ -6990,7 +7069,8 @@ isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fc619b96294735fc421d77a&modifiedByUser=51203146506d961c030791801&user=5f48eb3e65d7ee4942c46eeb"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fc619b96294735fc421d77a","modifiedByUser":"51203146506d961c030791801","user":"5f48eb3e65d7ee4942c46eeb"}'
 ```
 
 ```javascript
@@ -7004,7 +7084,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -7047,7 +7127,6 @@ request.put(options, function (error, response, body) {
   "totalAmount": 0,
   "cost": 0,
   "totalCost": 0,
-  "__v": 0 
 }
 "Driver journal updated: _id: 5fc619b96294735fc421d77a"
 ```
@@ -7072,7 +7151,8 @@ user           | String | Yes | Id of the user
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fc619b96294735fc421d77a"
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fc619b96294735fc421d77a"}'
 ```
 
 ```javascript
@@ -7084,7 +7164,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -7127,9 +7207,9 @@ _id                    | String | Yes | Id of the driver journal
 ## Get Vehicles
 
 ```shell
-curl "https://app.seventime.se/api/2/vehicles" \
+curl "https://app.seventime.se/api/2/vehicles/?limit=5&page=2" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=2"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7139,7 +7219,9 @@ let url = "https://app.seventime.se/api/2/vehicles/?&limit=5&page=2";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7169,7 +7251,6 @@ request(options, function(error, response, body) {
       "registrationNumber": "ABC123",
       "isActive": true,
       "createDate": "2016-06-08T14:45:42.546Z",
-      "__v": 0
     },
     {
       // ...
@@ -7196,7 +7277,8 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 ```shell
 curl "https://app.seventime.se/api/2/vehicles/55782f0382da2f85430284d" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7206,7 +7288,9 @@ let url = "https://app.seventime.se/api/2/vehicles/55782f0382da2f85430284d";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7230,7 +7314,6 @@ request(options, function(error, response, body) {
     "registrationNumber": "ABC123",
     "isActive": true,
     "createDate": "2016-06-07T13:20:04.346Z",
-    "__v": 0
   }
 }
 ```
@@ -7252,9 +7335,9 @@ _id | The _id of the vehicle to retrieve
 ## Get Distributors
 
 ```shell
-curl "https://app.seventime.se/api/2/distributors" \
+curl "https://app.seventime.se/api/2/distributors/?limit=5&page=3" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=3"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7264,7 +7347,9 @@ let url = "https://app.seventime.se/api/2/distributors/?&limit=5&page=3";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7315,7 +7400,6 @@ request(options, function(error, response, body) {
       "isSubContractor": true,
       "createdDate": "2020-09-23T13:19:42.450Z",
       "modifiedDate": "2020-09-23T13:19:42.450Z",
-      "__v": 0
     },
     {
       // ...
@@ -7343,7 +7427,8 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 
 ```shell
 curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7353,7 +7438,9 @@ let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7399,7 +7486,6 @@ request(options, function(error, response, body) {
     "createdDate": "2020-09-23T13:19:42.450Z",
     "modifiedDate": "2020-09-23T13:19:42.450Z",
     "systemAccount": "5112826056d961c030000001",
-    "__v": 0
   }
 }
 ```
@@ -7422,7 +7508,8 @@ _id | The _id of the distributor to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7432,7 +7519,9 @@ let url = "https://app.seventime.se/api/2/distributorContactPersons/?&distributo
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7464,7 +7553,6 @@ request(options, function(error, response, body) {
       "isActive": true,
       "createdDate": "2020-12-04T10:13:03.965Z",
       "modifiedDate": "2020-12-04T10:13:03.965Z",
-      "__v": 0
     },
     {
       // ...
@@ -7491,9 +7579,9 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get Purchase Orders
 
 ```shell
-curl "https://app.seventime.se/api/2/purchaseOrders" \
+curl "https://app.seventime.se/api/2/purchaseOrders/?limit=2&page=5" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=2&page=5"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7503,7 +7591,9 @@ let url = "https://app.seventime.se/api/2/purchaseOrders/?&limit=2&page=5";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7612,7 +7702,6 @@ request(options, function(error, response, body) {
         }
       ],
       "createDate": "2017-09-11T13:31:08.963Z",
-      "__v": 0,
       "projectNumber": "183897"
     },
     {
@@ -7647,7 +7736,8 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 
 ```shell
 curl "https://app.seventime.se/api/2/purchaseOrders/59d6041d5551819581034002" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -7657,7 +7747,9 @@ let url = "https://app.seventime.se/api/2/purchaseOrders/59d6041d555181958103400
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -7760,7 +7852,6 @@ request(options, function(error, response, body) {
       }
     ],
     "createDate": "2017-09-11T13:31:08.963Z",
-    "__v": 0,
     "projectNumber": "183897"
   }
 }
@@ -7784,7 +7875,8 @@ _id | The _id of the purchase order to retrieve
 ```shell
   curl -X POST "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "createdByUser=51718241fdb708f37959127&distributor=5f6b2e6af24d5df55b69277" 
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"51718241fdb708f37959127","distributor":"5f6b2e6af24d5df55b69277"}' 
 ```
 
 ```javascript
@@ -7797,7 +7889,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/purchaseOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -7881,7 +7973,6 @@ request.post(options, function (error, response, body) {
   "publicLink": "D2ymDeLqBpsOZDdJNVnV",
   "sentDate": "2020-12-04T14:30:38.169Z",
   "purchaseOrderNumber": "1051",
-  "__v": 0 
 }
 "Purchase Order created: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
 ```
@@ -7977,7 +8068,8 @@ onlyamount     | Text+amount row
 ```shell
   curl -X PUT "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fca480e571eb873a64b97ec&modifiedByUser=51718241fdb708f37959127&paymentDays=10" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fca480e571eb873a64b97ec","modifiedByUser":"51718241fdb708f37959127","paymentDays":"10"}' 
 ```
 
 ```javascript
@@ -7991,7 +8083,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/purchaseOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -8075,7 +8167,6 @@ request.put(options, function (error, response, body) {
   "publicLink": "D2ymDeLqBpsOZDdJNVnV",
   "sentDate": "2020-12-04T14:30:38.169Z",
   "purchaseOrderNumber": "1051",
-  "__v": 0 
 }
 "Purchase Order updated: name: purchase Order 123, _id: 5fca480e571eb873a64b97ec"
 
@@ -8100,7 +8191,8 @@ modifiedByUser             | String | Yes | Id of the user who modified the purc
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "_id=5fca480e571eb873a64b97ec" 
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fca480e571eb873a64b97ec"}' 
 ```
 
 ```javascript
@@ -8112,7 +8204,7 @@ let options = {
   url: 'https://app.seventime.se/api/2/purchaseOrders',
   json: jsonData,
   headers: {
-    'Client-Secret': clientSecret,
+    "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",
     "Accept": 'application/json'
   }
@@ -8158,7 +8250,8 @@ _id                        | String | Yes | Id of the purchase order
 
 ```shell
 curl "https://app.seventime.se/api/2/resultUnits" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8168,7 +8261,9 @@ let url = "https://app.seventime.se/api/2/resultUnits/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8192,7 +8287,6 @@ request(options, function(error, response, body) {
       "name": "Kontor Syd",
       "code": "Syd",
       "isActive": true,
-      "__v": 0
     },
     {
       // ...
@@ -8218,7 +8312,8 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 
 ```shell
 curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8228,7 +8323,9 @@ let url = "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8251,7 +8348,6 @@ request(options, function(error, response, body) {
     "name": "Kontor Syd",
     "code": "Syd",
     "isActive": true,
-    "__v": 0
   }
 }
 ```
@@ -8273,9 +8369,9 @@ _id | The _id of the result unit to retrieve
 ## Get Quotes
 
 ```shell
-curl "https://app.seventime.se/api/2/quotes" \
+curl "https://app.seventime.se/api/2/quotes/?limit=5&page=5" \
   -H "Client-Secret: thisismysecretkey" \
-  -d "limit=5&page=5"
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8285,7 +8381,9 @@ let url = "https://app.seventime.se/api/2/quotes/?&limit=5&page=5";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8515,7 +8613,6 @@ request(options, function(error, response, body) {
       ],
       "invoiceItems": [],
       "createDate": "2019-01-07T17:15:08.532Z",
-      "__v": 0
     },
     {
       // ...
@@ -8547,7 +8644,8 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 
 ```shell
 curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \ 
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8557,7 +8655,9 @@ let url = "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8781,7 +8881,6 @@ request(options, function(error, response, body) {
     ],
     "invoiceItems": [],
     "createDate": "2019-01-07T17:15:08.532Z",
-    "__v": 0
   }
 }
 ```
@@ -8803,7 +8902,8 @@ _id | The _id of the quote to retrieve
 
 ```shell
 curl "https://app.seventime.se/api/2/quoteTemplates" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8813,7 +8913,9 @@ let url = "https://app.seventime.se/api/2/quoteTemplates/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8875,7 +8977,6 @@ request(options, function(error, response, body) {
       "logotypeWidth": 200,
       "logoPosition": "left",
       "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>",
-      "__v": 0
     },
     {
       // ...
@@ -8902,7 +9003,8 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 
 ```shell
 curl "https://app.seventime.se/api/2/quoteCategories" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -8912,7 +9014,9 @@ let url = "https://app.seventime.se/api/2/quoteCategories/?";
 let options = {
   url: url,
   headers: {
-    "Client-Secret": "thisismysecretkey"
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
@@ -8934,7 +9038,6 @@ request(options, function(error, response, body) {
     {
       "_id": "58a678badc33073a42e02802",
       "isActive": true,
-      "__v": 0,
       "quoteCategoryName": "Utbildning"
     },
     {
@@ -8957,5 +9060,95 @@ Parameter | Default | Description
 quoteCategoryName                   |  | If specified, quote categories that match the parameter will be included.
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+# Custom fields
+## Get Custom fields
+
+```shell
+curl "https://app.seventime.se/api/2/customFields/?&entityType=200" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/customFields/?&entityType=200";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    { "_id": "572cc7advab059714hcfca51",
+      "selectFieldData": [],
+      "fieldType": 100,
+      "fieldName": "Kund",
+      "include": true,
+      "required": false },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves custom fields.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/customFields/?&entityType=<entityType>`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+entityType                          |  | Number corresponding to entity type. See table below for available types.
+
+**Entity types**
+
+Code | Description
+--------- | ----------- 
+100   | Time log
+200   | Work order
+300   | Taks
+400   | Invoice
+500   | Project
+600   | Expense
+700   | Machine time log
+800   | Driver journal
+900   | Salary deviation
+1000   | User
+1100   | Customer
+1200   | Absence
+1300   | Work time absence
+1400   | Quote
+1500   | Machine
+1600   | Object item
+1700   | Customer signature
+1800   | Supplement order
+1900   | Construction diary
+2000   | Checklist
+2100   | Payment plan
+
+
 
 
