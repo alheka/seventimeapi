@@ -216,7 +216,8 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 
 ```shell
 curl "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -677,7 +678,8 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 ```shell
 curl "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -831,7 +833,8 @@ sortDirection     |  | "ascending" or "descending". If specified and sortBy is s
 
 ```shell
 curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -962,7 +965,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/defaultSalaryTypes/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1096,7 +1100,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/userWorkTypes/" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1447,7 +1452,8 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 
 ```shell
 curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
@@ -1679,7 +1685,8 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 ```shell
 curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6" \
-  -H "Client-Secret: thisismysecretkey"
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
 ```
 
 ```javascript
