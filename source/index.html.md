@@ -9128,7 +9128,7 @@ This endpoint retrieves custom fields.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-entityType                          |  | Number corresponding to entity type. See table below for available types.
+entityType                          | 100 | Number corresponding to entity type. See table below for available types.
 
 **Entity types**
 
@@ -9136,7 +9136,7 @@ Code | Description
 --------- | ----------- 
 100   | Time log
 200   | Work order
-300   | Taks
+300   | Tasks
 400   | Invoice
 500   | Project
 600   | Expense
