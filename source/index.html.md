@@ -538,12 +538,13 @@ modifiedByUser      | String | Yes | Id of the user who updated the customer
   curl -X DELETE "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"571f61330c7f498a2d0001a4"}' 
+  -d '{"_id":"571f61330c7f498a2d0001a4","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '571f61330c7f498a2d0001a4'
+  _id: '571f61330c7f498a2d0001a4',
+  deletedByUser: 5f48eb3e65d7ee4942c46eeb
 };
 
 let options = {
@@ -590,6 +591,7 @@ This endpoint deletes a specific customer.
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String | Yes | Id of the customer
+deletedByUser       | String | Yes | Id of the user who deleted the customer
 
 
 # Contact Persons
@@ -1321,12 +1323,13 @@ modifiedByUser     | String   | Yes | Id of the user who made the change
   curl -X DELETE "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d05751946"}' 
+  -d '{"_id":"5fb3e157f795553d05751946","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb3e157f795553d05751946'
+  _id: '5fb3e157f795553d05751946',
+  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
 };
 
 let options = {
@@ -1373,6 +1376,7 @@ This endpoint deletes a specific user.
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String   | Yes | Id of the user
+deletedByUser      | String   | Yes | Id of the user who made the delete
 
 
 # Departments
@@ -2245,13 +2249,13 @@ modifiedByUser          | String | Yes | Id of the user who made the change
   curl -X DELETE "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a243e9caa3b"}' 
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b","deletedByUser":"51718241fdb708f379596193"}' 
 ```
 
 ```javascript
 const jsonData = {
   _id: '5fb3c92dd5472a243e9caa3b',
-  deletedByUser: '51718241fdb708f37959127'
+  deletedByUser: '51718241fdb708f379596193'
 };
 
 const options = {
@@ -6653,7 +6657,7 @@ user           | String | Yes | Id of the user on the expense
   curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fbe684416625651d7f43257"}'
+  -d '{"_id":"5fbe684416625651d7f43257","deletedByUser":"51203146506d961c030791801"}'
 ```
 
 ```javascript
@@ -6703,7 +6707,7 @@ This endpoint deletes an expense
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String | Yes | Id of the expense
-deletedByUser                | String | Yes | Id of the user who deleted the expense
+deletedByUser      | String | Yes | Id of the user who deleted the expense
 
 
 # Driver Journals
