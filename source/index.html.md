@@ -544,7 +544,7 @@ modifiedByUser      | String | Yes | Id of the user who updated the customer
 ```javascript
 let jsonData = {
   _id: '571f61330c7f498a2d0001a4',
-  deletedByUser: 5f48eb3e65d7ee4942c46eeb
+  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
 };
 
 let options = {
@@ -2168,7 +2168,7 @@ phone                       | String | No | Phone number
   curl -X PUT "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a243e9caa3b","name":"App development","customer":"571f61330c7f498a2d0001a4"}' 
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b","name":"App development","customer":"571f61330c7f498a2d0001a4","modifiedByUser":"51718241fdb708f37959127"}' 
 ```
 
 ```javascript
@@ -4232,7 +4232,7 @@ Code |  Invoice type | Description
   curl -X PUT "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb64449b0cc9510a561dfdf","customer":"571f21058d7f618a2d037165","createdByUser":"51718241fdb708f37959127","language":"EN"}' 
+  -d '{"_id":"5fb64449b0cc9510a561dfdf","customer":"571f21058d7f618a2d037165","modifiedByUser":"51718241fdb708f37959127","language":"EN"}' 
 ```
 
 ```javascript
@@ -4940,12 +4940,13 @@ modifiedByUser      | String      | Yes | Id of the user who made the change
   curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c7391b561bda0a7"}' 
+  -d '{"_id":"5fd0619c7391b561bda0a7","deletedByUser":"51203146506d961c030791801"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fd0619c7391b561bda0a7"
+  _id: "5fd0619c7391b561bda0a7",
+  deletedByUser: "51203146506d961c030791801"
 };
 
 let options = {
@@ -6001,12 +6002,13 @@ user            | String | Yes | Id of the user on the time log
   curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"51203146506d961c030791801"}'
+  -d '{"_id":"51203146506d961c030791801","deletedByUser":"51203146506d961c030791801"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbcfe75ba9312280ef6523e'
+  _id: '5fbcfe75ba9312280ef6523e',
+  deletedByUser: '51203146506d961c030791801'
 };
 
 let options = {
@@ -7163,12 +7165,13 @@ user           | String | Yes | Id of the user
   curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fc619b96294735fc421d77a"}'
+  -d '{"_id":"5fc619b96294735fc421d77a","deletedByUser":"51203146506d961c030791801"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fc619b96294735fc421d77a'
+  _id: '5fc619b96294735fc421d77a',
+  deletedByUser: '51203146506d961c030791801'
 };
 
 let options = {
@@ -8203,12 +8206,13 @@ modifiedByUser             | String | Yes | Id of the user who modified the purc
   curl -X DELETE "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fca480e571eb873a64b97ec"}' 
+  -d '{"_id":"5fca480e571eb873a64b97ec","deletedByUser":"51203146506d961c030791801"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fca480e571eb873a64b97ec'
+  _id: '5fca480e571eb873a64b97ec',
+  deletedByUser: '51203146506d961c030791801'
 };
 
 let options = {
