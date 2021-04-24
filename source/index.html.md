@@ -532,6 +532,7 @@ Parameter | Type | Required? | Description
 _id                 | String | Yes | Id of the customer
 modifiedByUser      | String | Yes | Id of the user who updated the customer
 
+<!---
 ## Delete a Customer
 
 ```shell
@@ -592,7 +593,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String | Yes | Id of the customer
 deletedByUser       | String | Yes | Id of the user who deleted the customer
-
+-->
 
 # Contact Persons
 
@@ -1317,6 +1318,7 @@ Parameter | Type | Required? | Description
 _id                | String   | Yes | Id of the user
 modifiedByUser     | String   | Yes | Id of the user who made the change
 
+<!---
 ## Delete a User
 
 ```shell
@@ -1377,7 +1379,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                | String   | Yes | Id of the user
 deletedByUser      | String   | Yes | Id of the user who made the delete
-
+-->
 
 # Departments
 
@@ -2242,7 +2244,7 @@ Parameter | Type | Required? | Description
 _id                     | String | Yes | Id of the project
 modifiedByUser          | String | Yes | Id of the user who made the change
 
-
+<!---
 ## Delete a Project
 
 ```shell
@@ -2304,6 +2306,7 @@ Parameter | Type | Required? | Description
 _id                     | String | Yes | Id of the project
 deletedByUser           | String | Yes | Id of the user who deleted the project
 
+-->
 
 # Supplement Orders
 ## Get Supplement Orders
@@ -3302,6 +3305,7 @@ Parameter | Type | Required? | Description
 _id               | String | Yes | Id of the work order
 modifiedByUser    | String | Yes | Id of the user who updated the work order
 
+<!---
 ## Delete a Work order
 ```shell
   curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
@@ -3360,6 +3364,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id               | String | Yes | Id of the work order
 deletedByUser    | String | Yes | Id of the user who deleted the work order
+-->
 
 # Price lists
 
@@ -4345,6 +4350,7 @@ taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if '
 invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
 invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
 
+<!---
 ## Delete an Invoice
 
 ```shell
@@ -4404,7 +4410,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id       | String | Yes | Id of the invoice
 deletedByUser       | String | Yes | Id of the user who deleted the invoice
-
+-->
 
 # Supplier invoices
 ## Get supplier invoices
@@ -8199,6 +8205,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                        | String | Yes | Id of the purchase order
 modifiedByUser             | String | Yes | Id of the user who modified the purchase order
+
 
 ## Delete a Purchase Order
 
