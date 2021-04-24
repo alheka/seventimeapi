@@ -680,7 +680,7 @@ You must replace <code>thisismysecretkey</code> with your personal API key.
 <h2 id='example-of-39-limit-39-and-39-page-39'>Example of &#39;limit&#39; and &#39;page&#39;</h2>
 <p>A search returns 490 results and the limit is set to 100. To get the first 100 results, the parameter &#39;page&#39; is set to 1. To get the next 100 results, &#39;page&#39; is set to 2, etc.</p>
 <h1 id='rate-limit'>Rate-limit</h1>
-<p>When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned making it very clear if the rate-limit is being enforced.
+<p>When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned.
 The limit is <strong>4 requests per second</strong>. This equals to a bit more than 200 requests per minute.</p>
 <h1 id='customers'>Customers</h1><h2 id='get-customers'>Get Customers</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/customers/?limit=10&amp;page=2"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
