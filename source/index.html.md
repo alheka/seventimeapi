@@ -84,6 +84,10 @@ When the number of results exceed the given limit, the 'page' parameter can be u
 ## Example of 'limit' and 'page'
 A search returns 490 results and the limit is set to 100. To get the first 100 results, the parameter 'page' is set to 1. To get the next 100 results, 'page' is set to 2, etc.
 
+# Rate-limit
+When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned making it very clear if the rate-limit is being enforced.
+The limit is **4 requests per second**. This equals to a bit more than 200 requests per minute.
+
 
 # Customers
 
