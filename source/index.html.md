@@ -108,6 +108,10 @@ The data property contains the information requested.
 }
 ```
 
+# Rate-limit
+When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned.
+The limit is **4 requests per second**. This equals to a bit more than 200 requests per minute.
+
 # Contact Persons
 
 ## Get Contact Persons
@@ -342,6 +346,7 @@ Code | Description
 1900   | Construction diary
 2000   | Checklist
 2100   | Payment plan
+
 
 # Customers
 
