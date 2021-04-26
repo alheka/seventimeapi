@@ -4,7 +4,7 @@
 
 
 ```shell
-curl "https://app.seventime.se/api/2/contactPersons/?limit=2&page=2" \
+curl "https://app.seventime.se/api/2/contactPersons/?limit=2&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
