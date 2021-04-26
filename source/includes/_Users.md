@@ -488,6 +488,7 @@ This endpoint creates a user.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
+createdByUser      | String   | Yes | Id of the user who created the new user
 firstName          | String   | Yes | First name of the user
 lastName           | String   | Yes | Last name of the user
 email              | String   | Yes | Email of the user
