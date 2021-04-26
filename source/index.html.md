@@ -10,6 +10,7 @@ toc_footers:
 - <a href="https://seventime.se">Seven Time</a>
 
 includes:
+- users
 - errors
 
 search: true
@@ -68,11 +69,12 @@ In addition to the 'Client-Secret', a few fields are required in the Header:
 - Accept - Must be "application/json"
 
 # Actions
-The Seven Time API supports three different actions:
+The Seven Time API supports four different actions:
 
 - get - used to retrieve data
 - push - used to create new items, e.g. new customers, users, etc.
 - put - used to update items, e.g. update an exisiting customer, user, etc.
+- delete - used to delete items e.g. delete a supplier invoice
 
 # Pagination
 Searches that returns a large number of results are paged due to performance reasons. These searches are limited by the parameter 'limit'. 
@@ -84,14 +86,35 @@ When the number of results exceed the given limit, the 'page' parameter can be u
 ## Example of 'limit' and 'page'
 A search returns 490 results and the limit is set to 100. To get the first 100 results, the parameter 'page' is set to 1. To get the next 100 results, 'page' is set to 2, etc.
 
+The data returned will be in the form of a JSON and contain a meta property where you will find information about the total number of results, number of pages and the current page.
+The data property contains the information requested.
 
-# Customers
 
-## Get Customers
+```json
+{
+  "meta": {
+    "totalResources": 490,
+    "totalPages": 5,
+    "currentPage": 2
+  },
+  "data": [
+    {
+      // ...
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+# Contact Persons
+
+## Get Contact Persons
 
 
 ```shell
-curl "https://app.seventime.se/api/2/customers/?limit=10&page=2" \
+curl "https://app.seventime.se/api/2/contactPersons/?limit=2&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -99,7 +122,242 @@ curl "https://app.seventime.se/api/2/customers/?limit=10&page=2" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/customers/?&limit=10&page=2";
+let url = "https://app.seventime.se/api/2/contactPersons/?&limit=5&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 3,
+    "totalPages": 1,
+    "currentPage": 1
+  },
+  "data": [
+    {
+      "_id": "5fb7bcd0ab7bb01d4d798762",
+      "name": "Tommy",
+      "title": "Utvecklare",
+      "workPhone": "",
+      "cellPhone": "",
+      "email": "support@seventime.se",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Tommy Hellström",
+      "mainContact": true,
+      "isActive": true,
+      "createdDate": "2020-11-17T12:06:24.281Z",
+      "modifiedDate": "2020-11-17T12:06:24.281Z",
+    },
+    {
+      // ...
+    }
+  ]
+}
+
+```
+
+This endpoint retrieves contact persons, a maximum of 500 contact persons will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/contactPersons`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c42fb99275000080`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+customerId      | | The id of the customer which the contact persons belong to. If not specified, all contact persons will be retrivied, regardless of which customer they belong to
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a specific Contact Person
+
+```shell
+curl "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "_id": "5fb7bcd0ab7bb01d4d798762",
+    "name": "Tommy",
+    "title": "Utvecklare",
+    "workPhone": "",
+    "cellPhone": "",
+    "email": "support@seventime.se",
+    "customer": "5bb2775da1640a751f000082",
+    "customerName": "Tommy Hellström",
+    "mainContact": true,
+    "isActive": true,
+    "createdDate": "2020-11-17T12:06:24.281Z",
+    "modifiedDate": "2020-11-17T12:06:24.281Z",
+    "systemAccount": "5112826056d961c030000001",
+  },
+}
+```
+
+This endpoint retrieves a contact persons.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/contactPersons/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the contact person to retrieve
+
+# Custom Fields
+## Get Custom fields
+
+```shell
+curl "https://app.seventime.se/api/2/customFields/?&entityType=200" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/customFields/?&entityType=200";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    { "_id": "572cc7advab059714hcfca51",
+      "selectFieldData": [],
+      "fieldType": 100,
+      "fieldName": "Kund",
+      "include": true,
+      "required": false },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves custom fields.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/customFields/?&entityType=<entityType>`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+entityType                          | 100 | Number corresponding to entity type. See table below for available types.
+
+**Entity types**
+
+Code | Description
+--------- | ----------- 
+100   | Time log
+200   | Work order
+300   | Tasks
+400   | Invoice
+500   | Project
+600   | Expense
+700   | Machine time log
+800   | Driver journal
+900   | Salary deviation
+1000   | User
+1100   | Customer
+1200   | Absence
+1300   | Work time absence
+1400   | Quote
+1500   | Machine
+1600   | Object item
+1700   | Customer signature
+1800   | Supplement order
+1900   | Construction diary
+2000   | Checklist
+2100   | Payment plan
+
+# Customers
+
+## Get Customers
+
+
+```shell
+curl "https://app.seventime.se/api/2/customers/?limit=10&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/customers/?&limit=10&page=1";
 let options = {
   url: url,
   headers: {
@@ -200,7 +458,7 @@ This endpoint retrieves customers, a maximum of 500 customers will be returned.
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/2/customers/?organizationNumber=555555-5555`
+E.g. `https://app.seventime.se/api/2/customers/?limit=10&page=1&organizationNumber=555555-5555`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -595,792 +853,6 @@ _id                 | String | Yes | Id of the customer
 deletedByUser       | String | Yes | Id of the user who deleted the customer
 -->
 
-# Contact Persons
-
-## Get Contact Persons
-
-
-```shell
-curl "https://app.seventime.se/api/2/contactPersons/?limit=2&page=4" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/contactPersons/?&limit=5&page=1";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 3,
-    "totalPages": 1,
-    "currentPage": 1
-  },
-  "data": [
-    {
-      "_id": "5fb7bcd0ab7bb01d4d798762",
-      "name": "Tommy",
-      "title": "Utvecklare",
-      "workPhone": "",
-      "cellPhone": "",
-      "email": "support@seventime.se",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Tommy Hellström",
-      "mainContact": true,
-      "isActive": true,
-      "createdDate": "2020-11-17T12:06:24.281Z",
-      "modifiedDate": "2020-11-17T12:06:24.281Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-
-```
-
-This endpoint retrieves contact persons, a maximum of 500 contact persons will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/contactPersons`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c42fb99275000080`
-
-Parameter | Default | Description
---------- | ------- | -----------
-customerId      | | The id of the customer which the contact persons belong to. If not specified, all contact persons will be retrivied, regardless of which customer they belong to
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get a specific Contact Person
-
-```shell
-curl "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/contactPersons/5fb7bcd0ab7bb01d4d798762";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "_id": "5fb7bcd0ab7bb01d4d798762",
-    "name": "Tommy",
-    "title": "Utvecklare",
-    "workPhone": "",
-    "cellPhone": "",
-    "email": "support@seventime.se",
-    "customer": "5bb2775da1640a751f000082",
-    "customerName": "Tommy Hellström",
-    "mainContact": true,
-    "isActive": true,
-    "createdDate": "2020-11-17T12:06:24.281Z",
-    "modifiedDate": "2020-11-17T12:06:24.281Z",
-    "systemAccount": "5112826056d961c030000001",
-  },
-}
-```
-
-This endpoint retrieves a contact persons.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/contactPersons/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the contact person to retrieve
-
-# Users
-## Get Users
-
-```shell
-curl "https://app.seventime.se/api/2/users/?limit=10&page=1" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/users/?&limit=100&page=3";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 4712,
-    "totalPages": 48,
-    "currentPage": 3
-  },
-  "data": [
-    {
-      "_id": "5f48eb3e65d7ee4942c4602",
-      "firstName": "Tommy",
-      "lastName": "Hellström",
-      "email": "tommy@nummer7.se",
-      "personalNumber": "",
-      "employeeNumber": "",
-      "userName": "20200828",
-      "workPhone": "",
-      "cellPhone": "",
-      "createdDate": "2020-08-28T11:32:14.452Z",
-      "modifiedDate": "2020-08-28T11:33:36.675Z",
-      "userRoleId": 10,
-      "isActive": true,
-      "isActivated": true,
-      "language": "SV"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves users, a maximum of 500 users will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/users`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/2/users/?name=Tommy Hellström`
-
-Parameter | Default | Description
---------- | ------- | -----------
-name              |  | If specified, users that match the parameter will be included.
-personNumber      |  | If specified, users that match the parameter will be included.
-department        |  | If specified, users that match the parameter will be included.
-userRole          |  | If specified, users that match the parameter will be included.
-isActive          |  | If specified, users that match the parameter will be included. This must be a boolean
-isActivated       |  | If specified, users that match the parameter will be included. This must be a boolean
-defaultSalaryType |  | If specified, users that match the parameter will be included.
-userSkills        |  | If specified, users that match the parameter will be included.
-sortBy            |  | If specified, a sort will be made on the specified parameter
-sortDirection     |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-## Get a specific User
-
-```shell
-curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data":
-  {
-    "_id": "59312765ad961c0318eb0a2",
-    "firstName": "Tommy",
-    "lastName": "Hellström",
-    "email": "tommy@nummer7.se",
-    "personalNumber": "",
-    "employeeNumber": "2",
-    "userName": "tommy",
-    "workPhone": "0431-360050",
-    "cellPhone": "070-4580425",
-    "createdDate": "2013-02-06T16:18:40.588Z",
-    "modifiedDate": "2020-11-16T10:39:01.762Z",
-    "userRoleId": 30,
-    "isActive": true,
-    "isActivated": true,
-    "language": "EN"
-  }
-}
-```
-
-This endpoint retrieves a specific user
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/users/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the user to retrieve
-
-## Get User Roles
-
-```shell
-curl "https://app.seventime.se/api/2/userRoles/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/userRoles/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "userRoleId": 1,
-      "userRoleName": "Administratör"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/userRoles/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get User Salary types
-
-```shell
-curl "https://app.seventime.se/api/2/defaultSalaryTypes/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/defaultSalaryTypes/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5834419c7a27db6932000052",
-      "name": "Övertid",
-      "description": "",
-      "code": "123",
-      "isAbsenceTimeType": false,
-      "isRuleType": false,
-      "absenceTimeCategory": null,
-      "absenceTimeCategoryName": "",
-      "unitType": "1",
-      "canBeRegistered": true,
-      "salaryAmount": 0,
-      "typeInSalarySystem": 10
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves user salary types, a maximum of 500 salary types will be returned.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/defaultSalaryTypes/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get User Skills
-
-```shell
-curl "https://app.seventime.se/api/2/userSkills/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/userSkills/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "59f9d1c53ffd5f932a000067",
-      "skillTitle": "Höga arbeten",
-      "requireEducations": [
-        "5a54ea1f7a7fe3c26200006e"
-      ]
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves user skills, a maximum of 500 user skills will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/userSkills/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get User Work Types
-
-```shell
-curl "https://app.seventime.se/api/2/userWorkTypes/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/userWorkTypes/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5f442181e62efdb4a3a7d9c6d",
-      "name": "Programmerare",
-      "pricePerHour": 555,
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/userRoles/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Create a User
-
-```shell
-  curl -X POST "https://app.seventime.se/api/2/users/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","email":"tommy@nummer7.se","userName":"TommyH","userRolesId":1"}'
-```
-
-```javascript
-let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  firstName: 'Tommy',
-  lastName: 'Hellström',
-  email: 'tommy@nummer7.se',
-  userName: 'TommyH',
-  userRoleId: 1,
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/users',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.post(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-  } else {
-    console.error("ERROR! Unable to create user: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-  "email": "tommy@nummer7.se",
-  "personalNumber": "",
-  "employeeNumber": "",
-  "userName": "TommyH",
-  "workPhone": "",
-  "cellPhone": "",
-  "createdDate": "2020-11-17T14:42:31.533Z",
-  "modifiedDate": "2020-11-17T14:42:31.533Z",
-  "userRoleId": 1,
-  "isActive": false,
-  "isActivated": false,
-  "language": "SV"
-}
-```
-
-This endpoint creates a user.
-
-### HTTP Request
-
-`POST https://app.seventime.se/api/2/users/`
-
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-firstName          | String   | Yes | First name of the user
-lastName           | String   | Yes | Last name of the user
-email              | String   | Yes | Email of the user
-userName           | String   | Yes | Username
-userRoleId         | String   | Yes | User role id
-employeeNumber     | String   | No  | EmployeeNumber
-workPhone          | String   | No  | Work phone number
-cellPhone          | String   | No  | Cell phone number
-isActive           | Boolean  | No  | Should the user be active?
-isActivated        | Boolean  | No  | Should the user be activated?
-password           | String   | No  | Password of the user
-language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
-
-## Update a User
-
-```shell
-  curl -X PUT "https://app.seventime.se/api/2/users/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d05751946","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","userName":"TommyH"}' 
-```
-
-```javascript
-let jsonData = {
-  _id: '5fb3e157f795553d05751946',
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
-  firstName: 'Tommy',
-  lastName: 'Hellström',
-  userName: 'TommyH'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/users',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.put(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("User updated: " + body.firstName + ", _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to update user: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-  "email": "tommy@nummer7.se",
-  "userName": "TommyH",
-  "createdDate": "2020-11-17T14:42:31.533Z",
-  "modifiedDate": "2020-12-11T13:25:07.332Z",
-  "userRoleId": 1,
-  "isActive": true,
-  "isActivated": false,
-  "language": "SV"
-}
-"User updated: Tommy, _id: 5fb3e157f795553d05751946"
-```
-
-This endpoint updates a specific user.
-
-### HTTP Request
-
-`PUT https://app.seventime.se/api/2/users/`
-
-### PUT Parameters
-
-The table below shows the required fields. Other available fields can be found in the section 'Create a User'.
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                | String   | Yes | Id of the user
-modifiedByUser     | String   | Yes | Id of the user who made the change
-
-<!---
-## Delete a User
-
-```shell
-  curl -X DELETE "https://app.seventime.se/api/2/users/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d05751946","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
-```
-
-```javascript
-let jsonData = {
-  _id: '5fb3e157f795553d05751946',
-  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/users',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.delete(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("User deleted: " + body.firstName + ", _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to delete user: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-}
-"User deleted: Tommy, _id: 5fb3e157f795553d05751946"
-```
-
-This endpoint deletes a specific user.
-
-### HTTP Request
-
-`DELETE https://app.seventime.se/api/2/users/`
-
-### DELETE Parameters
-
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                | String   | Yes | Id of the user
-deletedByUser      | String   | Yes | Id of the user who made the delete
--->
-
 # Departments
 
 ## Get Departments
@@ -1513,14 +985,11 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the department to retrieve
 
-
-# Projects
-
-## Get Projects
-
+# Distributors
+## Get Distributors
 
 ```shell
-curl "https://app.seventime.se/api/2/projects/?limit=10&page=7" \
+curl "https://app.seventime.se/api/2/distributors/?limit=5&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -1528,7 +997,7 @@ curl "https://app.seventime.se/api/2/projects/?limit=10&page=7" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/projects/?&limit=10&page=7";
+let url = "https://app.seventime.se/api/2/distributors/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -1544,7 +1013,7 @@ request(options, function(error, response, body) {
     // ...
   } else {
     console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
+  }  
 });
 ```
 
@@ -1553,300 +1022,146 @@ request(options, function(error, response, body) {
 ```json
 {
   "meta": {
-    "totalResources": 397,
-    "totalPages": 40,
-    "currentPage": 7
+    "totalResources": 16,
+    "totalPages": 4,
+    "currentPage": 3
   },
   "data": [
     {
-      "_id": "5f924f4f533f102af78f95b6",
-      "permissions": {
-        "permUsers": [],
-        "permRoles": [],
-        "permissionFlag": 1
-      },
-      "tags": [],
-      "name": "Från offert 20200811",
-      "projectNumber": "3314",
-      "projectStatus": 50,
-      "projectStatusRef": "5c8739d3205457b98b9883d4",
-      "projectType": null,
-      "projectTypeName": null,
-      "billingMethod": "FIXED_PRICE",
-      "pricePerHour": 0,
-      "fixedPrice": 0,
-      "fixedPriceInvoiced": false,
-      "fixedPriceLeftToInvoice": 0,
-      "fixedPriceExpenseItem": null,
-      "timeCategoryPriceList": null,
-      "estimatedTime": 0,
-      "recurringBudgetType": 10,
-      "recurringBudget": {
-        "budgetTime": 0,
-        "budgetAmount": 0,
-        "budgetType": 10
-      },
-      "resultUnit": null,
-      "resultUnitName": "",
-      "customer": "5763e05bcddce98e3b00004b",
-      "customerName": "Hellapps",
-      "contactPerson": null,
-      "contactPersonName": null,
-      "projectLeader": null,
-      "projectLeaderName": null,
-      "quote": "5b110ea19b27f5ef3f00007b",
-      "quoteNumber": "1058",
-      "department": null,
-      "departmentName": "",
-      "marking": "",
-      "yourOrderNumber": "1058",
-      "deliveryAddress": {
-        "name": "",
-        "address": "",
-        "address2": "",
-        "zipCode": "",
-        "city": "",
-        "country": "",
-        "phone": ""
-      },
-      "invoiceStatus": 0,
-      "notes": "",
-      "documents": [],
-      "startDate": null,
-      "endDate": null,
-      "budget": {
-        "typeOfBenefitCalc": 1,
-        "benefits": [],
-        "benefitTotal": 0,
-        "typeOfCostCalc": 1,
-        "costs": [],
-        "costTotal": 0
-      },
-      "budgetCalculation": {
-        "invoiceItems": [],
-        "totalBenefitAmount": 0,
-        "totalCostAmount": 0
-      },
-      "enableConstructionDiary": false,
-      "enablePaymentPlans": false,
-      "timeCategoryItems": [],
-      "expenseItemItems": [],
-      "staffLedger": {
-        "workPlaceIDNumber": "",
-        "developerName": "",
-        "developerOrgNumber": ""
-      },
-      "projectTimeNotification": {
-        "sent": false,
-        "notifyAtPercent": 0
-      },
-      "workRuleStartOfDay": null,
-      "workRuleEndOfDay": null,
-      "timeLogRegistrationMethods": [],
-      "timeShouldNotBeWorkTime": false,
-      "enablePortalAccess": false,
-      "projectResources": [],
-      "checkLists": [],
-      "color": "FAFAFA",
-      "isActive": true,
-      "comments": [],
-      "customFields": [
-        {
-          "_id": "5f326f50433f102ff77f95d7",
-          "fieldId": "5c0e7342ce9a647150000083",
-          "value": "5c0e7342ce9a647150000085"
-        }
-      ],
-      "createdDate": "2020-08-11T10:13:36.001Z",
-      "modifiedDate": "2020-08-11T10:13:36.002Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves projects, a maximum of 500 projects will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/projects`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/2/projects/?projectNumber=3314`
-
-Parameter | Default | Description
---------- | ------- | -----------
-name            |  | If specified, projects that match the parameter will be included.
-projectNumber   |  | If specified, projects that match the parameter will be included.
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-
-
-## Get a specific project
-
-```shell
-curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "recurringBudget": {
-      "budgetTime": 0,
-      "budgetAmount": 0,
-      "budgetType": 10
-    },
-    "deliveryAddress": {
-      "name": "",
+      "_id": "5f6b2e6af24d5df55b69277",
+      "name": "UE lev 20200923",
+      "distributorNumber": "20",
       "address": "",
-      "address2": "",
       "zipCode": "",
       "city": "",
       "country": "",
-      "phone": ""
+      "phone": "",
+      "email": "",
+      "organizationNumber": "",
+      "notes": "",
+      "purchaseOrderEmail": "",
+      "ourCustomerNumber": "",
+      "paymentDays": 30,
+      "hasSelfBilling": true,
+      "selfBillingSettings": {
+        "invoiceDeduction": 5,
+        "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+        "invoiceNumberSeries": "UELEV23",
+        "invoiceCounter": 1,
+        "emailForSelfBilling": "tommy@seventime.se"
+      },
+      "isActive": true,
+      "isSubContractor": true,
+      "createdDate": "2020-09-23T13:19:42.450Z",
+      "modifiedDate": "2020-09-23T13:19:42.450Z",
     },
-    "budget": {
-      "typeOfBenefitCalc": 1,
-      "benefits": [],
-      "benefitTotal": 0,
-      "typeOfCostCalc": 1,
-      "costs": [],
-      "costTotal": 0
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves distributors, a maximum of 500 distributors will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/distributors`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name                        |  | If specified, distributors that match the parameter will be included.
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a specific Distributor
+
+```shell
+curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "selfBillingSettings": {
+      "invoiceDeduction": 5,
+      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+      "invoiceNumberSeries": "UELEV23",
+      "invoiceCounter": 1,
+      "emailForSelfBilling": "tommy@seventime.se"
     },
-    "budgetCalculation": {
-      "invoiceItems": [],
-      "totalBenefitAmount": 0,
-      "totalCostAmount": 0
-    },
-    "permissions": {
-      "permUsers": [],
-      "permRoles": [],
-      "permDepartments": [],
-      "permissionFlag": 1
-    },
-    "staffLedger": {
-      "workPlaceIDNumber": "",
-      "developerName": "",
-      "developerOrgNumber": ""
-    },
-    "projectTimeNotification": {
-      "sent": false,
-      "notifyAtPercent": 0
-    },
-    "tags": [],
-    "_id": "5f326f4f433f102ff77f95d6",
-    "name": "Från offert 20200811",
-    "projectNumber": "3314",
-    "projectStatus": 50,
-    "projectStatusRef": "5c8639c3205457b88d9897b2",
-    "projectType": null,
-    "projectTypeName": null,
-    "billingMethod": "FIXED_PRICE",
-    "pricePerHour": 0,
-    "fixedPrice": 0,
-    "fixedPriceInvoiced": false,
-    "fixedPriceLeftToInvoice": 0,
-    "fixedPriceExpenseItem": null,
-    "timeCategoryPriceList": null,
-    "estimatedTime": 0,
-    "recurringBudgetType": 10,
-    "resultUnit": null,
-    "resultUnitName": "",
-    "customer": "5763e05bcddce98e3b00004b",
-    "customerName": "Hellapps",
-    "contactPerson": null,
-    "contactPersonName": null,
-    "projectLeader": null,
-    "projectLeaderName": null,
-    "quote": "5b110ea19b27f5ef3f00007b",
-    "quoteNumber": "1058",
-    "department": null,
-    "departmentName": "",
-    "marking": "",
-    "yourOrderNumber": "1058",
-    "invoiceStatus": 0,
+    "_id": "5f6b2e6af24d5df55b69277",
+    "name": "UE lev 20200923",
+    "distributorNumber": "20",
+    "address": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": "",
+    "email": "",
+    "organizationNumber": "",
     "notes": "",
-    "documents": [],
-    "startDate": null,
-    "endDate": null,
-    "enableConstructionDiary": false,
-    "enablePaymentPlans": false,
-    "timeCategoryItems": [],
-    "expenseItemItems": [],
-    "workRuleStartOfDay": null,
-    "workRuleEndOfDay": null,
-    "timeLogRegistrationMethods": [],
-    "timeShouldNotBeWorkTime": false,
-    "enablePortalAccess": false,
-    "projectResources": [],
-    "checkLists": [],
-    "color": "FAFAFA",
+    "purchaseOrderEmail": "",
+    "ourCustomerNumber": "",
+    "paymentDays": 30,
+    "hasSelfBilling": true,
     "isActive": true,
-    "comments": [],
-    "customFields": [
-      {
-        "_id": "5f326f50433f102ff77f95d7",
-        "fieldId": "5c0e7342ce9a647150000083",
-        "value": "5c0e7342ce9a647150000085"
-      }
-    ],
-    "createdDate": "2020-08-11T10:13:36.001Z",
-    "modifiedDate": "2020-08-11T10:13:36.002Z",
+    "isSubContractor": true,
+    "createdDate": "2020-09-23T13:19:42.450Z",
+    "modifiedDate": "2020-09-23T13:19:42.450Z",
     "systemAccount": "5112826056d961c030000001",
   }
 }
 ```
 
-This endpoint retrieves a specific project.
-
+This endpoint retrieves a specific distributor.
 
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/projects/<_id>`
+`GET https://app.seventime.se/api/2/distributors/<_id>`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-_id | The _id of the project to retrieve
+_id | The _id of the distributor to retrieve
 
-## Get Project statuses
+
+## Get Distributor Contact Persons
 
 ```shell
-curl "https://app.seventime.se/api/2/projectStatuses/" \
+curl "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -1854,7 +1169,7 @@ curl "https://app.seventime.se/api/2/projectStatuses/" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/projectStatuses/";
+let url = "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a";
 let options = {
   url: url,
   headers: {
@@ -1870,7 +1185,7 @@ request(options, function(error, response, body) {
     // ...
   } else {
     console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
+  }  
 });
 ```
 
@@ -1880,75 +1195,18 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5c8639c4704957d88b9894b1",
-      "statusName": "Avslutad",
-      "color": "468847",
-      "inProgressStatus": false,
-      "closedStatus": true,
-      "isActive": true
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves project statuses.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/projectStatuses/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get Project types
-
-```shell
-curl "https://app.seventime.se/api/2/projectTypes/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/projectTypes/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5b276a908e0273b743607182",
-      "projectTypeName": "Dev",
+      "_id": "5fca23df0317c3dae47b04a",
+      "name": "Kontaktperson 1",
+      "title": "",
+      "workPhone": "",
+      "cellPhone": "",
+      "email": "",
+      "distributor": "5f6b2e6af24d5df55b69277",
+      "distributorName": "UE lev 20200923",
+      "mainContact": false,
       "isActive": true,
+      "createdDate": "2020-12-04T10:13:03.965Z",
+      "modifiedDate": "2020-12-04T10:13:03.965Z",
     },
     {
       // ...
@@ -1957,25 +1215,25 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves project types.
-
-
+This endpoint retrieves distributor contact persons, a maximum of 500 contact persons will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/projectTypes/`
+`GET https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a`
 
-### URL Parameters
+### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+distributor                 |  | Id of the distributor. This field must be included
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get Project tags
+# Driver Journals
+## Get Driver Journals
 
 ```shell
-curl "https://app.seventime.se/api/2/projectTags/" \
+curl "https://app.seventime.se/api/2/driverJournals/limit=5&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -1983,7 +1241,7 @@ curl "https://app.seventime.se/api/2/projectTags/" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/projectTags/";
+let url = "https://app.seventime.se/api/2/driverJournals/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -1999,344 +1257,7 @@ request(options, function(error, response, body) {
     // ...
   } else {
     console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5fb2c736deb93b2713515684",
-      "tagName": "Viktigt",
-      "color": "673ab7"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves project tags.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/projectTags/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Create a Project
-```shell
-  curl -X POST "https://app.seventime.se/api/2/projects/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","name":"App development"}' 
-```
-
-```javascript
-const jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  name: 'App development',
-};
-
-const options = {
-  url: 'https://app.seventime.se/api/2/projects',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.post(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Project created: " + body.name + ", _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to create project: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-    "budget": { "benefits": [], "costs": [] },
-    "budgetCalculation": { "invoiceItems": [] },
-    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
-    "_id": "5fb3c92dd5472a243e9caa3b",
-    "tags": [],
-    "createdDate": "2020-11-17T12:59:25.109Z",
-    "modifiedDate": "2020-11-17T12:59:25.109Z",
-    "documents": [],
-    "timeCategoryItems": [],
-    "expenseItemItems": [],
-    "timeLogRegistrationMethods": [],
-    "projectResources": [],
-    "checkLists": [],
-    "comments": [],
-    "customFields": [],
-    "name": "App development",
-    "projectNumber": "12345786" 
-}
-"Project created: App development, _id: 5fb3c92dd5472a243e9caa3b"
-```
-
-This endpoint creates a project.
-
-### HTTP Request
-
-`POST https://app.seventime.se/api/2/projects/name=App development`
-
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-createdByUser           | String | Yes | Id of the user who created the project
-name                    | String | Yes | Name of the project
-projectNumber           | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
-projectStatusRef        | String | No  | Id of the status of the project
-customer                | String | No  | Id of the customer of the project
-contactPerson           | String | No  | Id of the contact person. This field requires that customer is specified and that the customer person belongs to that customer
-invoiceStatus           | Number | No  | Invoice status of the project. See below for available statuses
-projectLeader           | String | No  | Id of the user who should be the project leader
-projectType             | String | No  | Id of the project type
-department              | String | No  | Id of the department
-startDate               | String | No  | Start date of the project in the format YYYY-MM-DD
-endDate                 | String | No  | End date of the project in the format YYYY-MM-DD
-notes                   | String | No  | Notes to be included in the project
-resultUnit              | String | No  | Id of the result unit of the project
-billingMethod           | String | No  | Billing method of the project. See below for available billing methods
-pricePerHour            | Number | No* | Required if billingMethod is set to HOURLY
-fixedPrice              | Number | No* | Required if billingMethod is set to FIXED_PRICE
-timeCategoryPriceList   | String | No* | Required if billingMethod is set to PRICELIST
-projectTags             | Array  | No  | Array containing ids of tags
-marking                 | String | No  | Marking on project
-yourOrderNumber         | String | No  | Your order number
-deliveryAddress         | Object | No  | Contains attributes for delivery address. See below for details
-
-
-**Invoice statuses for projects**
-
-Code | Status
---------- | ----------- 
-0  | None
-5  | Not invoiceable
-10 | Ready to be invoiced
-20 | Partly invoiced
-30 | Fully invoiced
-
-**Billing methods for projects**
-
-Code | Billing method
---------- | ----------- 
-ACCORDING_TO_CUSTOMER   | This requires that the customer has a billing method set
-HOURLY                  | Hourly price
-PERUSER                 | The price will be set per user
-HOURLY_PER_TIMECATEGORY | Price will be set according to time category
-FIXED_PRICE             | Fixed price
-PRICELIST               | Price will be set according to a price list
-
-
-
-**Attributes for deliveryAddress**
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-name                        | String | No | Name of delivery recipient
-address                     | String | No | Primary address
-address2                    | String | No | Secondary address
-zipCode                     | String | No | Zip code
-city                        | String | No | City
-country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
-phone                       | String | No | Phone number
-
-## Update a Project
-
-```shell
-  curl -X PUT "https://app.seventime.se/api/2/projects/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a243e9caa3b","name":"App development","customer":"571f61330c7f498a2d0001a4","modifiedByUser":"51718241fdb708f37959127"}' 
-```
-
-```javascript
-const jsonData = {
-  _id: '5fb3c92dd5472a243e9caa3b',
-  modifiedByUser: '51718241fdb708f37959127',
-  name: 'App development',
-  customer: '571f61330c7f498a2d0001a4'
-};
-
-const options = {
-  url: 'https://app.seventime.se/api/2/projects',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.put(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Project updated: " + body.name + ", _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to update project: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-    "budget": { "benefits": [], "costs": [] },
-    "budgetCalculation": { "invoiceItems": [] },
-    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
-    "_id": "5fb3c92dd5472a243e9caa3b",
-    "tags": [],
-    "createdDate": "2020-11-17T12:59:25.109Z",
-    "modifiedDate": "2020-11-17T12:59:25.109Z",
-    "documents": [],
-    "timeCategoryItems": [],
-    "expenseItemItems": [],
-    "timeLogRegistrationMethods": [],
-    "projectResources": [],
-    "checkLists": [],
-    "comments": [],
-    "customFields": [],
-    "name": "App development",
-    "projectNumber": "12345786",
-    "customer": "571f61330c7f498a2d0001a4",
-    "customerName": "Hellapps AB"
-}
-"Project updated: App development, _id: 5fb3c92dd5472a243e9caa3b"
-```
-
-This endpoint updates a project.
-
-### HTTP Request
-
-`PUT https://app.seventime.se/api/2/projects/name=App development&customer=571f61330c7f498a2d0001a4`
-
-### PUT Parameters
-
-The table below shows the required fields. Other available fields can be found in the section 'Create a Project'.
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                     | String | Yes | Id of the project
-modifiedByUser          | String | Yes | Id of the user who made the change
-
-<!---
-## Delete a Project
-
-```shell
-  curl -X DELETE "https://app.seventime.se/api/2/projects/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a243e9caa3b","deletedByUser":"51718241fdb708f379596193"}' 
-```
-
-```javascript
-const jsonData = {
-  _id: '5fb3c92dd5472a243e9caa3b',
-  deletedByUser: '51718241fdb708f379596193'
-};
-
-const options = {
-  url: 'https://app.seventime.se/api/2/projects',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.delete(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Project deleted: " + body.name + ", _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to delete project: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-    "_id": "5fb3c92dd5472a243e9caa3b",
-    "name": "App development",
-    "projectNumber": "12345786",
-}
-"Project deleted: App development, _id: 5fb3c92dd5472a243e9caa3b"
-```
-
-This endpoint deletes a project.
-
-### HTTP Request
-
-`DELETE https://app.seventime.se/api/2/projects/name=App development&customer=571f61330c7f498a2d0001a4`
-
-### DELETE Parameters
-
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                     | String | Yes | Id of the project
-deletedByUser           | String | Yes | Id of the user who deleted the project
-
--->
-
-# Supplement Orders
-## Get Supplement Orders
-
-```shell
-curl "https://app.seventime.se/api/2/supplementOrders/?project=5f924f4f533f102af78f95b6" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
+  }  
 });
 ```
 
@@ -2345,128 +1266,81 @@ request(options, function(error, response, body) {
 ```json
 {
   "meta": {
-    "totalResources": 1,
-    "totalPages": 1,
-    "currentPage": 1
+    "totalResources": 87,
+    "totalPages": 18,
+    "currentPage": 2
   },
   "data": [
     {
-      "_id": "5ba5619ad77ca8791257284",
-      "title": "Discount",
+      "_id": "5613c0eabed82c732b67914b",
+      "name": "",
+      "driverJournalItemType": "574ed84219e781253319275004d",
+      "driverJournalItemTypeName": "4 kr/km",
+      "car": null,
+      "carRegistrationNumber": "ABC123",
       "description": "",
-      "headerText": "",
-      "supplementOrderNumber": 1,
-      "supplementOrderType": 1,
-      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-      "createdByUserName": "Tommy Hellström",
+      "user": "5f48eb3e65d7ee4942c46eeb",
+      "userName": "Tommy Hellström",
       "customer": "5bb26376c42fb99275000080",
       "customerName": "Hellapps AB",
       "project": "5f924f4f533f102af78f95b6",
-      "projectName": "Blåsippan",
-      "projectNumber": "17058",
-      "totalAmount": 75,
-      "totalTaxAmount": 18.75,
-      "totalAmountInclTax": 94,
-      "taxPercent": 25,
-      "contractedAmount": 0,
-      "priceList": null,
-      "priceListName": "",
-      "billingMethod": "FIXED_PRICE",
-      "acceptedDate": null,
-      "acceptedWithSignature": false,
-      "signaturePath": "",
-      "deviation": null,
-      "deviationNumber": 0,
-      "publicLink": "B2R8LWK5bakDjEbdw7",
-      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
-      "deviations": [],
-      "supplementOrderLogEntries": [
-        {
-          "logType": 1,
-          "description": "",
-          "user": "5f48eb3e65d7ee4942c46eeb",
-          "userName": "Tommy Hellström",
-          "_id": "5ba5619ad77ca8791257284",
-          "logDate": "2018-09-25T07:12:46.369Z"
-        },
-        {
-        // ...
-        }
-      ],
-      "documents": [],
-      "workOrderIds": [
-        "5bae34dca878bd790d02065g"
-      ],
-      "invoiceIds": [
-        "5f62c5281715836a4721b843",
-        "524f29251c112373a3421613"
-      ],
-      "invoiceItems": [
-        {
-          "_id": null,
-          "name": "",
-          "description": "",
-          "itemId": "0.9440031314948534",
-          "itemOrder": 1024,
-          "articleNumber": "203",
-          "itemType": "expense",
-          "timeCategory": null,
-          "categoryName": "",
-          "expenseItem": "5266af51d88751207100000e",
-          "expenseItemName": "Seven Time - 5 användare - #2",
-          "driverJournalItemType": null,
-          "driverJournalItemTypeName": "",
-          "machine": null,
-          "machineName": "",
-          "numberOfItems": 1,
-          "unitPrice": 100,
-          "priceList": null,
-          "priceListName": null,
-          "unit": "Styck",
-          "unitCost": 0,
-          "discountInPercent": 0,
-          "supplementChargePercent": -25,
-          "discountPercent": 0,
-          "taxPercent": 25,
-          "totalAmount": 75,
-          "totalTaxAmount": 0,
-          "totalAmountInclTax": 0,
-          "totalCost": 0,
-          "houseWorkFlag": false,
-          "houseWorkTypeOfWork": 0,
-          "selectedFlag": false,
-          "createDate": null
-        },
-        {
-        // ...
-        }
-      ],
-      "modifiedDate": null,
-      "createDate": "2018-09-25T07:12:46.369Z",
-      "status": 60,
+      "projectName": "Tester",
+      "workOrder": "5bae34dca878bd790d02065g",
+      "workOrderTitle": "20160525",
+      "workOrderNumber": 1181,
+      "startAddress": "Glimmingevägen 18, Västra Karup",
+      "endAddress": "Hamngatan 1, Malmö",
+      "travelPurpose": ".",
+      "startOdometer": 156,
+      "endOdometer": 178,
+      "totalDistance": 22,
+      "price": 4,
+      "totalAmount": 88,
+      "isInvoiced": true,
+      "invoice": "5fab29b038bd334ab540ab53",
+      "modifiedDate": "2016-06-17T09:29:01.958Z",
+      "createDate": "2016-06-17T09:20:46.845Z",
+      "isInvoiceable": true,
+      "timestamp": "2016-06-17T09:20:10.254Z",
+    },
+    {
+      // ...
     }
   ]
 }
 ```
 
-This endpoint retrieves supplement orders, a maximum of 500 supplement orders will be returned.
+This endpoint retrieves driver journals, a maximum of 500 driver journals will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6`
+`GET https://app.seventime.se/api/2/driverJournals`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-projectId     |  | Id of the project that supplement orders will be retrieved from. This parameter is required
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+projectName                 |  | If specified, driver journals that match the parameter will be included.
+customerName                |  | If specified, driver journals that match the parameter will be included.
+driverJournalItemTypeName   |  | If specified, driver journals that match the parameter will be included.
+isInvoiceable               |  | If specified, driver journals that match the parameter will be included.
+workOrderTitle              |  | If specified, driver journals that match the parameter will be included.
+workOrderNumber             |  | If specified, driver journals that match the parameter will be included.
+carRegistrationNumber       |  | If specified, driver journals that match the parameter will be included.
+startAddress                |  | If specified, driver journals that match the parameter will be included.
+endAddress                  |  | If specified, driver journals that match the parameter will be included.
+fromDate                    |  | If specified, driver journals registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDate                      |  | If specified, driver journals registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-## Get a specific Supplement Order
+
+
+
+## Get a specific Driver Journal
 
 ```shell
-curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
+curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -2474,7 +1348,7 @@ curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284";
+let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b";
 let options = {
   url: url,
   headers: {
@@ -2499,325 +1373,57 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-      "_id": "5ba5619ad77ca8791257284",
-      "title": "Discount",
-      "description": "",
-      "headerText": "",
-      "supplementOrderNumber": 1,
-      "supplementOrderType": 1,
-      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-      "createdByUserName": "Tommy Hellström",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Hellapps AB",
-      "project": "5f924f4f533f102af78f95b6",
-      "projectName": "Blåsippan",
-      "projectNumber": "17058",
-      "totalAmount": 75,
-      "totalTaxAmount": 18.75,
-      "totalAmountInclTax": 94,
-      "taxPercent": 25,
-      "contractedAmount": 0,
-      "priceList": null,
-      "priceListName": "",
-      "billingMethod": "FIXED_PRICE",
-      "acceptedDate": null,
-      "acceptedWithSignature": false,
-      "signaturePath": "",
-      "deviation": null,
-      "deviationNumber": 0,
-      "publicLink": "B2R8LWK5bakDjEbdw7",
-      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
-      "deviations": [],
-      "supplementOrderLogEntries": [
-        {
-          "logType": 1,
-          "description": "",
-          "user": "5f48eb3e65d7ee4942c46eeb",
-          "userName": "Tommy Hellström",
-          "_id": "5ba5619ad77ca8791257284",
-          "logDate": "2018-09-25T07:12:46.369Z"
-        },
-        {
-        // ...
-        }
-      ],
-      "documents": [],
-      "workOrderIds": [
-        "5bae34dca878bd790d02065g"
-      ],
-      "invoiceIds": [
-        "5f62c5281715836a4721b843",
-        "524f29251c112373a3421613"
-      ],
-      "invoiceItems": [
-        {
-          "_id": null,
-          "name": "",
-          "description": "",
-          "itemId": "0.9440031314948534",
-          "itemOrder": 1024,
-          "articleNumber": "203",
-          "itemType": "expense",
-          "timeCategory": null,
-          "categoryName": "",
-          "expenseItem": "5266af51d88751207100000e",
-          "expenseItemName": "Seven Time - 5 användare - #2",
-          "driverJournalItemType": null,
-          "driverJournalItemTypeName": "",
-          "machine": null,
-          "machineName": "",
-          "numberOfItems": 1,
-          "unitPrice": 100,
-          "priceList": null,
-          "priceListName": null,
-          "unit": "Styck",
-          "unitCost": 0,
-          "discountInPercent": 0,
-          "supplementChargePercent": -25,
-          "discountPercent": 0,
-          "taxPercent": 25,
-          "totalAmount": 75,
-          "totalTaxAmount": 0,
-          "totalAmountInclTax": 0,
-          "totalCost": 0,
-          "houseWorkFlag": false,
-          "houseWorkTypeOfWork": 0,
-          "selectedFlag": false,
-          "createDate": null
-        },
-        {
-        // ...
-        }
-      ],
-      "modifiedDate": null,
-      "createDate": "2018-09-25T07:12:46.369Z",
-      "status": 60,
-   }
-}
-```
-
-This endpoint retrieves a specific supplement order.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/supplementOrder/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the supplement order to retrieve
-
-# Work Orders
-## Get Work Orders
-
-```shell
-curl "https://app.seventime.se/api/2/workOrders/?limit=10&page=3" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/workOrders/?&limit=10&page3";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 1772,
-    "totalPages": 355,
-    "currentPage": 34
-  },
-  "data": [
-    {
-      "_id": "5bae34dca878bd790d02065d",
-      "workOrderNumber": 2901,
-      "createdByUserName": "Tommy Hellström",
-      "createdByUser": "59312765ad961c0318eb0a2",
-      "statusRef": "587f3157c73c0f6d9cea944f",
-      "status": 100,
-      "customerNumber": "511",
-      "customerName": "Abax Dörrsystem AB",
-      "customer": "571f61330c7f498a2d0001a4",
-      "estimatedTime": 0,
-      "endDate": "2017-10-12T16:00:00.000Z",
-      "startDate": "2017-10-10T07:00:00.000Z",
-      "description": "",
-      "title": "AO1",
-      "customFields": [],
-      "tags": [],
-      "workOrderUserWorkTypes": [],
-      "workOrderUserSkills": [],
-      "budgetCalculation": {
-        "invoiceItems": []
-      },
-      "invoiceRows": [],
-      "todoItems": [],
-      "reminders": [],
-      "checkLists": [],
-      "documents": [],
-      "locationCoordinates": [],
-      "workAddress": {
-        "useOtherAddress": false,
-        "address": "",
-        "zipCode": "",
-        "city": ""
-      },
-      "comments": [],
-      "partTimeResources": [],
-      "machines": [],
-      "users": [],
-      "createDate": "2018-09-28T13:17:16.785Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves work orders, a maximum of 500 work orders will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/workOrders`
-
-### Query Parameters
-
-E.g. `https://app.seventime.se/api/2/workOrders/?workOrderNumber=5555`
-
-Parameter | Default | Description
---------- | ------- | -----------
-title           |  | If specified, work orders that match the parameter will be included.
-workOrderNumber |  | If specified, work orders that match the parameter will be included.
-project         |  | If specified, work orders that match the parameter will be included.
-user            |  | If specified, work orders that match the parameter will be included.
-customer        |  | If specified, work orders that match the parameter will be included.
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-
-
-## Get a specific Work order
-
-```shell
-curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "workAddress": {
-      "useOtherAddress": false,
-      "address": "",
-      "zipCode": "",
-      "city": ""
-    },
-    "budgetCalculation": {
-      "invoiceItems": []
-    },
-    "locationCoordinates": [],
-    "tags": [],
-    "_id": "5bae34dca878bd790d02065g",
-    "workOrderNumber": 2901,
-    "createdByUserName": "Tommy Hellström",
-    "createdByUser": "59312765ad961c0318eb0a2",
-    "systemAccount": "5112826056d961c030000001",
-    "statusRef": "587f3157c73c0f6d9cea944f",
-    "status": 100,
-    "customerNumber": "511",
-    "customerName": "Abax Dörrsystem AB",
-    "customer": "571f61330c7f498a2d0001a4",
-    "estimatedTime": 0,
-    "endDate": "2017-10-12T16:00:00.000Z",
-    "startDate": "2017-10-10T07:00:00.000Z",
+    "isInvoiceable": true,
+    "_id": "5613c0eabed82c732b67914b",
+    "name": "",
+    "driverJournalItemType": "574ed84219e781253319275004d",
+    "driverJournalItemTypeName": "4 kr/km",
+    "car": null,
+    "carRegistrationNumber": "ABC123",
     "description": "",
-    "title": "AO1",
-    "customFields": [],
-    "workOrderUserWorkTypes": [],
-    "workOrderUserSkills": [],
-    "invoiceRows": [],
-    "todoItems": [],
-    "reminders": [],
-    "checkLists": [],
-    "documents": [],
-    "comments": [],
-    "partTimeResources": [],
-    "machines": [],
-    "users": [],
-    "createDate": "2018-09-28T13:17:16.785Z",
-    "relations": []
+    "user": "5f48eb3e65d7ee4942c46eeb",
+    "userName": "Tommy Hellström",
+    "customer": "5bb26376c42fb99275000080",
+    "customerName": "Hellapps AB",
+    "project": "5f924f4f533f102af78f95b6",
+    "projectName": "Tester",
+    "workOrder": "5bae34dca878bd790d02065g",
+    "workOrderTitle": "20160525",
+    "workOrderNumber": 1181,
+    "startAddress": "Glimmingevägen 18, Västra Karup",
+    "endAddress": "Hamngatan 1, Malmö",
+    "travelPurpose": ".",
+    "startOdometer": 156,
+    "endOdometer": 178,
+    "totalDistance": 22,
+    "price": 4,
+    "totalAmount": 88,
+    "isInvoiced": true,
+    "invoice": "5fab29b038bd334ab540ab53",
+    "modifiedDate": "2016-06-17T09:29:01.958Z",
+    "createDate": "2016-06-17T09:20:46.845Z",
+    "timestamp": "2016-06-17T09:20:10.254Z",
   }
 }
 ```
 
-This endpoint retrieves a specific work order.
-
+This endpoint retrieves a specific driver journal.
 
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/workOrders/<_id>`
+`GET https://app.seventime.se/api/2/driverJournals/<_id>`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-_id | The _id of the work order to retrieve
+_id | The _id of the driver journal to retrieve
 
-## Get work order types
+## Get Driver Journals Types
 
 ```shell
-curl "https://app.seventime.se/api/2/workOrderTypes/" \
+curl "https://app.seventime.se/api/2/driverJournalTypes" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -2825,7 +1431,7 @@ curl "https://app.seventime.se/api/2/workOrderTypes/" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/workOrderTypes/";
+let url = "https://app.seventime.se/api/2/driverJournalTypes/?";
 let options = {
   url: url,
   headers: {
@@ -2841,7 +1447,7 @@ request(options, function(error, response, body) {
     // ...
   } else {
     console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
+  }  
 });
 ```
 
@@ -2851,10 +1457,19 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "58263d936a17605a25020043",
+      "_id": "5e5ef41f0d87d3262bc0176",
+      "name": "Diesel - ej skt.fri",
+      "articleNumber": "45",
+      "cost": 0.5,
+      "price": 0.65,
+      "isInvoiceable": true,
+      "isDefault": false,
+      "salaryCompensationType": 20,
+      "salaryType": "5e5cd96da2f5b43254aa1f1e",
+      "salaryTypeName": "Milersättning för diesel",
+      "createDate": "2020-03-03T09:14:11.750Z",
       "isActive": true,
-      "workOrderTypeName": "Extra",
-      "color": "f44336"
+      "salaryCode": "9172"
     },
     {
       // ...
@@ -2863,165 +1478,44 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves work order types.
-
-
+This endpoint retrieves driver journals types, a maximum of 500 driver journals types will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/workOrderTypes/`
+`GET https://app.seventime.se/api/2/driverJournalTypes`
 
-### URL Parameters
+### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get work order tags
-
-```shell
-curl "https://app.seventime.se/api/2/workOrderTags/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/workOrderTags/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5df3a401f0690d1dbb3ec7bd",
-      "tagName": "1",
-      "color": "FAFAFA"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves work order tags.
+sortBy                      |  | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/workOrderTags/`
-
-### URL Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-## Get Work order statuses
+## Create a Driver Journal
 
 ```shell
-curl "https://app.seventime.se/api/2/workOrderStatuses/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/workOrderStatuses/";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "582f7cabd16fdbe335041055",
-      "statusName": "Ej planerad",
-      "color": "FF5722",
-      "inProgressStatus": false,
-      "closedStatus": false,
-      "isActive": true,
-      "plannedStatus": false
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves work order statuses.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/workOrderStatuses/`
-
-### URL Parameters
-
-No parameters
-
-## Create a Work order
-```shell
-  curl -X POST "https://app.seventime.se/api/2/workOrders/" \
+  curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"title":"Support","customer":"571f61330c7f498a2d0001a4","createdByUser":"5912626016d971c030916402"}' 
+  -d '{"createdByUser":"51203146506d961c030791801","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
 ```
 
 ```javascript
 let jsonData = {
-  title: 'Support',
-  customer: '571f61330c7f498a2d0001a4',
-  createdByUser: '5912626016d971c030916402'
+  createdByUser: '51203146506d961c030791801',
+  user: '5f48eb3e65d7ee4942c46eeb',
+  carRegistrationNumber: 'ABC123',
+  driverJournalItemType: '5e5ef41f0d87d3262bc0176',
+  startAddress: 'Address start, V Karup',
+  endAddress: 'Address end, Båstad',
+  travelPurpose: 'Delivery',
+  startOdometer: '45',
+  endOdometer: '60',
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/2/workOrders',
+  url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
     "Client-Secret": "thisismysecretkey",
@@ -3033,9 +1527,10 @@ let options = {
 request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
+    console.log("Driver journal created: _id: " + body._id);
+
   } else {
-    console.error("ERROR! Unable to create work order: " + error);
-    console.error(body);
+    console.error("ERROR! Unable to create driver journal: " + error);
   }
 });
 ```
@@ -3043,180 +1538,94 @@ request.post(options, function (error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json 
-{ 
-    "title": "Support"
-    "workOrderNumber": 4908,       
-    "description": "",   
-    "locationCoordinates": [],
-    "tags": [],
-    "_id": "5fb8517e1bcaad1cd2cd3f9c",
-    "createDate": "2020-11-16T10:15:42.216Z",
-    "users": [],
-    "machines": [],
-    "partTimeResources": [],
-    "comments": [],
-    "documents": [],
-    "checkLists": [],
-    "reminders": [],
-    "todoItems": [],
-    "invoiceRows": [],
-    "workOrderUserSkills": [],
-    "workOrderUserWorkTypes": [],
-    "customFields": [],
-    "relations": [],
-    "estimatedTime": 0, 
-    "marking": "",
-    "yourOrderNumber": "",
-    "customerName": "Testbolaget ABC",
-    "customer": "571f61330c7f498a2d0001a4",
-    "color": "FF5722",
-    "status": 500,
-    "statusRef": "587f7dadd10fbbe338000055",
-    "createdByUser":
-    { 
-    "_id": "5912626016d971c030916402"
-    // ...
-    },
-    "createdByUserName": "Lucas Hellström",
+{
+  "isInvoiceable": true,
+  "_id": "5fc619b96294735fc421d77a",
+  "timestamp": "2020-12-01T10:23:53.370Z",
+  "createDate": "2020-12-01T10:23:53.370Z",
+  "modifiedDate": "2020-12-01T10:23:53.370Z",
+  "systemAccount": "5112826056d961c030000001",
+  "user": "5f48eb3e65d7ee4942c46eeb",
+  "userName": "Tommy Hellström",
+  "carRegistrationNumber": "ABC123",
+  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemTypeName": "Diesel - ej skt.fri",
+  "startAddress": "Address start, V Karup",
+  "endAddress": "Address end, Båstad",
+  "travelPurpose": "Delivery",
+  "startOdometer": 45,
+  "endOdometer": 60,
+  "totalDistance": 15,
+  "isSalaryCompensated": false,
+  "price": 0,
+  "totalAmount": 0,
+  "cost": 0,
+  "totalCost": 0,
 }
+"Driver journal created: _id: 5fc619b96294735fc421d77a"
 ```
 
-This endpoint creates a work order.
+This endpoint creates a driver journal
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/2/workOrders/`
+`POST https://app.seventime.se/api/2/driverJournals/`
 
 ### POST Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-title               | String | Yes | Title of the work order
-customer            | String | Yes | Customer id for the customer who the work order should belong to
-createdByUser       | String | Yes | Id of the user who created the work order
-statusRef           | String | No | Id of the status of the work order.
-Project             | String | No | Project id for the project which the work order should belong to
-startDate           | String | No | Start date for the work order. The format must be YYYY-MM-DD HH:MM
-endDate             | String | No | End date for the work order. The format must be YYYY-MM-DD HH:MM
-currentOwner        | String | No | Id of the user who is the current owner of the work order
-users               | Array  | No | Array containing the ids of users who are working full time on the work order
-machines            | Array  | No | Array containing the ids of the machines which are working full time on the work order
-estimatedTime       | Number | No | Estimated time required to finish the work order
-contactPerson       | String | No | Id of the contact person
-workOrderType       | String | No | Id of the work order type
-department          | String | No | Id of the department
-workLeader          | String | No | Id of the work leader
-description         | String | No | Description of the work order
-color               | String | No | Color of the work order, only used if "How to set color" is 'Manually' in settings. See below for available colors
-invoiceStatus       | Number | No | Invoice status of the work order. See below for available statuses
-billingMethod       | String | No | Billing method of work order. See below for available billing methods
-fixedPrice          | Number | No* | *Only if Billing method is set to FIXED_PRICE
-isSupplementOrder   | Boolean | No | Should the work order be set as supplement order?
-workAddress         | Object | No | Contains attributes for work address. If not specified, the customers address will be set as work address. See below for details
-enablePortalAccess  | Boolean | No | Should the work order be available in the customer portal?
-allowRegistrationOfTimes     | Boolean | No | Should it be possible to register times on the work order?
-allowRegistrationOfExpenses  | Boolean | No | Should it be possible to register expenses on the work order?
-marking             | String | No | Marking on the work order
-yourOrderNumber     | String | No | Your order number of the work order
+createdByUser           | String | Yes | Id of the user who created the driver journal
+user                    | String | Yes | Id of the user on the driver journal
+vehicle                 | String | Yes*| Id of the vehicle. *Required if carRegistrationNumber is not specified
+carRegistrationNumber   | String | Yes*| Car registration number. *Required if vehicle is not specified. This will not be used if vehicle is specified
+driverJournalItemType   | String | Yes | Type of trip
+startAddress            | String | Yes | Start address of the driver journal
+endAddress              | String | Yes | End address of the driver journal
+travelPurpose           | String | Yes | Errand/position/Company/Contact person
+startOdometer           | Number | Yes | Odometer reading at the start
+endOdometer             | Number | Yes | Odometer reading at the end
+customer                | String | No  | Id of the customer
+project                 | String | No  | Id of the project
+workOrder               | String | No  | Id of the work order. If project is specified, the work order must belong to the project. The customer from the work order will be used on the driver journal
+price                   | Number | No  | Price/km
+cost                    | Number | No  | Cost/km
+description             | String | No  | Description or notes on the driver journal
+isInvoiceable           | Boolean | No | Is the driver jounal invoiceable?
+isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated?
 
-**Colors for work orders**
-
-<span style="width: 16px; height: 16px; background: #9c27b0;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 9c27b0 <br>
-<span style="width: 16px; height: 16px; background: #673ab7;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 673ab7 <br>
-<span style="width: 16px; height: 16px; background: #7C4DFF;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 7C4DFF <br>
-<span style="width: 16px; height: 16px; background: #3F51B5;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 3F51B5 <br>
-<span style="width: 16px; height: 16px; background: #3a87ad;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 3a87ad <br>
-
-<span style="width: 16px; height: 16px; background: #2196F3;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 2196F3 <br>
-<span style="width: 16px; height: 16px; background: #03A9F4;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 03A9F4 <br>
-<span style="width: 16px; height: 16px; background: #00BCD4;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 00BCD4 <br>
-<span style="width: 16px; height: 16px; background: #009688;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 009688 <br>
-<span style="width: 16px; height: 16px; background: #468847;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 468847 <br>
-
-<span style="width: 16px; height: 16px; background: #4CAF50;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 4CAF50 <br>
-<span style="width: 16px; height: 16px; background: #8BC34A;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 8BC34A <br>
-<span style="width: 16px; height: 16px; background: #CDDC39;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - CDDC39 <br>
-<span style="width: 16px; height: 16px; background: #FF9800;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FF9800 <br>
-<span style="width: 16px; height: 16px; background: #FF5722;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FF5722 <br>
-
-<span style="width: 16px; height: 16px; background: #f44336;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - f44336 <br>
-<span style="width: 16px; height: 16px; background: #e91e63;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - e91e63 <br>
-<span style="width: 16px; height: 16px; background: #795548;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 795548 <br>
-<span style="width: 16px; height: 16px; background: #5D4037;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 5D4037 <br>
-<span style="width: 16px; height: 16px; background: #999999;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 999999 <br>
-
-<span style="width: 16px; height: 16px; background: #666666;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 666666 <br>
-<span style="width: 16px; height: 16px; background: #333333;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 333333 <br>
-<span style="width: 16px; height: 16px; background: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 000000 <br>
-<span style="width: 16px; height: 16px; background: #FAFAFA;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FAFAFA <br>
-
-
-**Invoice statuses for work orders**
-
-Code | Status
---------- | ----------- 
-0  | None
-5  | Not invoiceable
-10 | Ready to be invoiced
-20 | Partly invoiced
-30 | Fully invoiced
-
-**Billing methods for work orders**
-
-Code | Billing method
---------- | ----------- 
-RUNNING             | Running price
-FIXED_PRICE         | Fixed price
-ACCORDING_TO_QUOTE  | Price will be set according to quote
-
-
-
-**Attributes for workAddress**
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-useOtherAddress             | Boolean | Yes | Should an alternative work address be used?
-name                        | String  | No  | Used if useSeparateBillingAddress is true
-address                     | String  | No  | Used if useSeparateBillingAddress is true
-address2                    | String  | No  | Used if useSeparateBillingAddress is true
-zipCode                     | String  | No  | Used if useSeparateBillingAddress is true
-city                        | String  | No  | Used if useSeparateBillingAddress is true
-country                     | String  | No  | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
-phone                       | String  | No  | Used if useSeparateBillingAddress is true
-
-## Update a Work order
-
+## Update a Driver Journal
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
+  curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb8517e1bcaad1cd2cd3f9c","modifiedByUser":"5f48eb3e65d7ee4942c4602","title":"Construction work"}' 
+  -d '{"_id":"5fc619b96294735fc421d77a","modifiedByUser":"51203146506d961c030791801","user":"5f48eb3e65d7ee4942c46eeb"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb8517e1bcaad1cd2cd3f9c',
-  modifiedByUser: '5f48eb3e65d7ee4942c4602',
-  title: 'Construction work'
+  _id: '5fc619b96294735fc421d77a',
+  modifiedByUser: '51203146506d961c030791801',
+  user: '5f48eb3e65d7ee4942c46eeb'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/2/workOrders',
+  url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
     "Client-Secret": "thisismysecretkey",
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.put(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
-    console.log("Work Order updated: " + body.title + ", _id: " + body._id);
+    console.log("Driver journal updated: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to update work order: " + error);
+    console.error("ERROR! Unable to update driver journal: " + error);
     console.error(body);
   }
 });
@@ -3225,117 +1634,79 @@ request.put(options, function (error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json 
-{ 
-  "runningInvoiceSettings":
-   { 
-     "oneRowText": "Arbetsorder #{{workOrderNumber}} {{workOrderTitle}}",
-     "timeLogMachineSupplement": "nothing",
-     "timeLogCustomField": "nothing",
-     "includeDescription": true,
-     "includeDateRange": false,
-     "includeDate": true,
-     "includeUser": true,
-     "machineFromTimeLog": false,
-     "includeCategory": true,
-     "includeTask": false,
-     "includeWorkOrder": false,
-     "includeProject": false,
-     "formatType": "detailedFormat" 
-   },
-  "budgetCalculation": { "invoiceItems": [] },
-  "locationCoordinates": [],
-  "tags": [],
-  "_id": "5fb8517e1bcaad1cd2cd3f9c",
-  "createDate": "2020-12-14T14:39:40.951Z",
-  "users": [],
-  "machines": [],
-  "partTimeResources": [],
-  "comments": [],
-  "documents": [],
-  "checkLists": [],
-  "reminders":
-   [ { "_id": "5321507b60913275921",
-       "reminderTimeType": 4,
-       "reminderTimeValue": 10,
-       "reminderType": 1,
-       "itemId": "0.2819101621862501" } ],
-  "todoItems": [],
-  "invoiceRows": [],
-  "workOrderUserSkills": [],
-  "workOrderUserWorkTypes": [],
-  "customFields": [],
-  "relations": [],
-  "title": "Construction work",
-  "estimatedTime": 0,
-  "description": "",
-  "marking": "",
-  "yourOrderNumber": "",
-  "customerName": "Hellapps",
-  "customer": "571f61330c7f498a2d0001a4",
-  "color": "FAFAFA",
-  "status": 100,
-  "statusRef": "582f7cabd16fdbe335041055",
-  "createdByUser": "5f48eb3e65d7ee4942c4602",
-  "createdByUserName": "Lucas Hellström",
-  "workOrderNumber": 4942,
-  "completedByUser": null,
-  "completedByUserName": "",
-  "completedDate": null,
-  "inProgressByUser": null,
-  "inProgressByUserName": "",
-  "inProgressDate": null,
-  "modifiedByUser": "5f48eb3e65d7ee4942c4602",
-  "modifiedByUserName": "Lucas Hellström",
-  "modifiedDate": "2020-12-14T14:43:29.158Z" 
+{
+  "isInvoiceable": true,
+  "_id": "5fc619b96294735fc421d77a",
+  "timestamp": "2020-12-01T10:23:53.370Z",
+  "createDate": "2020-12-01T10:23:53.370Z",
+  "modifiedDate": "2020-12-01T10:23:53.370Z",
+  "systemAccount": "5112826056d961c030000001",
+  "user": "5f48eb3e65d7ee4942c46eeb",
+  "userName": "Tommy Hellström",
+  "carRegistrationNumber": "ABC123",
+  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemTypeName": "Diesel - ej skt.fri",
+  "startAddress": "Address start, V Karup",
+  "endAddress": "Address end, Båstad",
+  "travelPurpose": "Delivery",
+  "startOdometer": 45,
+  "endOdometer": 60,
+  "totalDistance": 15,
+  "isSalaryCompensated": false,
+  "price": 0,
+  "totalAmount": 0,
+  "cost": 0,
+  "totalCost": 0,
 }
-"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+"Driver journal updated: _id: 5fc619b96294735fc421d77a"
 ```
 
-This endpoint updates a work order.
+This endpoint updates a driver journal
 
 ### HTTP Request
 
-`PUT https://app.seventime.se/api/2/workOrders/`
+`PUT https://app.seventime.se/api/2/driverJournals/`
 
 ### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create a Work Order'.
+The table below shows the required fields. Other available fields can be found in the section 'Create a Driver Journal'.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-_id               | String | Yes | Id of the work order
-modifiedByUser    | String | Yes | Id of the user who updated the work order
+_id            | String | Yes | Id of the driver journal
+modifiedByUser | String | Yes | Id of the user who made the change
+user           | String | Yes | Id of the user
 
-<!---
-## Delete a Work order
+## Delete a Driver Journal
+
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
+  curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"id":"5fb8517e1bcaad1cd2cd3f9c","deletedByUser":"5f48eb3e65d7ee4942c4602"}' 
+  -d '{"_id":"5fc619b96294735fc421d77a","deletedByUser":"51203146506d961c030791801"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb8517e1bcaad1cd2cd3f9c',
-  deletedByUser: '5f48eb3e65d7ee4942c4602'
+  _id: '5fc619b96294735fc421d77a',
+  deletedByUser: '51203146506d961c030791801'
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/2/workOrders',
+  url: 'https://app.seventime.se/api/2/driverJournals',
   json: jsonData,
   headers: {
     "Client-Secret": "thisismysecretkey",
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
   }
 };
 
 request.delete(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
-    console.log("Work Order deleted: " + body.title + ", _id: " + body._id);
+    console.log("Driver journal deleted: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to delete work order: " + error);
+    console.error("ERROR! Unable to delete driver journal: " + error);
     console.error(body);
   }
 });
@@ -3344,34 +1715,30 @@ request.delete(options, function (error, response, body) {
 > The above command returns JSON structured like this:
 
 ```json 
-{ 
-  "_id": "5fb8517e1bcaad1cd2cd3f9c",
-  "title": "Construction work",
-  "workOrderNumber": 4942,
+{
+  "_id": "5fc619b96294735fc421d77a",
 }
-"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+"Driver journal updated: _id: 5fc619b96294735fc421d77a"
 ```
 
-This endpoint deletes a work order.
+This endpoint deletes a driver journal
 
 ### HTTP Request
 
-`DELETE https://app.seventime.se/api/2/workOrders/`
+`DELETE https://app.seventime.se/api/2/driverJournals/`
 
 ### DELETE Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-_id               | String | Yes | Id of the work order
-deletedByUser    | String | Yes | Id of the user who deleted the work order
--->
+_id                    | String | Yes | Id of the driver journal
 
-# Price lists
+# Expenses
 
-## Get price lists
+## Get Expenses
 
 ```shell
-curl "https://app.seventime.se/api/2/priceLists/?limit=10&page=1" \
+curl "https://app.seventime.se/api/2/expenses/?limit=2&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -3379,7 +1746,7 @@ curl "https://app.seventime.se/api/2/priceLists/?limit=10&page=1" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/priceLists/?&limit=10&page=1";
+let url = "https://app.seventime.se/api/2/expenses/?&limit=2&page=1";
 let options = {
   url: url,
   headers: {
@@ -3395,7 +1762,7 @@ request(options, function(error, response, body) {
     // ...
   } else {
     console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
+  }  
 });
 ```
 
@@ -3404,15 +1771,53 @@ request(options, function(error, response, body) {
 ```json
 {
   "meta": {
-    "totalResources": 5,
-    "totalPages": 1,
-    "currentPage": 1
+    "totalResources": 622,
+    "totalPages": 311,
+    "currentPage": 3
   },
   "data": [
     {
-      "_id": "58c1504a658fb5911d018f5f",
-      "name": "Grosslistan",
-      "isActive": true,
+      "_id": "53ad291839f16d23a6414604d2",
+      "attestedBy": null,
+      "createDate": "2014-06-27T08:11:15.954Z",
+      "customer": null,
+      "customerName": "",
+      "description": "",
+      "documents": [],
+      "expenseItem": "52d92f32d5fcf8941893174ab",
+      "isAttested": false,
+      "isInvoiceable": true,
+      "isInvoiced": false,
+      "name": "Arbetsordermodul2",
+      "numberOfItems": 1,
+      "project": "516fad2b265135db78024621§",
+      "projectName": "Glimminge",
+      "supplementOrder": false,
+      "timestamp": "2014-06-27T00:00:00.000Z",
+      "totalAmount": 20,
+      "totalAmountAfterDiscount": 20,
+      "totalAmountInclTax": 25,
+      "totalTaxAmount": 5,
+      "unit": "st",
+      "unitCost": 20,
+      "unitPrice": 20,
+      "unitPriceInclTax": 25,
+      "unitTax": 5,
+      "user": "51203146506d961c030791801",
+      "userName": "Tommy Hellström",
+      "workOrder": null,
+      "workOrderNumber": 0,
+      "workOrderTitle": "",
+      "unitPriceAfterDiscount": 20,
+      "discountPercent": 0,
+      "unitTaxPercent": 25,
+      "doReimburse": false,
+      "salaryCompilation": null,
+      "verificationNumber": "",
+      "distributor": null,
+      "distributorName": "",
+      "totalCost": 20,
+      "articleNumber": "208"
     },
     {
       // ...
@@ -3421,24 +1826,33 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves price lists, a maximum of 500 price lists will be returned.
+This endpoint retrieves expenses, a maximum of 500 expenses will be returned.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/priceLists`
+`GET https://app.seventime.se/api/2/expenses`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+name               |  | If specified, expenses that match the parameter will be included.
+articleNumber      |  | If specified, expenses that match the parameter will be included.
+customer           |  | If specified, expenses that match the parameter will be included.
+project            |  | If specified, expenses that match the parameter will be included.
+distributor        |  | If specified, expenses that match the parameter will be included.
+fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+sortBy             |  | If specified, a sort will be made on the specified parameter
+sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
-## Get a specific Price List
+
+
+## Get a specific Expense
 
 ```shell
-curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
+curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -3446,7 +1860,7 @@ curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f";
+let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2";
 let options = {
   url: url,
   headers: {
@@ -3471,26 +1885,488 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "57bc187159a73f312300009d",
-    "isActive": true,
-    "systemAccount": "5112826056d961c030000001",
-    "name": "ÅF-prislista",
+    "_id": "53ad291839f16d23a6414604d2",
+    "attestedBy": null,
+    "createDate": "2014-06-27T08:11:15.954Z",
+    "customer": null,
+    "customerName": "",
+    "description": "",
+    "documents": [],
+    "expenseItem": "52d92f32d5fcf8941893174ab",
+    "isAttested": false,
+    "isInvoiceable": true,
+    "isInvoiced": false,
+    "name": "Arbetsordermodul2",
+    "numberOfItems": 1,
+    "project": "516fad2b265135db78024621§",
+    "projectName": "Glimminge",
+    "supplementOrder": false,
+    "timestamp": "2014-06-27T00:00:00.000Z",
+    "totalAmount": 20,
+    "totalAmountAfterDiscount": 20,
+    "totalAmountInclTax": 25,
+    "totalTaxAmount": 5,
+    "unit": "st",
+    "unitCost": 20,
+    "unitPrice": 20,
+    "unitPriceInclTax": 25,
+    "unitTax": 5,
+    "user": "51203146506d961c030791801",
+    "userName": "Tommy Hellström",
+    "workOrder": null,
+    "workOrderNumber": 0,
+    "workOrderTitle": "",
+    "unitPriceAfterDiscount": 20,
+    "discountPercent": 0,
+    "unitTaxPercent": 25,
+    "doReimburse": false,
+    "salaryCompilation": null,
+    "verificationNumber": "",
+    "distributor": null,
+    "distributorName": "",
+    "totalCost": 20,
+    "articleNumber": "208"
   }
 }
 ```
 
-This endpoint retrieves a specific price list.
+This endpoint retrieves a specific expense.
+
 
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/priceLists/<_id>`
+`GET https://app.seventime.se/api/2/expenses/<_id>`
 
 ### URL Parameters
 
 Parameter | Description
 --------- | -----------
-_id | The _id of the price list to retrieve
+_id | The _id of the expense to retrieve
+
+## Get Expenses Items
+
+```shell
+curl "https://app.seventime.se/api/2/expenseItems/?limit=10&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/expenseItems/?&limit=10&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }  
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 19478,
+    "totalPages": 1948,
+    "currentPage": 176
+  },
+  "data": [
+    {
+      "_id": "5de78aed1332719192362bed",
+      "description": "",
+      "tax": 25,
+      "articleNumber": "601310",
+      "name": "10-pack Reaktionsbollar",
+      "unitPrice": 295.59,
+      "unitCost": 221,
+      "unit": "St",
+      "isInvoiceable": true,
+      "isCategory": false,
+      "parentExpenseItem": null,
+      "parentExpenseItemName": "",
+      "createDate": "2019-12-04T10:31:06.603Z",
+      "bundledArticles": [],
+      "alwaysReimburse": false,
+      "isActive": true,
+      "categoryGroupNumber": "",
+      "articleGroupNumber": "",
+      "distributor": null,
+      "distributorName": "",
+      "isInventoryItem": false,
+      "unitPriceInclTax": 369.48749999999995
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves expense items, a maximum of 500 expense items will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/expenses`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name                    |  | If specified, expense items that match the parameter will be included.
+articleNumber           |  | If specified, expense items that match the parameter will be included.
+distributorName         |  | If specified, expense items that match the parameter will be included.
+description             |  | If specified, expense items that match the parameter will be included.
+parentExpenseItemName   |  | If specified, expense items that match the parameter will be included.
+isInvoiceable           |  | If specified, expense items that match the parameter will be included.
+isActive                |  | If specified, expense items that match the parameter will be included.
+favorite                |  | If specified, expense items that match the parameter will be included.
+sortBy                  |  | If specified, a sort will be made on the specified parameter
+sortDirection           |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+
+
+## Get a specific Expense Item
+
+```shell
+curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "_id": "5de78aed1332719192362bed",
+    "description": "",
+    "tax": 25,
+    "articleNumber": "601310",
+    "name": "10-pack Reaktionsbollar",
+    "unitPrice": 295.59,
+    "unitCost": 221,
+    "unit": "St",
+    "isInvoiceable": true,
+    "isCategory": false,
+    "parentExpenseItem": null,
+    "parentExpenseItemName": "",
+    "createDate": "2019-12-04T10:31:06.603Z",
+    "bundledArticles": [],
+    "alwaysReimburse": false,
+    "isActive": true,
+    "categoryGroupNumber": "",
+    "articleGroupNumber": "",
+    "distributor": null,
+    "distributorName": "",
+    "isInventoryItem": false,
+    "unitPriceInclTax": 369.48749999999995
+  }
+}
+```
+
+This endpoint retrieves a specific expense item.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/expenseItems/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the expense item to retrieve
+
+
+## Create an Expense
+
+```shell
+  curl -X POST "https://app.seventime.se/api/2/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
+```
+
+```javascript
+let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
+  user: '51203146506d961c030791801',
+  expenseItem: '5de78aed1332719192362bed'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Expense created: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to create expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "_id": "5fbe684416625651d7f43257",
+  "timestamp": "2020-11-25T14:20:52.129Z",
+  "documents": [],
+  "createDate": "2020-11-25T14:20:52.129Z",
+  "bundledArticles": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "numberOfItems": 1,
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "expenseItem": "5de78aed1332719192362bed",
+  "articleNumber": "575733",
+  "name": "10-pack Reaktionsbollar",
+  "description": "Skivhantel av järn",
+  "distributor": "573c52cdf609f5692351914b",
+  "distributorName": "Lev 4",
+  "unit": "St",
+  "unitCost": 319,
+  "unitTaxPercent": 25,
+  "unitPrice": 426.66,
+  "unitPriceAfterDiscount": 426.66,
+  "discountPercent": 0,
+  "unitTax": 106.665,
+  "unitPriceInclTax": 533.325,
+  "totalTaxAmount": 106.665,
+  "totalAmount": 426.66,
+  "totalAmountAfterDiscount": 426.66,
+  "totalCost": 319,
+}
+"Expense created: _id: 5fbe684416625651d7f43257"
+```
+
+This endpoint creates an expense
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/expenses/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+createdByUser       | String | Yes | Id of the user who created the expense
+user                | String | Yes | Id of the user on the expense
+expenseItem         | String | Yes*| Id of the expense item. *Required if freetext for articles is not activated
+name                | String | Yes*| Name of the article. *Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled.
+workOrder           | String | No  | Id of the work order
+customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
+project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
+distributor         | String | No  | Id of the distributor
+numberOfItems       | String | No  | Number of items
+unit                | String | No  | Unit of the number of items
+unitCost            | Number | No* | Cost per unit. If not specified, the cost on the expense item will be used. *Required if expenseItem is not specified
+unitPrice           | Number | No* | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price. *Required if expenseItem is not specified
+discountPercent     | Number | No* | Discount percent on the unit price. *Required if expenseItem is not specified
+taxPercent          | Number | No* | Tax percent on the unit price. *Required if expenseItem is not specified
+timestamp           | String | No  | Time stamp of expense
+description         | String | No  | Description of the expense
+isInvoiceable       | Boolean | No | Is the expense invoiceable?
+doReimburse         | Boolean | No | Is the expense an own expense?
+
+## Update an Expense
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fbe684416625651d7f43257","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801"}'
+```
+
+```javascript
+let jsonData = {
+  _id: '5fbe684416625651d7f43257',
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
+  user: '51203146506d961c030791801'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Expense updated: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "isInvoiceable": true,
+  "_id": "5fbe684416625651d7f43257",
+  "timestamp": "2020-11-25T14:20:52.129Z",
+  "documents": [],
+  "createDate": "2020-11-25T14:20:52.129Z",
+  "bundledArticles": [],
+  "customFields": [],
+  "systemAccount": "5112826056d961c030000001",
+  "numberOfItems": 1,
+  "user": "51203146506d961c030791801",
+  "userName": "Tommy Hellström",
+  "expenseItem": "5de78aed1332719192362bed",
+  "articleNumber": "575733",
+  "name": "10-pack Reaktionsbollar",
+  "description": "Skivhantel av järn",
+  "distributor": "573c52cdf609f5692351914b",
+  "distributorName": "Lev 4",
+  "unit": "St",
+  "unitCost": 319,
+  "unitTaxPercent": 25,
+  "unitPrice": 426.66,
+  "unitPriceAfterDiscount": 426.66,
+  "discountPercent": 0,
+  "unitTax": 106.665,
+  "unitPriceInclTax": 533.325,
+  "totalTaxAmount": 106.665,
+  "totalAmount": 426.66,
+  "totalAmountAfterDiscount": 426.66,
+  "totalCost": 319,
+}
+"Expense updated: _id: 5fbe684416625651d7f43257"
+```
+
+This endpoint updates an expense
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/expenses/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create an Expense'.
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id            | String | Yes | Id of the expense
+modifiedByUser | String | Yes | Id of the user who made the change
+user           | String | Yes | Id of the user on the expense
+
+## Delete an Expense
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fbe684416625651d7f43257","deletedByUser":"51203146506d961c030791801"}'
+```
+
+```javascript
+let jsonData = {
+  _id: "5fbe684416625651d7f43257",
+  deletedByUser: '51203146506d961c030791801'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/expenses',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Expense deleted: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete expense: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fbe684416625651d7f43257"
+}
+"Expense deleted: _id: 5fbe684416625651d7f43257"
+```
+
+This endpoint deletes an expense
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/expenses/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                | String | Yes | Id of the expense
+deletedByUser      | String | Yes | Id of the user who deleted the expense
 
 # Invoices
 
@@ -3498,7 +2374,7 @@ _id | The _id of the price list to retrieve
 
 
 ```shell
-curl "https://app.seventime.se/api/2/invoices/?limit=3&page=9" \
+curl "https://app.seventime.se/api/2/invoices/?limit=3&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -3506,7 +2382,7 @@ curl "https://app.seventime.se/api/2/invoices/?limit=3&page=9" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/invoices/?&limit=3&page=9";
+let url = "https://app.seventime.se/api/2/invoices/?&limit=3&page=1";
 let options = {
   url: url,
   headers: {
@@ -4412,11 +3288,11 @@ _id       | String | Yes | Id of the invoice
 deletedByUser       | String | Yes | Id of the user who deleted the invoice
 -->
 
-# Supplier invoices
-## Get supplier invoices
+# Users
+## Get Users
 
 ```shell
-curl "https://app.seventime.se/api/2/supplierInvoices/?limit=5&page=10" \
+curl "https://app.seventime.se/api/2/users/?limit=10&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -4424,7 +3300,2627 @@ curl "https://app.seventime.se/api/2/supplierInvoices/?limit=5&page=10" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/supplierInvoices/?&limit=5&page=10";
+let url = "https://app.seventime.se/api/2/users/?&limit=100&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 4712,
+    "totalPages": 48,
+    "currentPage": 3
+  },
+  "data": [
+    {
+      "_id": "5f48eb3e65d7ee4942c4602",
+      "firstName": "Tommy",
+      "lastName": "Hellström",
+      "email": "tommy@nummer7.se",
+      "personalNumber": "",
+      "employeeNumber": "",
+      "userName": "20200828",
+      "workPhone": "",
+      "cellPhone": "",
+      "createdDate": "2020-08-28T11:32:14.452Z",
+      "modifiedDate": "2020-08-28T11:33:36.675Z",
+      "userRoleId": 10,
+      "isActive": true,
+      "isActivated": true,
+      "language": "SV"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves users, a maximum of 500 users will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/users`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/users/?name=Tommy Hellström`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name              |  | If specified, users that match the parameter will be included.
+personNumber      |  | If specified, users that match the parameter will be included.
+department        |  | If specified, users that match the parameter will be included.
+userRole          |  | If specified, users that match the parameter will be included.
+isActive          |  | If specified, users that match the parameter will be included. This must be a boolean
+isActivated       |  | If specified, users that match the parameter will be included. This must be a boolean
+defaultSalaryType |  | If specified, users that match the parameter will be included.
+userSkills        |  | If specified, users that match the parameter will be included.
+sortBy            |  | If specified, a sort will be made on the specified parameter
+sortDirection     |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a specific User
+
+```shell
+curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data":
+  {
+    "_id": "59312765ad961c0318eb0a2",
+    "firstName": "Tommy",
+    "lastName": "Hellström",
+    "email": "tommy@nummer7.se",
+    "personalNumber": "",
+    "employeeNumber": "2",
+    "userName": "tommy",
+    "workPhone": "0431-360050",
+    "cellPhone": "070-4580425",
+    "createdDate": "2013-02-06T16:18:40.588Z",
+    "modifiedDate": "2020-11-16T10:39:01.762Z",
+    "userRoleId": 30,
+    "isActive": true,
+    "isActivated": true,
+    "language": "EN"
+  }
+}
+```
+
+This endpoint retrieves a specific user
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/users/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the user to retrieve
+
+## Get User Roles
+
+```shell
+curl "https://app.seventime.se/api/2/userRoles/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/userRoles/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "userRoleId": 1,
+      "userRoleName": "Administratör"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/userRoles/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get User Salary types
+
+```shell
+curl "https://app.seventime.se/api/2/defaultSalaryTypes/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/defaultSalaryTypes/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5834419c7a27db6932000052",
+      "name": "Övertid",
+      "description": "",
+      "code": "123",
+      "isAbsenceTimeType": false,
+      "isRuleType": false,
+      "absenceTimeCategory": null,
+      "absenceTimeCategoryName": "",
+      "unitType": "1",
+      "canBeRegistered": true,
+      "salaryAmount": 0,
+      "typeInSalarySystem": 10
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves user salary types, a maximum of 500 salary types will be returned.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/defaultSalaryTypes/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get User Skills
+
+```shell
+curl "https://app.seventime.se/api/2/userSkills/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/userSkills/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "59f9d1c53ffd5f932a000067",
+      "skillTitle": "Höga arbeten",
+      "requireEducations": [
+        "5a54ea1f7a7fe3c26200006e"
+      ]
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves user skills, a maximum of 500 user skills will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/userSkills/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get User Work Types
+
+```shell
+curl "https://app.seventime.se/api/2/userWorkTypes/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/userWorkTypes/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5f442181e62efdb4a3a7d9c6d",
+      "name": "Programmerare",
+      "pricePerHour": 555,
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/userRoles/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Create a User
+
+```shell
+  curl -X POST "https://app.seventime.se/api/2/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","email":"tommy@nummer7.se","userName":"TommyH","userRolesId":1"}'
+```
+
+```javascript
+let jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
+  firstName: 'Tommy',
+  lastName: 'Hellström',
+  email: 'tommy@nummer7.se',
+  userName: 'TommyH',
+  userRoleId: 1,
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+  } else {
+    console.error("ERROR! Unable to create user: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+  "email": "tommy@nummer7.se",
+  "personalNumber": "",
+  "employeeNumber": "",
+  "userName": "TommyH",
+  "workPhone": "",
+  "cellPhone": "",
+  "createdDate": "2020-11-17T14:42:31.533Z",
+  "modifiedDate": "2020-11-17T14:42:31.533Z",
+  "userRoleId": 1,
+  "isActive": false,
+  "isActivated": false,
+  "language": "SV"
+}
+```
+
+This endpoint creates a user.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/users/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+firstName          | String   | Yes | First name of the user
+lastName           | String   | Yes | Last name of the user
+email              | String   | Yes | Email of the user
+userName           | String   | Yes | Username
+userRoleId         | String   | Yes | User role id
+employeeNumber     | String   | No  | EmployeeNumber
+workPhone          | String   | No  | Work phone number
+cellPhone          | String   | No  | Cell phone number
+isActive           | Boolean  | No  | Should the user be active?
+isActivated        | Boolean  | No  | Should the user be activated?
+password           | String   | No  | Password of the user
+language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
+
+## Update a User
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3e157f795553d05751946","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","userName":"TommyH"}' 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb3e157f795553d05751946',
+  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
+  firstName: 'Tommy',
+  lastName: 'Hellström',
+  userName: 'TommyH'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("User updated: " + body.firstName + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update user: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+  "email": "tommy@nummer7.se",
+  "userName": "TommyH",
+  "createdDate": "2020-11-17T14:42:31.533Z",
+  "modifiedDate": "2020-12-11T13:25:07.332Z",
+  "userRoleId": 1,
+  "isActive": true,
+  "isActivated": false,
+  "language": "SV"
+}
+"User updated: Tommy, _id: 5fb3e157f795553d05751946"
+```
+
+This endpoint updates a specific user.
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/users/`
+
+### PUT Parameters
+
+The table below shows the required fields. Other available fields can be found in the section 'Create a User'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                | String   | Yes | Id of the user
+modifiedByUser     | String   | Yes | Id of the user who made the change
+
+<!---
+## Delete a User
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/users/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3e157f795553d05751946","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb3e157f795553d05751946',
+  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/users',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("User deleted: " + body.firstName + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete user: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{
+  "_id": "5fb3e157f795553d05751946",
+  "firstName": "Tommy",
+  "lastName": "Hellström",
+}
+"User deleted: Tommy, _id: 5fb3e157f795553d05751946"
+```
+
+This endpoint deletes a specific user.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/users/`
+
+### DELETE Parameters
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                | String   | Yes | Id of the user
+deletedByUser      | String   | Yes | Id of the user who made the delete
+-->
+
+
+# Projects
+
+## Get Projects
+
+
+```shell
+curl "https://app.seventime.se/api/2/projects/?limit=10&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/projects/?&limit=10&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 397,
+    "totalPages": 40,
+    "currentPage": 7
+  },
+  "data": [
+    {
+      "_id": "5f924f4f533f102af78f95b6",
+      "permissions": {
+        "permUsers": [],
+        "permRoles": [],
+        "permissionFlag": 1
+      },
+      "tags": [],
+      "name": "Från offert 20200811",
+      "projectNumber": "3314",
+      "projectStatus": 50,
+      "projectStatusRef": "5c8739d3205457b98b9883d4",
+      "projectType": null,
+      "projectTypeName": null,
+      "billingMethod": "FIXED_PRICE",
+      "pricePerHour": 0,
+      "fixedPrice": 0,
+      "fixedPriceInvoiced": false,
+      "fixedPriceLeftToInvoice": 0,
+      "fixedPriceExpenseItem": null,
+      "timeCategoryPriceList": null,
+      "estimatedTime": 0,
+      "recurringBudgetType": 10,
+      "recurringBudget": {
+        "budgetTime": 0,
+        "budgetAmount": 0,
+        "budgetType": 10
+      },
+      "resultUnit": null,
+      "resultUnitName": "",
+      "customer": "5763e05bcddce98e3b00004b",
+      "customerName": "Hellapps",
+      "contactPerson": null,
+      "contactPersonName": null,
+      "projectLeader": null,
+      "projectLeaderName": null,
+      "quote": "5b110ea19b27f5ef3f00007b",
+      "quoteNumber": "1058",
+      "department": null,
+      "departmentName": "",
+      "marking": "",
+      "yourOrderNumber": "1058",
+      "deliveryAddress": {
+        "name": "",
+        "address": "",
+        "address2": "",
+        "zipCode": "",
+        "city": "",
+        "country": "",
+        "phone": ""
+      },
+      "invoiceStatus": 0,
+      "notes": "",
+      "documents": [],
+      "startDate": null,
+      "endDate": null,
+      "budget": {
+        "typeOfBenefitCalc": 1,
+        "benefits": [],
+        "benefitTotal": 0,
+        "typeOfCostCalc": 1,
+        "costs": [],
+        "costTotal": 0
+      },
+      "budgetCalculation": {
+        "invoiceItems": [],
+        "totalBenefitAmount": 0,
+        "totalCostAmount": 0
+      },
+      "enableConstructionDiary": false,
+      "enablePaymentPlans": false,
+      "timeCategoryItems": [],
+      "expenseItemItems": [],
+      "staffLedger": {
+        "workPlaceIDNumber": "",
+        "developerName": "",
+        "developerOrgNumber": ""
+      },
+      "projectTimeNotification": {
+        "sent": false,
+        "notifyAtPercent": 0
+      },
+      "workRuleStartOfDay": null,
+      "workRuleEndOfDay": null,
+      "timeLogRegistrationMethods": [],
+      "timeShouldNotBeWorkTime": false,
+      "enablePortalAccess": false,
+      "projectResources": [],
+      "checkLists": [],
+      "color": "FAFAFA",
+      "isActive": true,
+      "comments": [],
+      "customFields": [
+        {
+          "_id": "5f326f50433f102ff77f95d7",
+          "fieldId": "5c0e7342ce9a647150000083",
+          "value": "5c0e7342ce9a647150000085"
+        }
+      ],
+      "createdDate": "2020-08-11T10:13:36.001Z",
+      "modifiedDate": "2020-08-11T10:13:36.002Z",
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves projects, a maximum of 500 projects will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/projects`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/projects/?projectNumber=3314`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+name            |  | If specified, projects that match the parameter will be included.
+projectNumber   |  | If specified, projects that match the parameter will be included.
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+
+
+## Get a specific project
+
+```shell
+curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/projects/5f924f4f533f102af78f95b6";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "recurringBudget": {
+      "budgetTime": 0,
+      "budgetAmount": 0,
+      "budgetType": 10
+    },
+    "deliveryAddress": {
+      "name": "",
+      "address": "",
+      "address2": "",
+      "zipCode": "",
+      "city": "",
+      "country": "",
+      "phone": ""
+    },
+    "budget": {
+      "typeOfBenefitCalc": 1,
+      "benefits": [],
+      "benefitTotal": 0,
+      "typeOfCostCalc": 1,
+      "costs": [],
+      "costTotal": 0
+    },
+    "budgetCalculation": {
+      "invoiceItems": [],
+      "totalBenefitAmount": 0,
+      "totalCostAmount": 0
+    },
+    "permissions": {
+      "permUsers": [],
+      "permRoles": [],
+      "permDepartments": [],
+      "permissionFlag": 1
+    },
+    "staffLedger": {
+      "workPlaceIDNumber": "",
+      "developerName": "",
+      "developerOrgNumber": ""
+    },
+    "projectTimeNotification": {
+      "sent": false,
+      "notifyAtPercent": 0
+    },
+    "tags": [],
+    "_id": "5f326f4f433f102ff77f95d6",
+    "name": "Från offert 20200811",
+    "projectNumber": "3314",
+    "projectStatus": 50,
+    "projectStatusRef": "5c8639c3205457b88d9897b2",
+    "projectType": null,
+    "projectTypeName": null,
+    "billingMethod": "FIXED_PRICE",
+    "pricePerHour": 0,
+    "fixedPrice": 0,
+    "fixedPriceInvoiced": false,
+    "fixedPriceLeftToInvoice": 0,
+    "fixedPriceExpenseItem": null,
+    "timeCategoryPriceList": null,
+    "estimatedTime": 0,
+    "recurringBudgetType": 10,
+    "resultUnit": null,
+    "resultUnitName": "",
+    "customer": "5763e05bcddce98e3b00004b",
+    "customerName": "Hellapps",
+    "contactPerson": null,
+    "contactPersonName": null,
+    "projectLeader": null,
+    "projectLeaderName": null,
+    "quote": "5b110ea19b27f5ef3f00007b",
+    "quoteNumber": "1058",
+    "department": null,
+    "departmentName": "",
+    "marking": "",
+    "yourOrderNumber": "1058",
+    "invoiceStatus": 0,
+    "notes": "",
+    "documents": [],
+    "startDate": null,
+    "endDate": null,
+    "enableConstructionDiary": false,
+    "enablePaymentPlans": false,
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "workRuleStartOfDay": null,
+    "workRuleEndOfDay": null,
+    "timeLogRegistrationMethods": [],
+    "timeShouldNotBeWorkTime": false,
+    "enablePortalAccess": false,
+    "projectResources": [],
+    "checkLists": [],
+    "color": "FAFAFA",
+    "isActive": true,
+    "comments": [],
+    "customFields": [
+      {
+        "_id": "5f326f50433f102ff77f95d7",
+        "fieldId": "5c0e7342ce9a647150000083",
+        "value": "5c0e7342ce9a647150000085"
+      }
+    ],
+    "createdDate": "2020-08-11T10:13:36.001Z",
+    "modifiedDate": "2020-08-11T10:13:36.002Z",
+    "systemAccount": "5112826056d961c030000001",
+  }
+}
+```
+
+This endpoint retrieves a specific project.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/projects/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the project to retrieve
+
+## Get Project statuses
+
+```shell
+curl "https://app.seventime.se/api/2/projectStatuses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/projectStatuses/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5c8639c4704957d88b9894b1",
+      "statusName": "Avslutad",
+      "color": "468847",
+      "inProgressStatus": false,
+      "closedStatus": true,
+      "isActive": true
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves project statuses.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/projectStatuses/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get Project types
+
+```shell
+curl "https://app.seventime.se/api/2/projectTypes/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/projectTypes/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5b276a908e0273b743607182",
+      "projectTypeName": "Dev",
+      "isActive": true,
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves project types.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/projectTypes/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get Project tags
+
+```shell
+curl "https://app.seventime.se/api/2/projectTags/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/projectTags/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5fb2c736deb93b2713515684",
+      "tagName": "Viktigt",
+      "color": "673ab7"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves project tags.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/projectTags/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy        |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Create a Project
+```shell
+  curl -X POST "https://app.seventime.se/api/2/projects/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","name":"App development"}' 
+```
+
+```javascript
+const jsonData = {
+  createdByUser: '5f48eb3e65d7ee4942c46eeb',
+  name: 'App development',
+};
+
+const options = {
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Project created: " + body.name + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to create project: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "budget": { "benefits": [], "costs": [] },
+    "budgetCalculation": { "invoiceItems": [] },
+    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "tags": [],
+    "createdDate": "2020-11-17T12:59:25.109Z",
+    "modifiedDate": "2020-11-17T12:59:25.109Z",
+    "documents": [],
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "timeLogRegistrationMethods": [],
+    "projectResources": [],
+    "checkLists": [],
+    "comments": [],
+    "customFields": [],
+    "name": "App development",
+    "projectNumber": "12345786" 
+}
+"Project created: App development, _id: 5fb3c92dd5472a243e9caa3b"
+```
+
+This endpoint creates a project.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/projects`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+createdByUser           | String | Yes | Id of the user who created the project
+name                    | String | Yes | Name of the project
+projectNumber           | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
+projectStatusRef        | String | No  | Id of the status of the project
+customer                | String | No  | Id of the customer of the project
+contactPerson           | String | No  | Id of the contact person. This field requires that customer is specified and that the customer person belongs to that customer
+invoiceStatus           | Number | No  | Invoice status of the project. See below for available statuses
+projectLeader           | String | No  | Id of the user who should be the project leader
+projectType             | String | No  | Id of the project type
+department              | String | No  | Id of the department
+startDate               | String | No  | Start date of the project in the format YYYY-MM-DD
+endDate                 | String | No  | End date of the project in the format YYYY-MM-DD
+notes                   | String | No  | Notes to be included in the project
+resultUnit              | String | No  | Id of the result unit of the project
+billingMethod           | String | No  | Billing method of the project. See below for available billing methods
+pricePerHour            | Number | No* | Required if billingMethod is set to HOURLY
+fixedPrice              | Number | No* | Required if billingMethod is set to FIXED_PRICE
+timeCategoryPriceList   | String | No* | Required if billingMethod is set to PRICELIST
+projectTags             | Array  | No  | Array containing ids of tags
+marking                 | String | No  | Marking on project
+yourOrderNumber         | String | No  | Your order number
+deliveryAddress         | Object | No  | Contains attributes for delivery address. See below for details
+
+
+**Invoice statuses for projects**
+
+Code | Status
+--------- | ----------- 
+0  | None
+5  | Not invoiceable
+10 | Ready to be invoiced
+20 | Partly invoiced
+30 | Fully invoiced
+
+**Billing methods for projects**
+
+Code | Billing method
+--------- | ----------- 
+ACCORDING_TO_CUSTOMER   | This requires that the customer has a billing method set
+HOURLY                  | Hourly price
+PERUSER                 | The price will be set per user
+HOURLY_PER_TIMECATEGORY | Price will be set according to time category
+FIXED_PRICE             | Fixed price
+PRICELIST               | Price will be set according to a price list
+
+
+
+**Attributes for deliveryAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+name                        | String | No | Name of delivery recipient
+address                     | String | No | Primary address
+address2                    | String | No | Secondary address
+zipCode                     | String | No | Zip code
+city                        | String | No | City
+country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
+phone                       | String | No | Phone number
+
+## Update a Project
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/projects/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b","name":"App development","customer":"571f61330c7f498a2d0001a4","modifiedByUser":"51718241fdb708f37959127"}' 
+```
+
+```javascript
+const jsonData = {
+  _id: '5fb3c92dd5472a243e9caa3b',
+  modifiedByUser: '51718241fdb708f37959127',
+  name: 'App development',
+  customer: '571f61330c7f498a2d0001a4'
+};
+
+const options = {
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Project updated: " + body.name + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update project: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "budget": { "benefits": [], "costs": [] },
+    "budgetCalculation": { "invoiceItems": [] },
+    "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "tags": [],
+    "createdDate": "2020-11-17T12:59:25.109Z",
+    "modifiedDate": "2020-11-17T12:59:25.109Z",
+    "documents": [],
+    "timeCategoryItems": [],
+    "expenseItemItems": [],
+    "timeLogRegistrationMethods": [],
+    "projectResources": [],
+    "checkLists": [],
+    "comments": [],
+    "customFields": [],
+    "name": "App development",
+    "projectNumber": "12345786",
+    "customer": "571f61330c7f498a2d0001a4",
+    "customerName": "Hellapps AB"
+}
+"Project updated: App development, _id: 5fb3c92dd5472a243e9caa3b"
+```
+
+This endpoint updates a project.
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/projects/?name=App development&customer=571f61330c7f498a2d0001a4`
+
+### PUT Parameters
+
+The table below shows the required fields. Other available fields can be found in the section 'Create a Project'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                     | String | Yes | Id of the project
+modifiedByUser          | String | Yes | Id of the user who made the change
+
+<!---
+## Delete a Project
+
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/projects/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb3c92dd5472a243e9caa3b","deletedByUser":"51718241fdb708f379596193"}' 
+```
+
+```javascript
+const jsonData = {
+  _id: '5fb3c92dd5472a243e9caa3b',
+  deletedByUser: '51718241fdb708f379596193'
+};
+
+const options = {
+  url: 'https://app.seventime.se/api/2/projects',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Project deleted: " + body.name + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete project: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "_id": "5fb3c92dd5472a243e9caa3b",
+    "name": "App development",
+    "projectNumber": "12345786",
+}
+"Project deleted: App development, _id: 5fb3c92dd5472a243e9caa3b"
+```
+
+This endpoint deletes a project.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/projects/name=App development&customer=571f61330c7f498a2d0001a4`
+
+### DELETE Parameters
+
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id                     | String | Yes | Id of the project
+deletedByUser           | String | Yes | Id of the user who deleted the project
+
+-->
+
+# Supplement Orders
+## Get Supplement Orders
+
+```shell
+curl "https://app.seventime.se/api/2/supplementOrders/?project=5f924f4f533f102af78f95b6" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 1,
+    "totalPages": 1,
+    "currentPage": 1
+  },
+  "data": [
+    {
+      "_id": "5ba5619ad77ca8791257284",
+      "title": "Discount",
+      "description": "",
+      "headerText": "",
+      "supplementOrderNumber": 1,
+      "supplementOrderType": 1,
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps AB",
+      "project": "5f924f4f533f102af78f95b6",
+      "projectName": "Blåsippan",
+      "projectNumber": "17058",
+      "totalAmount": 75,
+      "totalTaxAmount": 18.75,
+      "totalAmountInclTax": 94,
+      "taxPercent": 25,
+      "contractedAmount": 0,
+      "priceList": null,
+      "priceListName": "",
+      "billingMethod": "FIXED_PRICE",
+      "acceptedDate": null,
+      "acceptedWithSignature": false,
+      "signaturePath": "",
+      "deviation": null,
+      "deviationNumber": 0,
+      "publicLink": "B2R8LWK5bakDjEbdw7",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
+      "deviations": [],
+      "supplementOrderLogEntries": [
+        {
+          "logType": 1,
+          "description": "",
+          "user": "5f48eb3e65d7ee4942c46eeb",
+          "userName": "Tommy Hellström",
+          "_id": "5ba5619ad77ca8791257284",
+          "logDate": "2018-09-25T07:12:46.369Z"
+        },
+        {
+        // ...
+        }
+      ],
+      "documents": [],
+      "workOrderIds": [
+        "5bae34dca878bd790d02065g"
+      ],
+      "invoiceIds": [
+        "5f62c5281715836a4721b843",
+        "524f29251c112373a3421613"
+      ],
+      "invoiceItems": [
+        {
+          "_id": null,
+          "name": "",
+          "description": "",
+          "itemId": "0.9440031314948534",
+          "itemOrder": 1024,
+          "articleNumber": "203",
+          "itemType": "expense",
+          "timeCategory": null,
+          "categoryName": "",
+          "expenseItem": "5266af51d88751207100000e",
+          "expenseItemName": "Seven Time - 5 användare - #2",
+          "driverJournalItemType": null,
+          "driverJournalItemTypeName": "",
+          "machine": null,
+          "machineName": "",
+          "numberOfItems": 1,
+          "unitPrice": 100,
+          "priceList": null,
+          "priceListName": null,
+          "unit": "Styck",
+          "unitCost": 0,
+          "discountInPercent": 0,
+          "supplementChargePercent": -25,
+          "discountPercent": 0,
+          "taxPercent": 25,
+          "totalAmount": 75,
+          "totalTaxAmount": 0,
+          "totalAmountInclTax": 0,
+          "totalCost": 0,
+          "houseWorkFlag": false,
+          "houseWorkTypeOfWork": 0,
+          "selectedFlag": false,
+          "createDate": null
+        },
+        {
+        // ...
+        }
+      ],
+      "modifiedDate": null,
+      "createDate": "2018-09-25T07:12:46.369Z",
+      "status": 60,
+    }
+  ]
+}
+```
+
+This endpoint retrieves supplement orders, a maximum of 500 supplement orders will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/supplementOrders/?&project=5f924f4f533f102af78f95b6`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+project       |  | Id of the project that supplement orders will be retrieved from. This parameter is required
+sortBy        |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get a specific Supplement Order
+
+```shell
+curl "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/supplementOrders/5ba5619ad77ca8791257284";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+      "_id": "5ba5619ad77ca8791257284",
+      "title": "Discount",
+      "description": "",
+      "headerText": "",
+      "supplementOrderNumber": 1,
+      "supplementOrderType": 1,
+      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
+      "createdByUserName": "Tommy Hellström",
+      "customer": "5bb26376c42fb99275000080",
+      "customerName": "Hellapps AB",
+      "project": "5f924f4f533f102af78f95b6",
+      "projectName": "Blåsippan",
+      "projectNumber": "17058",
+      "totalAmount": 75,
+      "totalTaxAmount": 18.75,
+      "totalAmountInclTax": 94,
+      "taxPercent": 25,
+      "contractedAmount": 0,
+      "priceList": null,
+      "priceListName": "",
+      "billingMethod": "FIXED_PRICE",
+      "acceptedDate": null,
+      "acceptedWithSignature": false,
+      "signaturePath": "",
+      "deviation": null,
+      "deviationNumber": 0,
+      "publicLink": "B2R8LWK5bakDjEbdw7",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td><td style='vertical-align: top;'></td></tr></table>",
+      "deviations": [],
+      "supplementOrderLogEntries": [
+        {
+          "logType": 1,
+          "description": "",
+          "user": "5f48eb3e65d7ee4942c46eeb",
+          "userName": "Tommy Hellström",
+          "_id": "5ba5619ad77ca8791257284",
+          "logDate": "2018-09-25T07:12:46.369Z"
+        },
+        {
+        // ...
+        }
+      ],
+      "documents": [],
+      "workOrderIds": [
+        "5bae34dca878bd790d02065g"
+      ],
+      "invoiceIds": [
+        "5f62c5281715836a4721b843",
+        "524f29251c112373a3421613"
+      ],
+      "invoiceItems": [
+        {
+          "_id": null,
+          "name": "",
+          "description": "",
+          "itemId": "0.9440031314948534",
+          "itemOrder": 1024,
+          "articleNumber": "203",
+          "itemType": "expense",
+          "timeCategory": null,
+          "categoryName": "",
+          "expenseItem": "5266af51d88751207100000e",
+          "expenseItemName": "Seven Time - 5 användare - #2",
+          "driverJournalItemType": null,
+          "driverJournalItemTypeName": "",
+          "machine": null,
+          "machineName": "",
+          "numberOfItems": 1,
+          "unitPrice": 100,
+          "priceList": null,
+          "priceListName": null,
+          "unit": "Styck",
+          "unitCost": 0,
+          "discountInPercent": 0,
+          "supplementChargePercent": -25,
+          "discountPercent": 0,
+          "taxPercent": 25,
+          "totalAmount": 75,
+          "totalTaxAmount": 0,
+          "totalAmountInclTax": 0,
+          "totalCost": 0,
+          "houseWorkFlag": false,
+          "houseWorkTypeOfWork": 0,
+          "selectedFlag": false,
+          "createDate": null
+        },
+        {
+        // ...
+        }
+      ],
+      "modifiedDate": null,
+      "createDate": "2018-09-25T07:12:46.369Z",
+      "status": 60,
+   }
+}
+```
+
+This endpoint retrieves a specific supplement order.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/supplementOrder/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the supplement order to retrieve
+
+# Work Orders
+## Get Work Orders
+
+```shell
+curl "https://app.seventime.se/api/2/workOrders/?limit=10&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/workOrders/?&limit=10&page1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 1772,
+    "totalPages": 355,
+    "currentPage": 34
+  },
+  "data": [
+    {
+      "_id": "5bae34dca878bd790d02065d",
+      "workOrderNumber": 2901,
+      "createdByUserName": "Tommy Hellström",
+      "createdByUser": "59312765ad961c0318eb0a2",
+      "statusRef": "587f3157c73c0f6d9cea944f",
+      "status": 100,
+      "customerNumber": "511",
+      "customerName": "Abax Dörrsystem AB",
+      "customer": "571f61330c7f498a2d0001a4",
+      "estimatedTime": 0,
+      "endDate": "2017-10-12T16:00:00.000Z",
+      "startDate": "2017-10-10T07:00:00.000Z",
+      "description": "",
+      "title": "AO1",
+      "customFields": [],
+      "tags": [],
+      "workOrderUserWorkTypes": [],
+      "workOrderUserSkills": [],
+      "budgetCalculation": {
+        "invoiceItems": []
+      },
+      "invoiceRows": [],
+      "todoItems": [],
+      "reminders": [],
+      "checkLists": [],
+      "documents": [],
+      "locationCoordinates": [],
+      "workAddress": {
+        "useOtherAddress": false,
+        "address": "",
+        "zipCode": "",
+        "city": ""
+      },
+      "comments": [],
+      "partTimeResources": [],
+      "machines": [],
+      "users": [],
+      "createDate": "2018-09-28T13:17:16.785Z",
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves work orders, a maximum of 500 work orders will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/workOrders`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/workOrders/?workOrderNumber=5555`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+title           |  | If specified, work orders that match the parameter will be included.
+workOrderNumber |  | If specified, work orders that match the parameter will be included.
+project         |  | If specified, work orders that match the parameter will be included.
+user            |  | If specified, work orders that match the parameter will be included.
+customer        |  | If specified, work orders that match the parameter will be included.
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+
+
+## Get a specific Work order
+
+```shell
+curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "workAddress": {
+      "useOtherAddress": false,
+      "address": "",
+      "zipCode": "",
+      "city": ""
+    },
+    "budgetCalculation": {
+      "invoiceItems": []
+    },
+    "locationCoordinates": [],
+    "tags": [],
+    "_id": "5bae34dca878bd790d02065g",
+    "workOrderNumber": 2901,
+    "createdByUserName": "Tommy Hellström",
+    "createdByUser": "59312765ad961c0318eb0a2",
+    "systemAccount": "5112826056d961c030000001",
+    "statusRef": "587f3157c73c0f6d9cea944f",
+    "status": 100,
+    "customerNumber": "511",
+    "customerName": "Abax Dörrsystem AB",
+    "customer": "571f61330c7f498a2d0001a4",
+    "estimatedTime": 0,
+    "endDate": "2017-10-12T16:00:00.000Z",
+    "startDate": "2017-10-10T07:00:00.000Z",
+    "description": "",
+    "title": "AO1",
+    "customFields": [],
+    "workOrderUserWorkTypes": [],
+    "workOrderUserSkills": [],
+    "invoiceRows": [],
+    "todoItems": [],
+    "reminders": [],
+    "checkLists": [],
+    "documents": [],
+    "comments": [],
+    "partTimeResources": [],
+    "machines": [],
+    "users": [],
+    "createDate": "2018-09-28T13:17:16.785Z",
+    "relations": []
+  }
+}
+```
+
+This endpoint retrieves a specific work order.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/workOrders/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the work order to retrieve
+
+## Get work order types
+
+```shell
+curl "https://app.seventime.se/api/2/workOrderTypes/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/workOrderTypes/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "58263d936a17605a25020043",
+      "isActive": true,
+      "workOrderTypeName": "Extra",
+      "color": "f44336"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves work order types.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/workOrderTypes/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy          |  | If specified, a sort will be made on the specified parameter
+sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get work order tags
+
+```shell
+curl "https://app.seventime.se/api/2/workOrderTags/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/workOrderTags/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "5df3a401f0690d1dbb3ec7bd",
+      "tagName": "1",
+      "color": "FAFAFA"
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves work order tags.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/workOrderTags/`
+
+### URL Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy        |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Get Work order statuses
+
+```shell
+curl "https://app.seventime.se/api/2/workOrderStatuses/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/workOrderStatuses/";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "582f7cabd16fdbe335041055",
+      "statusName": "Ej planerad",
+      "color": "FF5722",
+      "inProgressStatus": false,
+      "closedStatus": false,
+      "isActive": true,
+      "plannedStatus": false
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves work order statuses.
+
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/workOrderStatuses/`
+
+### URL Parameters
+
+No parameters
+
+## Create a Work order
+```shell
+  curl -X POST "https://app.seventime.se/api/2/workOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Support","customer":"571f61330c7f498a2d0001a4","createdByUser":"5912626016d971c030916402"}' 
+```
+
+```javascript
+let jsonData = {
+  title: 'Support',
+  customer: '571f61330c7f498a2d0001a4',
+  createdByUser: '5912626016d971c030916402'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+  } else {
+    console.error("ERROR! Unable to create work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+    "title": "Support"
+    "workOrderNumber": 4908,       
+    "description": "",   
+    "locationCoordinates": [],
+    "tags": [],
+    "_id": "5fb8517e1bcaad1cd2cd3f9c",
+    "createDate": "2020-11-16T10:15:42.216Z",
+    "users": [],
+    "machines": [],
+    "partTimeResources": [],
+    "comments": [],
+    "documents": [],
+    "checkLists": [],
+    "reminders": [],
+    "todoItems": [],
+    "invoiceRows": [],
+    "workOrderUserSkills": [],
+    "workOrderUserWorkTypes": [],
+    "customFields": [],
+    "relations": [],
+    "estimatedTime": 0, 
+    "marking": "",
+    "yourOrderNumber": "",
+    "customerName": "Testbolaget ABC",
+    "customer": "571f61330c7f498a2d0001a4",
+    "color": "FF5722",
+    "status": 500,
+    "statusRef": "587f7dadd10fbbe338000055",
+    "createdByUser":
+    { 
+    "_id": "5912626016d971c030916402"
+    // ...
+    },
+    "createdByUserName": "Lucas Hellström",
+}
+```
+
+This endpoint creates a work order.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/workOrders/`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+title               | String | Yes | Title of the work order
+customer            | String | Yes | Customer id for the customer who the work order should belong to
+createdByUser       | String | Yes | Id of the user who created the work order
+statusRef           | String | No | Id of the status of the work order.
+Project             | String | No | Project id for the project which the work order should belong to
+startDate           | String | No | Start date for the work order. The format must be YYYY-MM-DD HH:MM
+endDate             | String | No | End date for the work order. The format must be YYYY-MM-DD HH:MM
+currentOwner        | String | No | Id of the user who is the current owner of the work order
+users               | Array  | No | Array containing the ids of users who are working full time on the work order
+machines            | Array  | No | Array containing the ids of the machines which are working full time on the work order
+estimatedTime       | Number | No | Estimated time required to finish the work order
+contactPerson       | String | No | Id of the contact person
+workOrderType       | String | No | Id of the work order type
+department          | String | No | Id of the department
+workLeader          | String | No | Id of the work leader
+description         | String | No | Description of the work order
+color               | String | No | Color of the work order, only used if "How to set color" is 'Manually' in settings. See below for available colors
+invoiceStatus       | Number | No | Invoice status of the work order. See below for available statuses
+billingMethod       | String | No | Billing method of work order. See below for available billing methods
+fixedPrice          | Number | No* | *Only if Billing method is set to FIXED_PRICE
+isSupplementOrder   | Boolean | No | Should the work order be set as supplement order?
+workAddress         | Object | No | Contains attributes for work address. If not specified, the customers address will be set as work address. See below for details
+enablePortalAccess  | Boolean | No | Should the work order be available in the customer portal?
+allowRegistrationOfTimes     | Boolean | No | Should it be possible to register times on the work order?
+allowRegistrationOfExpenses  | Boolean | No | Should it be possible to register expenses on the work order?
+marking             | String | No | Marking on the work order
+yourOrderNumber     | String | No | Your order number of the work order
+
+**Colors for work orders**
+
+<span style="width: 16px; height: 16px; background: #9c27b0;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 9c27b0 <br>
+<span style="width: 16px; height: 16px; background: #673ab7;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 673ab7 <br>
+<span style="width: 16px; height: 16px; background: #7C4DFF;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 7C4DFF <br>
+<span style="width: 16px; height: 16px; background: #3F51B5;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 3F51B5 <br>
+<span style="width: 16px; height: 16px; background: #3a87ad;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 3a87ad <br>
+
+<span style="width: 16px; height: 16px; background: #2196F3;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 2196F3 <br>
+<span style="width: 16px; height: 16px; background: #03A9F4;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 03A9F4 <br>
+<span style="width: 16px; height: 16px; background: #00BCD4;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 00BCD4 <br>
+<span style="width: 16px; height: 16px; background: #009688;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 009688 <br>
+<span style="width: 16px; height: 16px; background: #468847;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 468847 <br>
+
+<span style="width: 16px; height: 16px; background: #4CAF50;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 4CAF50 <br>
+<span style="width: 16px; height: 16px; background: #8BC34A;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 8BC34A <br>
+<span style="width: 16px; height: 16px; background: #CDDC39;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - CDDC39 <br>
+<span style="width: 16px; height: 16px; background: #FF9800;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FF9800 <br>
+<span style="width: 16px; height: 16px; background: #FF5722;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FF5722 <br>
+
+<span style="width: 16px; height: 16px; background: #f44336;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - f44336 <br>
+<span style="width: 16px; height: 16px; background: #e91e63;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - e91e63 <br>
+<span style="width: 16px; height: 16px; background: #795548;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 795548 <br>
+<span style="width: 16px; height: 16px; background: #5D4037;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 5D4037 <br>
+<span style="width: 16px; height: 16px; background: #999999;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 999999 <br>
+
+<span style="width: 16px; height: 16px; background: #666666;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 666666 <br>
+<span style="width: 16px; height: 16px; background: #333333;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 333333 <br>
+<span style="width: 16px; height: 16px; background: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - 000000 <br>
+<span style="width: 16px; height: 16px; background: #FAFAFA;">&nbsp;&nbsp;&nbsp;&nbsp;</span> - FAFAFA <br>
+
+
+**Invoice statuses for work orders**
+
+Code | Status
+--------- | ----------- 
+0  | None
+5  | Not invoiceable
+10 | Ready to be invoiced
+20 | Partly invoiced
+30 | Fully invoiced
+
+**Billing methods for work orders**
+
+Code | Billing method
+--------- | ----------- 
+RUNNING             | Running price
+FIXED_PRICE         | Fixed price
+ACCORDING_TO_QUOTE  | Price will be set according to quote
+
+
+
+**Attributes for workAddress**
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+useOtherAddress             | Boolean | Yes | Should an alternative work address be used?
+name                        | String  | No  | Used if useSeparateBillingAddress is true
+address                     | String  | No  | Used if useSeparateBillingAddress is true
+address2                    | String  | No  | Used if useSeparateBillingAddress is true
+zipCode                     | String  | No  | Used if useSeparateBillingAddress is true
+city                        | String  | No  | Used if useSeparateBillingAddress is true
+country                     | String  | No  | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
+phone                       | String  | No  | Used if useSeparateBillingAddress is true
+
+## Update a Work order
+
+
+```shell
+  curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"_id":"5fb8517e1bcaad1cd2cd3f9c","modifiedByUser":"5f48eb3e65d7ee4942c4602","title":"Construction work"}' 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb8517e1bcaad1cd2cd3f9c',
+  modifiedByUser: '5f48eb3e65d7ee4942c4602',
+  title: 'Construction work'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+};
+
+request.put(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Work Order updated: " + body.title + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to update work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "runningInvoiceSettings":
+   { 
+     "oneRowText": "Arbetsorder #{{workOrderNumber}} {{workOrderTitle}}",
+     "timeLogMachineSupplement": "nothing",
+     "timeLogCustomField": "nothing",
+     "includeDescription": true,
+     "includeDateRange": false,
+     "includeDate": true,
+     "includeUser": true,
+     "machineFromTimeLog": false,
+     "includeCategory": true,
+     "includeTask": false,
+     "includeWorkOrder": false,
+     "includeProject": false,
+     "formatType": "detailedFormat" 
+   },
+  "budgetCalculation": { "invoiceItems": [] },
+  "locationCoordinates": [],
+  "tags": [],
+  "_id": "5fb8517e1bcaad1cd2cd3f9c",
+  "createDate": "2020-12-14T14:39:40.951Z",
+  "users": [],
+  "machines": [],
+  "partTimeResources": [],
+  "comments": [],
+  "documents": [],
+  "checkLists": [],
+  "reminders":
+   [ { "_id": "5321507b60913275921",
+       "reminderTimeType": 4,
+       "reminderTimeValue": 10,
+       "reminderType": 1,
+       "itemId": "0.2819101621862501" } ],
+  "todoItems": [],
+  "invoiceRows": [],
+  "workOrderUserSkills": [],
+  "workOrderUserWorkTypes": [],
+  "customFields": [],
+  "relations": [],
+  "title": "Construction work",
+  "estimatedTime": 0,
+  "description": "",
+  "marking": "",
+  "yourOrderNumber": "",
+  "customerName": "Hellapps",
+  "customer": "571f61330c7f498a2d0001a4",
+  "color": "FAFAFA",
+  "status": 100,
+  "statusRef": "582f7cabd16fdbe335041055",
+  "createdByUser": "5f48eb3e65d7ee4942c4602",
+  "createdByUserName": "Lucas Hellström",
+  "workOrderNumber": 4942,
+  "completedByUser": null,
+  "completedByUserName": "",
+  "completedDate": null,
+  "inProgressByUser": null,
+  "inProgressByUserName": "",
+  "inProgressDate": null,
+  "modifiedByUser": "5f48eb3e65d7ee4942c4602",
+  "modifiedByUserName": "Lucas Hellström",
+  "modifiedDate": "2020-12-14T14:43:29.158Z" 
+}
+"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+```
+
+This endpoint updates a work order.
+
+### HTTP Request
+
+`PUT https://app.seventime.se/api/2/workOrders/`
+
+### PUT Parameters
+The table below shows the required fields. Other available fields can be found in the section 'Create a Work Order'.
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id               | String | Yes | Id of the work order
+modifiedByUser    | String | Yes | Id of the user who updated the work order
+
+<!---
+## Delete a Work order
+```shell
+  curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"id":"5fb8517e1bcaad1cd2cd3f9c","deletedByUser":"5f48eb3e65d7ee4942c4602"}' 
+```
+
+```javascript
+let jsonData = {
+  _id: '5fb8517e1bcaad1cd2cd3f9c',
+  deletedByUser: '5f48eb3e65d7ee4942c4602'
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/workOrders',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+};
+
+request.delete(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log(body);
+    console.log("Work Order deleted: " + body.title + ", _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to delete work order: " + error);
+    console.error(body);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json 
+{ 
+  "_id": "5fb8517e1bcaad1cd2cd3f9c",
+  "title": "Construction work",
+  "workOrderNumber": 4942,
+}
+"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+```
+
+This endpoint deletes a work order.
+
+### HTTP Request
+
+`DELETE https://app.seventime.se/api/2/workOrders/`
+
+### DELETE Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+_id               | String | Yes | Id of the work order
+deletedByUser    | String | Yes | Id of the user who deleted the work order
+-->
+
+# Price Lists
+
+## Get price lists
+
+```shell
+curl "https://app.seventime.se/api/2/priceLists/?limit=10&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/priceLists/?&limit=10&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 5,
+    "totalPages": 1,
+    "currentPage": 1
+  },
+  "data": [
+    {
+      "_id": "58c1504a658fb5911d018f5f",
+      "name": "Grosslistan",
+      "isActive": true,
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves price lists, a maximum of 500 price lists will be returned.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/priceLists`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+sortBy |  | If specified, a sort will be made on the specified parameter
+sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+
+## Get a specific Price List
+
+```shell
+curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "data": {
+    "_id": "57bc187159a73f312300009d",
+    "isActive": true,
+    "systemAccount": "5112826056d961c030000001",
+    "name": "ÅF-prislista",
+  }
+}
+```
+
+This endpoint retrieves a specific price list.
+
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/priceLists/<_id>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+_id | The _id of the price list to retrieve
+
+
+
+# Supplier Invoices
+## Get supplier invoices
+
+```shell
+curl "https://app.seventime.se/api/2/supplierInvoices/?limit=5&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/supplierInvoices/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -5004,7 +6500,7 @@ _id                 | String      | Yes | Id of the Supplier Invoice
 
 
 ```shell
-curl "https://app.seventime.se/api/2/machines/?limit=10&page=2" \
+curl "https://app.seventime.se/api/2/machines/?limit=10&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -5012,7 +6508,7 @@ curl "https://app.seventime.se/api/2/machines/?limit=10&page=2" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machines/?&limit=10&page=2";
+let url = "https://app.seventime.se/api/2/machines/?&limit=10&page=1";
 let options = {
   url: url,
   headers: {
@@ -5284,7 +6780,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get Machine Time Logs
 
 ```shell
-curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=2&page=27" \
+curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=20&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -5292,7 +6788,7 @@ curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=2&page=27" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machineTimeLogs/?&limit=2&page=27";
+let url = "https://app.seventime.se/api/2/machineTimeLogs/?&limit=20&page=1";
 let options = {
   url: url,
   headers: {
@@ -6082,1152 +7578,11 @@ Parameter | Type | Required? | Description
 _id             | String | Yes | Id of the time log
 
 
-# Expenses 
-
-## Get Expenses
-
-```shell
-curl "https://app.seventime.se/api/2/expenses/?limit=2&page=3" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/expenses/?&limit=2&page=3";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 622,
-    "totalPages": 311,
-    "currentPage": 3
-  },
-  "data": [
-    {
-      "_id": "53ad291839f16d23a6414604d2",
-      "attestedBy": null,
-      "createDate": "2014-06-27T08:11:15.954Z",
-      "customer": null,
-      "customerName": "",
-      "description": "",
-      "documents": [],
-      "expenseItem": "52d92f32d5fcf8941893174ab",
-      "isAttested": false,
-      "isInvoiceable": true,
-      "isInvoiced": false,
-      "name": "Arbetsordermodul2",
-      "numberOfItems": 1,
-      "project": "516fad2b265135db78024621§",
-      "projectName": "Glimminge",
-      "supplementOrder": false,
-      "timestamp": "2014-06-27T00:00:00.000Z",
-      "totalAmount": 20,
-      "totalAmountAfterDiscount": 20,
-      "totalAmountInclTax": 25,
-      "totalTaxAmount": 5,
-      "unit": "st",
-      "unitCost": 20,
-      "unitPrice": 20,
-      "unitPriceInclTax": 25,
-      "unitTax": 5,
-      "user": "51203146506d961c030791801",
-      "userName": "Tommy Hellström",
-      "workOrder": null,
-      "workOrderNumber": 0,
-      "workOrderTitle": "",
-      "unitPriceAfterDiscount": 20,
-      "discountPercent": 0,
-      "unitTaxPercent": 25,
-      "doReimburse": false,
-      "salaryCompilation": null,
-      "verificationNumber": "",
-      "distributor": null,
-      "distributorName": "",
-      "totalCost": 20,
-      "articleNumber": "208"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves expenses, a maximum of 500 expenses will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/expenses`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-name               |  | If specified, expenses that match the parameter will be included.
-articleNumber      |  | If specified, expenses that match the parameter will be included.
-customer           |  | If specified, expenses that match the parameter will be included.
-project            |  | If specified, expenses that match the parameter will be included.
-distributor        |  | If specified, expenses that match the parameter will be included.
-fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-sortBy             |  | If specified, a sort will be made on the specified parameter
-sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-
-
-## Get a specific Expense
-
-```shell
-curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "_id": "53ad291839f16d23a6414604d2",
-    "attestedBy": null,
-    "createDate": "2014-06-27T08:11:15.954Z",
-    "customer": null,
-    "customerName": "",
-    "description": "",
-    "documents": [],
-    "expenseItem": "52d92f32d5fcf8941893174ab",
-    "isAttested": false,
-    "isInvoiceable": true,
-    "isInvoiced": false,
-    "name": "Arbetsordermodul2",
-    "numberOfItems": 1,
-    "project": "516fad2b265135db78024621§",
-    "projectName": "Glimminge",
-    "supplementOrder": false,
-    "timestamp": "2014-06-27T00:00:00.000Z",
-    "totalAmount": 20,
-    "totalAmountAfterDiscount": 20,
-    "totalAmountInclTax": 25,
-    "totalTaxAmount": 5,
-    "unit": "st",
-    "unitCost": 20,
-    "unitPrice": 20,
-    "unitPriceInclTax": 25,
-    "unitTax": 5,
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
-    "workOrder": null,
-    "workOrderNumber": 0,
-    "workOrderTitle": "",
-    "unitPriceAfterDiscount": 20,
-    "discountPercent": 0,
-    "unitTaxPercent": 25,
-    "doReimburse": false,
-    "salaryCompilation": null,
-    "verificationNumber": "",
-    "distributor": null,
-    "distributorName": "",
-    "totalCost": 20,
-    "articleNumber": "208"
-  }
-}
-```
-
-This endpoint retrieves a specific expense.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/expenses/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the expense to retrieve
-
-## Get Expenses Items
-
-```shell
-curl "https://app.seventime.se/api/2/expenseItems/?limit=10&page=176" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/expenseItems/?&limit=10&page=176";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 19478,
-    "totalPages": 1948,
-    "currentPage": 176
-  },
-  "data": [
-    {
-      "_id": "5de78aed1332719192362bed",
-      "description": "",
-      "tax": 25,
-      "articleNumber": "601310",
-      "name": "10-pack Reaktionsbollar",
-      "unitPrice": 295.59,
-      "unitCost": 221,
-      "unit": "St",
-      "isInvoiceable": true,
-      "isCategory": false,
-      "parentExpenseItem": null,
-      "parentExpenseItemName": "",
-      "createDate": "2019-12-04T10:31:06.603Z",
-      "bundledArticles": [],
-      "alwaysReimburse": false,
-      "isActive": true,
-      "categoryGroupNumber": "",
-      "articleGroupNumber": "",
-      "distributor": null,
-      "distributorName": "",
-      "isInventoryItem": false,
-      "unitPriceInclTax": 369.48749999999995
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves expense items, a maximum of 500 expense items will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/expenses`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-name                    |  | If specified, expense items that match the parameter will be included.
-articleNumber           |  | If specified, expense items that match the parameter will be included.
-distributorName         |  | If specified, expense items that match the parameter will be included.
-description             |  | If specified, expense items that match the parameter will be included.
-parentExpenseItemName   |  | If specified, expense items that match the parameter will be included.
-isInvoiceable           |  | If specified, expense items that match the parameter will be included.
-isActive                |  | If specified, expense items that match the parameter will be included.
-favorite                |  | If specified, expense items that match the parameter will be included.
-sortBy                  |  | If specified, a sort will be made on the specified parameter
-sortDirection           |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-
-
-## Get a specific Expense Item
-
-```shell
-curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "_id": "5de78aed1332719192362bed",
-    "description": "",
-    "tax": 25,
-    "articleNumber": "601310",
-    "name": "10-pack Reaktionsbollar",
-    "unitPrice": 295.59,
-    "unitCost": 221,
-    "unit": "St",
-    "isInvoiceable": true,
-    "isCategory": false,
-    "parentExpenseItem": null,
-    "parentExpenseItemName": "",
-    "createDate": "2019-12-04T10:31:06.603Z",
-    "bundledArticles": [],
-    "alwaysReimburse": false,
-    "isActive": true,
-    "categoryGroupNumber": "",
-    "articleGroupNumber": "",
-    "distributor": null,
-    "distributorName": "",
-    "isInventoryItem": false,
-    "unitPriceInclTax": 369.48749999999995
-  }
-}
-```
-
-This endpoint retrieves a specific expense item.
-
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/expenseItems/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the expense item to retrieve
-
-
-## Create an Expense
-
-```shell
-  curl -X POST "https://app.seventime.se/api/2/expenses/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
-```
-
-```javascript
-let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  user: '51203146506d961c030791801',
-  expenseItem: '5de78aed1332719192362bed'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/expenses',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.post(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Expense created: _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to create expense: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-  "isInvoiceable": true,
-  "_id": "5fbe684416625651d7f43257",
-  "timestamp": "2020-11-25T14:20:52.129Z",
-  "documents": [],
-  "createDate": "2020-11-25T14:20:52.129Z",
-  "bundledArticles": [],
-  "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
-  "numberOfItems": 1,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "expenseItem": "5de78aed1332719192362bed",
-  "articleNumber": "575733",
-  "name": "10-pack Reaktionsbollar",
-  "description": "Skivhantel av järn",
-  "distributor": "573c52cdf609f5692351914b",
-  "distributorName": "Lev 4",
-  "unit": "St",
-  "unitCost": 319,
-  "unitTaxPercent": 25,
-  "unitPrice": 426.66,
-  "unitPriceAfterDiscount": 426.66,
-  "discountPercent": 0,
-  "unitTax": 106.665,
-  "unitPriceInclTax": 533.325,
-  "totalTaxAmount": 106.665,
-  "totalAmount": 426.66,
-  "totalAmountAfterDiscount": 426.66,
-  "totalCost": 319,
-}
-"Expense created: _id: 5fbe684416625651d7f43257"
-```
-
-This endpoint creates an expense
-
-### HTTP Request
-
-`POST https://app.seventime.se/api/2/expenses/`
-
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-createdByUser       | String | Yes | Id of the user who created the expense
-user                | String | Yes | Id of the user on the expense
-expenseItem         | String | Yes*| Id of the expense item. *Required if freetext for articles is not activated 
-name                | String | Yes*| Name of the article. *Required if expenseItem is not specified. This will set the article to freetext and is only possible if the setting for this is enabled. 
-workOrder           | String | No  | Id of the work order
-customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
-project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
-distributor         | String | No  | Id of the distributor
-numberOfItems       | String | No  | Number of items
-unit                | String | No  | Unit of the number of items
-unitCost            | Number | No* | Cost per unit. If not specified, the cost on the expense item will be used. *Required if expenseItem is not specified
-unitPrice           | Number | No* | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price. *Required if expenseItem is not specified
-discountPercent     | Number | No* | Discount percent on the unit price. *Required if expenseItem is not specified
-taxPercent          | Number | No* | Tax percent on the unit price. *Required if expenseItem is not specified
-timestamp           | String | No  | Time stamp of expense
-description         | String | No  | Description of the expense
-isInvoiceable       | Boolean | No | Is the expense invoiceable?
-doReimburse         | Boolean | No | Is the expense an own expense?
-
-## Update an Expense
-
-```shell
-  curl -X PUT "https://app.seventime.se/api/2/expenses/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fbe684416625651d7f43257","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801"}'
-```
-
-```javascript
-let jsonData = {
-  _id: '5fbe684416625651d7f43257',
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
-  user: '51203146506d961c030791801'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/expenses',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.put(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Expense updated: _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to update expense: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-  "isInvoiceable": true,
-  "_id": "5fbe684416625651d7f43257",
-  "timestamp": "2020-11-25T14:20:52.129Z",
-  "documents": [],
-  "createDate": "2020-11-25T14:20:52.129Z",
-  "bundledArticles": [],
-  "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
-  "numberOfItems": 1,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "expenseItem": "5de78aed1332719192362bed",
-  "articleNumber": "575733",
-  "name": "10-pack Reaktionsbollar",
-  "description": "Skivhantel av järn",
-  "distributor": "573c52cdf609f5692351914b",
-  "distributorName": "Lev 4",
-  "unit": "St",
-  "unitCost": 319,
-  "unitTaxPercent": 25,
-  "unitPrice": 426.66,
-  "unitPriceAfterDiscount": 426.66,
-  "discountPercent": 0,
-  "unitTax": 106.665,
-  "unitPriceInclTax": 533.325,
-  "totalTaxAmount": 106.665,
-  "totalAmount": 426.66,
-  "totalAmountAfterDiscount": 426.66,
-  "totalCost": 319,
-}
-"Expense updated: _id: 5fbe684416625651d7f43257"
-```
-
-This endpoint updates an expense
-
-### HTTP Request
-
-`PUT https://app.seventime.se/api/2/expenses/`
-
-### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create an Expense'.
-
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id            | String | Yes | Id of the expense
-modifiedByUser | String | Yes | Id of the user who made the change
-user           | String | Yes | Id of the user on the expense
-
-## Delete an Expense
-
-```shell
-  curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fbe684416625651d7f43257","deletedByUser":"51203146506d961c030791801"}'
-```
-
-```javascript
-let jsonData = {
-  _id: "5fbe684416625651d7f43257",
-  deletedByUser: '51203146506d961c030791801'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/expenses',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.delete(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Expense deleted: _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to delete expense: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{ 
-  "_id": "5fbe684416625651d7f43257"
-}
-"Expense deleted: _id: 5fbe684416625651d7f43257"
-```
-
-This endpoint deletes an expense
-
-### HTTP Request
-
-`DELETE https://app.seventime.se/api/2/expenses/`
-
-### DELETE Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                | String | Yes | Id of the expense
-deletedByUser      | String | Yes | Id of the user who deleted the expense
-
-
-# Driver Journals
-## Get Driver Journals
-
-```shell
-curl "https://app.seventime.se/api/2/driverJournals/limit=5&page=2" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/driverJournals/?&limit=5&page=2";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 87,
-    "totalPages": 18,
-    "currentPage": 2
-  },
-  "data": [
-    {
-      "_id": "5613c0eabed82c732b67914b",
-      "name": "",
-      "driverJournalItemType": "574ed84219e781253319275004d",
-      "driverJournalItemTypeName": "4 kr/km",
-      "car": null,
-      "carRegistrationNumber": "ABC123",
-      "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Hellapps AB",
-      "project": "5f924f4f533f102af78f95b6",
-      "projectName": "Tester",
-      "workOrder": "5bae34dca878bd790d02065g",
-      "workOrderTitle": "20160525",
-      "workOrderNumber": 1181,
-      "startAddress": "Glimmingevägen 18, Västra Karup",
-      "endAddress": "Hamngatan 1, Malmö",
-      "travelPurpose": ".",
-      "startOdometer": 156,
-      "endOdometer": 178,
-      "totalDistance": 22,
-      "price": 4,
-      "totalAmount": 88,
-      "isInvoiced": true,
-      "invoice": "5fab29b038bd334ab540ab53",
-      "modifiedDate": "2016-06-17T09:29:01.958Z",
-      "createDate": "2016-06-17T09:20:46.845Z",
-      "isInvoiceable": true,
-      "timestamp": "2016-06-17T09:20:10.254Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves driver journals, a maximum of 500 driver journals will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/driverJournals`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-projectName                 |  | If specified, driver journals that match the parameter will be included.
-customerName                |  | If specified, driver journals that match the parameter will be included.
-driverJournalItemTypeName   |  | If specified, driver journals that match the parameter will be included.
-isInvoiceable               |  | If specified, driver journals that match the parameter will be included.
-workOrderTitle              |  | If specified, driver journals that match the parameter will be included.
-workOrderNumber             |  | If specified, driver journals that match the parameter will be included.
-carRegistrationNumber       |  | If specified, driver journals that match the parameter will be included.
-startAddress                |  | If specified, driver journals that match the parameter will be included.
-endAddress                  |  | If specified, driver journals that match the parameter will be included.
-fromDate                    |  | If specified, driver journals registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-toDate                      |  | If specified, driver journals registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-sortBy                      |  | If specified, a sort will be made on the specified parameter
-sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-
-
-## Get a specific Driver Journal
-
-```shell
-curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "isInvoiceable": true,
-    "_id": "5613c0eabed82c732b67914b",
-    "name": "",
-    "driverJournalItemType": "574ed84219e781253319275004d",
-    "driverJournalItemTypeName": "4 kr/km",
-    "car": null,
-    "carRegistrationNumber": "ABC123",
-    "description": "",
-    "user": "5f48eb3e65d7ee4942c46eeb",
-    "userName": "Tommy Hellström",
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "Hellapps AB",
-    "project": "5f924f4f533f102af78f95b6",
-    "projectName": "Tester",
-    "workOrder": "5bae34dca878bd790d02065g",
-    "workOrderTitle": "20160525",
-    "workOrderNumber": 1181,
-    "startAddress": "Glimmingevägen 18, Västra Karup",
-    "endAddress": "Hamngatan 1, Malmö",
-    "travelPurpose": ".",
-    "startOdometer": 156,
-    "endOdometer": 178,
-    "totalDistance": 22,
-    "price": 4,
-    "totalAmount": 88,
-    "isInvoiced": true,
-    "invoice": "5fab29b038bd334ab540ab53",
-    "modifiedDate": "2016-06-17T09:29:01.958Z",
-    "createDate": "2016-06-17T09:20:46.845Z",
-    "timestamp": "2016-06-17T09:20:10.254Z",
-  }
-}
-```
-
-This endpoint retrieves a specific driver journal.
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/driverJournals/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the driver journal to retrieve
-
-## Get Driver Journals Types
-
-```shell
-curl "https://app.seventime.se/api/2/driverJournalTypes" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/driverJournalTypes/?";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5e5ef41f0d87d3262bc0176",
-      "name": "Diesel - ej skt.fri",
-      "articleNumber": "45",
-      "cost": 0.5,
-      "price": 0.65,
-      "isInvoiceable": true,
-      "isDefault": false,
-      "salaryCompensationType": 20,
-      "salaryType": "5e5cd96da2f5b43254aa1f1e",
-      "salaryTypeName": "Milersättning för diesel",
-      "createDate": "2020-03-03T09:14:11.750Z",
-      "isActive": true,
-      "salaryCode": "9172"
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves driver journals types, a maximum of 500 driver journals types will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/driverJournalTypes`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy                      |  | If specified, a sort will be made on the specified parameter
-sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-## Create a Driver Journal
-
-```shell
-  curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"createdByUser":"51203146506d961c030791801","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
-```
-
-```javascript
-let jsonData = {
-  createdByUser: '51203146506d961c030791801',
-  user: '5f48eb3e65d7ee4942c46eeb',
-  carRegistrationNumber: 'ABC123',
-  driverJournalItemType: '5e5ef41f0d87d3262bc0176',
-  startAddress: 'Address start, V Karup',
-  endAddress: 'Address end, Båstad',
-  travelPurpose: 'Delivery',
-  startOdometer: '45',
-  endOdometer: '60',
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/driverJournals',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.post(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Driver journal created: _id: " + body._id);
-
-  } else {
-    console.error("ERROR! Unable to create driver journal: " + error);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "isInvoiceable": true,
-  "_id": "5fc619b96294735fc421d77a",
-  "timestamp": "2020-12-01T10:23:53.370Z",
-  "createDate": "2020-12-01T10:23:53.370Z",
-  "modifiedDate": "2020-12-01T10:23:53.370Z",
-  "systemAccount": "5112826056d961c030000001",
-  "user": "5f48eb3e65d7ee4942c46eeb",
-  "userName": "Tommy Hellström",
-  "carRegistrationNumber": "ABC123",
-  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
-  "driverJournalItemTypeName": "Diesel - ej skt.fri",
-  "startAddress": "Address start, V Karup",
-  "endAddress": "Address end, Båstad",
-  "travelPurpose": "Delivery",
-  "startOdometer": 45,
-  "endOdometer": 60,
-  "totalDistance": 15,
-  "isSalaryCompensated": false,
-  "price": 0,
-  "totalAmount": 0,
-  "cost": 0,
-  "totalCost": 0,
-}
-"Driver journal created: _id: 5fc619b96294735fc421d77a"
-```
-
-This endpoint creates a driver journal
-
-### HTTP Request
-
-`POST https://app.seventime.se/api/2/driverJournals/`
-
-### POST Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-createdByUser           | String | Yes | Id of the user who created the driver journal
-user                    | String | Yes | Id of the user on the driver journal
-vehicle                 | String | Yes*| Id of the vehicle. *Required if carRegistrationNumber is not specified
-carRegistrationNumber   | String | Yes*| Car registration number. *Required if vehicle is not specified. This will not be used if vehicle is specified
-driverJournalItemType   | String | Yes | Type of trip
-startAddress            | String | Yes | Start address of the driver journal
-endAddress              | String | Yes | End address of the driver journal
-travelPurpose           | String | Yes | Errand/position/Company/Contact person
-startOdometer           | Number | Yes | Odometer reading at the start
-endOdometer             | Number | Yes | Odometer reading at the end
-customer                | String | No  | Id of the customer
-project                 | String | No  | Id of the project
-workOrder               | String | No  | Id of the work order. If project is specified, the work order must belong to the project. The customer from the work order will be used on the driver journal
-price                   | Number | No  | Price/km
-cost                    | Number | No  | Cost/km
-description             | String | No  | Description or notes on the driver journal
-isInvoiceable           | Boolean | No | Is the driver jounal invoiceable?
-isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated?
-
-## Update a Driver Journal
-
-```shell
-  curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fc619b96294735fc421d77a","modifiedByUser":"51203146506d961c030791801","user":"5f48eb3e65d7ee4942c46eeb"}'
-```
-
-```javascript
-let jsonData = {
-  _id: '5fc619b96294735fc421d77a',
-  modifiedByUser: '51203146506d961c030791801',
-  user: '5f48eb3e65d7ee4942c46eeb'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/driverJournals',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.put(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Driver journal updated: _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to update driver journal: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "isInvoiceable": true,
-  "_id": "5fc619b96294735fc421d77a",
-  "timestamp": "2020-12-01T10:23:53.370Z",
-  "createDate": "2020-12-01T10:23:53.370Z",
-  "modifiedDate": "2020-12-01T10:23:53.370Z",
-  "systemAccount": "5112826056d961c030000001",
-  "user": "5f48eb3e65d7ee4942c46eeb",
-  "userName": "Tommy Hellström",
-  "carRegistrationNumber": "ABC123",
-  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
-  "driverJournalItemTypeName": "Diesel - ej skt.fri",
-  "startAddress": "Address start, V Karup",
-  "endAddress": "Address end, Båstad",
-  "travelPurpose": "Delivery",
-  "startOdometer": 45,
-  "endOdometer": 60,
-  "totalDistance": 15,
-  "isSalaryCompensated": false,
-  "price": 0,
-  "totalAmount": 0,
-  "cost": 0,
-  "totalCost": 0,
-}
-"Driver journal updated: _id: 5fc619b96294735fc421d77a"
-```
-
-This endpoint updates a driver journal
-
-### HTTP Request
-
-`PUT https://app.seventime.se/api/2/driverJournals/`
-
-### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create a Driver Journal'.
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id            | String | Yes | Id of the driver journal
-modifiedByUser | String | Yes | Id of the user who made the change
-user           | String | Yes | Id of the user
-
-## Delete a Driver Journal
-
-```shell
-  curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-Type: application/json" \
-  -d '{"_id":"5fc619b96294735fc421d77a","deletedByUser":"51203146506d961c030791801"}'
-```
-
-```javascript
-let jsonData = {
-  _id: '5fc619b96294735fc421d77a',
-  deletedByUser: '51203146506d961c030791801'
-};
-
-let options = {
-  url: 'https://app.seventime.se/api/2/driverJournals',
-  json: jsonData,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request.delete(options, function (error, response, body) {
-  if (!error && response.statusCode === 200) {
-    console.log(body);
-    console.log("Driver journal deleted: _id: " + body._id);
-  } else {
-    console.error("ERROR! Unable to delete driver journal: " + error);
-    console.error(body);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json 
-{
-  "_id": "5fc619b96294735fc421d77a",
-}
-"Driver journal updated: _id: 5fc619b96294735fc421d77a"
-```
-
-This endpoint deletes a driver journal
-
-### HTTP Request
-
-`DELETE https://app.seventime.se/api/2/driverJournals/`
-
-### DELETE Parameters
-
-Parameter | Type | Required? | Description
---------- | ----------- | ----------- | -----------
-_id                    | String | Yes | Id of the driver journal
-
-
 # Vehicles
 ## Get Vehicles
 
 ```shell
-curl "https://app.seventime.se/api/2/vehicles/?limit=5&page=2" \
+curl "https://app.seventime.se/api/2/vehicles/?limit=5&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -7235,7 +7590,7 @@ curl "https://app.seventime.se/api/2/vehicles/?limit=5&page=2" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/vehicles/?&limit=5&page=2";
+let url = "https://app.seventime.se/api/2/vehicles/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -7351,255 +7706,12 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the vehicle to retrieve
 
-# Distributors
-## Get Distributors
-
-```shell
-curl "https://app.seventime.se/api/2/distributors/?limit=5&page=3" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/distributors/?&limit=5&page=3";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "meta": {
-    "totalResources": 16,
-    "totalPages": 4,
-    "currentPage": 3
-  },
-  "data": [
-    {
-      "_id": "5f6b2e6af24d5df55b69277",
-      "name": "UE lev 20200923",
-      "distributorNumber": "20",
-      "address": "",
-      "zipCode": "",
-      "city": "",
-      "country": "",
-      "phone": "",
-      "email": "",
-      "organizationNumber": "",
-      "notes": "",
-      "purchaseOrderEmail": "",
-      "ourCustomerNumber": "",
-      "paymentDays": 30,
-      "hasSelfBilling": true,
-      "selfBillingSettings": {
-        "invoiceDeduction": 5,
-        "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
-        "invoiceNumberSeries": "UELEV23",
-        "invoiceCounter": 1,
-        "emailForSelfBilling": "tommy@seventime.se"
-      },
-      "isActive": true,
-      "isSubContractor": true,
-      "createdDate": "2020-09-23T13:19:42.450Z",
-      "modifiedDate": "2020-09-23T13:19:42.450Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves distributors, a maximum of 500 distributors will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/distributors`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-name                        |  | If specified, distributors that match the parameter will be included.
-sortBy                      |  | If specified, a sort will be made on the specified parameter
-sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
-
-
-## Get a specific Distributor
-
-```shell
-curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": {
-    "selfBillingSettings": {
-      "invoiceDeduction": 5,
-      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
-      "invoiceNumberSeries": "UELEV23",
-      "invoiceCounter": 1,
-      "emailForSelfBilling": "tommy@seventime.se"
-    },
-    "_id": "5f6b2e6af24d5df55b69277",
-    "name": "UE lev 20200923",
-    "distributorNumber": "20",
-    "address": "",
-    "zipCode": "",
-    "city": "",
-    "country": "",
-    "phone": "",
-    "email": "",
-    "organizationNumber": "",
-    "notes": "",
-    "purchaseOrderEmail": "",
-    "ourCustomerNumber": "",
-    "paymentDays": 30,
-    "hasSelfBilling": true,
-    "isActive": true,
-    "isSubContractor": true,
-    "createdDate": "2020-09-23T13:19:42.450Z",
-    "modifiedDate": "2020-09-23T13:19:42.450Z",
-    "systemAccount": "5112826056d961c030000001",
-  }
-}
-```
-
-This endpoint retrieves a specific distributor.
-
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/distributors/<_id>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-_id | The _id of the distributor to retrieve
-
-
-## Get Distributor Contact Persons
-
-```shell
-curl "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    {
-      "_id": "5fca23df0317c3dae47b04a",
-      "name": "Kontaktperson 1",
-      "title": "",
-      "workPhone": "",
-      "cellPhone": "",
-      "email": "",
-      "distributor": "5f6b2e6af24d5df55b69277",
-      "distributorName": "UE lev 20200923",
-      "mainContact": false,
-      "isActive": true,
-      "createdDate": "2020-12-04T10:13:03.965Z",
-      "modifiedDate": "2020-12-04T10:13:03.965Z",
-    },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves distributor contact persons, a maximum of 500 contact persons will be returned.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/distributorContactPersons/?&distributor=5fca23df0317c3dae47b04a`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-distributor                 |  | Id of the distributor. This field must be included
-sortBy                      |  | If specified, a sort will be made on the specified parameter
-sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 # Purchase Orders
 ## Get Purchase Orders
 
 ```shell
-curl "https://app.seventime.se/api/2/purchaseOrders/?limit=2&page=5" \
+curl "https://app.seventime.se/api/2/purchaseOrders/?limit=2&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -7607,7 +7719,7 @@ curl "https://app.seventime.se/api/2/purchaseOrders/?limit=2&page=5" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/purchaseOrders/?&limit=2&page=5";
+let url = "https://app.seventime.se/api/2/purchaseOrders/?&limit=2&page=1";
 let options = {
   url: url,
   headers: {
@@ -8267,7 +8379,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                        | String | Yes | Id of the purchase order
 
-# Result Unit
+# Result Units
 ## Get Result Units
 
 ```shell
@@ -8387,11 +8499,11 @@ Parameter | Description
 --------- | -----------
 _id | The _id of the result unit to retrieve
 
-# Quote
+# Quotes
 ## Get Quotes
 
 ```shell
-curl "https://app.seventime.se/api/2/quotes/?limit=5&page=5" \
+curl "https://app.seventime.se/api/2/quotes/?limit=5&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -8399,7 +8511,7 @@ curl "https://app.seventime.se/api/2/quotes/?limit=5&page=5" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/quotes/?&limit=5&page=5";
+let url = "https://app.seventime.se/api/2/quotes/?&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -9083,93 +9195,6 @@ quoteCategoryName                   |  | If specified, quote categories that mat
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
-# Custom fields
-## Get Custom fields
-
-```shell
-curl "https://app.seventime.se/api/2/customFields/?&entityType=200" \
-  -H "Client-Secret: thisismysecretkey" \
-  -H "Content-type: application/json"
-```
-
-```javascript
-/* Sample with the request library */
-
-let url = "https://app.seventime.se/api/2/customFields/?&entityType=200";
-let options = {
-  url: url,
-  headers: {
-    "Client-Secret": "thisismysecretkey",
-    "Content-Type": "application/json",
-    "Accept": 'application/json'
-  }
-};
-
-request(options, function(error, response, body) {
-  if (!error && response.statusCode == 200) {
-    let info = JSON.parse(body);
-    // ...
-  } else {
-    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
-  }  
-});
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "data": [
-    { "_id": "572cc7advab059714hcfca51",
-      "selectFieldData": [],
-      "fieldType": 100,
-      "fieldName": "Kund",
-      "include": true,
-      "required": false },
-    {
-      // ...
-    }
-  ]
-}
-```
-
-This endpoint retrieves custom fields.
-
-### HTTP Request
-
-`GET https://app.seventime.se/api/2/customFields/?&entityType=<entityType>`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-entityType                          | 100 | Number corresponding to entity type. See table below for available types.
-
-**Entity types**
-
-Code | Description
---------- | ----------- 
-100   | Time log
-200   | Work order
-300   | Tasks
-400   | Invoice
-500   | Project
-600   | Expense
-700   | Machine time log
-800   | Driver journal
-900   | Salary deviation
-1000   | User
-1100   | Customer
-1200   | Absence
-1300   | Work time absence
-1400   | Quote
-1500   | Machine
-1600   | Object item
-1700   | Customer signature
-1800   | Supplement order
-1900   | Construction diary
-2000   | Checklist
-2100   | Payment plan
 
 
 
