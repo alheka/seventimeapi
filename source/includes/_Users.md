@@ -10,7 +10,7 @@ curl "https://app.seventime.se/api/2/users/?limit=10&page=1" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/users/?&limit=100&page=1";
+let url = "https://app.seventime.se/api/2/users/?limit=100&page=1";
 let options = {
   url: url,
   headers: {
@@ -64,7 +64,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves users, a maximum of 500 users will be returned.
+This endpoint retrieves users.
 
 ### HTTP Request
 
@@ -205,7 +205,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
+This endpoint retrieves user roles.
 
 
 
@@ -277,7 +277,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves user salary types, a maximum of 500 salary types will be returned.
+This endpoint retrieves user salary types.
 
 
 
@@ -342,7 +342,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves user skills, a maximum of 500 user skills will be returned.
+This endpoint retrieves user skills.
 
 ### HTTP Request
 
@@ -403,7 +403,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves user roles, a maximum of 500 user roles will be returned.
+This endpoint retrieves user roles.
 
 
 ### HTTP Request
