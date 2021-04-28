@@ -43,26 +43,26 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5fab29b038bd334ab540ab53",
+      "_id": "5fab29b038bd334ab5402446",
       "deliveryAddress": {
         "name": "Kontoret",
-        "address": "Glimmingevägen 18",
-        "address2": "Testvägen 123",
+        "address": "Östra Gatan 129",
+        "address2": "Västra Gatan 921",
         "zipCode": "12345",
-        "city": "Västra Karup",
+        "city": "Stockholm",
         "country": "SE",
-        "phone": "12345-6798"
+        "phone": "1234-567890"
       },
       "houseProperties": {
         "typeOfProperty": 1,
-        "propertyDescription": "property description test test",
+        "propertyDescription": "property description",
         "housingSocietyNumber": "",
         "apartmentNumber": "",
         "maxDeductionAmount": 100000,
         "personalNumber": "",
         "deductionDistribution": [
           {
-            "_id": "5fae99b072aa334cb539ab7d",
+            "_id": "5fae99b072aa334cb533648",
             "userName": "testUser",
             "personalNumber": "12345",
             "distributionPercent": 40
@@ -73,22 +73,22 @@ request(options, function(error, response, body) {
         ]
       },
       "workOrderIds": [
-        "5fa2b550c289ea64821ea37b"
+        "5fa2b550c289ea61785952",
         // ...
       ],
       "tags": [
-        "5f742440d608b2201c3e7bab",
-        "5f74243ad608b2201c3e7ba9"
+        "5f742440d608b220152b1549",
+        "5f74243ad608b22058126b12"
       ],
       "createDate": "2020-11-13T14:35:28.797Z",
       "invoiceItems": [
         {
-          "_id": "5fae99b072aa334cb539ab7b",
+          "_id": "5fae99b072aa334cb52449682",
           "createDate": "2020-11-13T14:35:28.795Z",
           "houseWorkTypeOfWork": 1,
           "name": "**Skivhantel i Gummi 10 Kg****",
           "description": "Skivhantel av järn",
-          "expenseItem": "5de78ae9bb13565916362606",
+          "expenseItem": "5de78ae9bb1356246889512",
           "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
           "itemType": "expense",
           "numberOfItems": 1,
@@ -111,12 +111,12 @@ request(options, function(error, response, body) {
       ],
       "invoiceLogEntries": [
         {
-          "_id": "5fae99b072aa334cb539ab7e",
+          "_id": "5fae99b072aa3667942258",
           "logDate": "2020-11-13T14:35:28.797Z",
           "logType": 1,
           "description": "",
-          "user": "51714655fbb708f379000003",
-          "userName": "Lucas Hellström",
+          "user": "51714655fbb708f54975368",
+          "userName": "Anna Andersson",
           "additionalData": ""
         },
         {
@@ -124,30 +124,30 @@ request(options, function(error, response, body) {
         }
       ],
       "invoiceName": "Invoice",
-      "marking": "marking test",
-      "yourOrderNumber": "12345test test",
-      "notes": "invoice notes test test test",
+      "marking": "marking",
+      "yourOrderNumber": "12345",
+      "notes": "invoice notes",
       "taxPercent": 12,
       "invoiceStatus": 2,
       "invoiceDate": "2020-11-04T23:00:00.000Z",
-      "createdByUser": "51714655fbb708f379000003",
-      "createdByUserName": "Lucas Hellström",
-      "customer": "5cc05b6a4e595e684effc134",
-      "customerName": "Hellapps AB",
+      "createdByUser": "51714655fbb708f37966632571",
+      "createdByUserName": "Anna Andersson",
+      "customer": "5cc05b6a4e595e68466411b",
+      "customerName": "Company AB",
       "dueDate": "2020-12-04T23:00:00.000Z",
       "language": "EN",
-      "project": "5b20cce1d59a902e28000079",
+      "project": "5b20cce1d59a902e28489125b",
       "projectName": "Blåsippan",
-      "contactPerson": "5af95e6b1e56d1623800027d",
-      "contactPersonName": "Bj�rn Romansoff",
-      "ourReference": "518ff209d5af991b1c000003",
-      "ourReferenceName": "Felix Hellström",
-      "workOrder": "5fa2b550c289ea64821ea37b",
+      "contactPerson": "5af95e6b1e557892234",
+      "contactPersonName": "Anna Andersson",
+      "ourReference": "518ff209d5a658451412",
+      "ourReferenceName": "Anna Andersson",
+      "workOrder": "5fa2b550c289ea96544921",
       "workOrderNumber": "4843",
       "invoiceType": 1,
-      "resultUnit": "5784ff52fc71ce243d00004b",
+      "resultUnit": "5784ff52fc71ce243b889d22482",
       "resultUnitName": "Kontor Nord",
-      "priceList": "57bc187159a73f312300009e",
+      "priceList": "57bc187159a73f31230b5186472d25",
       "priceListName": "Kundlista Inkl moms",
       "multipleTaxesOnRows": true,
       "currencyCode": "SEK",
@@ -165,8 +165,8 @@ request(options, function(error, response, body) {
       "creditInvoice": null,
       "creditInvoiceNumber": "",
       "currencyRate": 1,
-      "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-      "customerEmail": "tommy@nummer7.se",
+      "customerAddress": "Östra Gatan 129<br>123 45 Stockholm",
+      "customerEmail": "email@company.com",
       "customerNumber": "3028",
       "customerOrgNo": "",
       "customerVAT": "",
@@ -174,7 +174,7 @@ request(options, function(error, response, body) {
       "discountInPercent": 0,
       "exportedToEconomy": false,
       "footerInfoText": null,
-      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
+      "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\"></span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
       "headerText": null,
       "houseDeductionAmount": 0,
       "houseDeductionBasisAmount": 0,
@@ -227,7 +227,7 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 ## Get a specific Invoice
 
 ```shell
-curl "https://app.seventime.se/api/2/invoices/5fab29b038bd334ab540ab53" \
+curl "https://app.seventime.se/api/2/invoices/5fab29b038b7789542665" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -235,7 +235,7 @@ curl "https://app.seventime.se/api/2/invoices/5fab29b038bd334ab540ab53" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/invoices/5fae99b072aa334cb539ab73";
+let url = "https://app.seventime.se/api/2/invoices/5fab29b038b7789542665";
 let options = {
   url: url,
   headers: {
@@ -262,23 +262,23 @@ request(options, function(error, response, body) {
   "data": {
     "deliveryAddress": {
       "name": "Kontoret",
-      "address": "Glimmingevägen 18",
-      "address2": "Testvägen 123",
+      "address": "Östra Gatan 129",
+      "address2": "Västra Gatan 921",
       "zipCode": "12345",
-      "city": "Västra Karup",
+      "city": "Stockholm",
       "country": "SE",
       "phone": "12345-6798"
     },
     "houseProperties": {
       "typeOfProperty": 1,
-      "propertyDescription": "property description test test",
+      "propertyDescription": "property description",
       "housingSocietyNumber": "",
       "apartmentNumber": "",
       "maxDeductionAmount": 100000,
       "personalNumber": "",
       "deductionDistribution": [
         {
-          "_id": "5fae99b072aa334cb539ab7d",
+          "_id": "5fae99b072aa3548648942372",
           "userName": "testUser",
           "personalNumber": "12345",
           "distributionPercent": 40
@@ -294,23 +294,23 @@ request(options, function(error, response, body) {
     "machineTimeLogIds": [],
     "supplierInvoiceIds": [],
     "workOrderIds": [
-      "5fa2b550c289ea64821ea37b"
+      "5fa2b550c289ea55486219"
     ],
     "externalSystemExport": [],
     "tags": [
-      "5f742440d608b2201c3e7bab",
-      "5f74243ad608b2201c3e7ba9"
+      "5f742440d608b22078942bd66",
+      "5f74243ad608b25489256488b"
     ],
-    "_id": "5fae99b072aa334cb539ab73",
+    "_id": "5fae99b072aa334cb5a5979425d",
     "createDate": "2020-11-13T14:35:28.797Z",
     "invoiceItems": [
       {
         "createDate": "2020-11-13T14:35:28.795Z",
-        "_id": "5fae99b072aa334cb539ab7b",
+        "_id": "5fae99b072aa334cb5399723547b",
         "houseWorkTypeOfWork": 1,
         "name": "**Skivhantel i Gummi 10 Kg****",
         "description": "Skivhantel av järn",
-        "expenseItem": "5de78ae9bb13565916362606",
+        "expenseItem": "5de78ae9bb1356594897615",
         "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
         "itemType": "expense",
         "numberOfItems": 1,
@@ -335,11 +335,11 @@ request(options, function(error, response, body) {
     "invoiceLogEntries": [
       {
         "logDate": "2020-11-13T14:35:28.797Z",
-        "_id": "5fae99b072aa334cb539ab7e",
+        "_id": "5fae99b072aa334c64897216",
         "logType": 1,
         "description": "",
-        "user": "51714655fbb708f379000003",
-        "userName": "Lucas Hellström",
+        "user": "51714655fbb708f3647823159",
+        "userName": "Anna Andersson",
         "additionalData": ""
       },
       {
@@ -351,8 +351,8 @@ request(options, function(error, response, body) {
     "supplementOrders": [],
     "customFields": [
       {
-        "_id": "5fb5217e4ea82f3df5febbcf",
-        "fieldId": "5f67af2796bce73d3a61ff39",
+        "_id": "5fb5217e4ea82f6477123584dd",
+        "fieldId": "5f67af2796bce97845216892",
         "value": {
           "distributorId": null,
           "distributorName": ""
@@ -360,30 +360,30 @@ request(options, function(error, response, body) {
       }
     ],
     "invoiceName": "Invoice",
-    "marking": "marking test",
-    "yourOrderNumber": "12345test test",
-    "notes": "invoice notes test test test",
+    "marking": "marking",
+    "yourOrderNumber": "12345",
+    "notes": "invoice notes",
     "taxPercent": 12,
     "invoiceStatus": 2,
     "invoiceDate": "2020-11-04T23:00:00.000Z",
-    "createdByUser": "51714655fbb708f379000003",
-    "createdByUserName": "Lucas Hellström",
-    "customer": "5cc05b6a4e595e684effc134",
-    "customerName": "Hellapps AB",
+    "createdByUser": "51714655fbb708f3754578228",
+    "createdByUserName": "Anna Andersson",
+    "customer": "5cc05b6a4e595e6854976137451b",
+    "customerName": "Company AB",
     "dueDate": "2020-12-04T23:00:00.000Z",
     "language": "EN",
-    "project": "5b20cce1d59a902e28000079",
+    "project": "5b20cce1d59a979134679582",
     "projectName": "Blåsippan",
-    "contactPerson": "5af95e6b1e56d1623800027d",
-    "contactPersonName": "Bj�rn Romansoff",
-    "ourReference": "518ff209d5af991b1c000003",
-    "ourReferenceName": "Felix Hellström",
-    "workOrder": "5fa2b550c289ea64821ea37b",
+    "contactPerson": "5af95e6b1e56d12235489761954",
+    "contactPersonName": "Anna Andersson",
+    "ourReference": "518ff209d5af91647923578",
+    "ourReferenceName": "Anna Andersson",
+    "workOrder": "5fa2b550c289ea64845842b",
     "workOrderNumber": "4843",
     "invoiceType": 1,
-    "resultUnit": "5784ff52fc71ce243d00004b",
+    "resultUnit": "5784ff52fc71ce243d1354892",
     "resultUnitName": "Kontor Nord",
-    "priceList": "57bc187159a73f312300009e",
+    "priceList": "57bc187159a73f3164915be",
     "priceListName": "Kundlista Inkl moms",
     "multipleTaxesOnRows": true,
     "currencyCode": "SEK",
@@ -401,8 +401,8 @@ request(options, function(error, response, body) {
     "creditInvoice": null,
     "creditInvoiceNumber": "",
     "currencyRate": 1,
-    "customerAddress": "Glimmingevägen 18<br>26974 Västra Karup",
-    "customerEmail": "tommy@nummer7.se",
+    "customerAddress": "Östra Gatan 129<br>123 45 Stockholm",
+    "customerEmail": "email@company.com",
     "customerNumber": "3028",
     "customerOrgNo": "",
     "customerVAT": "",
@@ -410,7 +410,7 @@ request(options, function(error, response, body) {
     "discountInPercent": 0,
     "exportedToEconomy": false,
     "footerInfoText": null,
-    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\">Test</span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
+    "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'><div><div><span style=\"font-size: 11px;\"></span></div></div></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Efter förfallodagen debiteras dröjsmålsränta: 13.0%</span></div><div><br></div></td><td style='vertical-align: top;'><span style=\"font-size: 11px;\">Äganderättsförbehåll tills full likvid erlagts</span><span style=\"font-size: 11px;\">.</span><br></td><td style='vertical-align: top;'><div><span style=\"font-size: 11px;\">Godkänd för F-skatt</span></div><div><br></div></td></tr></table>",
     "headerText": null,
     "houseDeductionAmount": 0,
     "houseDeductionBasisAmount": 0,
@@ -482,7 +482,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5f742440d608b2201c3e7bab",
+      "_id": "5f742440d608b22448b22791",
       "tagName": "Att granska",
       "color": "f44336"
     },
@@ -510,17 +510,17 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 
 ## Create an Invoice
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/invoices/" \
+curl -X POST "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"invoiceStatus":"2","customer":"571f21058d7f618a2d037165","createdByUser":"51718241fdb708f37959127","language":"EN"}' 
+  -d '{"invoiceStatus":"2","customer":"571f21058d7f612467981357165","createdByUser":"51718241fdb7084835249227","language":"EN"}' 
 ```
 
 ```javascript
 let jsonData = {
   invoiceStatus: 'Support',
-  customer: '571f21058d7f618a2d037165',
-  createdByUser: '51718241fdb708f37959127',
+  customer: '571f21058d7f612467981357165',
+  createdByUser: '51718241fdb7084835249227',
   language: 'EN'
 };
 
@@ -557,17 +557,17 @@ request.post(options, function (error, response, body) {
   "workOrderIds": [],
   "externalSystemExport": [],
   "tags": [],
-  "_id": "5fb64449b0cc9510a561dfdf",
+  "_id": "5fb64449b0cc951024822167",
   "createDate": "2020-11-19T10:09:13.039Z",
   "invoiceItems": [],
   "documents": [],
   "invoiceLogEntries":
    [ 
-    { "_id": "5fb64449b0cc9510a561dfe0",
+    { "_id": "5fb64449b0cc95679815",
        "logType": 1,
        "description": "",
-       "user": "5f48eb3e65d7ee4942c4602",
-       "userName": "Lucas Hellström",
+       "user": "5f48eb3e65d7479134682",
+       "userName": "Anna Andersson",
        "additionalData": "",
        "logDate": "2020-11-19T10:09:13.039Z" },
      { 
@@ -578,7 +578,6 @@ request.post(options, function (error, response, body) {
   "checkLists": [],
   "supplementOrders": [],
   "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
   "invoiceName": "Invoice",
   "marking": "",
   "yourOrderNumber": "",
@@ -586,10 +585,10 @@ request.post(options, function (error, response, body) {
   "taxPercent": 25,
   "invoiceStatus": 2,
   "invoiceDate": "2020-11-19T10:09:13.033Z",
-  "createdByUser": "5f48eb3e65d7ee4942c4602",
-  "createdByUserName": "Lucas Hellström",
-  "customer": "571f21058d7f618a2d037165",
-  "customerName": "SevenTime",
+  "createdByUser": "51718241fdb7084835249227",
+  "createdByUserName": "Anna Andersson",
+  "customer": "571f21058d7f612467981357165",
+  "customerName": "Company",
   "dueDate": "2020-12-09T22":59":59.999Z",
   "language": "EN",
   "invoiceType": 0,
@@ -602,7 +601,7 @@ request.post(options, function (error, response, body) {
   "invoiceNumber": "24511",
   "OCRNumber": "2451177",
 }
-"Invoice created: _id: 5fb64449b0cc9510a561dfdf"
+"Invoice created: _id: 5fb64449b0cc951024822167"
 ```
 
 This endpoint creates an invoice
@@ -740,18 +739,18 @@ Code |  Invoice type | Description
 ## Update an Invoice
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/invoices/" \
+curl -X PUT "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb64449b0cc9510a561dfdf","customer":"571f21058d7f618a2d037165","modifiedByUser":"51718241fdb708f37959127","language":"EN"}' 
+  -d '{"_id":"5fb64449b0cc951024822167","customer":"571f21058d7f616498213765","modifiedByUser":"51718241fdb7894158127","language":"EN"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb64449b0cc9510a561dfdf',
-  modifiedByUser: '51718241fdb708f37959127',
+  _id: '5fb64449b0cc951024822167',
+  modifiedByUser: '51718241fdb7894158127',
   invoiceName: 'Invoice 2020-12',
-  customer: '571f21058d7f618a2d037165',
+  customer: '571f21058d7f616498213765',
   multipleTaxesOnRows: 'true',
   taxPercent: 25,
   invoiceItems: [{...}, ...]
@@ -790,7 +789,7 @@ request.put(options, function (error, response, body) {
   "workOrderIds": [],
   "externalSystemExport": [],
   "tags": [],
-  "_id": "5fb64449b0cc9510a561dfdf",
+  "_id": "5fb64449b0cc951024822167",
   "createDate": "2020-11-19T10:09:13.039Z",
   "invoiceItems": [{...}, ...],
   "documents": [],
@@ -799,8 +798,8 @@ request.put(options, function (error, response, body) {
     { "_id": "5fb64449b0cc9510a561dfe0",
        "logType": 1,
        "description": "",
-       "user": "5f48eb3e65d7ee4942c4602",
-       "userName": "Lucas Hellström",
+       "user": "5f48eb3e65d7e976825602",
+       "userName": "Anna Andersson",
        "additionalData": "",
        "logDate": "2020-11-19T10:09:13.039Z" },
      { 
@@ -811,7 +810,6 @@ request.put(options, function (error, response, body) {
   "checkLists": [],
   "supplementOrders": [],
   "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
   "invoiceName": "Invoice 2020-12",
   "marking": "",
   "yourOrderNumber": "",
@@ -819,10 +817,10 @@ request.put(options, function (error, response, body) {
   "taxPercent": 25,
   "invoiceStatus": 2,
   "invoiceDate": "2020-11-19T10:09:13.033Z",
-  "createdByUser": "5f48eb3e65d7ee4942c4602"
-  "createdByUserName": "Lucas Hellström",
-  "customer": "571f21058d7f618a2d037165",
-  "customerName": "HellApps AB",
+  "createdByUser": "5f48eb3e65d7ee494b523978"
+  "createdByUserName": "Anna Andersson",
+  "customer": "571f21058d7f618a264217895",
+  "customerName": "Company AB",
   "dueDate": "2020-12-09T22":59":59.999Z",
   "language": "EN",
   "invoiceType": 0,
@@ -860,16 +858,16 @@ invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'S
 ## Delete an Invoice
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/invoices/" \
+curl -X DELETE "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb64449b0cc9510a561dfdf","deletedByUser":"51718241fdb708f37959127"}' 
+  -d '{"_id":"5fb64449b0cc951024822167","deletedByUser":"5f48eb3e65d7ee494b523978"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb64449b0cc9510a561dfdf',
-  deletedByUser: '51718241fdb708f37959127'
+  _id: '5fb64449b0cc951024822167',
+  deletedByUser: '5f48eb3e65d7ee494b523978'
 };
 
 let options = {
@@ -897,7 +895,7 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fb64449b0cc9510a561dfdf",
+  "_id": "5fb64449b0cc951024822167",
   "invoiceName": "Invoice",
   "invoiceNumber": "24511",
 }

@@ -42,9 +42,9 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "58c1504a658fb5911d018f5f",
+      "_id": "58c1504a658fb5911d6489528",
       "name": "Grosslistan",
-      "isActive": true,
+      "isActive": true
     },
     {
       // ...
@@ -70,7 +70,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get a specific Price List
 
 ```shell
-curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
+curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d6489528" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -78,7 +78,7 @@ curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d018f5f";
+let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d6489528";
 let options = {
   url: url,
   headers: {
@@ -103,10 +103,9 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "57bc187159a73f312300009d",
+    "_id": "58c1504a658fb5911d6489528",
     "isActive": true,
-    "systemAccount": "5112826056d961c030000001",
-    "name": "ÅF-prislista",
+    "name": "ÅF-prislista"
   }
 }
 ```

@@ -43,18 +43,18 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5fb7bcd0ab7bb01d4d798762",
-      "name": "Tommy",
+      "_id": "5fb7bcd0ab7bb01d4d54832",
+      "name": "Anna",
       "title": "Utvecklare",
       "workPhone": "",
       "cellPhone": "",
-      "email": "support@seventime.se",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Tommy Hellström",
+      "email": "email@company.com",
+      "customer": "5bb26376c4nj551167",
+      "customerName": "Anna Andersson",
       "mainContact": true,
       "isActive": true,
       "createdDate": "2020-11-17T12:06:24.281Z",
-      "modifiedDate": "2020-11-17T12:06:24.281Z",
+      "modifiedDate": "2020-11-17T12:06:24.281Z"
     },
     {
       // ...
@@ -72,7 +72,7 @@ This endpoint retrieves contact persons.
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c42fb99275000080`
+E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c4nj551167`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -116,20 +116,19 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5fb7bcd0ab7bb01d4d798762",
-    "name": "Tommy",
+    "_id": "5fb7bcd0ab7bb01d4d54832",
+    "name": "Anna",
     "title": "Utvecklare",
     "workPhone": "",
     "cellPhone": "",
-    "email": "support@seventime.se",
-    "customer": "5bb2775da1640a751f000082",
-    "customerName": "Tommy Hellström",
+    "email": "email@company.com",
+    "customer": "5bb26376c4nj551167",
+    "customerName": "Anna Andersson",
     "mainContact": true,
     "isActive": true,
     "createdDate": "2020-11-17T12:06:24.281Z",
     "modifiedDate": "2020-11-17T12:06:24.281Z",
-    "systemAccount": "5112826056d961c030000001",
-  },
+  }
 }
 ```
 

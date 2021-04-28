@@ -35,12 +35,13 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": [
-    { "_id": "572cc7advab059714hcfca51",
+    { "_id": "572cc7advab059725982b",
       "selectFieldData": [],
       "fieldType": 100,
       "fieldName": "Kund",
       "include": true,
-      "required": false },
+      "required": false
+    },
     {
       // ...
     }

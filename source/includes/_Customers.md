@@ -43,16 +43,16 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "571f61330c7f498a2d0001a4",
+      "_id": "571f61330c7f498a2d5812",
       "customerNumber": "733352",
-      "vatNumber": "SE556596075301",
-      "organizationNumber": "556596-0753",
-      "email": "support@seventime.se",
-      "phone": "0431-360050",
-      "city": "Västra Karup",
-      "zipCode": "269 74",
-      "address": "Glimmingevägen 18",
-      "name": "Tommy Hellström",
+      "vatNumber": "SE555708197354",
+      "organizationNumber": "555555-5555",
+      "email": "email@company.com",
+      "phone": "1234-123456",
+      "city": "Stockholm",
+      "zipCode": "123 45",
+      "address": "Östra Gatan 129",
+      "name": "Anna Andersson",
       "documents": [],
       "billingSettings": {
         "useSeparateBillingAddress": false,
@@ -75,10 +75,10 @@ request(options, function(error, response, body) {
         "deductionDistribution": [
           {
             "itemId": "0.40862768612862976",
-            "userName": "Tommy Hellström",
+            "userName": "Anna Andersson",
             "personalNumber": "555555-5555",
             "distributionPercent": 100,
-            "_id": "5bb2683d3a0fdb697e000080"
+            "_id": "5bb2683d3a0f154899"
           }
         ],
         "expenseDiscount": 0,
@@ -89,7 +89,6 @@ request(options, function(error, response, body) {
       },
       "modifiedDate": "2018-10-01T18:12:06.025Z",
       "createdDate": "2018-10-01T18:12:06.025Z",
-
       "address2": "",
       "country": "",
       "billingMethod": "",
@@ -128,7 +127,7 @@ sortDirection       |  | "ascending" or "descending". If specified and sortBy is
 ## Get a specific Customer
 
 ```shell
-curl "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4" \
+curl "https://app.seventime.se/api/2/customers/571f61330c7f4124592b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -136,7 +135,7 @@ curl "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/customers/571f61330c7f498a2d0001a4";
+let url = "https://app.seventime.se/api/2/customers/571f61330c7f4124592b";
 let options = {
   url: url,
   headers: {
@@ -161,16 +160,16 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "571f61330c7f498a2d0001a4",
+    "_id": "571f61330c7f498a364892",
     "customerNumber": "733352",
-    "vatNumber": "SE556596075301",
-    "organizationNumber": "556596-0753",
-    "email": "support@seventime.se",
-    "phone": "0431-360050",
-    "city": "Västra Karup",
-    "zipCode": "269 74",
-    "address": "Glimmingevägen 18",
-    "name": "Tommy Hellström",
+    "vatNumber": "SE555702476792",
+    "organizationNumber": "555555-5555",
+    "email": "email@company.com",
+    "phone": "1234-123456",
+    "city": "Stockholm",
+    "zipCode": "123 45",
+    "address": "Östra Gatan 129",
+    "name": "Anna Andersson",
     "documents": [],
     "billingSettings": {
       "useSeparateBillingAddress": false,
@@ -193,10 +192,10 @@ request(options, function(error, response, body) {
       "deductionDistribution": [
         {
           "itemId": "0.40862768612862976",
-          "userName": "Tommy Hellström",
+          "userName": "Anna Andersson",
           "personalNumber": "555555-5555",
           "distributionPercent": 100,
-          "_id": "5bb2683d3a0fdb697e000080"
+          "_id": "5bb2683d3a0fdb85133"
         }
       ],
       "expenseDiscount": 0,
@@ -235,21 +234,21 @@ _id | The _id of the customer to retrieve
 
 ## Create a Customer
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/customers/" \
+Curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","name":"Tommy Hellström","address":"Glimmingevägen 18","zipCode":"269 74","city":Västra Karup","phone":0431-360050","email":"support@seventime.se","organizationNumber":"555555-5555"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":Stockholm","phone":1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  name: 'Tommy Hellström',
-  address: 'Glimmingevägen 18',
-  zipCode: '269 74',
-  city: 'Västra Karup',
-  phone: '0431-360050',
-  email: 'support@seventime.se',
+  createdByUser: '5f48eb3e65d7ee8984354b',
+  name: 'Anna Andersson',
+  address: 'Östra Gatan 129',
+  zipCode: '123 45',
+  city: 'Stockholm',
+  phone: '1234-123456',
+  email: 'email@company.com',
   organizationNumber: '555555-5555'
 };
 
@@ -277,15 +276,15 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "571f61330c7f498a2d0001a4",
+  "_id": "571f61330c7f498a4712448b",
   "customerNumber": "733352",
   "organizationNumber": "555555-5555",
-  "email": "support@seventime.se",
-  "phone": "0431-360050",
-  "city": "Västra Karup",
-  "zipCode": "269 74",
-  "address": "Glimmingevägen 18",
-  "name": "Tommy Hellström",
+  "email": "email@company.com",
+  "phone": "1234-123456",
+  "city": "Stockholm",
+  "zipCode": "123 45",
+  "address": "Östra Gatan 129",
+  "name": "Anna Andersson",
   "documents": [],
   "billingSettings": {
     "deductionDistribution": []
@@ -370,17 +369,17 @@ distributionPercent   | Number | Yes | 1-100
 ## Update a Customer
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/customers/" \
+curl -X PUT "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"571f61330c7f498a2d0001a4","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","name":"Seven Time AB","customerNumber":"733352"}' 
+  -d '{"_id":"571f61330c7f498a4712448b","modifiedByUser":"5f48eb3e65d7ee49649eeb","name":"Company AB","customerNumber":"733352"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '571f61330c7f498a2d0001a4',
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
-  name: 'Seven Time AB',
+  _id: '571f61330c7f498a4712448b',
+  modifiedByUser: '5f48eb3e65d7ee49649eeb',
+  name: 'Company AB',
   customerNumber: '733352'
 };
 
@@ -410,15 +409,15 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "571f61330c7f498a2d0001a4",
+  "_id": "571f61330c7f498a4712448b",
   "customerNumber": "733352",
   "organizationNumber": "555555-5555",
-  "email": "support@seventime.se",
-  "phone": "0431-360050",
-  "city": "Västra Karup",
-  "zipCode": "269 74",
-  "address": "Glimmingevägen 18",
-  "name": "Seven Time AB",
+  "email": "email@company.com",
+  "phone": "1234-123456",
+  "city": "Stockholm",
+  "zipCode": "123 45",
+  "address": "Östra Gatan 129",
+  "name": "Company AB",
   "documents": [],
   "billingSettings": {
     "deductionDistribution": []
@@ -427,10 +426,10 @@ request.put(options, function (error, response, body) {
   "createdDate": "2018-10-01T18:12:06.025Z",
   "isActive": true  
 }
-"Customer updated: Seven Time AB, _id: 571f61330c7f498a2d0001a4"
+"Customer updated: Company AB, _id: 571f61330c7f498a4712448b"
 ```
 
-This endpoint updates a specific customer.
+This endpoint updates a customer.
 
 ### HTTP Request
 
@@ -449,16 +448,16 @@ modifiedByUser      | String | Yes | Id of the user who updated the customer
 ## Delete a Customer
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/customers/" \
+curl -X DELETE "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"571f61330c7f498a2d0001a4","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
+  -d '{"_id":"571f61330c7f498a4712448b","deletedByUser":"5f48eb3e65d7ee4942c446872"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '571f61330c7f498a2d0001a4',
-  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
+  _id: '571f61330c7f498a4712448b',
+  deletedByUser: '5f48eb3e65d7ee4942c446872'
 };
 
 let options = {
@@ -487,11 +486,11 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "571f61330c7f498a2d0001a4",
+  "_id": "571f61330c7f498a4712448b",
   "customerNumber": "733352",
-  "name": "Seven Time AB",
+  "name": "Company AB",
 }
-"Customer deleted: Seven Time AB, _id: 571f61330c7f498a2d0001a4"
+"Customer deleted: Company AB, _id: 571f61330c7f498a4712448b"
 ```
 
 This endpoint deletes a specific customer.

@@ -41,15 +41,15 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5bae34dca878bd790d02065d",
+      "_id": "5bae34dca878bd790d0498751",
       "workOrderNumber": 2901,
-      "createdByUserName": "Tommy Hellström",
-      "createdByUser": "59312765ad961c0318eb0a2",
-      "statusRef": "587f3157c73c0f6d9cea944f",
+      "createdByUserName": "Anna Andersson",
+      "createdByUser": "59312765ad961c0311358974",
+      "statusRef": "587f3157c73c0f6d9c568741",
       "status": 100,
       "customerNumber": "511",
-      "customerName": "Abax Dörrsystem AB",
-      "customer": "571f61330c7f498a2d0001a4",
+      "customerName": "Kund #1",
+      "customer": "571f61330c7f498a269751242",
       "estimatedTime": 0,
       "endDate": "2017-10-12T16:00:00.000Z",
       "startDate": "2017-10-10T07:00:00.000Z",
@@ -78,7 +78,7 @@ request(options, function(error, response, body) {
       "partTimeResources": [],
       "machines": [],
       "users": [],
-      "createDate": "2018-09-28T13:17:16.785Z",
+      "createDate": "2018-09-28T13:17:16.785Z"
     },
     {
       // ...
@@ -113,7 +113,7 @@ sortDirection   |  | "ascending" or "descending". If specified and sortBy is spe
 ## Get a specific Work order
 
 ```shell
-curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
+curl "https://app.seventime.se/api/2/workOrders/5bae34dca878b5497748" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -121,7 +121,7 @@ curl "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878bd790d02065g";
+let url = "https://app.seventime.se/api/2/workOrders/5bae34dca878b5497748";
 let options = {
   url: url,
   headers: {
@@ -157,16 +157,15 @@ request(options, function(error, response, body) {
     },
     "locationCoordinates": [],
     "tags": [],
-    "_id": "5bae34dca878bd790d02065g",
+    "_id": "5bae34dca878b5497748",
     "workOrderNumber": 2901,
-    "createdByUserName": "Tommy Hellström",
-    "createdByUser": "59312765ad961c0318eb0a2",
-    "systemAccount": "5112826056d961c030000001",
-    "statusRef": "587f3157c73c0f6d9cea944f",
+    "createdByUserName": "Anna Andersson",
+    "createdByUser": "59312765ad961c0365978421",
+    "statusRef": "587f3157c73c0f6d9125897451",
     "status": 100,
     "customerNumber": "511",
-    "customerName": "Abax Dörrsystem AB",
-    "customer": "571f61330c7f498a2d0001a4",
+    "customerName": "Kund #1",
+    "customer": "571f61330c7f498a216975841",
     "estimatedTime": 0,
     "endDate": "2017-10-12T16:00:00.000Z",
     "startDate": "2017-10-10T07:00:00.000Z",
@@ -241,7 +240,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "58263d936a17605a25020043",
+      "_id": "58263d936a17605a25689741",
       "isActive": true,
       "workOrderTypeName": "Extra",
       "color": "f44336"
@@ -305,7 +304,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5df3a401f0690d1dbb3ec7bd",
+      "_id": "5df3a401f0690d1db659741",
       "tagName": "1",
       "color": "FAFAFA"
     },
@@ -368,7 +367,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "582f7cabd16fdbe335041055",
+      "_id": "582f7cabd16fdb974185235",
       "statusName": "Ej planerad",
       "color": "FF5722",
       "inProgressStatus": false,
@@ -397,17 +396,17 @@ No parameters
 
 ## Create a Work order
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/workOrders/" \
+curl -X POST "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"title":"Support","customer":"571f61330c7f498a2d0001a4","createdByUser":"5912626016d971c030916402"}' 
+  -d '{"title":"Support","customer":"571f61330c7f49451685","createdByUser":"5912626016d971c03069712"}' 
 ```
 
 ```javascript
 let jsonData = {
   title: 'Support',
-  customer: '571f61330c7f498a2d0001a4',
-  createdByUser: '5912626016d971c030916402'
+  customer: '571f61330c7f49451685',
+  createdByUser: '5912626016d971c03069712'
 };
 
 let options = {
@@ -439,7 +438,7 @@ request.post(options, function (error, response, body) {
     "description": "",   
     "locationCoordinates": [],
     "tags": [],
-    "_id": "5fb8517e1bcaad1cd2cd3f9c",
+    "_id": "5fb8517e1bcaad1cd6987451",
     "createDate": "2020-11-16T10:15:42.216Z",
     "users": [],
     "machines": [],
@@ -457,17 +456,13 @@ request.post(options, function (error, response, body) {
     "estimatedTime": 0, 
     "marking": "",
     "yourOrderNumber": "",
-    "customerName": "Testbolaget ABC",
-    "customer": "571f61330c7f498a2d0001a4",
+    "customerName": "Company AB",
+    "customer": "571f61330c7f498a64978511",
     "color": "FF5722",
     "status": 500,
     "statusRef": "587f7dadd10fbbe338000055",
-    "createdByUser":
-    { 
-    "_id": "5912626016d971c030916402"
-    // ...
-    },
-    "createdByUserName": "Lucas Hellström",
+    "createdByUser": "5912626016d971c03069712",
+    "createdByUserName": "Anna Andersson",
 }
 ```
 
@@ -578,16 +573,16 @@ phone                       | String  | No  | Used if useSeparateBillingAddress 
 
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
+curl -X PUT "https://app.seventime.se/api/2/workOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb8517e1bcaad1cd2cd3f9c","modifiedByUser":"5f48eb3e65d7ee4942c4602","title":"Construction work"}' 
+  -d '{"_id":"5fb8517e1bcaad1cd69875412","modifiedByUser":"5f48eb3e65d7e987513654","title":"Construction work"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb8517e1bcaad1cd2cd3f9c',
-  modifiedByUser: '5f48eb3e65d7ee4942c4602',
+  _id: '5fb8517e1bcaad1cd69875412',
+  modifiedByUser: '5f48eb3e65d7e987513654',
   title: 'Construction work'
 };
 
@@ -635,7 +630,7 @@ request.put(options, function (error, response, body) {
   "budgetCalculation": { "invoiceItems": [] },
   "locationCoordinates": [],
   "tags": [],
-  "_id": "5fb8517e1bcaad1cd2cd3f9c",
+  "_id": "5fb8517e1bcaad1cd26497821",
   "createDate": "2020-12-14T14:39:40.951Z",
   "users": [],
   "machines": [],
@@ -644,7 +639,7 @@ request.put(options, function (error, response, body) {
   "documents": [],
   "checkLists": [],
   "reminders":
-   [ { "_id": "5321507b60913275921",
+   [ { "_id": "5321507b60913236597511",
        "reminderTimeType": 4,
        "reminderTimeValue": 10,
        "reminderType": 1,
@@ -660,13 +655,13 @@ request.put(options, function (error, response, body) {
   "description": "",
   "marking": "",
   "yourOrderNumber": "",
-  "customerName": "Hellapps",
-  "customer": "571f61330c7f498a2d0001a4",
+  "customerName": "Company",
+  "customer": "571f61330c7f498a2d987841",
   "color": "FAFAFA",
   "status": 100,
-  "statusRef": "582f7cabd16fdbe335041055",
-  "createdByUser": "5f48eb3e65d7ee4942c4602",
-  "createdByUserName": "Lucas Hellström",
+  "statusRef": "582f7cabd16fdbe985147",
+  "createdByUser": "5f48eb3e65d7ee987854125",
+  "createdByUserName": "Anna Andersson",
   "workOrderNumber": 4942,
   "completedByUser": null,
   "completedByUserName": "",
@@ -674,11 +669,11 @@ request.put(options, function (error, response, body) {
   "inProgressByUser": null,
   "inProgressByUserName": "",
   "inProgressDate": null,
-  "modifiedByUser": "5f48eb3e65d7ee4942c4602",
-  "modifiedByUserName": "Lucas Hellström",
+  "modifiedByUser": "5f48eb3e65d7e987513587",
+  "modifiedByUserName": "Anna Andersson",
   "modifiedDate": "2020-12-14T14:43:29.158Z" 
 }
-"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+"Work Order updated: Construction work, _id: 5fb8517e1bcaad1cd26497821"
 ```
 
 This endpoint updates a work order.
@@ -698,16 +693,16 @@ modifiedByUser    | String | Yes | Id of the user who updated the work order
 <!---
 ## Delete a Work order
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
+curl -X DELETE "https://app.seventime.se/api/2/workOrders" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"id":"5fb8517e1bcaad1cd2cd3f9c","deletedByUser":"5f48eb3e65d7ee4942c4602"}' 
+  -d '{"id":"5fb8517e1bcaad1cd26497821","deletedByUser":"5f48eb3e65d7ee45497521"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb8517e1bcaad1cd2cd3f9c',
-  deletedByUser: '5f48eb3e65d7ee4942c4602'
+  _id: '5fb8517e1bcaad1cd26497821',
+  deletedByUser: '5f48eb3e65d7ee45497521'
 };
 
 let options = {
@@ -735,11 +730,11 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fb8517e1bcaad1cd2cd3f9c",
+  "_id": "5fb8517e1bcaad1cd26497821",
   "title": "Construction work",
   "workOrderNumber": 4942,
 }
-"Work Order updated: Construction work, _id: 5fd7792cd6ec6e1f57bb8d8e"
+"Work Order updated: Construction work, _id: 5fb8517e1bcaad1cd26497821"
 ```
 
 This endpoint deletes a work order.

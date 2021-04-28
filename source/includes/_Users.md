@@ -41,13 +41,13 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f48eb3e65d7ee4942c4602",
-      "firstName": "Tommy",
-      "lastName": "Hellström",
-      "email": "tommy@nummer7.se",
+      "_id": "5f48eb3e65d7ee49469874512",
+      "firstName": "Anna",
+      "lastName": "Andersson",
+      "email": "email@company.com",
       "personalNumber": "",
       "employeeNumber": "",
-      "userName": "20200828",
+      "userName": "Anna",
       "workPhone": "",
       "cellPhone": "",
       "createdDate": "2020-08-28T11:32:14.452Z",
@@ -72,7 +72,7 @@ This endpoint retrieves users.
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/2/users/?name=Tommy Hellström`
+E.g. `https://app.seventime.se/api/2/users/?name=Anna Andersson`
 
 Parameter | Default | Description
 --------- | ------- | -----------
@@ -91,7 +91,7 @@ sortDirection     |  | "ascending" or "descending". If specified and sortBy is s
 ## Get a specific User
 
 ```shell
-curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
+curl "https://app.seventime.se/api/2/users/5f48eb3e65d7ee49469874512" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -99,7 +99,7 @@ curl "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/users/59312765ad961c0318eb0a2";
+let url = "https://app.seventime.se/api/2/users/5f48eb3e65d7ee49469874512";
 let options = {
   url: url,
   headers: {
@@ -125,14 +125,14 @@ request(options, function(error, response, body) {
 {
   "data":
   {
-    "_id": "59312765ad961c0318eb0a2",
-    "firstName": "Tommy",
-    "lastName": "Hellström",
-    "email": "tommy@nummer7.se",
+    "_id": "5f48eb3e65d7ee49469874512",
+    "firstName": "Anna",
+    "lastName": "Andersson",
+    "email": "email@company.com",
     "personalNumber": "",
     "employeeNumber": "2",
-    "userName": "tommy",
-    "workPhone": "0431-360050",
+    "userName": "Anna",
+    "workPhone": "1234-123456",
     "cellPhone": "070-4580425",
     "createdDate": "2013-02-06T16:18:40.588Z",
     "modifiedDate": "2020-11-16T10:39:01.762Z",
@@ -257,7 +257,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5834419c7a27db6932000052",
+      "_id": "5834419c7a27db69365897412",
       "name": "Övertid",
       "description": "",
       "code": "123",
@@ -329,10 +329,10 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "59f9d1c53ffd5f932a000067",
+      "_id": "59f9d1c53ffd5f93226978451",
       "skillTitle": "Höga arbeten",
       "requireEducations": [
-        "5a54ea1f7a7fe3c26200006e"
+        "5a54ea1f7a7fe3c212569874852"
       ]
     },
     {
@@ -392,7 +392,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5f442181e62efdb4a3a7d9c6d",
+      "_id": "5f442181e62efdb4a3126597412",
       "name": "Programmerare",
       "pricePerHour": 555,
     },
@@ -420,19 +420,19 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Create a User
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/users/" \
+curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","email":"tommy@nummer7.se","userName":"TommyH","userRolesId":1"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee49421258981","firstName":"Anna","lastName":"Andersson","email":"email@company.com","userName":"AnnaA","userRolesId":1"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  firstName: 'Tommy',
-  lastName: 'Hellström',
-  email: 'tommy@nummer7.se',
-  userName: 'TommyH',
+  createdByUser: '5f48eb3e65d7ee49421258981',
+  firstName: 'Anna',
+  lastName: 'Andersson',
+  email: 'email@company.com',
+  userName: 'AnnaA',
   userRoleId: 1,
 };
 
@@ -460,13 +460,13 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-  "email": "tommy@nummer7.se",
+  "_id": "5f48eb3e65d7ee49421258981",
+  "firstName": "Anna",
+  "lastName": "Andersson",
+  "email": "email@company.com",
   "personalNumber": "",
   "employeeNumber": "",
-  "userName": "TommyH",
+  "userName": "AnnaA",
   "workPhone": "",
   "cellPhone": "",
   "createdDate": "2020-11-17T14:42:31.533Z",
@@ -505,19 +505,19 @@ language           | String   | No  | Language of the user as a language code (e
 ## Update a User
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/users/" \
+curl -X PUT "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d05751946","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","firstName":"Tommy","lastName":"Hellström","userName":"TommyH"}' 
+  -d '{"_id":"5fb3e157f795553d0575597841","modifiedByUser":"5f48eb3e65d7ee4942645d21","firstName":"Anna","lastName":"Andersson","userName":"AnnaA"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb3e157f795553d05751946',
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
-  firstName: 'Tommy',
-  lastName: 'Hellström',
-  userName: 'TommyH'
+  _id: '5fb3e157f795553d0575597841',
+  modifiedByUser: '5f48eb3e65d7ee4942645d21',
+  firstName: 'Anna',
+  lastName: 'Andersson',
+  userName: 'AnnaA'
 };
 
 let options = {
@@ -545,11 +545,11 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
-  "email": "tommy@nummer7.se",
-  "userName": "TommyH",
+  "_id": "5fb3e157f795553d0575597841",
+  "firstName": "Anna",
+  "lastName": "Andersson",
+  "email": "email@company.com",
+  "userName": "AnnaA",
   "createdDate": "2020-11-17T14:42:31.533Z",
   "modifiedDate": "2020-12-11T13:25:07.332Z",
   "userRoleId": 1,
@@ -557,7 +557,7 @@ request.put(options, function (error, response, body) {
   "isActivated": false,
   "language": "SV"
 }
-"User updated: Tommy, _id: 5fb3e157f795553d05751946"
+"User updated: Anna, _id: 5fb3e157f795553d0575597841"
 ```
 
 This endpoint updates a specific user.
@@ -579,16 +579,16 @@ modifiedByUser     | String   | Yes | Id of the user who made the change
 ## Delete a User
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/users/" \
+curl -X DELETE "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d05751946","deletedByUser":"5f48eb3e65d7ee4942c46eeb"}' 
+  -d '{"_id":"5fb3e157f795553d0575597841","deletedByUser":"5f48eb3e65d7ee4942645d21"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb3e157f795553d05751946',
-  deletedByUser: '5f48eb3e65d7ee4942c46eeb'
+  _id: '5fb3e157f795553d0575597841',
+  deletedByUser: '5f48eb3e65d7ee4942645d21'
 };
 
 let options = {
@@ -616,11 +616,11 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb3e157f795553d05751946",
-  "firstName": "Tommy",
-  "lastName": "Hellström",
+  "_id": "5fb3e157f795553d0575597841",
+  "firstName": "Anna",
+  "lastName": "Andersson",
 }
-"User deleted: Tommy, _id: 5fb3e157f795553d05751946"
+"User deleted: Anna, _id: 5fb3e157f795553d0575597841"
 ```
 
 This endpoint deletes a specific user.

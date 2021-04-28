@@ -42,7 +42,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "514959f8733259db7591000c",
+      "_id": "514959f8733259db75648975215",
       "allDay": false,
       "cost": 10690.5824,
       "createDate": "2013-03-16T11:39:36.437Z",
@@ -55,8 +55,8 @@ request(options, function(error, response, body) {
       "time": 41.18577972222222,
       "timeCategory": null,
       "timestamp": "2013-03-14T18:28:26.193Z",
-      "user": "51203146506d961c030791801",
-      "userName": "Tommy Hellström",
+      "user": "51203146506d961c030798526587",
+      "userName": "Anna Andersson",
       "invoiceableTime": 41.18577972222222,
       "customFields": [],
       "isInvoiceable": true,
@@ -74,15 +74,15 @@ request(options, function(error, response, body) {
       },
       "unSocialHoursCosts": [
         {
-          "_id": "5f57385dbe6f05476e59e603",
-          "salaryType": "58cb7f24e9c363d0b0a06298a",
+          "_id": "5f57385dbe6f05476e5923541",
+          "salaryType": "58cb7f24e9c363d0b0a1258984",
           "salaryTypeName": "OB kväll",
           "costPerHour": 150,
           "time": 6
         },
         {
-          "_id": "5f57385dbe6f05476e59e816",
-          "salaryType": "58cb7f24e9c363d0b0a06298a",
+          "_id": "5f57385dbe6f054764875216",
+          "salaryType": "58cb7f24e9c363d0b689847a",
           "salaryTypeName": "OB kväll",
           "costPerHour": 150,
           "time": 10.5261325
@@ -125,7 +125,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a specific Time Log
 
 ```shell
-curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c" \
+curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db45897213548" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -133,7 +133,7 @@ curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/timeLogs/514959f8733259db7591000c";
+let url = "https://app.seventime.se/api/2/timeLogs/514959f8733259db45897213548";
 let options = {
   url: url,
   headers: {
@@ -170,7 +170,7 @@ request(options, function(error, response, body) {
     "status": 1,
     "isInvoiceable": true,
     "isInvoiced": false,
-    "_id": "514959f8733259db7591000c",
+    "_id": "514959f8733259db45897213548",
     "cost": 10690.5824,
     "createDate": "2013-03-16T11:39:36.437Z",
     "customer": null,
@@ -181,8 +181,8 @@ request(options, function(error, response, body) {
     "time": 41.18577972222222,
     "timeCategory": null,
     "timestamp": "2013-03-14T18:28:26.193Z",
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
+    "user": "51203146506d961c030248975612",
+    "userName": "Anna Andersson",
     "invoiceableTime": 41.18577972222222,
     "customFields": [],
     "machineTimePrices": [],
@@ -190,15 +190,15 @@ request(options, function(error, response, body) {
     "realTimestamp": "2020-08-27T07:52:57.685Z",
     "unSocialHoursCosts": [
       {
-        "_id": "5f57385dbe6f05476e59e603",
-        "salaryType": "58cb7f24e9c363d0b0a06298a",
+        "_id": "5f57385dbe6f05368974521",
+        "salaryType": "58cb7f24e9c363d4589761258",
         "salaryTypeName": "OB kväll",
         "costPerHour": 150,
         "time": 6
       },
       {
-        "_id": "5f57385dbe6f05476e59e816",
-        "salaryType": "58cb8f2e9c663d0e0a00005a",
+        "_id": "5f57385dbe6f054765879125",
+        "salaryType": "58cb8f2e9c663d0e68482a",
         "salaryTypeName": "OB kväll",
         "costPerHour": 150,
         "time": 10.5261325
@@ -259,7 +259,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "58cd3c4771b8a3c347041207",
+      "_id": "58cd3c4771b8a3c34658974521",
       "name": "Semester",
       "description": "",
       "isAbsenceType": true,
@@ -298,7 +298,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a specific Time Category
 
 ```shell
-curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207" \
+curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34658974521" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -306,7 +306,7 @@ curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c347041207";
+let url = "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34658974521";
 let options = {
   url: url,
   headers: {
@@ -331,7 +331,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "58cd3c4771b8a3c347041207",
+    "_id": "58cd3c4771b8a3c34658974521",
     "name": "Semester",
     "description": "",
     "isAbsenceType": true,
@@ -368,16 +368,16 @@ _id | The _id of the time category to retrieve
 ## Create a Time Log
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
+curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","timestamp":"2020-06-05 12:00","time":"5"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee4926574851","user":"51203146506d961c03036589741","timestamp":"2020-06-05 12:00","time":"5"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  user: '51203146506d961c030791801',
+  createdByUser: '5f48eb3e65d7ee4926574851',
+  user: '51203146506d961c03036589741',
   timestamp: '2020-06-05 12:00',
   time: '5'
 };
@@ -412,7 +412,7 @@ request.post(options, function (error, response, body) {
   "status": 1,
   "isInvoiceable": true,
   "isInvoiced": false,
-  "_id": "5fbcfe75ba9312280ef6523e",
+  "_id": "5fbcfe75ba9312280e2145897521",
   "timestamp": "2020-11-19T12:00:00.000Z",
   "realTimestamp": "2020-11-19T12:00:00.000Z",
   "createDate": "2020-11-24T12:37:09.258Z",
@@ -420,15 +420,14 @@ request.post(options, function (error, response, body) {
   "customFields": [],
   "machineTimePrices": [],
   "machineTimeSupplements": [],
-  "systemAccount": "5112826056d961c030000001",
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
+  "user": "51203146506d961c03036589741",
+  "userName": "Anna Andersson",
   "endTimestamp": "2020-11-19T17:00:00.000Z",
   "realEndTimestamp": "2020-11-19T17:00:00.000Z",
   "time": 5,
   "invoiceableTime": 5,
   "pricePerHour": 777,
-  "price": 777,
+  "price": 777
 }
 ```
 
@@ -461,17 +460,17 @@ isInvoiceable       | Boolean | No  | Your order number
 ## Update a Time Log
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
+curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"51203146506d961c030791801","modifiedByUser":"51718241fdb708f37959127","user":"51203146506d961c030791801","timestamp":"2020-10-7 07:00","endTimestamp":"2020-10-7 15:00"}'
+  -d '{"_id":"5fbcfe75ba9312280e2145897521","modifiedByUser":"51718241fdb708f3923268","user":"51203146506d961c03036589741","timestamp":"2020-10-7 07:00","endTimestamp":"2020-10-7 15:00"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbcfe75ba9312280ef6523e',
-  modifiedByUser: '51718241fdb708f37959127',
-  user: '51203146506d961c030791801',
+  _id: '5fbcfe75ba9312280e2145897521',
+  modifiedByUser: '51718241fdb708f3923268',
+  user: '51203146506d961c03036589741',
   timestamp: '2020-10-07 07:00',
   endTimestamp: '2020-10-07 15:00',
 };
@@ -507,7 +506,7 @@ request.put(options, function (error, response, body) {
   "status": 1,
   "isInvoiceable": true,
   "isInvoiced": false,
-  "_id": "5fbcfe75ba9312280ef6523e",
+  "_id": "5fbcfe75ba9312280e2145897521",
   "timestamp": "2020-10-07T06:00:00.000Z",
   "realTimestamp": "2020-10-07T06:00:00.000Z",
   "createDate": "2020-11-24T12:37:09.258Z",
@@ -515,15 +514,14 @@ request.put(options, function (error, response, body) {
   "customFields": [],
   "machineTimePrices": [],
   "machineTimeSupplements": [],
-  "systemAccount": "5112826056d961c030000001",
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
+  "user": "51203146506d961c03036589741",
+  "userName": "Anna Andersson",
   "endTimestamp": "2020-10-07T014:00:00.000Z",
   "realEndTimestamp": "2020-10-07T14:00:00.000Z",
   "time": 8,
   "invoiceableTime": 8,
   "pricePerHour": 777,
-  "price": 777,
+  "price": 777
 }
 "Time log updated: _id: 5fbcfe75ba9312280ef6523e"
 ```
@@ -546,16 +544,16 @@ user            | String | Yes | Id of the user on the time log
 ## Delete a Time Log
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
+curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"51203146506d961c030791801","deletedByUser":"51203146506d961c030791801"}'
+  -d '{"_id":"51203146506d961c35798485","deletedByUser":"51203146506d961c03036589741"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbcfe75ba9312280ef6523e',
-  deletedByUser: '51203146506d961c030791801'
+  _id: '51203146506d961c35798485',
+  deletedByUser: '51203146506d961c03036589741'
 };
 
 let options = {
@@ -583,31 +581,9 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "startLocation": { type: 'Point', coordinates: [] },
-  "stopLocation": { type: 'Point', coordinates: [] },
-  "allDay": false,
-  "status": 1,
-  "isInvoiceable": true,
-  "isInvoiced": false,
-  "_id": "5fbcfe75ba9312280ef6523e",
-  "timestamp": "2020-10-07T06:00:00.000Z",
-  "realTimestamp": "2020-10-07T06:00:00.000Z",
-  "createDate": "2020-11-24T12:37:09.258Z",
-  "unSocialHoursCosts": [],
-  "customFields": [],
-  "machineTimePrices": [],
-  "machineTimeSupplements": [],
-  "systemAccount": "5112826056d961c030000001",
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "endTimestamp": "2020-10-07T014:00:00.000Z",
-  "realEndTimestamp": "2020-10-07T14:00:00.000Z",
-  "time": 8,
-  "invoiceableTime": 8,
-  "pricePerHour": 777,
-  "price": 777,
+  "_id": "51203146506d961c35798485"
 }
-"Time log deleted: _id: 5fbcfe75ba9312280ef6523e"
+"Time log deleted: _id: 51203146506d961c35798485"
 ```
 
 This endpoint deletes a time log

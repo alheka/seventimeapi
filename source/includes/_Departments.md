@@ -43,7 +43,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "59d05abdc471b72e4901079",
+      "_id": "59d05abdc471b72e4979135",
       "name": "Utveckling",
       "departmentNumber": "2",
       "isActive": true,
@@ -74,7 +74,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 ## Get a specific Department
 
 ```shell
-curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079" \
+curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -82,7 +82,7 @@ curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/departments/59d05abdc471b72e4901079";
+let url = "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135";
 let options = {
   url: url,
   headers: {
@@ -108,7 +108,7 @@ request(options, function(error, response, body) {
 {
   "data": {
     "managerIds": [],
-    "_id": "59d05abdc471b72e4901079",
+    "_id": "59d05abdc471b72e4979135",
     "name": "Utveckling",
     "departmentNumber": "2",
     "isActive": true,

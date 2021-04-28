@@ -42,20 +42,20 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "53ad291839f16d23a6414604d2",
+      "_id": "53ad291839f16d23a6448412b",
       "attestedBy": null,
       "createDate": "2014-06-27T08:11:15.954Z",
       "customer": null,
       "customerName": "",
       "description": "",
       "documents": [],
-      "expenseItem": "52d92f32d5fcf8941893174ab",
+      "expenseItem": "52d92f32d5fcf8949842b",
       "isAttested": false,
       "isInvoiceable": true,
       "isInvoiced": false,
       "name": "Arbetsordermodul2",
       "numberOfItems": 1,
-      "project": "516fad2b265135db78024621§",
+      "project": "516fad2b265135db7801542b",
       "projectName": "Glimminge",
       "supplementOrder": false,
       "timestamp": "2014-06-27T00:00:00.000Z",
@@ -68,8 +68,8 @@ request(options, function(error, response, body) {
       "unitPrice": 20,
       "unitPriceInclTax": 25,
       "unitTax": 5,
-      "user": "51203146506d961c030791801",
-      "userName": "Tommy Hellström",
+      "user": "51203146506d9615189d125",
+      "userName": "Anna Andersson",
       "workOrder": null,
       "workOrderNumber": 0,
       "workOrderTitle": "",
@@ -117,7 +117,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a specific Expense
 
 ```shell
-curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
+curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a79348b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -125,7 +125,7 @@ curl "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a6414604d2";
+let url = "https://app.seventime.se/api/2/expenses/53ad291839f16d23a79348b";
 let options = {
   url: url,
   headers: {
@@ -150,20 +150,20 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "53ad291839f16d23a6414604d2",
+    "_id": "53ad291839f16d23a61549135d",
     "attestedBy": null,
     "createDate": "2014-06-27T08:11:15.954Z",
     "customer": null,
     "customerName": "",
     "description": "",
     "documents": [],
-    "expenseItem": "52d92f32d5fcf8941893174ab",
+    "expenseItem": "52d92f32d5fc8988645588d",
     "isAttested": false,
     "isInvoiceable": true,
     "isInvoiced": false,
     "name": "Arbetsordermodul2",
     "numberOfItems": 1,
-    "project": "516fad2b265135db78024621§",
+    "project": "516fad2b265135db7803154d",
     "projectName": "Glimminge",
     "supplementOrder": false,
     "timestamp": "2014-06-27T00:00:00.000Z",
@@ -176,8 +176,8 @@ request(options, function(error, response, body) {
     "unitPrice": 20,
     "unitPriceInclTax": 25,
     "unitTax": 5,
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
+    "user": "51203146506d961c0e1248a25",
+    "userName": "Anna Andersson",
     "workOrder": null,
     "workOrderNumber": 0,
     "workOrderTitle": "",
@@ -251,7 +251,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5de78aed1332719192362bed",
+      "_id": "5de78aed133271919648552",
       "description": "",
       "tax": 25,
       "articleNumber": "601310",
@@ -308,7 +308,7 @@ sortDirection           |  | "ascending" or "descending". If specified and sortB
 ## Get a specific Expense Item
 
 ```shell
-curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
+curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192366458" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -316,7 +316,7 @@ curl "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192362bed";
+let url = "https://app.seventime.se/api/2/expenseItems/5de78aed1332719192366458";
 let options = {
   url: url,
   headers: {
@@ -341,7 +341,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5de78aed1332719192362bed",
+    "_id": "5de78aed1332719192366458",
     "description": "",
     "tax": 25,
     "articleNumber": "601310",
@@ -385,17 +385,17 @@ _id | The _id of the expense item to retrieve
 ## Create an Expense
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/expenses/" \
+curl -X POST "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee49452154","user":"51203146506d961c0219865121","expenseItem":"5de78aed1332719192366458"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  user: '51203146506d961c030791801',
-  expenseItem: '5de78aed1332719192362bed'
+  createdByUser: '5f48eb3e65d7ee49452154',
+  user: '51203146506d961c0219865121',
+  expenseItem: '5de78aed1332719192366458'
 };
 
 let options = {
@@ -424,17 +424,16 @@ request.post(options, function (error, response, body) {
 ```json 
 { 
   "isInvoiceable": true,
-  "_id": "5fbe684416625651d7f43257",
+  "_id": "5fbe6844166256521851",
   "timestamp": "2020-11-25T14:20:52.129Z",
   "documents": [],
   "createDate": "2020-11-25T14:20:52.129Z",
   "bundledArticles": [],
   "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
   "numberOfItems": 1,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
-  "expenseItem": "5de78aed1332719192362bed",
+  "user": "51203146506d961c0219865121",
+  "userName": "Anna Andersson",
+  "expenseItem": "5de78aed1332719192366458",
   "articleNumber": "575733",
   "name": "10-pack Reaktionsbollar",
   "description": "Skivhantel av järn",
@@ -453,7 +452,7 @@ request.post(options, function (error, response, body) {
   "totalAmountAfterDiscount": 426.66,
   "totalCost": 319,
 }
-"Expense created: _id: 5fbe684416625651d7f43257"
+"Expense created: _id: 5fbe6844166256521851"
 ```
 
 This endpoint creates an expense
@@ -488,17 +487,17 @@ doReimburse         | Boolean | No | Is the expense an own expense?
 ## Update an Expense
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/expenses/" \
+curl -X PUT "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fbe684416625651d7f43257","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","user":"51203146506d961c030791801"}'
+  -d '{"_id":"5fbe684416625651d3476852","modifiedByUser":"5f48eb3e612421554796edb","user":"51203146506d961c030689135"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbe684416625651d7f43257',
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
-  user: '51203146506d961c030791801'
+  _id: '5fbe684416625651d3476852',
+  modifiedByUser: '5f48eb3e612421554796edb',
+  user: '51203146506d961c030689135'
 };
 
 let options = {
@@ -527,21 +526,20 @@ request.put(options, function (error, response, body) {
 ```json 
 { 
   "isInvoiceable": true,
-  "_id": "5fbe684416625651d7f43257",
+  "_id": "5fbe684416625651d3476852",
   "timestamp": "2020-11-25T14:20:52.129Z",
   "documents": [],
   "createDate": "2020-11-25T14:20:52.129Z",
   "bundledArticles": [],
   "customFields": [],
-  "systemAccount": "5112826056d961c030000001",
   "numberOfItems": 1,
-  "user": "51203146506d961c030791801",
-  "userName": "Tommy Hellström",
+  "user": "51203146506d961c030689135",
+  "userName": "Anna Andersson",
   "expenseItem": "5de78aed1332719192362bed",
   "articleNumber": "575733",
   "name": "10-pack Reaktionsbollar",
   "description": "Skivhantel av järn",
-  "distributor": "573c52cdf609f5692351914b",
+  "distributor": "573c52cdf609f5664789528",
   "distributorName": "Lev 4",
   "unit": "St",
   "unitCost": 319,
@@ -578,16 +576,16 @@ user           | String | Yes | Id of the user on the expense
 ## Delete an Expense
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
+curl -X DELETE "https://app.seventime.se/api/2/expenses/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fbe684416625651d7f43257","deletedByUser":"51203146506d961c030791801"}'
+  -d '{"_id":"5fbe6844166256479138667","deletedByUser":"51203146506d96457793165"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fbe684416625651d7f43257",
-  deletedByUser: '51203146506d961c030791801'
+  _id: "5fbe6844166256479138667",
+  deletedByUser: '51203146506d96457793165'
 };
 
 let options = {
@@ -615,9 +613,9 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fbe684416625651d7f43257"
+  "_id": "5fbe6844166256479138667"
 }
-"Expense deleted: _id: 5fbe684416625651d7f43257"
+"Expense deleted: _id: 5fbe6844166256479138667"
 ```
 
 This endpoint deletes an expense

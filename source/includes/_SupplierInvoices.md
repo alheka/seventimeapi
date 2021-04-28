@@ -41,20 +41,20 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f62c5281715836a4721b843",
+      "_id": "5f62c5281715836a472254821",
       "isInvoiceable": false,
       "isInvoiced": false,
       "selfBillingTimeLogIds": [
-        "5f5f6881241b6f02a6b20705",
-        "5f5f6881241b6f02a6b2070b"
+        "5f5f6881241b6f02a6218724",
+        "5f5f6881241b6f02a6879518"
       ],
       "selfBillingExpenseIds": [
-        "5f5f8c6a5b2317286eb838ab",
-        "5f5f8c6a5b2317286eb838a8"
+        "5f5f8c6a5b2317286e285721",
+        "5f5f8c6a5b2317286e698574"
       ],
       "invoiceItems": [
         {
-          "_id": "5f60c501271935b91231a941",
+          "_id": "5f60c501271935b912215879",
           "createDate": "2020-09-15T13:44:06.569Z",
           "articleNumber": "",
           "description": "Beredskap normal",
@@ -70,7 +70,7 @@ request(options, function(error, response, body) {
           "totalTaxAmount": 550,
           "totalCost": 2090,
           "itemType": "time",
-          "timeCategory": "5e81d33db3f1cb30a8ef5514",
+          "timeCategory": "5e81d33db3f1cb30a16489572",
           "categoryName": "Beredskap normal"
         },
         {
@@ -78,9 +78,9 @@ request(options, function(error, response, body) {
         }
       ],
       "documents": [],
-      "distributor": "5f48eb7105b8ed6932c19eb9",
+      "distributor": "5f48eb7105b8ed6934398752",
       "distributorName": "20200828",
-      "yourReference": "Tommy Hellström",
+      "yourReference": "Anna Andersson",
       "createDate": "2020-09-15T13:44:06.566Z",
       "invoiceDate": "2020-09-15T13:44:06.566Z",
       "paymentDate": null,
@@ -102,15 +102,15 @@ request(options, function(error, response, body) {
       "economySystemRef": "",
       "importedFrom": "",
       "supplierInvoiceStatus": 5,
-      "workOrder": "5f4df1793751c0916156ed5",
+      "workOrder": "5f4df1793751c0916136489752",
       "workOrderTitle": "Återkommande 20200116 - 234556565656",
       "workOrderNumber": 4737,
       "project": null,
       "projectName": null,
       "supplementOrderId": null,
       "supplementOrderNumber": null,
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "SevenTime",
+      "customer": "5bb26376c42fb992716598742",
+      "customerName": "Company",
       "department": null,
       "departmentName": "",
       "supplementOrder": false,
@@ -119,10 +119,10 @@ request(options, function(error, response, body) {
       "isSelfBillingInvoice": true,
       "selfBillingInvoiceStatus": 1,
       "exportedToEconomy": false,
-      "selfBillingInvoice": "5f5f23fd7161761b55422c",
+      "selfBillingInvoice": "5f5f23fd716176146859257",
       "selfBillingInvoiceNumber": "24272",
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
-      "footerInfoText": "Text under...",
+      "footerInfoText": "Text under..."
     },
     {
       // ...
@@ -161,7 +161,7 @@ sortDirection            |  | "ascending" or "descending". If specified and sort
 ## Get a specific Supplier Invoice
 
 ```shell
-curl "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843" \
+curl "https://app.seventime.se/api/2/supplierInvoices/5f62c528171548657d215a785" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -169,7 +169,7 @@ curl "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843" 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c5281715836a4721b843";
+let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c528171548657d215a785";
 let options = {
   url: url,
   headers: {
@@ -194,20 +194,20 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5f62c5281715836a4721b843",
+    "_id": "5f62c528171548657d215a785",
     "isInvoiceable": false,
     "isInvoiced": false,
     "selfBillingTimeLogIds": [
-      "5f5f6881241b6f02a6b20705",
-      "5f5f6881241b6f02a6b2070b"
+      "5f5f6881241b6f0221457985",
+      "5f5f6881241b6f02a6364619"
     ],
     "selfBillingExpenseIds": [
-      "5f5f8c6a5b2317286eb838ab",
-      "5f5f8c6a5b2317286eb838a8"
+      "5f5f8c6a5b2317286eb65482b",
+      "5f5f8c6a5b2317286eb8d76b1"
     ],
     "invoiceItems": [
       {
-        "_id": "5f60c501271935b91231a941",
+        "_id": "5f60c501271935b9165897451",
         "createDate": "2020-09-15T13:44:06.569Z",
         "articleNumber": "",
         "description": "Beredskap normal",
@@ -223,7 +223,7 @@ request(options, function(error, response, body) {
         "totalTaxAmount": 550,
         "totalCost": 2090,
         "itemType": "time",
-        "timeCategory": "5e81d33db3f1cb30a8ef5514",
+        "timeCategory": "5e81d33db3f1cb30a2135842",
         "categoryName": "Beredskap normal"
       },
       {
@@ -231,9 +231,9 @@ request(options, function(error, response, body) {
       }
     ],
     "documents": [],
-    "distributor": "5f48eb7105b8ed6932c19eb9",
+    "distributor": "5f48eb7105b8ed6969875258",
     "distributorName": "20200828",
-    "yourReference": "Tommy Hellström",
+    "yourReference": "Anna Andersson",
     "createDate": "2020-09-15T13:44:06.566Z",
     "invoiceDate": "2020-09-15T13:44:06.566Z",
     "paymentDate": null,
@@ -255,15 +255,15 @@ request(options, function(error, response, body) {
     "economySystemRef": "",
     "importedFrom": "",
     "supplierInvoiceStatus": 5,
-    "workOrder": "5f4df1793751c0916156ed5",
+    "workOrder": "5f4df1793751c0916134687952",
     "workOrderTitle": "Återkommande 20200116 - 234556565656",
     "workOrderNumber": 4737,
     "project": null,
     "projectName": null,
     "supplementOrderId": null,
     "supplementOrderNumber": null,
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "SevenTime",
+    "customer": "5bb26376c42fb91357498542",
+    "customerName": "Company",
     "department": null,
     "departmentName": "",
     "supplementOrder": false,
@@ -272,7 +272,7 @@ request(options, function(error, response, body) {
     "isSelfBillingInvoice": true,
     "selfBillingInvoiceStatus": 1,
     "exportedToEconomy": false,
-    "selfBillingInvoice": "5f5f23fd7161761b55422c",
+    "selfBillingInvoice": "5f5f23fd7161713589748562",
     "selfBillingInvoiceNumber": "24272",
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
     "footerInfoText": "Text under...",
@@ -297,17 +297,17 @@ _id | The _id of the supplier invoice to retrieve
 ## Create a Supplier Invoice
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
+curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"supplierInvoiceNumber":"9162","createdByUser":"5f48eb3e65d7ee4942c46eeb","distributor":"5f6b2e6af24d5df55b69277","totalAmountInclTax":"100000"}' 
+  -d '{"supplierInvoiceNumber":"9162","createdByUser":"5f48eb3e65d7e12574952d685","distributor":"5f6b2e6af24d5d69784521","totalAmountInclTax":"100000"}' 
 ```
 
 ```javascript
 let jsonData = {
   supplierInvoiceNumber: 9162,
-  createdByUser: '5f48eb3e65d7ee4942c46eeb',
-  distributor: '5f6b2e6af24d5df55b69277',
+  createdByUser: '5f48eb3e65d7e12574952d685',
+  distributor: '5f6b2e6af24d5d69784521',
   totalAmountInclTax: 100000
 };
 
@@ -338,7 +338,7 @@ request.post(options, function (error, response, body) {
   "isInvoiceable": true,
   "selfBillingTimeLogIds": [],
   "selfBillingExpenseIds": [],
-  "_id": "5fd0619c7391b561bda0a7",
+  "_id": "5fd0619c739154975825",
   "invoiceItems": [],
   "documents": [],
   "supplierInvoiceLogEntries": [ 
@@ -346,14 +346,14 @@ request.post(options, function (error, response, body) {
       "_id": "5fdd142c621b21a10129",
       "logType": 1,
       "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström",
+      "user": "5f48eb3e65d7e12574952d685",
+      "userName": "Anna Andersson",
       "logDate": "2020-12-09T12":43":51.516Z" 
     } 
   ],
   "markupPercent": 0,
-  "distributor": "5f6b2e6af24d5df55b69277",
-  "distributorName": "Hellapps AB",
+  "distributor": "5f6b2e6af24d5d69784521",
+  "distributorName": "Company AB",
   "supplierInvoiceNumber": "9162",
   "invoiceDate": "2020-12-09T12:43:51.515Z",
   "dueDate": "2020-12-09T12:43:51.515Z",
@@ -439,16 +439,16 @@ driverJournal  | Driver journal row
 ## Update a Supplier Invoice
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
+curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c7391b561bda0a7","modifiedByUser":"5f48eb3e65d7ee4942c46eeb","supplierInvoiceStatus":"7"}' 
+  -d '{"_id":"5fd0619c739154975825","modifiedByUser":"5f48eb3e65d7ee4942c6859741","supplierInvoiceStatus":"7"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fd0619c7391b561bda0a7",
-  modifiedByUser: '5f48eb3e65d7ee4942c46eeb',
+  _id: "5fd0619c739154975825",
+  modifiedByUser: '5f48eb3e65d7ee4942c6859741',
   supplierInvoiceStatus: 10
 };
 
@@ -481,22 +481,22 @@ request.put(options, function (error, response, body) {
   "isInvoiceable": true,
   "selfBillingTimeLogIds": [],
   "selfBillingExpenseIds": [],
-  "_id": "5fd0619c7391b561bda0a7",
+  "_id": "5fd0619c739154975825",
   "invoiceItems": [],
   "documents": [],
   "supplierInvoiceLogEntries": [ 
     { 
-      "_id": "5fdd142c621b21a10129",
+      "_id": "5fdd142c621b649785231",
       "logType": 1,
       "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström",
+      "user": "5f48eb3e65d7ee897425862",
+      "userName": "Anna Andersson",
       "logDate": "2020-12-09T12":43":51.516Z" 
     } 
   ],
   "markupPercent": 0,
-  "distributor": "5f6b2e6af24d5df55b69277",
-  "distributorName": "Hellapps AB",
+  "distributor": "5f6b2e6af24d5df697845268",
+  "distributorName": "Company AB",
   "supplierInvoiceNumber": "9162",
   "invoiceDate": "2020-12-09T12:43:51.515Z",
   "dueDate": "2020-12-09T12:43:51.515Z",
@@ -508,7 +508,7 @@ request.put(options, function (error, response, body) {
   "supplierInvoiceStatus": 10,
   "createDate": "2020-12-09T12:43:51.515Z",
 }
-"Supplier invoice updated: _id: 5fd0619c7391b561bda0a7"
+"Supplier invoice updated: _id: 5fd0619c739154975825"
 ```
 
 This endpoint updates a supplier invoice
@@ -529,16 +529,16 @@ modifiedByUser      | String      | Yes | Id of the user who made the change
 ## Delete a Supplier Invoice
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
+curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c7391b561bda0a7","deletedByUser":"51203146506d961c030791801"}' 
+  -d '{"_id":"5fd0619c739154975825","deletedByUser":"51203146506d961c03649852317"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fd0619c7391b561bda0a7",
-  deletedByUser: "51203146506d961c030791801"
+  _id: "5fd0619c739154975825",
+  deletedByUser: "51203146506d961c03649852317"
 };
 
 let options = {
@@ -567,10 +567,10 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fd0619c7391b561bda0a7",
+  "_id": "5fd0619c739154975825",
   "supplierInvoiceNumber": "9162",
 }
-"Supplier invoice deleted: _id: 5fd0619c7391b561bda0a7, number: 9162"
+"Supplier invoice deleted: _id: 5fd0619c739154975825, number: 9162"
 ```
 
 This endpoint deletes a supplier invoice

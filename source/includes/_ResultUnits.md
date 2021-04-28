@@ -36,7 +36,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "57076abe8010bd22792004b",
+      "_id": "57076abe8010bd225413654",
       "name": "Kontor Syd",
       "code": "Syd",
       "isActive": true,
@@ -64,7 +64,7 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a specific Result Unit
 
 ```shell
-curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b" \
+curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd225413654" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -72,7 +72,7 @@ curl "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/resultUnits/57076abe8010bd22792004b";
+let url = "https://app.seventime.se/api/2/resultUnits/57076abe8010bd225413654";
 let options = {
   url: url,
   headers: {
@@ -97,7 +97,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "57076abe8010bd22792004b",
+    "_id": "57076abe8010bd225413654",
     "name": "Kontor Syd",
     "code": "Syd",
     "isActive": true,

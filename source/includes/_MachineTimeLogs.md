@@ -42,18 +42,18 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "59ef428433092a4536000066",
+      "_id": "59ef428433092a453647952813",
       "time": 12,
       "invoiceableTime": 12,
       "description": "12",
       "internalDescription": "",
       "attestedBy": null,
       "invoice": null,
-      "machine": "59e75917ae561db738700451",
+      "machine": "59e75917ae561db737946137",
       "machineName": "Grävare",
-      "user": "51203146506d961c030791801",
-      "userName": "Tommy Hellström",
-      "department": "58b30abde244b75d46501274",
+      "user": "51203146506d966481937",
+      "userName": "Anna Andersson",
+      "department": "58b30abde244b75d15648293",
       "departmentName": "Utveckling",
       "customer": null,
       "customerName": null,
@@ -69,7 +69,7 @@ request(options, function(error, response, body) {
       "isInvoiced": false,
       "isInvoiceable": true,
       "status": 1,
-      "timestamp": "2017-10-24T13:39:06.144Z",
+      "timestamp": "2017-10-24T13:39:06.144Z"
     },
     {
       // ...
@@ -97,7 +97,7 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 ## Get a specific Machine Time Log
 
 ```shell
-curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
+curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d77915827619" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -105,7 +105,7 @@ curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d7179005920";
+let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d77915827619";
 let options = {
   url: url,
   headers: {
@@ -133,18 +133,18 @@ request(options, function(error, response, body) {
     "status": 1,
     "isInvoiceable": true,
     "isInvoiced": false,
-    "_id": "5a4bc02e40a13d7179005920",
+    "_id": "5a4bc02e40a13d77915827619",
     "time": 12,
     "invoiceableTime": 12,
     "description": "12",
     "internalDescription": "",
     "attestedBy": null,
     "invoice": null,
-    "machine": "59e75917ae561db738700451",
+    "machine": "59e75917ae561db7364829167",
     "machineName": "Grävare",
-    "user": "51203146506d961c030791801",
-    "userName": "Tommy Hellström",
-    "department": "58b30abde244b75d46501274",
+    "user": "51203146506d97461389557821",
+    "userName": "Anna Andersson",
+    "department": "58b30abde244b75d464826137958",
     "departmentName": "Utveckling",
     "customer": null,
     "customerName": null,
@@ -157,7 +157,7 @@ request(options, function(error, response, body) {
     "price": 0,
     "cost": 0,
     "createDate": "2017-10-24T13:39:16.764Z",
-    "timestamp": "2017-10-24T13:39:06.144Z",
+    "timestamp": "2017-10-24T13:39:06.144Z"
   }
 }
 ```

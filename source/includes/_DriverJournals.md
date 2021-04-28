@@ -41,24 +41,24 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5613c0eabed82c732b67914b",
+      "_id": "5613c0eabed82c732b54312",
       "name": "",
-      "driverJournalItemType": "574ed84219e781253319275004d",
+      "driverJournalItemType": "574ed84219e78125333213578b",
       "driverJournalItemTypeName": "4 kr/km",
       "car": null,
       "carRegistrationNumber": "ABC123",
       "description": "",
-      "user": "5f48eb3e65d7ee4942c46eeb",
-      "userName": "Tommy Hellström",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Hellapps AB",
-      "project": "5f924f4f533f102af78f95b6",
+      "user": "5f48eb3e65d7eeb491836d",
+      "userName": "Anna Andersson",
+      "customer": "5bb26376c42fb9929932161",
+      "customerName": "Company AB",
+      "project": "5f924f4f533f103176210",
       "projectName": "Tester",
-      "workOrder": "5bae34dca878bd790d02065g",
+      "workOrder": "5bae34dca878bd7d0182b",
       "workOrderTitle": "20160525",
       "workOrderNumber": 1181,
-      "startAddress": "Glimmingevägen 18, Västra Karup",
-      "endAddress": "Hamngatan 1, Malmö",
+      "startAddress": "Östra Gatan 129, Stockholm",
+      "endAddress": "Västra Gatan 921, Stockholm",
       "travelPurpose": ".",
       "startOdometer": 156,
       "endOdometer": 178,
@@ -66,11 +66,11 @@ request(options, function(error, response, body) {
       "price": 4,
       "totalAmount": 88,
       "isInvoiced": true,
-      "invoice": "5fab29b038bd334ab540ab53",
+      "invoice": "5fab29b038bd33301751",
       "modifiedDate": "2016-06-17T09:29:01.958Z",
       "createDate": "2016-06-17T09:20:46.845Z",
       "isInvoiceable": true,
-      "timestamp": "2016-06-17T09:20:10.254Z",
+      "timestamp": "2016-06-17T09:20:10.254Z"
     },
     {
       // ...
@@ -109,7 +109,7 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get a specific Driver Journal
 
 ```shell
-curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
+curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed93172591b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -117,7 +117,7 @@ curl "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed82c732b67914b";
+let url = "https://app.seventime.se/api/2/driverJournals/5613c0eabed93172591b";
 let options = {
   url: url,
   headers: {
@@ -143,24 +143,24 @@ request(options, function(error, response, body) {
 {
   "data": {
     "isInvoiceable": true,
-    "_id": "5613c0eabed82c732b67914b",
+    "_id": "5613c0eabed93172591b",
     "name": "",
-    "driverJournalItemType": "574ed84219e781253319275004d",
+    "driverJournalItemType": "574ed84219e78125333201799",
     "driverJournalItemTypeName": "4 kr/km",
     "car": null,
     "carRegistrationNumber": "ABC123",
     "description": "",
-    "user": "5f48eb3e65d7ee4942c46eeb",
-    "userName": "Tommy Hellström",
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "Hellapps AB",
-    "project": "5f924f4f533f102af78f95b6",
+    "user": "5f48eb3e65d7ee40317245d",
+    "userName": "Anna Andersson",
+    "customer": "5bb26376c42e07412b55",
+    "customerName": "Company AB",
+    "project": "5f924f4f533f102af784581",
     "projectName": "Tester",
-    "workOrder": "5bae34dca878bd790d02065g",
+    "workOrder": "5bae34dca878b237942",
     "workOrderTitle": "20160525",
     "workOrderNumber": 1181,
-    "startAddress": "Glimmingevägen 18, Västra Karup",
-    "endAddress": "Hamngatan 1, Malmö",
+    "startAddress": "Östra Gatan 129, Stockholm",
+    "endAddress": "Västra Gatan 921, Stockholm",
     "travelPurpose": ".",
     "startOdometer": 156,
     "endOdometer": 178,
@@ -168,7 +168,7 @@ request(options, function(error, response, body) {
     "price": 4,
     "totalAmount": 88,
     "isInvoiced": true,
-    "invoice": "5fab29b038bd334ab540ab53",
+    "invoice": "5fab29b0386134897",
     "modifiedDate": "2016-06-17T09:29:01.958Z",
     "createDate": "2016-06-17T09:20:46.845Z",
     "timestamp": "2016-06-17T09:20:10.254Z",
@@ -226,7 +226,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5e5ef41f0d87d3262bc0176",
+      "_id": "5e5ef41f03481b466",
       "name": "Diesel - ej skt.fri",
       "articleNumber": "45",
       "cost": 0.5,
@@ -234,7 +234,7 @@ request(options, function(error, response, body) {
       "isInvoiceable": true,
       "isDefault": false,
       "salaryCompensationType": 20,
-      "salaryType": "5e5cd96da2f5b43254aa1f1e",
+      "salaryType": "5e5cd96da2f5b64823791",
       "salaryTypeName": "Milersättning för diesel",
       "createDate": "2020-03-03T09:14:11.750Z",
       "isActive": true,
@@ -264,20 +264,20 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Create a Driver Journal
 
 ```shell
-  curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
+curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"51203146506d961c030791801","user":"51203146506d961c030791801","expenseItem":"5de78aed1332719192362bed"}'
+  -d '{"createdByUser":"5120314650548666171","user":"51203178219463791","expenseItem":"5de78aed13437891254"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '51203146506d961c030791801',
-  user: '5f48eb3e65d7ee4942c46eeb',
+  createdByUser: '512031465648817e55b',
+  user: '5f48eb3e65d7e5489134452',
   carRegistrationNumber: 'ABC123',
-  driverJournalItemType: '5e5ef41f0d87d3262bc0176',
-  startAddress: 'Address start, V Karup',
-  endAddress: 'Address end, Båstad',
+  driverJournalItemType: '5e5ef4124135975',
+  startAddress: 'Address start, Stockholm',
+  endAddress: 'Address end, Stockholm',
   travelPurpose: 'Delivery',
   startOdometer: '45',
   endOdometer: '60',
@@ -309,18 +309,17 @@ request.post(options, function (error, response, body) {
 ```json 
 {
   "isInvoiceable": true,
-  "_id": "5fc619b96294735fc421d77a",
+  "_id": "5fc619b964579133",
   "timestamp": "2020-12-01T10:23:53.370Z",
   "createDate": "2020-12-01T10:23:53.370Z",
   "modifiedDate": "2020-12-01T10:23:53.370Z",
-  "systemAccount": "5112826056d961c030000001",
-  "user": "5f48eb3e65d7ee4942c46eeb",
-  "userName": "Tommy Hellström",
+  "user": "5f48eb3e65d7ee457951b",
+  "userName": "Anna Andersson",
   "carRegistrationNumber": "ABC123",
-  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemType": "5e5ef41f0d5481125",
   "driverJournalItemTypeName": "Diesel - ej skt.fri",
-  "startAddress": "Address start, V Karup",
-  "endAddress": "Address end, Båstad",
+  "startAddress": "Address start, Stockholm",
+  "endAddress": "Address end, Stockholm",
   "travelPurpose": "Delivery",
   "startOdometer": 45,
   "endOdometer": 60,
@@ -331,7 +330,7 @@ request.post(options, function (error, response, body) {
   "cost": 0,
   "totalCost": 0,
 }
-"Driver journal created: _id: 5fc619b96294735fc421d77a"
+"Driver journal created: _id: 5fc619b9625789154"
 ```
 
 This endpoint creates a driver journal
@@ -366,17 +365,17 @@ isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated
 ## Update a Driver Journal
 
 ```shell
-  curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
+curl -X PUT "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fc619b96294735fc421d77a","modifiedByUser":"51203146506d961c030791801","user":"5f48eb3e65d7ee4942c46eeb"}'
+  -d '{"_id":"5fc619b96294498231","modifiedByUser":"51203146506d96498312567","user":"5f48eb3e65d7ee44598912b"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fc619b96294735fc421d77a',
-  modifiedByUser: '51203146506d961c030791801',
-  user: '5f48eb3e65d7ee4942c46eeb'
+  _id: '5fc619b96294735fc7812458',
+  modifiedByUser: '51203146506d94891377',
+  user: '5f48eb3e65d7ee461288'
 };
 
 let options = {
@@ -405,18 +404,17 @@ request.put(options, function (error, response, body) {
 ```json 
 {
   "isInvoiceable": true,
-  "_id": "5fc619b96294735fc421d77a",
+  "_id": "5fc619b96294735124544bd",
   "timestamp": "2020-12-01T10:23:53.370Z",
   "createDate": "2020-12-01T10:23:53.370Z",
   "modifiedDate": "2020-12-01T10:23:53.370Z",
-  "systemAccount": "5112826056d961c030000001",
-  "user": "5f48eb3e65d7ee4942c46eeb",
-  "userName": "Tommy Hellström",
+  "user": "5f48eb3e65d7e2548412d",
+  "userName": "Anna Andersson",
   "carRegistrationNumber": "ABC123",
-  "driverJournalItemType": "5e5ef41f0d87d3262bc0176",
+  "driverJournalItemType": "5e5ef41f0d989125e",
   "driverJournalItemTypeName": "Diesel - ej skt.fri",
-  "startAddress": "Address start, V Karup",
-  "endAddress": "Address end, Båstad",
+  "startAddress": "Address start, Stockholm",
+  "endAddress": "Address end, Stockholm",
   "travelPurpose": "Delivery",
   "startOdometer": 45,
   "endOdometer": 60,
@@ -425,9 +423,9 @@ request.put(options, function (error, response, body) {
   "price": 0,
   "totalAmount": 0,
   "cost": 0,
-  "totalCost": 0,
+  "totalCost": 0
 }
-"Driver journal updated: _id: 5fc619b96294735fc421d77a"
+"Driver journal updated: _id: 5fc619b96294735124544bd"
 ```
 
 This endpoint updates a driver journal
@@ -443,21 +441,21 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id            | String | Yes | Id of the driver journal
 modifiedByUser | String | Yes | Id of the user who made the change
-user           | String | Yes | Id of the user
+user           | String | Yes | Id of the user on the driver journal
 
 ## Delete a Driver Journal
 
 ```shell
-  curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
+curl -X DELETE "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fc619b96294735fc421d77a","deletedByUser":"51203146506d961c030791801"}'
+  -d '{"_id":"5fc619b96294735fd458173","deletedByUser":"51203146506d961c1349691"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fc619b96294735fc421d77a',
-  deletedByUser: '51203146506d961c030791801'
+  _id: '5fc619b96294735315489',
+  deletedByUser: '51203146506d9611b895'
 };
 
 let options = {
@@ -487,7 +485,7 @@ request.delete(options, function (error, response, body) {
 {
   "_id": "5fc619b96294735fc421d77a",
 }
-"Driver journal updated: _id: 5fc619b96294735fc421d77a"
+"Driver journal deleted: _id: 5fc619b962947312234894"
 ```
 
 This endpoint deletes a driver journal

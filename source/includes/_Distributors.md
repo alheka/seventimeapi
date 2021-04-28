@@ -41,7 +41,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f6b2e6af24d5df55b69277",
+      "_id": "5f6b2e6af24d5df526848",
       "name": "UE lev 20200923",
       "distributorNumber": "20",
       "address": "",
@@ -58,15 +58,15 @@ request(options, function(error, response, body) {
       "hasSelfBilling": true,
       "selfBillingSettings": {
         "invoiceDeduction": 5,
-        "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+        "deductionExpenseItem": "5e74bf0917ae9b91662484d",
         "invoiceNumberSeries": "UELEV23",
         "invoiceCounter": 1,
-        "emailForSelfBilling": "tommy@seventime.se"
+        "emailForSelfBilling": "email@company.com"
       },
       "isActive": true,
       "isSubContractor": true,
       "createdDate": "2020-09-23T13:19:42.450Z",
-      "modifiedDate": "2020-09-23T13:19:42.450Z",
+      "modifiedDate": "2020-09-23T13:19:42.450Z"
     },
     {
       // ...
@@ -93,7 +93,7 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 ## Get a specific Distributor
 
 ```shell
-curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
+curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5d7121b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -101,7 +101,7 @@ curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5df55b69277";
+let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5d7121b";
 let options = {
   url: url,
   headers: {
@@ -128,12 +128,12 @@ request(options, function(error, response, body) {
   "data": {
     "selfBillingSettings": {
       "invoiceDeduction": 5,
-      "deductionExpenseItem": "5e74bf0917ae9b9166f5b4b9",
+      "deductionExpenseItem": "5e74bf0917ae9b9166154952d",
       "invoiceNumberSeries": "UELEV23",
       "invoiceCounter": 1,
-      "emailForSelfBilling": "tommy@seventime.se"
+      "emailForSelfBilling": "email@company.com"
     },
-    "_id": "5f6b2e6af24d5df55b69277",
+    "_id": "5f6b2e6af24d5d7121b",
     "name": "UE lev 20200923",
     "distributorNumber": "20",
     "address": "",
@@ -151,8 +151,7 @@ request(options, function(error, response, body) {
     "isActive": true,
     "isSubContractor": true,
     "createdDate": "2020-09-23T13:19:42.450Z",
-    "modifiedDate": "2020-09-23T13:19:42.450Z",
-    "systemAccount": "5112826056d961c030000001",
+    "modifiedDate": "2020-09-23T13:19:42.450Z"
   }
 }
 ```
@@ -174,7 +173,7 @@ _id | The _id of the distributor to retrieve
 ## Get Distributor Contact Persons
 
 ```shell
-curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5fca23df0317c3dae47b04a" \
+curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -182,7 +181,7 @@ curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5fca
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5fca23df0317c3dae47b04a";
+let url = "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b";
 let options = {
   url: url,
   headers: {
@@ -208,18 +207,18 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5fca23df0317c3dae47b04a",
+      "_id": "5fca23df0317c151d15459",
       "name": "Kontaktperson 1",
       "title": "",
       "workPhone": "",
       "cellPhone": "",
       "email": "",
-      "distributor": "5f6b2e6af24d5df55b69277",
+      "distributor": "5f6b2e6af24d5d7121b",
       "distributorName": "UE lev 20200923",
       "mainContact": false,
       "isActive": true,
       "createdDate": "2020-12-04T10:13:03.965Z",
-      "modifiedDate": "2020-12-04T10:13:03.965Z",
+      "modifiedDate": "2020-12-04T10:13:03.965Z"
     },
     {
       // ...
@@ -232,7 +231,7 @@ This endpoint retrieves distributor contact persons.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/distributorContactPersons/?distributor=5fca23df0317c3dae47b04a`
+`GET https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b`
 
 ### Query Parameters
 

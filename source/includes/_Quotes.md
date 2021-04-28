@@ -41,7 +41,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5c33891321361d7d5235d294",
+      "_id": "5c33891321361d7d548782561",
       "quoteNumber": "1054",
       "quoteType": 0,
       "quoteName": "Prisindikation",
@@ -53,16 +53,16 @@ request(options, function(error, response, body) {
       "headerText": null,
       "footerInfoText": null,
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
-      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-      "createdByUserName": "Tommy Hellström",
-      "ourReference": "5f48eb3e65d7ee4942c46eeb",
-      "ourReferenceName": "Tommy Hellström",
-      "salesAgent": "5f48eb3e65d7ee4942c46eeb",
-      "salesAgentName": "Tommy Hellström",
-      "customer": "5bb26376c42fb99275000080",
-      "customerName": "Hellapps",
+      "createdByUser": "5f48eb3e65d7ee494247852",
+      "createdByUserName": "Anna Andersson",
+      "ourReference": "5f48eb3e65d7ee494247852",
+      "ourReferenceName": "Anna Andersson",
+      "salesAgent": "5f48eb3e65d7ee494247852",
+      "salesAgentName": "Anna Andersson",
+      "customer": "5bb26376c42fb99275054892034",
+      "customerName": "Company",
       "customerNumber": "44312",
-      "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
+      "customerAddress": "Östra Gatan 129 123 45 Stockholm",
       "customerVAT": "",
       "contactPerson": null,
       "contactPersonName": null,
@@ -102,14 +102,14 @@ request(options, function(error, response, body) {
       "houseDeductionBasisAmount": 0,
       "houseDeductionAmount": 0,
       "enableQuoteConditions": false,
-      "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
+      "quoteConditionsContent": "",
       "multipleTaxesOnRows": false,
       "showPriceInclTaxesOnRows": true,
       "confirmationDate": null,
       "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
-      "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
+      "confirmationFooterInfoText": "",
       "confirmationTitle": "Orderbekräftelse",
-      "publicLink": "ObLBZZ0wDWcjlx7Be516",
+      "publicLink": "ObLBZZ0wDWcjlzxUwLnD",
       "useBudgetCalculation": false,
       "quoteAcceptReason": null,
       "quoteAcceptReasonName": null,
@@ -117,14 +117,14 @@ request(options, function(error, response, body) {
       "quoteDeclineReasonName": null,
       "notes": "",
       "openNotificationSent": false,
-      "quoteTemplate": "5b7dd2ba41cb2a725326s80",
+      "quoteTemplate": "5b7dd2ba41cb2a725547911",
       "stockReservationIsDone": false,
       "quoteElements": [
         {
-          "_id": "5b7ada8bc41cb2341681",
+          "_id": "5b7ada8548975216",
           "content": {
-            "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
-            "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
+            "text": "",
+            "confirmationText": ""
           },
           "backgroundColor": "FAFAFA",
           "bottomMargin": 20,
@@ -137,8 +137,7 @@ request(options, function(error, response, body) {
           "content": {
             "invoiceItems": [
               {
-                "stockLocation": "5bbd3a49dda7dbc37293680",
-                "editMode": true,
+                "stockLocation": "5bbd3a49dda6579841241",
                 "selectedFlag": false,
                 "houseWorkTypeOfWork": 0,
                 "houseWorkFlag": false,
@@ -160,8 +159,8 @@ request(options, function(error, response, body) {
                 "machine": null,
                 "driverJournalItemTypeName": "",
                 "driverJournalItemType": null,
-                "expenseItemName": "Seven Time - 5 användare - #2",
-                "expenseItem": "5de78aed1332719192362bed",
+                "expenseItemName": "Company - 5 användare - #2",
+                "expenseItem": "5de78aed1332719657d4218b",
                 "categoryName": "",
                 "timeCategory": null,
                 "itemType": "expense",
@@ -194,10 +193,10 @@ request(options, function(error, response, body) {
           "itemId": "0.086780107201752"
         },
         {
-          "_id": "5b7a808bc41361d87a3",
+          "_id": "5b7a808bc65798521357",
           "content": {
-            "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
-            "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
+            "text": "",
+            "confirmationText": ""
           },
           "backgroundColor": "FAFAFA",
           "bottomMargin": 20,
@@ -232,10 +231,10 @@ request(options, function(error, response, body) {
       "documents": [],
       "quoteLogEntries": [
         {
-          "_id": "5c33831c3512857d5cd6195",
+          "_id": "5c33831c3512857dd314687592",
           "logDate": "2019-01-07T17:15:08.533Z",
-          "userName": "Tommy Hellström",
-          "user": "59312765ad961c0318eb0a2",
+          "userName": "Anna Andersson",
+          "user": "59312765ad961c6489415",
           "description": "",
           "logType": 1,
           "entryId": "mZjaXWo2oRTr"
@@ -245,7 +244,7 @@ request(options, function(error, response, body) {
         }
       ],
       "invoiceItems": [],
-      "createDate": "2019-01-07T17:15:08.532Z",
+      "createDate": "2019-01-07T17:15:08.532Z"
     },
     {
       // ...
@@ -276,7 +275,7 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a specific Quote
 
 ```shell
-curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294" \
+curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561" \
   -H "Client-Secret: thisismysecretkey" \ 
   -H "Content-type: application/json"
 ```
@@ -284,7 +283,7 @@ curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/quotes/5c33891321361d7d5235d294";
+let url = "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561";
 let options = {
   url: url,
   headers: {
@@ -309,7 +308,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5c33891321361d7d5235d294",
+    "_id": "5c33891321361d7d548782561",
     "quoteNumber": "1054",
     "quoteType": 0,
     "quoteName": "Prisindikation",
@@ -321,16 +320,16 @@ request(options, function(error, response, body) {
     "headerText": null,
     "footerInfoText": null,
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
-    "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-    "createdByUserName": "Tommy Hellström",
-    "ourReference": "5f48eb3e65d7ee4942c46eeb",
-    "ourReferenceName": "Tommy Hellström",
-    "salesAgent": "5f48eb3e65d7ee4942c46eeb",
-    "salesAgentName": "Tommy Hellström",
-    "customer": "5bb26376c42fb99275000080",
-    "customerName": "Hellapps",
+    "createdByUser": "5f48eb3e65d7ee497412582",
+    "createdByUserName": "Anna Andersson",
+    "ourReference": "5f48eb3e65d7ee497412582",
+    "ourReferenceName": "Anna Andersson",
+    "salesAgent": "5f48eb3e65d7ee497412582",
+    "salesAgentName": "Anna Andersson",
+    "customer": "5bb26376c42fb9965479852",
+    "customerName": "Company",
     "customerNumber": "44312",
-    "customerAddress": "Glimmingevägen 18 26974 Västra Karup",
+    "customerAddress": "Östra Gatan 129 123 45 Stockholm",
     "customerVAT": "",
     "contactPerson": null,
     "contactPersonName": null,
@@ -370,14 +369,14 @@ request(options, function(error, response, body) {
     "houseDeductionBasisAmount": 0,
     "houseDeductionAmount": 0,
     "enableQuoteConditions": false,
-    "quoteConditionsContent": "<div>Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.</div><div>Leveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.</div><div>Frakt: frakt tillkommer enligt PROCLAD's prislista.</div><div>Priser: Alla priser är i SEK exklusive Moms.&nbsp;</div><div>Giltighet: Priserna gäller&nbsp;30 dagar efter&nbsp;offertdatum</div>",
+    "quoteConditionsContent": "",
     "multipleTaxesOnRows": false,
     "showPriceInclTaxesOnRows": true,
     "confirmationDate": null,
     "confirmationHeaderText": "Härmed bekräftar vi er beställning enligt specifikationen nedan.",
-    "confirmationFooterInfoText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto",
+    "confirmationFooterInfoText": "",
     "confirmationTitle": "Orderbekräftelse",
-    "publicLink": "ObLBZZ0wDWcjlx7Be516",
+    "publicLink": "ObLBZZ0wDWcjlxzUbYtLL",
     "useBudgetCalculation": false,
     "quoteAcceptReason": null,
     "quoteAcceptReasonName": null,
@@ -385,14 +384,14 @@ request(options, function(error, response, body) {
     "quoteDeclineReasonName": null,
     "notes": "",
     "openNotificationSent": false,
-    "quoteTemplate": "5b7dd2ba41cb2a725326s80",
+    "quoteTemplate": "5b7dd2ba41cb2a725879452815",
     "stockReservationIsDone": false,
     "quoteElements": [
       {
-        "_id": "5b7ada8bc41cb2341681",
+        "_id": "5b7ada8bc41cb365284975",
         "content": {
-          "text": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - ",
-          "confirmationText": "Hej!\nTack för er förfrågan. Vi har härmed möjligheten att offerera fasadtillbehör enligt nedan:\n\nHar tak? - \nHar fönster? - "
+          "text": "",
+          "confirmationText": ""
         },
         "backgroundColor": "FAFAFA",
         "bottomMargin": 20,
@@ -401,12 +400,11 @@ request(options, function(error, response, body) {
         "itemId": "0.1735729354019433"
       },
       {
-        "_id": "5c25fd4e818921172d237086",
+        "_id": "5c25fd4e8189211798574952",
         "content": {
           "invoiceItems": [
             {
-              "stockLocation": "5bbd3a49dda7dbc37293680",
-              "editMode": true,
+              "stockLocation": "5bbd3a49dda7dbc364978521",
               "selectedFlag": false,
               "houseWorkTypeOfWork": 0,
               "houseWorkFlag": false,
@@ -428,8 +426,8 @@ request(options, function(error, response, body) {
               "machine": null,
               "driverJournalItemTypeName": "",
               "driverJournalItemType": null,
-              "expenseItemName": "Seven Time - 5 användare - #2",
-              "expenseItem": "5de78aed1332719192362bed",
+              "expenseItemName": "Company - 5 användare - #2",
+              "expenseItem": "5de78aed13327196587954283",
               "categoryName": "",
               "timeCategory": null,
               "itemType": "expense",
@@ -462,10 +460,10 @@ request(options, function(error, response, body) {
         "itemId": "0.086780107201752"
       },
       {
-        "_id": "5b7a808bc41361d87a3",
+        "_id": "5b7a808bc413665478512",
         "content": {
-          "text": "Leveransvillkor: Enligt PROCLAD Scandinavia allmänna leverans- och försäljningsvillkor.\nLeveranstid: Enligt senare överenskommelse. Vi reservera oss för eventuell mellanförsäljning.\nFrakt: frakt tillkommer enligt PROCLAD's prislista.\nPriser: Alla priser är i SEK exklusive Moms. \nGiltighet: Priserna gäller 30 dagar efter offertdatum",
-          "confirmationText": "Tack för er beställning!\n\nLeveransvillkor: enligt PROCLAD Scandinavia leverans- och försäljningsvillkor.\nBetalning: 30 dagar netto"
+          "text": "",
+          "confirmationText": ""
         },
         "backgroundColor": "FAFAFA",
         "bottomMargin": 20,
@@ -500,10 +498,10 @@ request(options, function(error, response, body) {
     "documents": [],
     "quoteLogEntries": [
       {
-        "_id": "5c33831c3512857d5cd6195",
+        "_id": "5c33831c351285769857452542",
         "logDate": "2019-01-07T17:15:08.533Z",
-        "userName": "Tommy Hellström",
-        "user": "59312765ad961c0318eb0a2",
+        "userName": "Anna Andersson",
+        "user": "59312765ad961c036598758245",
         "description": "",
         "logType": 1,
         "entryId": "mZjaXWo2oRTr"
@@ -513,7 +511,7 @@ request(options, function(error, response, body) {
       }
     ],
     "invoiceItems": [],
-    "createDate": "2019-01-07T17:15:08.532Z",
+    "createDate": "2019-01-07T17:15:08.532Z"
   }
 }
 ```
@@ -568,20 +566,20 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5fb02816ed7ed72d9d936a0fa",
+      "_id": "5fb02816ed7ed72d965987485",
       "columnContents": [
         "This is a new footer!<br><br>"
       ],
       "templateName": "Standard utan sektioner",
       "quoteType": 0,
       "language": "",
-      "createdByUser": "5f48eb3e65d7ee4942c46eeb",
-      "createdByUserName": "Tommy Hellström",
+      "createdByUser": "5f48eb3e65d7ee49425485982",
+      "createdByUserName": "Anna Andersson",
       "createDate": "2020-11-09T13:31:10.929Z",
       "documents": [],
       "quoteElements": [
         {
-          "_id": "5b7a808bc41cb2a725000081",
+          "_id": "5b7a808bc41cb2a778985478541",
           "itemId": "0.2991772478801382",
           "elementTypeId": 1400,
           "topMargin": 20,
@@ -596,20 +594,19 @@ request(options, function(error, response, body) {
       "overrideLogoAndAddress": false,
       "logo": [
         {
-          "_id": "5f6b5b15468263005f22404f3",
+          "_id": "5f6b5b15468263005f54793258",
           "createDate": "2020-09-23T14:26:29.655Z",
           "modifiedDate": "2020-09-23T14:26:29.655Z",
-          "name": "logo-med-beskrivande-text-caps-black-text-w300.png",
-          "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/5112826056d961c030000001/quoteTemplates/5f6b45ac31d0496b82642951/logo/logo-med-beskrivande-text-caps-black-text-w300.png?AWSAccessKeyId=AKIAIS4KY6NEYJKCBSGA&Expires=1605360649&Signature=kVutB84nfsqrmqCpHsAL3AGX4q8%3D",
+          "name": "logo.png",
           "contentType": "image/png",
           "size": 6765,
-          "user": "5f48eb3e65d7ee4942c46eeb",
-          "userName": "Tommy Hellström"
+          "user": "5f48eb3e65d7ee468748512546",
+          "userName": "Anna Andersson"
         }
       ],
       "logotypeWidth": 200,
       "logoPosition": "left",
-      "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>",
+      "quoteAddress": "<b>Företaget</b><div>Gatan</div><div>12345 Staden</div>"
     },
     {
       // ...
@@ -669,7 +666,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "58a678badc33073a42e02802",
+      "_id": "58a678badc33073a42215684",
       "isActive": true,
       "quoteCategoryName": "Utbildning"
     },

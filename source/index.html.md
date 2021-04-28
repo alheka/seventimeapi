@@ -26,6 +26,7 @@ includes:
 - Quotes
 - ResultUnits
 - SupplementOrders
+- SupplierInvoices
 - TimeLogs
 - Users
 - Vehicles
@@ -92,7 +93,7 @@ The Seven Time API supports four different actions:
 - get - used to retrieve data
 - push - used to create new items, e.g. new customers, users, etc.
 - put - used to update items, e.g. update an exisiting customer, user, etc.
-- delete - used to delete items e.g. delete a supplier invoice
+- delete - used to delete items e.g. delete a supplier invoice.
 
 # Pagination
 Searches that returns a large number of results are paged due to performance reasons. 
