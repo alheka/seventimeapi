@@ -15,6 +15,7 @@ includes:
 - Customers
 - Departments
 - Distributors
+- Documents
 - DriverJournals
 - Expenses
 - Invoices
@@ -37,7 +38,7 @@ search: true
 
 # Introduction
 
-Welcome to the Seven Time API! You can use our API to access Seven Time API endpoints, currently limited to customers.
+Welcome to the Seven Time API! You can use our API to access Seven Time API endpoints.
 
 You can view code examples for Shell and JavaScript in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 

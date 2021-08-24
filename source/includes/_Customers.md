@@ -318,7 +318,7 @@ email               | String | No | Email address
 organizationNumber  | String | No | Organization number or Personal number
 vatNumber           | String | No | VAT number
 paymentDays         | Number | No | Payment days for the user
-deliveryAddress     | String | No | Contains attributes specific for delivery. See below for details.
+deliveryAddress     | Object | No | Contains attributes specific for delivery. See below for details.
 billingSettings     | Object | No | Contains attributes specific for billing. See below for details.
 
 **Attributes for deliveryAddress**
