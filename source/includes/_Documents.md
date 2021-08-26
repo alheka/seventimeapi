@@ -85,7 +85,7 @@ request.post(options, function (error, response, body) {
 }
 ```
 
-This endpoint uploads a document.
+This endpoint uploads a document or adds a folder.
 
 ### HTTP Request
 
@@ -96,11 +96,12 @@ This endpoint uploads a document.
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 uploadedBy         | String   | Yes | Id of the user who uploaded the file
-entityId           | String   | Yes | Id of the parent object, e.g. id of a work order
-entityType         | Number   | Yes | Entity type of the parent. See table below for available types and corresponding code
+entityId           | String   | Yes* | Id of the parent object, e.g. id of a work order. 
+entityType         | Number   | Yes* | Entity type of the parent. See table below for available types and corresponding code.
 file               | Object   | Yes | Object containing the file and information about the file. See below for more details
 folderId           | String   | Yes | Folder id in which the document will be placed in
 
+*Not Required for folders
 
 **Available entity types for parent object**
 
@@ -125,8 +126,9 @@ Code | Entity type
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-fileContent         | String   | Yes | The file content should be included here encoded as base64
+fileContent         | String   | Yes* | The file content should be included here encoded as base64.
 options             | Object   | Yes | Options for the file. This object should contain fileName and contentType
 fileName            | String   | Yes | Name of the file in Seven Time. This does not need to be the same as the local file
-contentType         | String   | Yes | Content or MIME type of the file
+contentType         | String   | Yes* | Content or MIME type of the file.
 
+*Not Required for folders
