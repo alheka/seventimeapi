@@ -115,6 +115,7 @@ workOrder          |  | If specified, time logs that match the parameter will be
 workOrderNumber    |  | If specified, time logs that match the parameter will be included.
 timestamp          |  | If specified, time logs that start after the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
 endTimestamp       |  | If specified, time logs that end before the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
+invoicedDate       |  | If specified, time logs with the specied invoice date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 

@@ -153,6 +153,8 @@ distributor              |  | If specified, supplier invoices that match the par
 fromInvoiceDate          |  | If specified, supplier invoices that match the parameter will be included.
 toInvoiceDate            |  | If specified, supplier invoices that match the parameter will be included.
 isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
+isSelfBillingInvoice     |  | If specified, supplier invoices that match the parameter will be included.
+exportedToEconomy        |  | If specified, supplier invoices that match the parameter will be included.
 sortBy                   |  | If specified, a sort will be made on the specified parameter
 sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
