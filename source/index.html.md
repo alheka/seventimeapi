@@ -32,6 +32,7 @@ includes:
 - Users
 - Vehicles
 - WorkOrders
+- WorkSchedules
 
 search: true
 ---

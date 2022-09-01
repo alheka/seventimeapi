@@ -130,6 +130,10 @@ This endpoint retrieves work schedules.
 
 `GET https://app.seventime.se/api/2/workSchedules`
 
+<hr>  
+                
+The array workScheduleDays holds the info for different days, monday to sunday. I.e. workScheduleDays[0] is monday and workScheduleDays[6] is sunday. 
+
 
 ## Get a specific Department
 
