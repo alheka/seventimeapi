@@ -624,7 +624,7 @@
                     <a href="#get-work-schedules" class="toc-h2 toc-link" data-title="Get Work schedules">Get Work schedules</a>
                   </li>
                   <li>
-                    <a href="#get-a-specific-department" class="toc-h2 toc-link" data-title="Get a specific Department">Get a specific Department</a>
+                    <a href="#get-a-specific-workschedule" class="toc-h2 toc-link" data-title="Get a specific WorkSchedule">Get a specific WorkSchedule</a>
                   </li>
               </ul>
           </li>
@@ -12448,7 +12448,7 @@ deletedByUser    | String | Yes | Id of the user who deleted the work order
 <p><hr>  </p>
 
 <p>The array workScheduleDays holds the info for different days, monday to sunday. I.e. workScheduleDays[0] is monday and workScheduleDays[6] is sunday. </p>
-<h2 id='get-a-specific-department'>Get a specific Department</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135"</span> <span class="se">\</span>
+<h2 id='get-a-specific-workschedule'>Get a specific WorkSchedule</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-type: application/json"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
@@ -12558,7 +12558,7 @@ deletedByUser    | String | Yes | Id of the user who deleted the work order
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint retrieves a specific department.</p>
+<p>This endpoint retrieves a specific work schedule.</p>
 <h3 id='http-request-2'>HTTP Request</h3>
 <p><code>GET https://app.seventime.se/api/2/workSchedules/&lt;_id&gt;</code></p>
 <h3 id='url-parameters'>URL Parameters</h3>
