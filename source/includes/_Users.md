@@ -55,7 +55,22 @@ request(options, function(error, response, body) {
       "userRoleId": 10,
       "isActive": true,
       "isActivated": true,
-      "language": "SV"
+      "language": "SV",
+      "workSchedules": [
+        {
+          "_id": "5e9565f2103b932af29dff7d",
+          "startDate": "2020-03-01T00:00:00.000Z",
+          "endDate": "2020-05-30T00:00:00.000Z",
+          "workSchedule": "5e9565ew103b932af29dcc5f"
+        },
+        {
+          "_id": "62ff8cbf16a40777f0166e86",
+          "startDate": "2020-06-01T00:00:00.000Z",
+          "endDate": null,
+          "workSchedule": "512406dfiua296a124000003"
+        }
+      ],
+      "canHaveDynamicSchedule": false
     },
     {
       // ...
@@ -139,7 +154,22 @@ request(options, function(error, response, body) {
     "userRoleId": 30,
     "isActive": true,
     "isActivated": true,
-    "language": "EN"
+    "language": "EN",
+    "workSchedules": [
+      {
+        "_id": "5e9565f2103b932af29dff7d",
+        "startDate": "2020-03-01T00:00:00.000Z",
+        "endDate": "2020-05-30T00:00:00.000Z",
+        "workSchedule": "5e9565ew103b932af29dcc5f"
+      },
+      {
+        "_id": "62ff8cbf16a40777f0166e86",
+        "startDate": "2020-06-01T00:00:00.000Z",
+        "endDate": null,
+        "workSchedule": "512406dfiua296a124000003"
+      }
+    ],
+    "canHaveDynamicSchedule": false
   }
 }
 ```
