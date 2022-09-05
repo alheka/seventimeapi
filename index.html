@@ -296,6 +296,12 @@
                   <li>
                     <a href="#get-distributor-contact-persons" class="toc-h2 toc-link" data-title="Get Distributor Contact Persons">Get Distributor Contact Persons</a>
                   </li>
+                  <li>
+                    <a href="#create-a-distributor" class="toc-h2 toc-link" data-title="Create a Distributor">Create a Distributor</a>
+                  </li>
+                  <li>
+                    <a href="#update-a-distributor" class="toc-h2 toc-link" data-title="Update a Distributor">Update a Distributor</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -608,6 +614,17 @@
                   </li>
                   <li>
                     <a href="#update-a-work-order" class="toc-h2 toc-link" data-title="Update a Work order">Update a Work order</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#work-schedules" class="toc-h1 toc-link" data-title="Work schedules">Work schedules</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-work-schedules" class="toc-h2 toc-link" data-title="Get Work schedules">Get Work schedules</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-specific-department" class="toc-h2 toc-link" data-title="Get a specific Department">Get a specific Department</a>
                   </li>
               </ul>
           </li>
@@ -1998,6 +2015,320 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <td>sortDirection</td>
 <td></td>
 <td>&quot;ascending&quot; or &quot;descending&quot;. If specified and sortBy is specified the sort order will be ascending or descending</td>
+</tr>
+</tbody></table>
+<h2 id='create-a-distributor'>Create a Distributor</h2><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s2">"https://app.seventime.se/api/2/distributors/"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -d <span class="s1">'{"name":"DistributorName"}'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">jsonData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'DistributorName'</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.seventime.se/api/2/distributors'</span><span class="p">,</span>
+  <span class="na">json</span><span class="p">:</span> <span class="nx">jsonData</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"ERROR! Unable to distributor: "</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">62</span><span class="err">f</span><span class="mi">3</span><span class="err">a</span><span class="mi">242</span><span class="err">ca</span><span class="mi">38</span><span class="err">bbsce</span><span class="mi">075249</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="err">'Distributor</span><span class="w"> </span><span class="err">Test'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"distributorNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">123456</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="err">'test</span><span class="w"> </span><span class="mi">1</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">12345</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="err">'Båstad'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="err">'SE'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">0412412412</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">132312</span><span class="err">kewkewa'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organizationNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">12345688</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"vatNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">90</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bankgiro"</span><span class="p">:</span><span class="w"> </span><span class="err">'eeee'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"plusgiro"</span><span class="p">:</span><span class="w"> </span><span class="err">'bbbbb'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="err">'testartestar</span><span class="w"> </span><span class="err">testar'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"purchaseOrderEmail"</span><span class="p">:</span><span class="w"> </span><span class="err">'test@testing.com'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ourCustomerNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">031239</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentDays"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isSubContractor"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"hasSelfBilling"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"selfBillingSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"invoiceDeduction"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceNumberSeries"</span><span class="p">:</span><span class="w"> </span><span class="err">'SE'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceCounter"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"emailForSelfBilling"</span><span class="p">:</span><span class="w"> </span><span class="err">'llllllll'</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">2022-08-10</span><span class="err">T</span><span class="mi">12</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mf">26.716</span><span class="err">Z'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">2022-08-10</span><span class="err">T</span><span class="mi">12</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mf">26.718</span><span class="err">Z'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="err">__v</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span></code></pre>
+<p>This endpoint creates a distributor</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://app.seventime.se/api/2/distributors/</code></p>
+<h3 id='post-parameters'>POST Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Yes</td>
+<td>Name of the distributor</td>
+</tr>
+<tr>
+<td>distributorNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Distributor number</td>
+</tr>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>No</td>
+<td>Address of the distributor</td>
+</tr>
+<tr>
+<td>zipCode</td>
+<td>String</td>
+<td>No</td>
+<td>Zip code of the distributor</td>
+</tr>
+<tr>
+<td>city</td>
+<td>String</td>
+<td>No</td>
+<td>City of the distributor</td>
+</tr>
+<tr>
+<td>country</td>
+<td>String</td>
+<td>No</td>
+<td>Country of the distributor</td>
+</tr>
+<tr>
+<td>email</td>
+<td>Number</td>
+<td>No</td>
+<td>Email of the distributor</td>
+</tr>
+<tr>
+<td>organizationNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Organization number for the distributor</td>
+</tr>
+<tr>
+<td>vatNumber</td>
+<td>String</td>
+<td>No</td>
+<td>VAT number for the distributor</td>
+</tr>
+<tr>
+<td>bankgiro</td>
+<td>String</td>
+<td>No</td>
+<td>Bankgiro for distributor</td>
+</tr>
+<tr>
+<td>plusgiro</td>
+<td>String</td>
+<td>No</td>
+<td>Plusgiro for distributor</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>String</td>
+<td>No</td>
+<td>Notes</td>
+</tr>
+<tr>
+<td>purchaseOrderEmail</td>
+<td>String</td>
+<td>No</td>
+<td>The purchase order email</td>
+</tr>
+<tr>
+<td>ourCustomerNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Your customer number for the distributor</td>
+</tr>
+<tr>
+<td>paymentDays</td>
+<td>Number</td>
+<td>No</td>
+<td>Number of payment days</td>
+</tr>
+<tr>
+<td>isSubContractor</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Is it a sub contractor?</td>
+</tr>
+<tr>
+<td>hasSelfBilling</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Should the distributor have self billing?</td>
+</tr>
+<tr>
+<td>selfBillingSettings</td>
+<td>Array</td>
+<td>No</td>
+<td>Array containing information about self billing. See below for more details.</td>
+</tr>
+<tr>
+<td>isActive</td>
+<td>Boolean</td>
+<td>No</td>
+<td>Should the distributor be active?</td>
+</tr>
+</tbody></table>
+
+<p><strong>Attributes for selfBillingSettings</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>invoiceDeduction</td>
+<td>String</td>
+<td>No</td>
+<td>Invoice deduction</td>
+</tr>
+<tr>
+<td>invoiceNumberSeries</td>
+<td>String</td>
+<td>No</td>
+<td>Invoice number series</td>
+</tr>
+<tr>
+<td>invoiceCounter</td>
+<td>String</td>
+<td>No</td>
+<td>Invoice counter</td>
+</tr>
+<tr>
+<td>emailForSelfBilling</td>
+<td>String</td>
+<td>No</td>
+<td>Email for self billing</td>
+</tr>
+</tbody></table>
+<h2 id='update-a-distributor'>Update a Distributor</h2><pre class="highlight shell tab-shell"><code>curl -X PUT <span class="s2">"https://app.seventime.se/api/2/distributors/"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -d <span class="s1">'{"_id":"62f3a242ca38bbsce075249",name:"New distributor name"}'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">jsonData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">_id</span><span class="p">:</span> <span class="s1">'5fbcfe75ba9312280e2145897521'</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'New distributor name'</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.seventime.se/api/2/distributors'</span><span class="p">,</span>
+  <span class="na">json</span><span class="p">:</span> <span class="nx">jsonData</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Distributor updated: _id: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">_id</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"ERROR! Unable to distributor: "</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">62</span><span class="err">f</span><span class="mi">3</span><span class="err">a</span><span class="mi">242</span><span class="err">ca</span><span class="mi">38</span><span class="err">bbsce</span><span class="mi">075249</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="err">'New</span><span class="w"> </span><span class="err">distributor</span><span class="w"> </span><span class="err">name'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"distributorNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">123456</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="err">'test</span><span class="w"> </span><span class="mi">1</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">12345</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="err">'Båstad'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="err">'SE'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">0412412412</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">132312</span><span class="err">kewkewa'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"organizationNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">12345688</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"vatNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">90</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"bankgiro"</span><span class="p">:</span><span class="w"> </span><span class="err">'eeee'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"plusgiro"</span><span class="p">:</span><span class="w"> </span><span class="err">'bbbbb'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="err">'testartestar</span><span class="w"> </span><span class="err">testar'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"purchaseOrderEmail"</span><span class="p">:</span><span class="w"> </span><span class="err">'test@testing.com'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"ourCustomerNumber"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">031239</span><span class="err">'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"paymentDays"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isSubContractor"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"hasSelfBilling"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"selfBillingSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"invoiceDeduction"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceNumberSeries"</span><span class="p">:</span><span class="w"> </span><span class="err">'SE'</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"invoiceCounter"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"emailForSelfBilling"</span><span class="p">:</span><span class="w"> </span><span class="err">'llllllll'</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">2022-08-10</span><span class="err">T</span><span class="mi">12</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mf">26.716</span><span class="err">Z'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="err">'</span><span class="mi">2022-08-10</span><span class="err">T</span><span class="mi">12</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mf">26.718</span><span class="err">Z'</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="err">__v</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="s2">"Distributor updated: _id: 62f3a242ca38bbsce075249"</span><span class="w">
+</span></code></pre>
+<p>This endpoint updates a distributor</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>PUT https://app.seventime.se/api/2/distributors/</code></p>
+<h3 id='put-parameters'>PUT Parameters</h3>
+<p>The table below shows the required fields. Other available fields can be found in the section &#39;Create a Time Log&#39;.</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>String</td>
+<td>Yes</td>
+<td>Id of the distributor</td>
 </tr>
 </tbody></table>
 <h1 id='documents'>Documents</h1><h2 id='get-documents'>Get Documents</h2>
@@ -8807,6 +9138,16 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>If specified, supplier invoices that match the parameter will be included.</td>
 </tr>
 <tr>
+<td>isSelfBillingInvoice</td>
+<td></td>
+<td>If specified, supplier invoices that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>exportedToEconomy</td>
+<td></td>
+<td>If specified, supplier invoices that match the parameter will be included.</td>
+</tr>
+<tr>
 <td>sortBy</td>
 <td></td>
 <td>If specified, a sort will be made on the specified parameter</td>
@@ -9595,6 +9936,11 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>If specified, time logs that end before the given date and time will be included. The date has to be in the format &#39;YYYY-MM-HH HH:MM&#39;</td>
 </tr>
 <tr>
+<td>invoicedDate</td>
+<td></td>
+<td>If specified, time logs with the specied invoice date will be included. The date has to be in the format &#39;YYYY-MM-HH HH:MM&#39;</td>
+</tr>
+<tr>
 <td>sortBy</td>
 <td></td>
 <td>If specified, a sort will be made on the specified parameter</td>
@@ -10194,7 +10540,22 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
       </span><span class="s2">"userRoleId"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
       </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
       </span><span class="s2">"isActivated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SV"</span><span class="w">
+      </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SV"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"workSchedules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e9565f2103b932af29dff7d"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-03-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-30T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"workSchedule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e9565ew103b932af29dcc5f"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62ff8cbf16a40777f0166e86"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"workSchedule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"512406dfiua296a124000003"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"canHaveDynamicSchedule"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
@@ -10310,7 +10671,22 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
     </span><span class="s2">"userRoleId"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
     </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
     </span><span class="s2">"isActivated"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="w">
+    </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"workSchedules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e9565f2103b932af29dff7d"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-03-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-05-30T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"workSchedule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e9565ew103b932af29dcc5f"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"62ff8cbf16a40777f0166e86"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"startDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-06-01T00:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"endDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"workSchedule"</span><span class="p">:</span><span class="w"> </span><span class="s2">"512406dfiua296a124000003"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"canHaveDynamicSchedule"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
@@ -11950,6 +12326,253 @@ Parameter | Type | Required? | Description
 _id               | String | Yes | Id of the work order
 deletedByUser    | String | Yes | Id of the user who deleted the work order
 -->
+<h1 id='work-schedules'>Work schedules</h1><h2 id='get-work-schedules'>Get Work schedules</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/workSchedules"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/workSchedules"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"512406df88a296a124000106"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Heltid"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100%"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"workScheduleWeeks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"workScheduleDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                  </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                  </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                  </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                  </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                  </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                  </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                  </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                  </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                  </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+                  </span><span class="p">}</span><span class="w">
+                </span><span class="p">],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+              </span><span class="p">},</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+                </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves work schedules.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/workSchedules</code></p>
+
+<p><hr>  </p>
+
+<p>The array workScheduleDays holds the info for different days, monday to sunday. I.e. workScheduleDays[0] is monday and workScheduleDays[6] is sunday. </p>
+<h2 id='get-a-specific-department'>Get a specific Department</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"512406df88a296b124000106"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Heltid"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100%"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"workScheduleWeeks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"workScheduleDays"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+              </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"breakStartHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"breakEndHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">13</span><span class="w">
+              </span><span class="p">}</span><span class="w">
+            </span><span class="p">],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"breaks"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+            </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"startHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"endHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"numberOfWorkHours"</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a specific department.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/workSchedules/&lt;_id&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>The _id of the work schedule to retrieve</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
