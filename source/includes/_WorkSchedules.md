@@ -135,10 +135,10 @@ This endpoint retrieves work schedules.
 The array workScheduleDays holds the info for different days, monday to sunday. I.e. workScheduleDays[0] is monday and workScheduleDays[6] is sunday. 
 
 
-## Get a specific Department
+## Get a specific WorkSchedule
 
 ```shell
-curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135" \
+curl "https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -253,7 +253,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves a specific department.
+This endpoint retrieves a specific work schedule.
 
 
 
