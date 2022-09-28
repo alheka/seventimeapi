@@ -104,6 +104,7 @@ workOrderNumber |  | If specified, work orders that match the parameter will be 
 project         |  | If specified, work orders that match the parameter will be included.
 user            |  | If specified, work orders that match the parameter will be included.
 customer        |  | If specified, work orders that match the parameter will be included.
+lastModified    |  | If specified, work orders that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy          |  | If specified, a sort will be made on the specified parameter
 sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 

@@ -113,9 +113,10 @@ task               |  | If specified, time logs that match the parameter will be
 category           |  | If specified, time logs that match the parameter will be included.
 workOrder          |  | If specified, time logs that match the parameter will be included.
 workOrderNumber    |  | If specified, time logs that match the parameter will be included.
-timestamp          |  | If specified, time logs that start after the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
-endTimestamp       |  | If specified, time logs that end before the given date and time will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
-invoicedDate       |  | If specified, time logs with the specied invoice date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'
+timestamp          |  | If specified, time logs that start after the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+invoicedDate       |  | If specified, time logs with invoice date since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -444,8 +445,8 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 createdByUser       | String | Yes | Id of the user who created the time log
 user                | String | Yes | Id of the user on the time log
-timestamp           | String | Yes | Starting date and time for the time log. This must be in the format 'YYYY-MM-DD HH-MM'
-endTimestamp        | String | No* | Starting date and time for the time log. This must be in the format 'YYYY-MM-DD HH-MM'. *This is required if field 'time' is not specified
+timestamp           | String | Yes | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+endTimestamp        | String | No* | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'. *This is required if field 'time' is not specified
 time                | String | No* | time of the timelog in hours. *This is required if field 'endTimestamp' is not specified
 invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log
 customer            | String | No  | Id of the customer

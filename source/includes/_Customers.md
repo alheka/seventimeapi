@@ -117,9 +117,10 @@ E.g. `https://app.seventime.se/api/2/customers/?limit=10&page=1&organizationNumb
 Parameter | Default | Description
 --------- | ------- | -----------
 name                |  | If specified, customers that match the parameter will be included.
-customerNumber      |    | If specified, customers that match the parameter will be included.
+customerNumber      |  | If specified, customers that match the parameter will be included.
 organizationNumber  |  | If specified, customers that match the parameter will be included.
 city                |  | If specified, customers that match the parameter will be included.
+lastModified        |  | If specified, customers that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy              |  | If specified, a sort will be made on the specified parameter
 sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
