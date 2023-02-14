@@ -108,6 +108,7 @@ project            |  | If specified, expenses that match the parameter will be 
 distributor        |  | If specified, expenses that match the parameter will be included.
 fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+lastModified       |  | If specified, expenses that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
