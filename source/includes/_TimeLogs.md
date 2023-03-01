@@ -96,7 +96,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves machines time logs.
+This endpoint retrieves time logs (and absences if the punch clock module is not used). The attribute "isAbsence" will be true for absences.
 
 ### HTTP Request
 
@@ -116,6 +116,7 @@ workOrderNumber    |  | If specified, time logs that match the parameter will be
 timestamp          |  | If specified, time logs that start after the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 invoicedDate       |  | If specified, time logs with invoice date since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+isAbsence          |  | If specified, time logs that is of "absence type" will be included.
 lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
@@ -182,6 +183,7 @@ request(options, function(error, response, body) {
     "project": null,
     "time": 41.18577972222222,
     "timeCategory": null,
+    "isAbsence": false,
     "timestamp": "2013-03-14T18:28:26.193Z",
     "user": "51203146506d961c030248975612",
     "userName": "Anna Andersson",
@@ -211,8 +213,6 @@ request(options, function(error, response, body) {
 ```
 
 This endpoint retrieves a specific time log.
-
-
 
 ### HTTP Request
 
@@ -447,7 +447,7 @@ createdByUser       | String | Yes | Id of the user who created the time log
 user                | String | Yes | Id of the user on the time log
 timestamp           | String | Yes | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 endTimestamp        | String | No* | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'. *This is required if field 'time' is not specified
-time                | String | No* | time of the timelog in hours. *This is required if field 'endTimestamp' is not specified
+time                | String | No* | Time of the time log in hours. *This is required if field 'endTimestamp' is not specified
 invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log
 customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
@@ -457,7 +457,8 @@ pricePerHour        | Number | No  | price per hour of the time log. If not spec
 description         | String | No  | Description/notes of the time log
 internalDescription | String | No  | Internal description/notes of the time log
 supplementOrder     | Boolean | No  | Is the time log a supplement order?
-isInvoiceable       | Boolean | No  | Your order number
+isInvoiceable       | Boolean | No  | Invoiceable ot not
+isAbsence           | Boolean | No  | Should be set to true if it is an absence  
 
 ## Update a Time Log
 
@@ -508,6 +509,7 @@ request.put(options, function (error, response, body) {
   "status": 1,
   "isInvoiceable": true,
   "isInvoiced": false,
+  "isAbsence": false,
   "_id": "5fbcfe75ba9312280e2145897521",
   "timestamp": "2020-10-07T06:00:00.000Z",
   "realTimestamp": "2020-10-07T06:00:00.000Z",
