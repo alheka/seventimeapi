@@ -147,7 +147,7 @@ supplierInvoiceNumber    |  | If specified, supplier invoices that match the par
 supplierInvoiceStatus    |  | If specified, supplier invoices that match the parameter will be included.
 project                  |  | If specified, supplier invoices that match the parameter will be included.
 customer                 |  | If specified, supplier invoices that match the parameter will be included.
-workOrder           |  | If specified, supplier invoices that match the parameter will be included.
+workOrder                |  | If specified, supplier invoices that match the parameter will be included.
 workOrderNumber          |  | If specified, supplier invoices that match the parameter will be included.
 distributor              |  | If specified, supplier invoices that match the parameter will be included.
 fromInvoiceDate          |  | If specified, supplier invoices that match the parameter will be included.
@@ -155,6 +155,7 @@ toInvoiceDate            |  | If specified, supplier invoices that match the par
 isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
 isSelfBillingInvoice     |  | If specified, supplier invoices that match the parameter will be included.
 exportedToEconomy        |  | If specified, supplier invoices that match the parameter will be included.
+lastModified             |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy                   |  | If specified, a sort will be made on the specified parameter
 sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
