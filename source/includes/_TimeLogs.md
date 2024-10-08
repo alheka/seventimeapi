@@ -96,7 +96,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves machines time logs.
+This endpoint retrieves time logs.
 
 ### HTTP Request
 
