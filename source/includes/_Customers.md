@@ -238,7 +238,7 @@ _id | The _id of the customer to retrieve
 Curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":Stockholm","phone":1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","phone":1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
 ```
 
 ```javascript
@@ -296,7 +296,7 @@ request.post(options, function (error, response, body) {
 }
 ```
 
-This endpoint creates a specific customer.
+This endpoint creates a customer.
 
 ### HTTP Request
 
