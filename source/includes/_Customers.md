@@ -309,6 +309,7 @@ Parameter | Type | Required? | Description
 createdByUser       | String | Yes | Id of the user who created the customer
 name                | String | Yes | Name of the customer
 customerNumber      | String | No | Customer number. If specified it has to be unique otherwise an error will be returned. If not specified it will be set automatically.
+typeOfCustomer      | String | No | Type of Customer. 10 for company, 20 for private
 address             | String | No | Address
 address2            | String | No | Address 2
 zipCode             | String | No | Zip code
