@@ -504,6 +504,8 @@ allowRegistrationOfTimes     | Boolean | No | Should it be possible to register 
 allowRegistrationOfExpenses  | Boolean | No | Should it be possible to register expenses on the work order?
 marking             | String | No | Marking on the work order
 yourOrderNumber     | String | No | Your order number of the work order
+tags                | Array  | No | Array containing the ids of the tags
+
 
 **Colors for work orders**
 
