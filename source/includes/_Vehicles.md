@@ -118,7 +118,7 @@ This endpoint retrieves a specific vehicle.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/vehicle/<_id>`
+`GET https://app.seventime.se/api/2/vehicles/<_id>`
 
 ### URL Parameters
 

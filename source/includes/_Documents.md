@@ -81,7 +81,7 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  success: true
+  "success": true
 }
 ```
 
@@ -99,7 +99,7 @@ uploadedBy         | String   | Yes | Id of the user who uploaded the file
 entityId           | String   | Yes* | Id of the parent object, e.g. id of a work order. 
 entityType         | Number   | Yes* | Entity type of the parent. See table below for available types and corresponding code.
 file               | Object   | Yes | Object containing the file and information about the file. See below for more details
-folderId           | String   | Yes | Folder id in which the document will be placed in
+folderId           | String   | No | Folder id in which the document will be placed. Defaults to null when omitted.
 
 *Not Required for folders
 
@@ -127,7 +127,7 @@ Code | Entity type
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 fileContent         | String   | Yes* | The file content should be included here encoded as base64.
-options             | Object   | Yes | Options for the file. This object should contain fileName and contentType
+options             | Object   | Yes | Options for the file. This object must contain fileName and contentType. Folder uploads currently still require file.options.fileName due to the current implementation.
 fileName            | String   | Yes | Name of the file in Seven Time. This does not need to be the same as the local file
 contentType         | String   | Yes* | Content or MIME type of the file.
 

@@ -589,7 +589,7 @@ request.post(options, function (error, response, body) {
   "createdByUserName": "Anna Andersson",
   "customer": "571f21058d7f612467981357165",
   "customerName": "Company",
-  "dueDate": "2020-12-09T22":59":59.999Z",
+  "dueDate": "2020-12-09T22:59:59.999Z",
   "language": "EN",
   "invoiceType": 0,
   "totalAmount": 0,
@@ -817,11 +817,11 @@ request.put(options, function (error, response, body) {
   "taxPercent": 25,
   "invoiceStatus": 2,
   "invoiceDate": "2020-11-19T10:09:13.033Z",
-  "createdByUser": "5f48eb3e65d7ee494b523978"
+  "createdByUser": "5f48eb3e65d7ee494b523978",
   "createdByUserName": "Anna Andersson",
   "customer": "571f21058d7f618a264217895",
   "customerName": "Company AB",
-  "dueDate": "2020-12-09T22":59":59.999Z",
+  "dueDate": "2020-12-09T22:59:59.999Z",
   "language": "EN",
   "invoiceType": 0,
   "totalAmount": 0,
@@ -853,6 +853,10 @@ multipleTaxesOnRows     | Boolean| Yes | Should it be possible to use different 
 taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
 invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
 invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
+
+<aside class="notice">
+DELETE Invoices is not documented because this route is not currently implemented.
+</aside>
 
 <!---
 ## Delete an Invoice

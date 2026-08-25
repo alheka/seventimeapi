@@ -446,6 +446,10 @@ Parameter | Type | Required? | Description
 _id                 | String | Yes | Id of the customer
 modifiedByUser      | String | Yes | Id of the user who updated the customer
 
+<aside class="notice">
+DELETE Customers is not documented because this route is not currently implemented.
+</aside>
+
 <!---
 ## Delete a Customer
 

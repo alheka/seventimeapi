@@ -149,7 +149,7 @@ This endpoint retrieves supplement orders.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-project       |  | Id of the project that supplement orders will be retrieved from. This parameter is required
+project       |  | Required. Id of the project that supplement orders will be retrieved from. The list endpoint requires this query parameter.
 sortBy        |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -290,7 +290,7 @@ This endpoint retrieves a specific supplement order.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/supplementOrder/<_id>`
+`GET https://app.seventime.se/api/2/supplementOrders/<_id>`
 
 ### URL Parameters
 

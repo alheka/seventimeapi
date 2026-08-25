@@ -11,6 +11,7 @@ toc_footers:
 
 includes:
 - errors
+- CompanyInformation
 - ContactPersons
 - Customers
 - Departments
@@ -26,12 +27,14 @@ includes:
 - PurchaseOrders
 - Quotes
 - ResultUnits
+- Statuses
 - SupplementOrders
 - SupplierInvoices
 - TimeLogs
 - Users
 - Vehicles
 - WorkOrders
+- WebhookSubscriptions
 - WorkSchedules
 
 search: true
@@ -86,7 +89,8 @@ You must replace <code>thisismysecretkey</code> with your personal API key.
 # Header fields
 In addition to the 'Client-Secret', a few fields are required in the Header:
 
-- Content-type - Must be "application/json"
+- Client-Secret - Required for all requests. An invalid key returns HTTP 401. Due to the current implementation, omitting this header can return HTTP 500 instead of HTTP 401.
+- Content-type - Must be "application/json". This is enforced for all non-GET requests.
 - Accept - Must be "application/json"
 
 # Actions
@@ -133,5 +137,5 @@ The data property contains the information requested.
 
 # Rate-limit
 When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned.
-The limit is **4 requests per second**. This equals to a bit more than 200 requests per minute.
+The production limit is **4 requests per second**. This equals to a bit more than 200 requests per minute.
 

@@ -728,6 +728,10 @@ Parameter | Type | Required? | Description
 _id                     | String | Yes | Id of the project
 modifiedByUser          | String | Yes | Id of the user who made the change
 
+<aside class="notice">
+DELETE Projects is not documented because this route is not currently implemented.
+</aside>
+
 <!---
 ## Delete a Project
 

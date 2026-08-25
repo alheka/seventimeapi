@@ -227,7 +227,7 @@ _id | The _id of the time log to retrieve
 ## Get Time Categories
 
 ```shell
-curl "https://app.seventime.se/api/2/timeCategories" \
+curl "https://app.seventime.se/api/2/TimeCategories" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -235,7 +235,7 @@ curl "https://app.seventime.se/api/2/timeCategories" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/timeCategories/?";
+let url = "https://app.seventime.se/api/2/TimeCategories/?";
 let options = {
   url: url,
   headers: {
@@ -288,7 +288,7 @@ This endpoint retrieves time categories.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/timeCategories`
+`GET https://app.seventime.se/api/2/TimeCategories`
 
 ### Query Parameters
 
@@ -408,8 +408,8 @@ request.post(options, function (error, response, body) {
 
 ```json 
 { 
-  "startLocation": { type: 'Point', coordinates: [] },
-  "stopLocation": { type: 'Point', coordinates: [] },
+  "startLocation": { "type": "Point", "coordinates": [] },
+  "stopLocation": { "type": "Point", "coordinates": [] },
   "allDay": false,
   "status": 1,
   "isInvoiceable": true,
@@ -503,8 +503,8 @@ request.put(options, function (error, response, body) {
 
 ```json 
 { 
-  "startLocation": { type: 'Point', coordinates: [] },
-  "stopLocation": { type: 'Point', coordinates: [] },
+  "startLocation": { "type": "Point", "coordinates": [] },
+  "stopLocation": { "type": "Point", "coordinates": [] },
   "allDay": false,
   "status": 1,
   "isInvoiceable": true,
@@ -520,7 +520,7 @@ request.put(options, function (error, response, body) {
   "machineTimeSupplements": [],
   "user": "51203146506d961c03036589741",
   "userName": "Anna Andersson",
-  "endTimestamp": "2020-10-07T014:00:00.000Z",
+  "endTimestamp": "2020-10-07T14:00:00.000Z",
   "realEndTimestamp": "2020-10-07T14:00:00.000Z",
   "time": 8,
   "invoiceableTime": 8,

@@ -605,6 +605,10 @@ Parameter | Type | Required? | Description
 _id                | String   | Yes | Id of the user
 modifiedByUser     | String   | Yes | Id of the user who made the change
 
+<aside class="notice">
+DELETE Users is not documented because this route is not currently implemented.
+</aside>
+
 <!---
 ## Delete a User
 

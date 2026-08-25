@@ -204,7 +204,7 @@ This endpoint retrieves a specific machine.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/machine/<_id>`
+`GET https://app.seventime.se/api/2/machines/<_id>`
 
 ### URL Parameters
 

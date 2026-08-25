@@ -434,7 +434,7 @@ request.post(options, function (error, response, body) {
 
 ```json 
 { 
-    "title": "Support"
+    "title": "Support",
     "workOrderNumber": 4908,       
     "description": "",   
     "locationCoordinates": [],
@@ -463,7 +463,7 @@ request.post(options, function (error, response, body) {
     "status": 500,
     "statusRef": "587f7dadd10fbbe338000055",
     "createdByUser": "5912626016d971c03069712",
-    "createdByUserName": "Anna Andersson",
+    "createdByUserName": "Anna Andersson"
 }
 ```
 
@@ -692,6 +692,10 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id               | String | Yes | Id of the work order
 modifiedByUser    | String | Yes | Id of the user who updated the work order
+
+<aside class="notice">
+DELETE Work Orders is not documented because this route is not currently implemented.
+</aside>
 
 <!---
 ## Delete a Work order
