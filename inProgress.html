@@ -447,23 +447,31 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </thead><tbody>
 <tr>
 <td>400</td>
-<td>Bad Request -- Your request is invalid.</td>
+<td>Bad Request -- Your request is invalid, e.g. a required field is missing, a parameter has an invalid value, or the &#39;Content-Type&#39; header is not &#39;application/json&#39; on a non-GET request.</td>
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong.</td>
+<td>Unauthorized -- Your API key is wrong, or the user connected to a personal API key is no longer active.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The resource requested is hidden for administrators only.</td>
+<td>Forbidden -- The API key (or the user connected to a personal API key) does not have permission to access the resource.</td>
 </tr>
 <tr>
 <td>404</td>
 <td>Not Found -- The specified resource could not be found.</td>
 </tr>
 <tr>
+<td>422</td>
+<td>Unprocessable Entity -- The list query has no filters and could match a very large number of records (<code>code</code>: &quot;QUERY_TOO_BROAD&quot;). Add a filter, e.g. a date range.</td>
+</tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- The rate limit has been exceeded. See &#39;Rate-limit&#39;.</td>
+</tr>
+<tr>
 <td>500</td>
-<td>Internal Server Error -- We had a problem with our server. Try again later.</td>
+<td>Internal Server Error -- We had a problem with our server. Note that many validation errors that occur when creating or updating a resource are also returned with HTTP 500 and a descriptive <code>errorMessage</code>.</td>
 </tr>
 <tr>
 <td>503</td>
