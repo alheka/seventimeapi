@@ -36,8 +36,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 70,
+    "totalResourcesIsExact": true,
     "totalPages": 35,
-    "currentPage": 5
+    "currentPage": 1,
+    "hasMore": true,
+    "nextPage": 2
   },
   "data": [
     {
@@ -136,6 +139,10 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves purchase orders.
 
+At least one filter, e.g. a distributor or a project, has to be specified. A request without any filter returns HTTP status 422 with the code `QUERY_TOO_BROAD`.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching purchase orders, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/purchaseOrders`
@@ -152,6 +159,8 @@ distributor                         |  | If specified, purchase orders that matc
 project                             |  | If specified, purchase orders that match the parameter will be included.
 workOrder                           |  | If specified, purchase orders that match the parameter will be included.
 workOrderNumber                     |  | If specified, purchase orders that match the parameter will be included.
+limit                               | 100 | Number of purchase orders per page. Maximum 500
+page                                | 1 | Page number
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -412,17 +421,18 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 createdByUser             | String | Yes | Id of the user who created the purchase order
 distributor               | String | Yes | Id of the distributor
-language                  | String | No | Language of the purchase order as a language code, e.g 'SV' for Swedish
+language                  | String | No | Language of the purchase order as a language code, 'SV' for Swedish or 'EN' for English
 purchaseOrderName         | String | No | Name of the purchase order. If not specified, this will be set according to the settings
 purchaseOrderInfoName     | String | No | Name of the info box on the purchase order. This will not be shown on the purchase order when sent
-purchaseOrderStatus       | String | No | Purchase order status. See below for available statuses
+purchaseOrderStatus       | Number | No | Purchase order status. See below for available statuses. If not specified, this will be set to 1 (Draft)
+ourReference              | String | No | Id of the user who is our reference. If not specified, this will be set to createdByUser
 contactPersonDistributor  | String | No | Id of the contact person of the distributor
 purchaseOrderDate         | String | No | Purchase order date in the format 'YYYY-MM-DD'
 workOrder                 | String | No | Id of the work order. The work order will only be shown in the info box and not on the purchase order when sent
 project                   | String | No | Id of the project. The project will only be shown in the info box and not on the purchase order when sent
 desiredDeliveryDate       | String | No | Desired delivery date
 deliveryAddress           | Object | No | Contains attributes for delivery address. See below for details
-deliveryAttention         | String | No | Id of the delivery attention
+deliveryAttention         | String | No | Name of the delivery attention
 deliveryPhone             | String | No | Phone number of the delivery
 invoiceAddress            | Object | No | Contains attributes for invoice address. See below for details
 marking                   | String | No | Marking on the purchase order
@@ -453,7 +463,8 @@ address2                    | String | No | Secondary address
 zipCode                     | String | No | Zip code
 city                        | String | No | City
 country                     | String | No | Country, given as a country code (E.g. SE for Sweden)
-phone                       | String | No | Phone number
+phone                       | String | No | Phone number. Only for deliveryAddress
+email                       | String | No | Email address. Only for invoiceAddress
 
 
 
@@ -464,7 +475,7 @@ The field invoiceItems should be an array containing objects with the attributes
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 itemType              | String | Yes | Item type of invoice row, see below for details
-expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
+expenseItem           | String | No* | Id of the expense item. *If itemType is expense, one of expenseItem, articleNumber or name is required
 timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
 numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
 unit                  | String | No  | Unit of the item
@@ -480,7 +491,7 @@ This table contains the different item types used in the field invoiceItems.item
 Item type |  Description
 --------- |-----------
 expense        | Expense row
-timeLog        | Time log row
+timelog        | Time log row
 general        | Free-text row
 blank          | Blank row
 text           | Text row
@@ -638,7 +649,7 @@ let options = {
 request.delete(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
-    console.log("Purchase Order deleted: " + body.purchaseOrderName +  ", _id: " + body._id);
+    console.log("Purchase Order deleted: " + body.name +  ", _id: " + body._id);
   } else {
     console.error("ERROR! Unable to delete purchase order: " + error);
     console.error(body);
@@ -651,8 +662,8 @@ request.delete(options, function (error, response, body) {
 ```json 
 { 
   "_id": "5fca480e571eb8548271985c",
-  "purchaseOrderName": "purchase Order 123",
-  "purchaseOrderNumber": "1051",
+  "number": "1051",
+  "name": "purchase Order 123"
 }
 "Purchase Order deleted: name: purchase Order 123, _id: 5fca480e571eb8548271985c"
 
@@ -669,3 +680,4 @@ This endpoint deletes a purchase order
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                        | String | Yes | Id of the purchase order
+deletedByUser              | String | Yes | Id of the user who deleted the purchase order

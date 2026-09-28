@@ -63,8 +63,10 @@ This endpoint retrieves price lists.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy | name | If specified, a sort will be made on the specified parameter
+sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit | 100 | Number of price lists per page. Maximum 500
+page | 1 | Page number
 
 
 ## Get a specific Price List

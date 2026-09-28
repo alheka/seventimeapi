@@ -103,14 +103,16 @@ E.g. `https://app.seventime.se/api/2/machines/?machineNumber=21`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-name             |  | If specified, invoices that match the parameter will be included.
-machineNumber    |  | If specified, invoices that match the parameter will be included.
-machineTypeName  |  | If specified, invoices that match the parameter will be included.
-machineModel     |  | If specified, invoices that match the parameter will be included.
-serialNumber     |  | If specified, invoices that match the parameter will be included.
-serviceable      |  | If specified, invoices that match the parameter will be included.
-sortBy           |  | If specified, a sort will be made on the specified parameter
-sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+machineName      |  | If specified, machines that match the parameter will be included.
+machineNumber    |  | If specified, machines that match the parameter will be included.
+machineTypeName  |  | If specified, machines that match the parameter will be included.
+machineModel     |  | If specified, machines that match the parameter will be included.
+serialNumber     |  | If specified, machines that match the parameter will be included.
+serviceable      |  | "true" or "false". If specified, machines that match the parameter will be included.
+sortBy           | machineName | If specified, a sort will be made on the specified parameter
+sortDirection    | ascending | "ascending" or "descending". The sort order will be ascending or descending
+limit            | 100 | Number of machines per page. Maximum 500
+page             | 1 | Page number
 
 
 
@@ -269,7 +271,7 @@ This endpoint retrieves machine types.
 
 `GET https://app.seventime.se/api/2/machineTypes/`
 
-### URL Parameters
+### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------

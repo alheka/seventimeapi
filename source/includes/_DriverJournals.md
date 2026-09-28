@@ -2,7 +2,7 @@
 ## Get Driver Journals
 
 ```shell
-curl "https://app.seventime.se/api/2/driverJournals/?limit=5&page=1" \
+curl "https://app.seventime.se/api/2/driverJournals/?fromDate=2016-06-01&toDate=2016-06-30&limit=5&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -10,7 +10,7 @@ curl "https://app.seventime.se/api/2/driverJournals/?limit=5&page=1" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/driverJournals/?limit=5&page=1";
+let url = "https://app.seventime.se/api/2/driverJournals/?fromDate=2016-06-01&toDate=2016-06-30&limit=5&page=1";
 let options = {
   url: url,
   headers: {
@@ -36,8 +36,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 87,
+    "totalResourcesIsExact": true,
     "totalPages": 18,
-    "currentPage": 2
+    "currentPage": 2,
+    "hasMore": true,
+    "nextPage": 3
   },
   "data": [
     {
@@ -81,6 +84,10 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves driver journals.
 
+At least one filter, e.g. a date range or a user, has to be specified. A request without any filter returns HTTP status 422 with the code `QUERY_TOO_BROAD`.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching driver journals, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/driverJournals`
@@ -89,19 +96,22 @@ This endpoint retrieves driver journals.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-projectName                 |  | If specified, driver journals that match the parameter will be included.
-customerName                |  | If specified, driver journals that match the parameter will be included.
+user                        |  | If specified, driver journals for the user with this id will be included.
+project                     |  | If specified, driver journals for the project with this id will be included.
+customer                    |  | If specified, driver journals for the customer with this id will be included.
+workOrder                   |  | If specified, driver journals for the work order with this id will be included.
 driverJournalItemTypeName   |  | If specified, driver journals that match the parameter will be included.
 isInvoiceable               |  | If specified, driver journals that match the parameter will be included.
-workOrderTitle              |  | If specified, driver journals that match the parameter will be included.
 workOrderNumber             |  | If specified, driver journals that match the parameter will be included.
 carRegistrationNumber       |  | If specified, driver journals that match the parameter will be included.
 startAddress                |  | If specified, driver journals that match the parameter will be included.
 endAddress                  |  | If specified, driver journals that match the parameter will be included.
 fromDate                    |  | If specified, driver journals registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate                      |  | If specified, driver journals registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-sortBy                      |  | If specified, a sort will be made on the specified parameter
-sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy                      | timestamp | If specified, a sort will be made on the specified parameter
+sortDirection               |  | "ascending" or "descending". The sort order will be ascending or descending
+limit                       | 100 | Number of driver journals per page. Maximum 500
+page                        | 1 | Page number
 
 
 
@@ -171,7 +181,7 @@ request(options, function(error, response, body) {
     "invoice": "5fab29b0386134897",
     "modifiedDate": "2016-06-17T09:29:01.958Z",
     "createDate": "2016-06-17T09:20:46.845Z",
-    "timestamp": "2016-06-17T09:20:10.254Z",
+    "timestamp": "2016-06-17T09:20:10.254Z"
   }
 }
 ```
@@ -267,7 +277,7 @@ sortDirection               |  | "ascending" or "descending". If specified and s
 curl -X POST "https://app.seventime.se/api/2/driverJournals/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5120314650548666171","user":"51203178219463791","expenseItem":"5de78aed13437891254"}'
+  -d '{"createdByUser":"512031465648817e55b","user":"5f48eb3e65d7e5489134452","carRegistrationNumber":"ABC123","driverJournalItemType":"5e5ef4124135975","startAddress":"Address start, Stockholm","endAddress":"Address end, Stockholm","travelPurpose":"Delivery","startOdometer":45,"endOdometer":60}'
 ```
 
 ```javascript
@@ -300,6 +310,7 @@ request.post(options, function (error, response, body) {
 
   } else {
     console.error("ERROR! Unable to create driver journal: " + error);
+    console.error(body);
   }
 });
 ```
@@ -328,7 +339,7 @@ request.post(options, function (error, response, body) {
   "price": 0,
   "totalAmount": 0,
   "cost": 0,
-  "totalCost": 0,
+  "totalCost": 0
 }
 "Driver journal created: _id: 5fc619b9625789154"
 ```
@@ -359,8 +370,8 @@ workOrder               | String | No  | Id of the work order. If project is spe
 price                   | Number | No  | Price/km
 cost                    | Number | No  | Cost/km
 description             | String | No  | Description or notes on the driver journal
-isInvoiceable           | Boolean | No | Is the driver jounal invoiceable?
-isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated?
+isInvoiceable           | Boolean | No | Is the driver jounal invoiceable? If not specified, this will be set to true
+isSalaryCompensated     | Boolean | No | Is the driver jounal salary compensated? If not specified, this will be set to false
 
 ## Update a Driver Journal
 
@@ -484,11 +495,12 @@ request.delete(options, function (error, response, body) {
 ```json 
 {
   "_id": "5fc619b96294735fc421d77a",
+  "name": ""
 }
 "Driver journal deleted: _id: 5fc619b962947312234894"
 ```
 
-This endpoint deletes a driver journal
+This endpoint deletes a driver journal. A driver journal that has been invoiced or salary processed cannot be deleted.
 
 ### HTTP Request
 
@@ -499,3 +511,4 @@ This endpoint deletes a driver journal
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                    | String | Yes | Id of the driver journal
+deletedByUser          | String | Yes | Id of the user who deleted the driver journal

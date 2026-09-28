@@ -37,8 +37,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 1182,
+    "totalResourcesIsExact": true,
     "totalPages": 394,
-    "currentPage": 1
+    "currentPage": 1,
+    "hasMore": true,
+    "nextPage": 2
   },
   "data": [
     {
@@ -98,6 +101,8 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves time logs (and absences if the punch clock module is not used). The attribute "isAbsence" will be true for absences.
 
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching time logs, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/timeLogs`
@@ -113,11 +118,13 @@ task               |  | If specified, time logs that match the parameter will be
 category           |  | If specified, time logs that match the parameter will be included.
 workOrder          |  | If specified, time logs that match the parameter will be included.
 workOrderNumber    |  | If specified, time logs that match the parameter will be included.
-timestamp          |  | If specified, time logs that start after the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-invoicedDate       |  | If specified, time logs with invoice date since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-isAbsence          |  | If specified, time logs that is of "absence type" will be included.
-lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+timestamp          |  | If specified, time logs that start after the given date and time will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+invoicedDate       |  | If specified, time logs invoiced on the specified date will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+isAbsence          |  | If set to "true", only time logs that are of "absence type" will be included.
+lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+limit              | 100 | Number of time logs per page. Maximum 500
+page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -294,6 +301,7 @@ This endpoint retrieves time categories.
 
 Parameter | Default | Description
 --------- | ------- | -----------
+limit              | 100 | Maximum number of time categories to return. Maximum 500
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -445,20 +453,20 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 createdByUser       | String | Yes | Id of the user who created the time log
 user                | String | Yes | Id of the user on the time log
-timestamp           | String | Yes | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-endTimestamp        | String | No* | Starting date and time for the time log. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'. *This is required if field 'time' is not specified
+timestamp           | String | Yes | Starting date and time for the time log. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+endTimestamp        | String | No* | Ending date and time for the time log. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. Cannot be before timestamp. *This is required if field 'time' is not specified
 time                | String | No* | Time of the time log in hours. *This is required if field 'endTimestamp' is not specified
 invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log
 customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
-timeCategory        | String | No  | Id of the time category
+timeCategory        | String | No* | Id of the time category. *Required if isAbsence is true
 workOrder           | String | No  | Id of the work order
-pricePerHour        | Number | No  | price per hour of the time log. If not specified, the price will be set according to the user, customer, project, time category or work order.
+pricePerHour        | Number | No  | price per hour of the time log. If not specified (or if the time log is not invoiceable), the price will be set according to the user, customer, project, time category or work order.
 description         | String | No  | Description/notes of the time log
 internalDescription | String | No  | Internal description/notes of the time log
 supplementOrder     | Boolean | No  | Is the time log a supplement order?
 isInvoiceable       | Boolean | No  | Invoiceable or not
-isAbsence           | Boolean | No  | Should be set to true if it is an absence  
+isAbsence           | Boolean | No  | Should be set to true if it is an absence. For absences, the fields customer, workOrder, pricePerHour, invoiceableTime, supplementOrder and isInvoiceable are ignored and the absence is not invoiceable
 
 ## Update a Time Log
 
@@ -543,7 +551,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id             | String | Yes | Id of the time log
 modifiedByUser  | String | Yes | Id of the user who made the change
-user            | String | Yes | Id of the user on the time log
+user            | String | No  | Id of the user on the time log. If not specified, the current user on the time log is kept
 
 ## Delete a Time Log
 
@@ -590,7 +598,7 @@ request.delete(options, function (error, response, body) {
 "Time log deleted: _id: 51203146506d961c35798485"
 ```
 
-This endpoint deletes a time log
+This endpoint deletes a time log. Time logs that have been invoiced or salary processed cannot be deleted.
 
 ### HTTP Request
 
@@ -601,3 +609,4 @@ This endpoint deletes a time log
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id             | String | Yes | Id of the time log
+deletedByUser   | String | Yes | Id of the user who deleted the time log

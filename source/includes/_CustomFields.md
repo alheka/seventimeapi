@@ -61,6 +61,10 @@ Parameter | Default | Description
 --------- | ------- | -----------
 entityType                          | 100 | Number corresponding to entity type. See table below for available types.
 
+If `entityType` is not one of the codes in the table below, HTTP 400 is returned with the `errorMessage` "Invalid entity type". If no field configuration exists for the entity type, HTTP 404 is returned.
+
+The response contains all fields in the field configuration for the entity type (both standard fields and custom fields). Custom fields have `fieldType` 10100 (Text), 10200 (Yes/No), 10300 (Date), 10400 (Numeric), 10500 (Select list) or 10600 (Multi select list).
+
 **Entity types**
 
 Code | Description

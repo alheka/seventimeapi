@@ -47,7 +47,7 @@ request(options, function(error, response, body) {
       "name": "Utveckling",
       "departmentNumber": "2",
       "isActive": true,
-      "managerIds": [],
+      "managerIds": []
     },
     {
       // ...
@@ -64,12 +64,14 @@ This endpoint retrieves departments.
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/2/departments/?`
+E.g. `https://app.seventime.se/api/2/departments/?sortBy=departmentNumber&sortDirection=descending`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy | name | If specified, a sort will be made on the specified parameter
+sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit | 100 | Number of departments per page. Maximum 500
+page | 1 | Page number
 
 ## Get a specific Department
 
@@ -111,7 +113,7 @@ request(options, function(error, response, body) {
     "_id": "59d05abdc471b72e4979135",
     "name": "Utveckling",
     "departmentNumber": "2",
-    "isActive": true,
+    "isActive": true
   }
 }
 ```

@@ -4,6 +4,10 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 
 ## Triggers
 
+### Contact persons
+- New Contact Person
+- Updated Contact Person
+
 ### Customers
 - New Customer
 - Updated Customer
@@ -16,13 +20,19 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 - New Project
 - Updated Project
 
+### Quotes
+- Quote Sent
+- Quote Opened
+- Quote Approved
+- Quote Rejected
+
 ### Tasks
 - New Task
 - Updated Task
 
 ### Timer
 - <details>
-    <summary>Timer started</summary>
+    <summary>Timer Started</summary>
       Using the following inputs, it is possible to track specific users, work orders etc.
       <table>
       <tr>
@@ -37,11 +47,11 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>workOrder</td>
         <td>Work order</td>
       </tr>
-    <tr>
+      <tr>
         <td>project</td>
         <td>Project</td>
       </tr>
-    <tr>
+      <tr>
         <td>customer</td>
         <td>Customer</td>
       </tr>
@@ -69,6 +79,127 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 
 
 ## Actions
+### Contact persons
+- <details>
+    <summary>Get Contact Person by Name</summary>
+      <table>
+      <tr>
+        <th>Key</th>
+        <th>Label</th>
+      </tr>
+      <tr>
+        <td>customerId</td>
+        <td>Customer</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>Name</td>
+      </tr>
+    </table>
+</details>
+
+- <details>
+    <summary>Get Contact Person by ID</summary>
+      <table>
+      <tr>
+        <th>Key</th>
+        <th>Label</th>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Contact Person ID</td>
+      </tr>
+    </table>
+</details>
+
+- <details>
+    <summary>Create Contact Person</summary>
+      <table>
+      <tr>
+        <th>Key</th>
+        <th>Label</th>
+      </tr>
+      <tr>
+        <td>customer</td>
+        <td>Customer</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>Name</td>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td>Title</td>
+      </tr>
+      <tr>
+        <td>workPhone</td>
+        <td>Work phone</td>
+      </tr>
+      <tr>
+        <td>cellPhone</td>
+        <td>Cell phone</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>Email</td>
+      </tr>
+      <tr>
+        <td>isActive</td>
+        <td>Is active</td>
+      </tr>
+      <tr>
+        <td>mainContact</td>
+        <td>Main contact</td>
+      </tr>
+    </table>
+</details>
+
+- <details>
+    <summary>Update Contact Person</summary>
+      <table>
+      <tr>
+        <th>Key</th>
+        <th>Label</th>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>ID</td>
+      </tr>
+      <tr>
+        <td>customer</td>
+        <td>Customer</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>Name</td>
+      </tr>
+      <tr>
+        <td>title</td>
+        <td>Title</td>
+      </tr>
+      <tr>
+        <td>workPhone</td>
+        <td>Work phone</td>
+      </tr>
+      <tr>
+        <td>cellPhone</td>
+        <td>Cell phone</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>Email</td>
+      </tr>
+      <tr>
+        <td>isActive</td>
+        <td>Is active</td>
+      </tr>
+      <tr>
+        <td>mainContact</td>
+        <td>Main contact</td>
+      </tr>
+    </table>
+</details>
+
 ### Customers
 - <details>
     <summary>Get Customer by Name or Number</summary>
@@ -85,11 +216,15 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>customerNumber</td>
         <td>Customer number</td>
       </tr>
+      <tr>
+        <td>email</td>
+        <td>Email</td>
+      </tr>
     </table>
 </details>
 
 - <details>
-    <summary>Get Customer by id</summary>
+    <summary>Get Customer by Id</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -161,6 +296,46 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>paymentDays</td>
         <td>Payment days</td>
       </tr>
+      <tr>
+        <td>notes</td>
+        <td>Notes</td>
+      </tr>
+      <tr>
+        <td>typeOfCustomer</td>
+        <td>Type of customer</td>
+      </tr>
+      <tr>
+        <td>isConstructionCompany</td>
+        <td>Construction Company</td>
+      </tr>
+      <tr>
+        <td>isROTCustomer</td>
+        <td>ROT-Customer</td>
+      </tr>
+      <tr>
+        <td>isRUTCustomer</td>
+        <td>RUT-Customer</td>
+      </tr>
+      <tr>
+        <td>isGREENCustomer</td>
+        <td>Green Technology Customer</td>
+      </tr>
+      <tr>
+        <td>expenseDiscount</td>
+        <td>Discount/Mark Up on Article (Own)</td>
+      </tr>
+      <tr>
+        <td>expenseDiscountWholeSale</td>
+        <td>Discount/Mark Up On Article (Suppliers)</td>
+      </tr>
+      <tr>
+        <td>expenseCustomProfitMargin</td>
+        <td>Markup On Purchase Price (Own)</td>
+      </tr>
+      <tr>
+        <td>expenseWholeSaleProfitMargin</td>
+        <td>Markup On Purchase Price (Wholesale)</td>
+      </tr>
     </table>
 </details>
 
@@ -227,6 +402,14 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>paymentDays</td>
         <td>Payment days</td>
       </tr>
+      <tr>
+        <td>notes</td>
+        <td>Notes</td>
+      </tr>
+      <tr>
+        <td>typeOfCustomer</td>
+        <td>Type of customer</td>
+      </tr>
     </table>
 </details>
 
@@ -246,7 +429,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 </details>
 
 - <details>
-    <summary>Get Invoice by id</summary>
+    <summary>Get Invoice by Id</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -319,10 +502,6 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Result unit</td>
       </tr>
       <tr>
-        <td>deliveryAddress</td>
-        <td>Delivery address</td>
-      </tr>
-      <tr>
         <td>invoiceType</td>
         <td>Invoice type</td>
       </tr>
@@ -331,8 +510,8 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Price list</td>
       </tr>
       <tr>
-        <td>multipleTaxesOnRow</td>
-        <td>Multiple taxes on row</td>
+        <td>multipleTaxesOnRows</td>
+        <td>Multiple taxes on rows</td>
       </tr>
       <tr>
         <td>taxPercent</td>
@@ -351,16 +530,68 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Notes</td>
       </tr>
       <tr>
-        <td>invoiceItems</td>
-        <td>Invoice items</td>
-      </tr>
-      <tr>
         <td>useFooterFromSettings</td>
         <td>Use footer from settings</td>
       </tr>
       <tr>
         <td>footerText</td>
         <td>Footer text</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressName</td>
+        <td>Delivery address - name</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressAddress</td>
+        <td>Delivery address - address</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressAddress2</td>
+        <td>Delivery address - address 2</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressZipCode</td>
+        <td>Delivery address - zip code</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressCity</td>
+        <td>Delivery address - city</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressCountry</td>
+        <td>Delivery address - country</td>
+      </tr>
+      <tr>
+        <td>deliveryAddressPhone</td>
+        <td>Delivery address - phone</td>
+      </tr>
+      <tr>
+        <td>invoiceItemDescription</td>
+        <td>Invoice item - description</td>
+      </tr>
+      <tr>
+        <td>invoiceItemNumberOfItems</td>
+        <td>Invoice item - number of items</td>
+      </tr>
+      <tr>
+        <td>invoiceItemUnit</td>
+        <td>Invoice item - unit</td>
+      </tr>
+      <tr>
+        <td>invoiceItemUnitCost</td>
+        <td>Invoice item - purchase price</td>
+      </tr>
+      <tr>
+        <td>invoiceItemUnitPrice</td>
+        <td>Invoice item - unit price</td>
+      </tr>
+      <tr>
+        <td>invoiceItemDiscount</td>
+        <td>Invoice item - discount</td>
+      </tr>
+      <tr>
+        <td>tags</td>
+        <td>Tags</td>
       </tr>
     </table>
 </details>
@@ -379,6 +610,10 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       <tr>
         <td>modifiedByUser</td>
         <td>Modified by user</td>
+      </tr>
+      <tr>
+        <td>customer</td>
+        <td>Customer</td>
       </tr>
       <tr>
         <td>language</td>
@@ -437,8 +672,8 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Price list</td>
       </tr>
       <tr>
-        <td>multipleTaxesOnRow</td>
-        <td>Multiple taxes on row</td>
+        <td>multipleTaxesOnRows</td>
+        <td>Multiple taxes on rows</td>
       </tr>
       <tr>
         <td>taxPercent</td>
@@ -457,16 +692,35 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Notes</td>
       </tr>
       <tr>
-        <td>invoiceItems</td>
-        <td>Invoice items</td>
-      </tr>
-      <tr>
         <td>useFooterFromSettings</td>
         <td>Use footer from settings</td>
       </tr>
       <tr>
         <td>footerText</td>
         <td>Footer text</td>
+      </tr>
+      <tr>
+        <td>tags</td>
+        <td>Tags</td>
+      </tr>
+    </table>
+</details>
+
+### Machines
+- <details>
+    <summary>Get Machine by Name or Number</summary>
+      <table>
+      <tr>
+        <th>Key</th>
+        <th>Label</th>
+      </tr>
+      <tr>
+        <td>machineName</td>
+        <td>Machine name</td>
+      </tr>
+      <tr>
+        <td>machineNumber</td>
+        <td>Machine number</td>
       </tr>
     </table>
 </details>
@@ -491,7 +745,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 </details>
 
 - <details>
-    <summary>Get Project by id</summary>
+    <summary>Get Project by Id</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -591,7 +845,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       </tr>
       <tr>
         <td>id</td>
-        <td>ID</td>
+        <td>Project</td>
       </tr>
       <tr>
         <td>modifiedByUser</td>
@@ -708,7 +962,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       </tr>
       <tr>
         <td>startDate</td>
-        <td>StartDate</td>
+        <td>Start date</td>
       </tr>
       <tr>
         <td>dueDate</td>
@@ -750,7 +1004,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       </tr>
       <tr>
         <td>startDate</td>
-        <td>StartDate</td>
+        <td>Start date</td>
       </tr>
       <tr>
         <td>dueDate</td>
@@ -775,11 +1029,11 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>project</td>
         <td>Project</td>
       </tr>
-    <tr>
+      <tr>
         <td>customer</td>
         <td>Customer</td>
       </tr>
-    <tr>
+      <tr>
         <td>workOrder</td>
         <td>Work order</td>
       </tr>
@@ -795,7 +1049,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 </details>
 
 - <details>
-    <summary>Start timer</summary>
+    <summary>Start Timer</summary>
     A timer cannot be started for a user that already has an active timer.
       <table>
       <tr>
@@ -830,7 +1084,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 </details>
 
 - <details>
-    <summary>Stop timer</summary>
+    <summary>Stop Timer</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -849,7 +1103,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 
 ### Time logs
 - <details>
-    <summary>Get Time Log by Id</summary>
+    <summary>Get Time Log by ID</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -906,12 +1160,12 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Time category</td>
       </tr>
       <tr>
-        <td>Work order</td>
         <td>workOrder</td>
+        <td>Work order</td>
       </tr>
       <tr>
-        <td>Price per hour</td>
         <td>pricePerHour</td>
+        <td>Price per hour</td>
       </tr>
       <tr>
         <td>description</td>
@@ -937,7 +1191,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 </details>
 
 - <details>
-    <summary>Update Task</summary>
+    <summary>Update Time Log</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -949,7 +1203,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       </tr>
       <tr>
         <td>modifiedByUser</td>
-        <td>Created by user</td>
+        <td>Modified by user</td>
       </tr>
       <tr>
         <td>user</td>
@@ -984,12 +1238,12 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Time category</td>
       </tr>
       <tr>
-        <td>Work order</td>
         <td>workOrder</td>
+        <td>Work Order</td>
       </tr>
       <tr>
-        <td>Price per hour</td>
         <td>pricePerHour</td>
+        <td>Price per hour</td>
       </tr>
       <tr>
         <td>description</td>
@@ -1056,7 +1310,7 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Work order title</td>
       </tr>
       <tr>
-        <td>workOrderTitle</td>
+        <td>workOrderNumber</td>
         <td>Work order number</td>
       </tr>
     </table>
@@ -1120,14 +1374,58 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
         <td>Your order number</td>
       </tr>
       <tr>
-        <td>workAddress</td>
-        <td>Work address</td>
+        <td>billingMethod</td>
+        <td>Billing method</td>
+      </tr>
+      <tr>
+        <td>fixedPrice</td>
+        <td>Fixed price</td>
+      </tr>
+      <tr>
+        <td>contactPerson</td>
+        <td>Contact person</td>
+      </tr>
+      <tr>
+        <td>tags</td>
+        <td>Tags</td>
+      </tr>
+      <tr>
+        <td>workAddressUseOtherAddress</td>
+        <td>Work address - use other address</td>
+      </tr>
+      <tr>
+        <td>workAddressName</td>
+        <td>Work address - name</td>
+      </tr>
+      <tr>
+        <td>workAddressAddress</td>
+        <td>Work address - address</td>
+      </tr>
+      <tr>
+        <td>workAddressAddress2</td>
+        <td>Work address - address2</td>
+      </tr>
+      <tr>
+        <td>workAddressZipCode</td>
+        <td>Work address - zip code</td>
+      </tr>
+      <tr>
+        <td>workAddressCity</td>
+        <td>Work address - city</td>
+      </tr>
+      <tr>
+        <td>workAddressCountry</td>
+        <td>Work address - country</td>
+      </tr>
+      <tr>
+        <td>workAddressPhone</td>
+        <td>Work address - phone</td>
       </tr>
     </table>
 </details>
 
 - <details>
-    <summary>Update Project</summary>
+    <summary>Update Work Order</summary>
       <table>
       <tr>
         <th>Key</th>
@@ -1176,6 +1474,22 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
       <tr>
         <td>workAddress</td>
         <td>Work address</td>
+      </tr>
+      <tr>
+        <td>billingMethod</td>
+        <td>Billing method</td>
+      </tr>
+      <tr>
+        <td>fixedPrice</td>
+        <td>Fixed price</td>
+      </tr>
+      <tr>
+        <td>contactPerson</td>
+        <td>Contact person</td>
+      </tr>
+      <tr>
+        <td>tags</td>
+        <td>Tags</td>
       </tr>
     </table>
 </details>

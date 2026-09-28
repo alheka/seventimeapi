@@ -45,7 +45,7 @@ request(options, function(error, response, body) {
       "name": "Audi Q8",
       "registrationNumber": "ABC123",
       "isActive": true,
-      "createDate": "2016-06-08T14:45:42.546Z",
+      "createDate": "2016-06-08T14:45:42.546Z"
     },
     {
       // ...
@@ -66,6 +66,8 @@ Parameter | Default | Description
 --------- | ------- | -----------
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit                       | 100 | Number of vehicles per page. Maximum 500
+page                        | 1 | Page number
 
 
 ## Get a specific Vehicles
@@ -108,7 +110,7 @@ request(options, function(error, response, body) {
     "name": "Audi Q8",
     "registrationNumber": "ABC123",
     "isActive": true,
-    "createDate": "2016-06-07T13:20:04.346Z",
+    "createDate": "2016-06-07T13:20:04.346Z"
   }
 }
 ```

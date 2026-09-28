@@ -76,6 +76,8 @@ project            |  | If specified, timers that match the parameter will be in
 task               |  | If specified, timers that match the parameter will be included.
 timeCategory       |  | If specified, timers that match the parameter will be included.
 workOrder          |  | If specified, timers that match the parameter will be included.
+limit              | 100 | Number of timers per page. Maximum 500
+page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -131,11 +133,11 @@ request.post(options, function (error, response, body) {
 }
 ```
 
-This endpoint starts a timer
+This endpoint starts a timer. A user can only have one active timer; if the user already has an active timer, an error is returned.
 
 ### HTTP Request
 
-`POST https://app.seventime.se/api/2/timers/`
+`POST https://app.seventime.se/api/2/startTimer/`
 
 ### POST Parameters
 
@@ -187,8 +189,8 @@ request.post(options, function (error, response, body) {
 
 ```json 
 { 
-  "startLocation": { type: 'Point', coordinates: [] },
-  "stopLocation": { type: 'Point', coordinates: [] },
+  "startLocation": { "type": "Point", "coordinates": [] },
+  "stopLocation": { "type": "Point", "coordinates": [] },
   "allDay": false,
   "status": 1,
   "isInvoiceable": true,
@@ -219,7 +221,7 @@ This endpoint stops a timer and returns the created time log
 
 `POST https://app.seventime.se/api/2/stopTimer/`
 
-### DELETE Parameters
+### POST Parameters
 
 Parameter | Type | Required? | Description
 --------- | ----------- |-----------| -----------

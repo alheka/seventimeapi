@@ -72,10 +72,10 @@ This endpoint retrieves tasks.
 Parameter | Default | Description
 --------- | ------- | -----------
 title              |  | If specified, tasks that match the parameter will be included.
-fromStartDate      |  | If specified, tasks that start after this date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'.
-toStartDate        |  | If specified, tasks that start before this date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'.
-fromDueDate        |  | If specified, tasks that are due after this date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'. 
-toDueDate          |  | If specified, tasks that are due before this date will be included. The date has to be in the format 'YYYY-MM-HH HH:MM'.
+fromStartDate      |  | If specified, tasks that start after this date will be included. The date has to be in the format 'YYYY-MM-DD'.
+toStartDate        |  | If specified, tasks that start before this date will be included. The date has to be in the format 'YYYY-MM-DD'.
+fromDueDate        |  | If specified, tasks that are due after this date will be included. The date has to be in the format 'YYYY-MM-DD'.
+toDueDate          |  | If specified, tasks that are due before this date will be included. The date has to be in the format 'YYYY-MM-DD'.
 user               |  | If specified, tasks that match the parameter will be included.
 project            |  | If specified, tasks that match the parameter will be included.
 customer           |  | If specified, tasks that match the parameter will be included.
@@ -84,9 +84,13 @@ workOrder          |  | If specified, tasks that match the parameter will be inc
 invoice            |  | If specified, tasks that match the parameter will be included.
 machine            |  | If specified, tasks that match the parameter will be included.
 objectItem         |  | If specified, tasks that match the parameter will be included.
-sortBy             |  | If specified, a sort will be made on the specified parameter
-sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+completed          |  | "true" or "false". If specified, only completed or only not completed tasks will be included.
+sortBy             | title | If specified, a sort will be made on the specified parameter
+sortDirection      | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit              | 100 | Number of tasks per page. Maximum 500
+page               | 1 | Page number
 
+A date parameter in an invalid format returns HTTP status 400 with `{"errorMessage": "Incorrect date format", "field": "<parameter>"}`.
 
 
 
@@ -212,7 +216,7 @@ request.post(options, function (error, response, body) {
   "projectName": null,
   "workOrder": null,
   "workOrderTitle": null,
-  "workOrderNumber": null,
+  "workOrderNumber": null
 }
 ```
 
@@ -228,11 +232,11 @@ Parameter | Type    | Required? | Description
 --------- |---------|-----------| -----------
 createdByUser       | String  | Yes       | Id of the user who created the task
 title               | String  | Yes       | Title of the task
-startDate           | String  | No        | Starting date for the task. This must be in the format 'YYYY-MM-DD'
-dueDate             | String  | No        | Due date for the tasks. This must be in the format 'YYYY-MM-DD'
-workOrder           | String  | No        | Id of the work order that the task will belong to
+startDate           | String  | No        | Starting date for the task. This must be in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM'
+dueDate             | String  | No        | Due date for the tasks. This must be in the format 'YYYY-MM-DD' or 'YYYY-MM-DD HH:MM'
+workOrder           | String  | No        | Id of the work order that the task will belong to. Cannot be combined with `project`
 user                | String  | No        | Id of the user that will be assigned to the task
-project             | String  | No        | Id of the project
+project             | String  | No        | Id of the project. Cannot be combined with `workOrder`
 customer            | String  | No        | Id of the customer
 quote               | String  | No        | Id of the quote
 invoice             | String  | No        | Id of the invoice
@@ -296,7 +300,7 @@ request.put(options, function (error, response, body) {
   "projectName": null,
   "workOrder": null,
   "workOrderTitle": null,
-  "workOrderNumber": null,
+  "workOrderNumber": null
 }
 Task updated: _id: 6705973h3j1733m33j3382"
 ```
@@ -355,7 +359,8 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5f48eb3e65d7ee4926574851"
+  "_id": "5f48eb3e65d7ee4926574851",
+  "title": "Updated API task"
 }
 "Task deleted: _id: 5f48eb3e65d7ee4926574851"
 ```
@@ -371,3 +376,4 @@ This endpoint deletes a task
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id             | String | Yes | Id of the task
+deletedByUser   | String | Yes | Id of the user who deleted the task

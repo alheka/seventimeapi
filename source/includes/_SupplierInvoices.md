@@ -144,7 +144,7 @@ E.g. `https://app.seventime.se/api/2/supplierInvoices/?supplierInvoiceNumber=931
 Parameter | Default | Description
 --------- | ------- | -----------
 supplierInvoiceNumber    |  | If specified, supplier invoices that match the parameter will be included.
-supplierInvoiceStatus    |  | If specified, supplier invoices that match the parameter will be included.
+supplierInvoiceStatus    |  | If specified, supplier invoices with this status will be included. Accepted values: 1, 5, 7, 10, 15, 35, 50. Other values are ignored
 project                  |  | If specified, supplier invoices that match the parameter will be included.
 customer                 |  | If specified, supplier invoices that match the parameter will be included.
 workOrder                |  | If specified, supplier invoices that match the parameter will be included.
@@ -155,9 +155,13 @@ toInvoiceDate            |  | If specified, supplier invoices that match the par
 isInvoiceable            |  | If specified, supplier invoices that match the parameter will be included.
 isSelfBillingInvoice     |  | If specified, supplier invoices that match the parameter will be included.
 exportedToEconomy        |  | If specified, supplier invoices that match the parameter will be included.
-lastModified             |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+attestFlag               |  | "ONLY_ATTESTED" or "ONLY_NON_ATTESTED". If specified, only attested or only non-attested supplier invoices will be included
+obliterateFlag           |  | "ONLY_OBLITERATED" or "ONLY_NON_OBLITERATED". If specified, only obliterated (status 35) or only non-obliterated supplier invoices will be included. Overrides supplierInvoiceStatus
+lastModified             |  | If specified, supplier invoices that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy                   |  | If specified, a sort will be made on the specified parameter
 sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit                    | 100 | Number of supplier invoices per page. Maximum 500
+page                     | 1 | Page number
 
 
 
@@ -278,7 +282,7 @@ request(options, function(error, response, body) {
     "selfBillingInvoice": "5f5f23fd7161713589748562",
     "selfBillingInvoiceNumber": "24272",
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
-    "footerInfoText": "Text under...",
+    "footerInfoText": "Text under..."
   }
 }
 ```
@@ -351,7 +355,7 @@ request.post(options, function (error, response, body) {
       "description": "",
       "user": "5f48eb3e65d7e12574952d685",
       "userName": "Anna Andersson",
-      "logDate": "2020-12-09T12":43":51.516Z" 
+      "logDate": "2020-12-09T12:43:51.516Z" 
     } 
   ],
   "markupPercent": 0,
@@ -366,7 +370,7 @@ request.post(options, function (error, response, body) {
   "totalTaxAmount": 20000,
   "totalAmountToInvoice": 80000,
   "supplierInvoiceStatus": 1,
-  "createDate": "2020-12-09T12:43:51.515Z",
+  "createDate": "2020-12-09T12:43:51.515Z"
 }
 ```
 
@@ -380,21 +384,26 @@ This endpoint creates a supplier invoice
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-supplierInvoiceNumber     | Number | Yes | Number of  the supplier invoice
-createdByUser             | String | Yes | Id of the user who created the supplier invoice
-distributor               | String | Yes | Id of the distributor
-totalAmountInclTax        | Number | Yes | Total amount incl. tax on the supplier invoice
+supplierInvoiceNumber     | String | No | Number of  the supplier invoice
+createdByUser             | String | No | Id of the user who created the supplier invoice
+distributor               | String | No | Id of the distributor
+distributorNumber         | String | No | Distributor number. Used to find the distributor if distributor is not specified
+distributorName           | String | No | Distributor name. Used to find the distributor if neither distributor nor distributorNumber is specified
+totalAmountInclTax        | Number | No | Total amount incl. tax on the supplier invoice. If not specified, this will be set to 0
+totalTaxAmount            | Number | No | Total tax amount. If not specified, it is calculated from totalAmountInclTax and taxPercent
 customer                  | String | No | Id of the customer
 project                   | String | No | Id of the project
+projectNumber             | String | No | Project number. Used to find the project if project is not specified
 workOrder                 | String | No | Id of the work order. The work order must belong to the specified project
 resultUnit                | String | No | Id of the result unit
-supplierInvoiceStatus     | Number | No | Status of the supplier invoice. 1 for 'Registered', 5 for 'Draft', 7 for 'Sent' and 10 for 'Invoiced'
-taxPercent                | Number | No | Tax on the supplier invoice as a percentage. Ex: 25 for 25% tax
+resultUnitCode            | String | No | Code of the result unit. Used if resultUnit is not specified
+supplierInvoiceStatus     | Number | No | Status of the supplier invoice. 1 for 'Registered', 5 for 'Draft', 7 for 'Sent' and 10 for 'Invoiced'. If not specified, this will be set to 1
+taxPercent                | Number | No | Tax on the supplier invoice as a percentage. Ex: 25 for 25% tax. If not specified, this will be set to 25
 markupPercent             | Number | No | Markup on the supplier invoice as a percentage. Ex: 10 for 10% markup
-invoiceDate               | String | No | Invoice date in the format 'YYYY-MM-DD'
-dueDate                   | String | No | Due date in the format 'YYYY-MM-DD'
+invoiceDate               | String | No | Invoice date in the format 'YYYY-MM-DD'. If not specified, today's date will be used
+dueDate                   | String | No | Due date in the format 'YYYY-MM-DD'. If not specified, today's date will be used
 exportedToEconomy         | Boolean| No | Is the supplier invoice exported to a economy system?
-OCR                       | Number | No | OCR number of the invoice
+OCR                       | String | No | OCR number of the invoice
 currencyCode              | String | No | Currency code to be used on the supplier invoice
 currencyRate              | Number | No*| Currency rate between SEK and the selected currency. *Required if currencyCode is not 'SEK'. This will always be set to 1 if currencyCode is 'SEK'
 supplementOrder           | Boolean| No | Should the supplier invoice be a supplement order? This is only available if the project or work order is set to use a fixed price
@@ -412,10 +421,13 @@ The field invoiceItems should be an array containing objects with the attributes
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 itemType              | String | Yes | Item type of invoice row, see below for details
-expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
+expenseItem           | String | No* | Id of the expense item. *If itemType is expense, one of expenseItem, articleNumber or name is required
+articleNumber         | String | No  | Article number. Used for expense rows without expenseItem
+name                  | String | No  | Name of the item. Used for expense rows without expenseItem
+description           | String | No  | Description of the item
 timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
 machine               | String | No* | Id of the machine. *Required if itemType is machineTimeLog
-driverJournalItemType | String | No* | Id of the driver journal. *Required if itemType is driverJournal
+driverJournalItemType | String | No* | Id of the driver journal item type. *Required if itemType is driverJournal
 numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
 unit                  | String | No  | Unit of the item
 unitCost              | Number | No  | Purchase price of the item
@@ -423,15 +435,16 @@ unitPrice             | Number | No  | Unit price of the item
 pricePerHour          | Number | No  | Price per hour. Used for time log rows
 totalAmount           | Number | No  | Total amount. Used for onlyamount rows
 discountPercent       | Number | No  | Discount of the item
+taxPercent            | Number | No  | Tax of the item as a percentage. If not specified, this will be set to 25
 
 **Item types**
 
-This table contains the different item types used in the field invoiceItems.itemTypes
+This table contains the different item types used in the field invoiceItems.itemType. The values are case sensitive.
 
 Item type |  Description
 --------- |-----------
 expense        | Expense row
-timeLog        | Time log row
+timelog        | Time log row
 general        | Free-text row
 blank          | Blank row
 text           | Text row
@@ -442,17 +455,17 @@ driverJournal  | Driver journal row
 ## Update a Supplier Invoice
 
 ```shell
-curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
+curl -X PUT "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c739154975825","modifiedByUser":"5f48eb3e65d7ee4942c6859741","supplierInvoiceStatus":"7"}' 
+  -d '{"_id":"5fd0619c739154975825","modifiedByUser":"5f48eb3e65d7ee4942c6859741","notes":"Updated notes"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: "5fd0619c739154975825",
   modifiedByUser: '5f48eb3e65d7ee4942c6859741',
-  supplierInvoiceStatus: 10
+  notes: 'Updated notes'
 };
 
 let options = {
@@ -494,7 +507,7 @@ request.put(options, function (error, response, body) {
       "description": "",
       "user": "5f48eb3e65d7ee897425862",
       "userName": "Anna Andersson",
-      "logDate": "2020-12-09T12":43":51.516Z" 
+      "logDate": "2020-12-09T12:43:51.516Z" 
     } 
   ],
   "markupPercent": 0,
@@ -508,8 +521,9 @@ request.put(options, function (error, response, body) {
   "totalAmount": 80000,
   "totalTaxAmount": 20000,
   "totalAmountToInvoice": 80000,
-  "supplierInvoiceStatus": 10,
-  "createDate": "2020-12-09T12:43:51.515Z",
+  "supplierInvoiceStatus": 1,
+  "notes": "Updated notes",
+  "createDate": "2020-12-09T12:43:51.515Z"
 }
 "Supplier invoice updated: _id: 5fd0619c739154975825"
 ```
@@ -521,7 +535,9 @@ This endpoint updates a supplier invoice
 `PUT https://app.seventime.se/api/2/supplierInvoices/`
 
 ### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create an Invoice'.
+The table below shows the required fields. Other available fields can be found in the section 'Create a Supplier Invoice'.
+
+The fields supplierInvoiceStatus, exportedToEconomy, economySystemRef, attestStatus, attestedDate, supplierInvoiceLogEntries, documents, createdByUser and systemAccount are ignored when updating a supplier invoice.
 
 
 Parameter | Type | Required? | Description
@@ -557,7 +573,7 @@ let options = {
 request.delete(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
-    console.log("Supplier invoice updated: _id: " + body._id + ', number: ' + body.supplierInvoiceNumber);
+    console.log("Supplier invoice deleted: _id: " + body._id + ', number: ' + body.supplierInvoiceNumber);
 
   } else {
     console.error("ERROR! Unable to delete supplier invoice: " + error);
@@ -571,12 +587,12 @@ request.delete(options, function (error, response, body) {
 ```json 
 { 
   "_id": "5fd0619c739154975825",
-  "supplierInvoiceNumber": "9162",
+  "supplierInvoiceNumber": "9162"
 }
 "Supplier invoice deleted: _id: 5fd0619c739154975825, number: 9162"
 ```
 
-This endpoint deletes a supplier invoice
+This endpoint deletes a supplier invoice. A supplier invoice that has been invoiced cannot be deleted.
 
 ### HTTP Request
 
@@ -587,3 +603,4 @@ This endpoint deletes a supplier invoice
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String      | Yes | Id of the Supplier Invoice
+deletedByUser       | String      | Yes | Id of the user who deleted the supplier invoice

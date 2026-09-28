@@ -163,11 +163,14 @@ E.g. `https://app.seventime.se/api/2/projects/?projectNumber=3314`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-name            |  | If specified, projects that match the parameter will be included.
+name            |  | If specified, projects whose name exactly matches the parameter will be included.
 projectNumber   |  | If specified, projects that match the parameter will be included.
-lastModified    |  | If specified, projects that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+customer        |  | If specified, projects that belong to the customer with this id will be included.
+lastModified    |  | If specified, projects that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+sortBy          | name | If specified, a sort will be made on the specified parameter
+sortDirection   | ascending | "ascending" or "descending". Only used if sortBy is specified
+limit           | 100 | Number of results per page (1-500). See 'Pagination'
+page            | 1 | Page to retrieve. See 'Pagination'
 
 
 
@@ -367,6 +370,7 @@ request(options, function(error, response, body) {
       "_id": "5c8639c4704957d884791328",
       "statusName": "Avslutad",
       "color": "468847",
+      "plannedStatus": false,
       "inProgressStatus": false,
       "closedStatus": true,
       "isActive": true
@@ -378,7 +382,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves project statuses.
+This endpoint retrieves project statuses, in the order they are configured.
 
 
 
@@ -388,10 +392,7 @@ This endpoint retrieves project statuses.
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters
 
 ## Get Project types
 
@@ -441,7 +442,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves project types.
+This endpoint retrieves project types, sorted by projectTypeName.
 
 
 
@@ -451,10 +452,7 @@ This endpoint retrieves project types.
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters
 
 ## Get Project tags
 
@@ -504,7 +502,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves project tags.
+This endpoint retrieves project tags, sorted by tagName. If no project tags have been created for the account, an empty array (`[]`) is returned without the `data` wrapper.
 
 
 
@@ -514,10 +512,7 @@ This endpoint retrieves project tags.
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters
 
 ## Create a Project
 ```shell
@@ -579,7 +574,9 @@ request.post(options, function (error, response, body) {
 "Project created: App development, _id: 5fb3c92dd5472a24647985231"
 ```
 
-This endpoint creates a project.
+This endpoint creates a project. The created project is returned directly (not wrapped in a `data` property).
+
+Missing `name` or `createdByUser`, an invalid `billingMethod`, a missing field required by the billing method, or a project number that is already in use returns HTTP 400. Other validation errors (e.g. an id that is not found) are returned with HTTP 500 and a descriptive `errorMessage`.
 
 ### HTTP Request
 
@@ -591,22 +588,22 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 createdByUser           | String | Yes | Id of the user who created the project
 name                    | String | Yes | Name of the project
-projectNumber           | Number | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
+projectNumber           | String | No  | Project number must be unique if specified. If not specified, it will be automatically assigned
 projectStatusRef        | String | No  | Id of the status of the project
 customer                | String | No  | Id of the customer of the project
-contactPerson           | String | No  | Id of the contact person. This field requires that customer is specified and that the customer person belongs to that customer
-invoiceStatus           | Number | No  | Invoice status of the project. See below for available statuses
+contactPerson           | String | No  | Id of the contact person
+invoiceStatus           | Number | No  | Invoice status of the project. Must be 5, 10, 20 or 30. See below for available statuses
 projectLeader           | String | No  | Id of the user who should be the project leader
 projectType             | String | No  | Id of the project type
 department              | String | No  | Id of the department
 startDate               | String | No  | Start date of the project in the format YYYY-MM-DD
-endDate                 | String | No  | End date of the project in the format YYYY-MM-DD
+endDate                 | String | No  | End date of the project in the format YYYY-MM-DD. Must be after startDate if startDate is specified
 notes                   | String | No  | Notes to be included in the project
 resultUnit              | String | No  | Id of the result unit of the project
 billingMethod           | String | No  | Billing method of the project. See below for available billing methods
-pricePerHour            | Number | No* | Required if billingMethod is set to HOURLY
-fixedPrice              | Number | No* | Required if billingMethod is set to FIXED_PRICE
-timeCategoryPriceList   | String | No* | Required if billingMethod is set to PRICELIST
+pricePerHour            | Number | No* | Required if billingMethod is set to HOURLY. Must be a non-zero number
+fixedPrice              | Number | No* | Required if billingMethod is set to FIXED_PRICE. Must be a non-zero number
+timeCategoryPriceList   | String | No* | Id of a price list. Required if billingMethod is set to PRICELIST
 projectTags             | Array  | No  | Array containing ids of tags
 marking                 | String | No  | Marking on project
 yourOrderNumber         | String | No  | Your order number
@@ -717,11 +714,13 @@ This endpoint updates a project.
 
 ### HTTP Request
 
-`PUT https://app.seventime.se/api/2/projects/?_id=5fb3c92dd5472a24647985231&modifiedByUser=51718241fdb708f3795364795&name=App development&customer=571f61330c7f498a2d0001a4`
+`PUT https://app.seventime.se/api/2/projects`
 
 ### PUT Parameters
 
-The table below shows the required fields. Other available fields can be found in the section 'Create a Project'.
+The fields are sent as JSON in the request body. The table below shows the required fields. Other available fields can be found in the section 'Create a Project'. The updated project is returned directly (not wrapped in a `data` property).
+
+Missing `_id` or `modifiedByUser`, an invalid `billingMethod` or a missing field required by the billing method returns HTTP 400. Other validation errors, e.g. a project number that is already used by another project, are returned with HTTP 500 and a descriptive `errorMessage`.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------

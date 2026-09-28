@@ -120,9 +120,12 @@ name                |  | If specified, customers that match the parameter will b
 customerNumber      |  | If specified, customers that match the parameter will be included.
 organizationNumber  |  | If specified, customers that match the parameter will be included.
 city                |  | If specified, customers that match the parameter will be included.
+email               |  | If specified, customers that match the parameter will be included.
 lastModified        |  | If specified, customers that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
 sortBy              |  | If specified, a sort will be made on the specified parameter
 sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit               | 100 | Number of customers per page. Maximum 500
+page                | 1 | Page number
 
 
 ## Get a specific Customer
@@ -235,10 +238,10 @@ _id | The _id of the customer to retrieve
 
 ## Create a Customer
 ```shell
-Curl -X POST "https://app.seventime.se/api/2/customers/" \
+curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","phone":1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","phone":"1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
 ```
 
 ```javascript
@@ -309,7 +312,7 @@ Parameter | Type | Required? | Description
 createdByUser       | String | Yes | Id of the user who created the customer
 name                | String | Yes | Name of the customer
 customerNumber      | String | No | Customer number. If specified it has to be unique otherwise an error will be returned. If not specified it will be set automatically.
-typeOfCustomer      | String | No | Type of customer. 10 for company, 20 for private
+typeOfCustomer      | Number | No | Type of customer. 10 for company, 20 for private. If not specified or invalid, this will be set to 10
 address             | String | No | Address
 address2            | String | No | Address 2
 zipCode             | String | No | Zip code
@@ -319,7 +322,8 @@ phone               | String | No | Phone number
 email               | String | No | Email address
 organizationNumber  | String | No | Organization number or Personal number
 vatNumber           | String | No | VAT number
-paymentDays         | Number | No | Payment days for the user
+paymentDays         | Number | No | Payment days for the customer. If not specified, this will be set to 30
+notes               | String | No | Notes
 deliveryAddress     | Object | No | Contains attributes specific for delivery. See below for details.
 billingSettings     | Object | No | Contains attributes specific for billing. See below for details.
 
@@ -346,8 +350,8 @@ zipCode                     | String | No | Used if useSeparateBillingAddress is
 city                        | String | No | Used if useSeparateBillingAddress is true
 useSeparateBillingEmail     | Boolean | No | If 'invoiceEmail' should be used
 invoiceEmail                | String | No | Used for invoices if useSeparateBillingEmail is true
-invoiceDeliveryType         | Number | No | Empty or 0 = Email, 10 = Postal letter, 20 = Svefaktura
-defaultEmailSubject         | String | No | Default email subject for invoices
+invoiceDeliveryType         | Number | No | Empty or 0 = Email, 10 = Postal letter, 20 = Svefaktura. Ignored when creating a customer, can only be set when updating
+defaultEmailSubject         | String | No | Default email subject for invoices. Ignored when creating a customer, can only be set when updating
 isConstructionCompany       | Boolean | No | Is construction company
 isROTCustomer               | Boolean | No | Is ROT customer
 isRUTCustomer               | Boolean | No | Is RUT customer
@@ -355,6 +359,7 @@ typeOfProperty              | Number | No | 1 = Detached property, 2 = Condomini
 propertyDescription         | String | No | Swedish: Fastighetsbeteckning
 housingSocietyNumber        | String | No | Swedish: Orgnr för bostadsrättsförening
 apartmentNumber             | String | No | Swedish: Lägenhetsnummer
+personalNumber              | String | No | Personal number
 deductionDistribution       | Array | No | Array of DeductionItem's. See below for details.
 
 

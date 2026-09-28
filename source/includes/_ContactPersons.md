@@ -78,8 +78,10 @@ Parameter | Default | Description
 --------- |---------| -----------
 customerId      |         | The id of the customer which the contact persons belong to. If not specified, all contact persons will be retrivied, regardless of which customer they belong to
 name            |         | The name of the contact persons
-sortBy          |         | If specified, a sort will be made on the specified parameter
-sortDirection   |         | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy          | name    | If specified, a sort will be made on the specified parameter
+sortDirection   | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit           | 100     | Number of contact persons per page. Maximum 500
+page            | 1       | Page number
 
 ## Get a specific Contact Person
 
@@ -116,24 +118,22 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "data": {
-    "_id": "5fb7bcd0ab7bb01d4d54832",
-    "name": "Anna",
-    "title": "Utvecklare",
-    "workPhone": "",
-    "cellPhone": "",
-    "email": "email@company.com",
-    "customer": "5bb26376c4nj551167",
-    "customerName": "Anna Andersson",
-    "mainContact": true,
-    "isActive": true,
-    "createdDate": "2020-11-17T12:06:24.281Z",
-    "modifiedDate": "2020-11-17T12:06:24.281Z",
-  }
+  "_id": "5fb7bcd0ab7bb01d4d54832",
+  "name": "Anna",
+  "title": "Utvecklare",
+  "workPhone": "",
+  "cellPhone": "",
+  "email": "email@company.com",
+  "customer": "5bb26376c4nj551167",
+  "customerName": "Anna Andersson",
+  "mainContact": true,
+  "isActive": true,
+  "createdDate": "2020-11-17T12:06:24.281Z",
+  "modifiedDate": "2020-11-17T12:06:24.281Z"
 }
 ```
 
-This endpoint retrieves a contact person.
+This endpoint retrieves a contact person. Note that the contact person is returned directly, not wrapped in a `data` object.
 
 ### HTTP Request
 
@@ -147,7 +147,7 @@ _id | The _id of the contact person to retrieve
 
 ## Create a Contact Person
 ```shell
-Curl -X POST "https://app.seventime.se/api/2/contactPersons/" \
+curl -X POST "https://app.seventime.se/api/2/contactPersons/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
   -d '{"customer":"5f48eb712ebe7ebe6eb37b","name":"Anna Andersson","title":"Chef","workPhone":"","cellPhone":"","email":"email@company.com","isActive":"true","mainContact":"false"}'
@@ -200,7 +200,7 @@ request.post(options, function (error, response, body) {
   "mainContact": true,
   "isActive": true,
   "createdDate": "2020-11-17T12:06:24.281Z",
-  "modifiedDate": "2020-11-17T12:06:24.281Z",
+  "modifiedDate": "2020-11-17T12:06:24.281Z"
 }
 ```
 
@@ -220,8 +220,8 @@ title               | String  | No | Title
 workPhone           | String  | No | Work phone
 cellPhone           | String  | No | Cell phone
 email               | String  | No | Email
-isActive            | Boolean | No | Is the contact person active?
-mainContact         | Boolean | No | Main contact
+isActive            | Boolean | No | Is the contact person active? Default true
+mainContact         | Boolean | No | Main contact. Default false
 
 ## Update a Contact person
 
@@ -275,7 +275,7 @@ request.put(options, function (error, response, body) {
   "mainContact": true,
   "isActive": true,
   "createdDate": "2020-11-17T12:06:24.281Z",
-  "modifiedDate": "2020-11-17T12:06:24.281Z",
+  "modifiedDate": "2020-11-17T12:06:24.281Z"
 }
 "Contact person updated: Anna, _id: 5fb7bcd0ab7bb01d4d54832"
 ```
@@ -287,7 +287,7 @@ This endpoint updates a contact person.
 `PUT https://app.seventime.se/api/2/contactPersons/`
 
 ### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create a Contact Person'.
+The table below shows the required fields. Other available fields can be found in the section 'Create a Contact Person'. Empty values for `name`, `title`, `workPhone`, `cellPhone` and `email` are ignored, so these fields cannot be cleared through the API.
 
 
 Parameter | Type | Required? | Description

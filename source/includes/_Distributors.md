@@ -88,6 +88,8 @@ Parameter | Default | Description
 name                        |  | If specified, distributors that match the parameter will be included.
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit                       | 100 | Number of distributors per page. Maximum 500
+page                        | 1 | Page number
 
 
 ## Get a specific Distributor
@@ -237,7 +239,7 @@ This endpoint retrieves distributor contact persons.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-distributor                 |  | Id of the distributor. This field must be included
+distributor                 |  | Id of the distributor (24 characters). This field must be included, otherwise HTTP status 400 is returned
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -270,7 +272,7 @@ request.post(options, function (error, response, body) {
   if (!error && response.statusCode === 200) {
     console.log(body);
   } else {
-    console.error("ERROR! Unable to distributor: " + error);
+    console.error("ERROR! Unable to create distributor: " + error);
     console.error(body);
   }
 });
@@ -280,36 +282,36 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": '62f3a242ca38bbsce075249',
-  "name": 'Distributor Test',
-  "distributorNumber": '123456',
-  "address": 'test 1',
-  "zipCode": '12345',
-  "city": 'Båstad',
-  "country": 'SE',
-  "phone": '0412412412',
-  "email": '132312kewkewa',
-  "organizationNumber": '12345688',
-  "vatNumber": '90',
-  "bankgiro": 'eeee',
-  "plusgiro": 'bbbbb',
-  "notes": 'testartestar testar',
-  "purchaseOrderEmail": 'test@testing.com',
-  "ourCustomerNumber": '031239',
+  "_id": "62f3a242ca38bbsce075249",
+  "name": "Distributor Test",
+  "distributorNumber": "123456",
+  "address": "test 1",
+  "zipCode": "12345",
+  "city": "Båstad",
+  "country": "SE",
+  "phone": "0412412412",
+  "email": "132312kewkewa",
+  "organizationNumber": "12345688",
+  "vatNumber": "90",
+  "bankgiro": "eeee",
+  "plusgiro": "bbbbb",
+  "notes": "testartestar testar",
+  "purchaseOrderEmail": "test@testing.com",
+  "ourCustomerNumber": "031239",
   "paymentDays": 45,
   "isSubContractor": true,
   "hasSelfBilling": true,
   "selfBillingSettings": {
     "invoiceDeduction": 10,
-    "invoiceNumberSeries": 'SE',
+    "invoiceNumberSeries": "SE",
     "invoiceCounter": 12,
-    "emailForSelfBilling": 'llllllll'
+    "emailForSelfBilling": "llllllll"
   },
   "isActive": false,
-  "createdDate": '2022-08-10T12:49:26.716Z',
-  "modifiedDate": '2022-08-10T12:49:26.718Z',
+  "createdDate": "2022-08-10T12:49:26.716Z",
+  "modifiedDate": "2022-08-10T12:49:26.718Z",
   "documents": [],
-  __v: 0
+  "__v": 0
 }
 
 ```
@@ -324,33 +326,38 @@ This endpoint creates a distributor
 
 Parameter | Type    | Required? | Description
 --------- |---------| ----------- | -----------
-name                | String  | Yes | Name of the distributor
+name                | String  | Yes | Name of the distributor. Must be unique (case insensitive), otherwise an error will be returned
 distributorNumber   | String  | No  | Distributor number
 address             | String  | No  | Address of the distributor
 zipCode             | String  | No  | Zip code of the distributor
 city                | String  | No  | City of the distributor
 country             | String  | No  | Country of the distributor
-email               | Number  | No  | Email of the distributor
+phone               | String  | No  | Phone number of the distributor
+webAddress          | String  | No  | Web address of the distributor
+email               | String  | No  | Email of the distributor
 organizationNumber  | String  | No  | Organization number for the distributor
 vatNumber           | String  | No  | VAT number for the distributor
 bankgiro            | String  | No  | Bankgiro for distributor
 plusgiro            | String  | No  | Plusgiro for distributor
+IBAN                | String  | No  | IBAN for distributor
+BIC                 | String  | No  | BIC for distributor
 notes               | String  | No  | Notes
 purchaseOrderEmail  | String  | No  | The purchase order email
 ourCustomerNumber   | String  | No  | Your customer number for the distributor
 paymentDays         | Number  | No  | Number of payment days
 isSubContractor     | Boolean | No  | Is it a sub contractor?
 hasSelfBilling      | Boolean | No  | Should the distributor have self billing?
-selfBillingSettings | Array   | No  | Array containing information about self billing. See below for more details.
+selfBillingSettings | Object  | No  | Object containing information about self billing. See below for more details.
 isActive            | Boolean | No  | Should the distributor be active?
 
 **Attributes for selfBillingSettings**
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-invoiceDeduction          | String | No | Invoice deduction
+invoiceDeduction          | Number | No | Invoice deduction
+deductionExpenseItem      | String | No | Id of the expense item used for the deduction
 invoiceNumberSeries       | String | No | Invoice number series
-invoiceCounter            | String | No | Invoice counter
+invoiceCounter            | Number | No | Invoice counter
 emailForSelfBilling       | String | No | Email for self billing
 
 
@@ -360,7 +367,7 @@ emailForSelfBilling       | String | No | Email for self billing
 curl -X PUT "https://app.seventime.se/api/2/distributors/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"62f3a242ca38bbsce075249",name:"New distributor name"}'
+  -d '{"_id":"62f3a242ca38bbsce075249","name":"New distributor name"}'
 ```
 
 ```javascript
@@ -384,7 +391,7 @@ request.put(options, function (error, response, body) {
     console.log(body);
     console.log("Distributor updated: _id: " + body._id);
   } else {
-    console.error("ERROR! Unable to distributor: " + error);
+    console.error("ERROR! Unable to update distributor: " + error);
     console.error(body);
   }
 });
@@ -394,36 +401,36 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": '62f3a242ca38bbsce075249',
-  "name": 'New distributor name',
-  "distributorNumber": '123456',
-  "address": 'test 1',
-  "zipCode": '12345',
-  "city": 'Båstad',
-  "country": 'SE',
-  "phone": '0412412412',
-  "email": '132312kewkewa',
-  "organizationNumber": '12345688',
-  "vatNumber": '90',
-  "bankgiro": 'eeee',
-  "plusgiro": 'bbbbb',
-  "notes": 'testartestar testar',
-  "purchaseOrderEmail": 'test@testing.com',
-  "ourCustomerNumber": '031239',
+  "_id": "62f3a242ca38bbsce075249",
+  "name": "New distributor name",
+  "distributorNumber": "123456",
+  "address": "test 1",
+  "zipCode": "12345",
+  "city": "Båstad",
+  "country": "SE",
+  "phone": "0412412412",
+  "email": "132312kewkewa",
+  "organizationNumber": "12345688",
+  "vatNumber": "90",
+  "bankgiro": "eeee",
+  "plusgiro": "bbbbb",
+  "notes": "testartestar testar",
+  "purchaseOrderEmail": "test@testing.com",
+  "ourCustomerNumber": "031239",
   "paymentDays": 45,
   "isSubContractor": true,
   "hasSelfBilling": true,
   "selfBillingSettings": {
     "invoiceDeduction": 10,
-    "invoiceNumberSeries": 'SE',
+    "invoiceNumberSeries": "SE",
     "invoiceCounter": 12,
-    "emailForSelfBilling": 'llllllll'
+    "emailForSelfBilling": "llllllll"
   },
   "isActive": false,
-  "createdDate": '2022-08-10T12:49:26.716Z',
-  "modifiedDate": '2022-08-10T12:49:26.718Z',
+  "createdDate": "2022-08-10T12:49:26.716Z",
+  "modifiedDate": "2022-08-10T12:49:26.718Z",
   "documents": [],
-  __v: 0
+  "__v": 0
 }
 "Distributor updated: _id: 62f3a242ca38bbsce075249"
 ```
@@ -435,8 +442,9 @@ This endpoint updates a distributor
 `PUT https://app.seventime.se/api/2/distributors/`
 
 ### PUT Parameters
-The table below shows the required fields. Other available fields can be found in the section 'Create a Time Log'.
+The table below shows the required fields. Other available fields can be found in the section 'Create a Distributor'.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id             | String | Yes | Id of the distributor
+name            | String | Yes | Name of the distributor. Must not be used by another distributor (case insensitive)

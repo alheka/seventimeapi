@@ -3,7 +3,7 @@
 ## Get Machine Time Logs
 
 ```shell
-curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=20&page=1" \
+curl "https://app.seventime.se/api/2/machineTimeLogs/?fromDate=2017-10-01&toDate=2017-10-31&limit=20&page=1" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -11,7 +11,7 @@ curl "https://app.seventime.se/api/2/machineTimeLogs/?limit=20&page=1" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machineTimeLogs/?limit=20&page=1";
+let url = "https://app.seventime.se/api/2/machineTimeLogs/?fromDate=2017-10-01&toDate=2017-10-31&limit=20&page=1";
 let options = {
   url: url,
   headers: {
@@ -37,8 +37,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 55,
-    "totalPages": 28,
-    "currentPage": 27
+    "totalResourcesIsExact": true,
+    "totalPages": 3,
+    "currentPage": 1,
+    "hasMore": true,
+    "nextPage": 2
   },
   "data": [
     {
@@ -80,6 +83,10 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves machine time logs.
 
+At least one filter, e.g. a date range or a user, has to be specified. A request without any filter returns HTTP status 422 with the code `QUERY_TOO_BROAD`.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching machine time logs, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/machineTimeLogs`
@@ -90,6 +97,15 @@ Parameter | Default | Description
 --------- | ------- | -----------
 fromDate         |  | If specified, machine time logs registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate           |  | If specified, machine time logs registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+user             |  | If specified, machine time logs registered for the user with this id will be included
+machineName      |  | If specified, machine time logs for the machine with this name will be included
+customerName     |  | If specified, machine time logs for the customer with this name will be included
+projectName      |  | If specified, machine time logs for the project with this name will be included
+workOrderTitle   |  | If specified, machine time logs for the work order with this title will be included
+workOrderNumber  |  | If specified, machine time logs for the work order with this number will be included
+departmentName   |  | If specified, machine time logs for the department with this name will be included
+limit            | 100 | Number of machine time logs per page. Maximum 500
+page             | 1 | Page number
 sortBy           |  | If specified, a sort will be made on the specified parameter
 sortDirection    |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -182,15 +198,17 @@ _id | The _id of the machine time log to retrieve
 curl -X POST "https://app.seventime.se/api/2/machineTimeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"user":"51203146506d97461389557821","machine":"59e75917ae561db7364829167","time":2,"timestamp":"2024-01-15T08:00:00.000Z"}'
+  -d '{"createdByUser":"51203146506d97461389557821","user":"51203146506d97461389557821","machine":"59e75917ae561db7364829167","time":2,"timestamp":"2024-01-15T08:00:00.000Z","description":"Excavation"}'
 ```
 
 ```javascript
 let jsonData = {
+  createdByUser: '51203146506d97461389557821',
   user: '51203146506d97461389557821',
   machine: '59e75917ae561db7364829167',
   time: 2,
-  timestamp: '2024-01-15T08:00:00.000Z'
+  timestamp: '2024-01-15T08:00:00.000Z',
+  description: 'Excavation'
 };
 
 let options = {
@@ -213,19 +231,32 @@ request.post(options, function (error, response, body) {
 });
 ```
 
-> The above command returns JSON structured like this:
+> The above command returns the created machine time log, structured like this:
 
 ```json
 {
   "_id": "65a50f80d1e44854f9c12345",
   "time": 2,
+  "description": "Excavation",
+  "internalDescription": "",
   "machine": "59e75917ae561db7364829167",
+  "machineName": "Grävare",
   "user": "51203146506d97461389557821",
+  "userName": "Anna Andersson",
+  "pricePerHour": 850,
+  "price": 1700,
+  "cost": 0,
+  "isInvoiced": false,
+  "isInvoiceable": true,
   "timestamp": "2024-01-15T08:00:00.000Z"
 }
 ```
 
 This endpoint creates a machine time log.
+
+The price of a machine time log is always calculated from the price per hour of the machine. The fields `price` and `pricePerHour` cannot be set via the API; sending either of them results in an error.
+
+The time can be given either with `time`, or with `timestamp` and `endTimestamp`, in which case the time is calculated from the difference between them. If `timestamp` is omitted the current date and time is used.
 
 ### HTTP Request
 
@@ -235,19 +266,29 @@ This endpoint creates a machine time log.
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-user                | String | Yes | Id of the user registering the machine time log
+createdByUser       | String | Yes | Id of the user creating the machine time log
 machine             | String | Yes | Id of the machine
-otherUser           | String | No  | Id of another user, if the log should be registered for another user
+user                | String | No  | Id of the user the machine time log is registered for
+time                | Number | Yes* | Registered time in hours. Must be a positive number
+timestamp           | String | No  | Start date and time in ISO 8601 format. Defaults to the current date and time
+endTimestamp        | String | No* | End date and time in ISO 8601 format. Cannot be before `timestamp`
 customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
 workOrder           | String | No  | Id of the work order
-time                | Number | Yes | Registered time in hours
+department          | String | No  | Id of the department
+resultUnit          | String | No  | Id of the result unit
+costAccount         | String | No  | Id of the cost account
 description         | String | No  | Description
 internalDescription | String | No  | Internal description
-invoiceableTime     | Number | No  | Invoiceable time in hours
 isInvoiceable       | Boolean | No | If the machine time log is invoiceable
-timestamp           | String | Yes | Time log date and time in ISO 8601 format
-status              | Number | No  | Status of the machine time log
+supplementOrder     | Boolean | No | If the machine time log is a supplement order
+supplementOrderTime | Number | No  | Supplement order time in hours. Only used when `supplementOrder` is true
+
+*`time` is required unless `endTimestamp` is given.
+
+<aside class="warning">
+The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The price is calculated from the machine's price per hour.
+</aside>
 
 ## Update a Machine Time Log
 
@@ -255,16 +296,14 @@ status              | Number | No  | Status of the machine time log
 curl -X PUT "https://app.seventime.se/api/2/machineTimeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"65a50f80d1e44854f9c12345","user":"51203146506d97461389557821","machine":"59e75917ae561db7364829167","time":3,"timestamp":"2024-01-15T08:00:00.000Z"}'
+  -d '{"_id":"65a50f80d1e44854f9c12345","modifiedByUser":"51203146506d97461389557821","time":3}'
 ```
 
 ```javascript
 let jsonData = {
   _id: '65a50f80d1e44854f9c12345',
-  user: '51203146506d97461389557821',
-  machine: '59e75917ae561db7364829167',
-  time: 3,
-  timestamp: '2024-01-15T08:00:00.000Z'
+  modifiedByUser: '51203146506d97461389557821',
+  time: 3
 };
 
 let options = {
@@ -287,7 +326,31 @@ request.put(options, function (error, response, body) {
 });
 ```
 
-This endpoint updates a machine time log.
+> The above command returns the updated machine time log, structured like this:
+
+```json
+{
+  "_id": "65a50f80d1e44854f9c12345",
+  "time": 3,
+  "description": "Excavation",
+  "internalDescription": "",
+  "machine": "59e75917ae561db7364829167",
+  "machineName": "Grävare",
+  "user": "51203146506d97461389557821",
+  "userName": "Anna Andersson",
+  "pricePerHour": 850,
+  "price": 2550,
+  "cost": 0,
+  "isInvoiced": false,
+  "isInvoiceable": true,
+  "timestamp": "2024-01-15T08:00:00.000Z",
+  "modifiedDate": "2024-01-16T10:12:00.000Z"
+}
+```
+
+This endpoint updates a machine time log. Only the fields included in the request are updated. The price is recalculated from the machine's price per hour.
+
+A machine time log that has been invoiced cannot be updated. The fields `isInvoiced`, `invoicedDate` and `invoice` are ignored.
 
 ### HTTP Request
 
@@ -298,19 +361,26 @@ This endpoint updates a machine time log.
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                 | String | Yes | Id of the machine time log
-user                | String | Yes | Id of the user registering the machine time log
-machine             | String | Yes | Id of the machine
-otherUser           | String | No  | Id of another user, if the log should be registered for another user
+modifiedByUser      | String | Yes | Id of the user updating the machine time log
+machine             | String | No  | Id of the machine
+user                | String | No  | Id of the user the machine time log is registered for
+time                | Number | No  | Registered time in hours. Must be a positive number
+timestamp           | String | No  | Start date and time in ISO 8601 format
+endTimestamp        | String | No  | End date and time in ISO 8601 format. Cannot be before `timestamp`
 customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
 workOrder           | String | No  | Id of the work order
-time                | Number | Yes | Registered time in hours
+department          | String | No  | Id of the department
+resultUnit          | String | No  | Id of the result unit
+costAccount         | String | No  | Id of the cost account
 description         | String | No  | Description
 internalDescription | String | No  | Internal description
-invoiceableTime     | Number | No  | Invoiceable time in hours
 isInvoiceable       | Boolean | No | If the machine time log is invoiceable
-timestamp           | String | Yes | Time log date and time in ISO 8601 format
-status              | Number | No  | Status of the machine time log
+supplementOrder     | Boolean | No | If the machine time log is a supplement order
+
+<aside class="warning">
+The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The price is calculated from the machine's price per hour.
+</aside>
 
 ## Delete a Machine Time Log
 
@@ -347,7 +417,15 @@ request.delete(options, function (error, response, body) {
 });
 ```
 
-This endpoint deletes a machine time log.
+> The above command returns JSON structured like this:
+
+```json
+{
+  "_id": "65a50f80d1e44854f9c12345"
+}
+```
+
+This endpoint deletes a machine time log. A machine time log that has been invoiced cannot be deleted.
 
 ### HTTP Request
 

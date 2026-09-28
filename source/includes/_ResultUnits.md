@@ -39,7 +39,7 @@ request(options, function(error, response, body) {
       "_id": "57076abe8010bd225413654",
       "name": "Kontor Syd",
       "code": "Syd",
-      "isActive": true,
+      "isActive": true
     },
     {
       // ...
@@ -58,8 +58,8 @@ This endpoint retrieves purchase orders.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-sortBy                              |  | If specified, a sort will be made on the specified parameter
-sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy                              | name | If specified, a sort will be made on the specified parameter
+sortDirection                       | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 ## Get a specific Result Unit
 
@@ -100,7 +100,7 @@ request(options, function(error, response, body) {
     "_id": "57076abe8010bd225413654",
     "name": "Kontor Syd",
     "code": "Syd",
-    "isActive": true,
+    "isActive": true
   }
 }
 ```

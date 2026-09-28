@@ -133,7 +133,7 @@ request(options, function(error, response, body) {
       ],
       "modifiedDate": null,
       "createDate": "2018-09-25T07:12:46.369Z",
-      "status": 60,
+      "status": 60
     }
   ]
 }
@@ -150,8 +150,12 @@ This endpoint retrieves supplement orders.
 Parameter | Default | Description
 --------- | ------- | -----------
 project       |  | Required. Id of the project that supplement orders will be retrieved from. The list endpoint requires this query parameter.
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy        | createDate | If specified, a sort will be made on the specified parameter
+sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+limit         | 100 | Number of supplement orders per page. Maximum 500
+page          | 1 | Page number
+
+A request without `project` returns HTTP status 400 with `{"errorMessage": "Field 'project' required"}`.
 
 ## Get a specific Supplement Order
 
@@ -281,7 +285,7 @@ request(options, function(error, response, body) {
       ],
       "modifiedDate": null,
       "createDate": "2018-09-25T07:12:46.369Z",
-      "status": 60,
+      "status": 60
    }
 }
 ```

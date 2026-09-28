@@ -70,7 +70,8 @@ request(options, function(error, response, body) {
           "workSchedule": "512406dfiua296a124000003"
         }
       ],
-      "canHaveDynamicSchedule": false
+      "canHaveDynamicSchedule": false,
+      "department": null
     },
     {
       // ...
@@ -91,15 +92,17 @@ E.g. `https://app.seventime.se/api/2/users/?name=Anna Andersson`
 
 Parameter | Default | Description
 --------- | ------- | -----------
-name              |  | If specified, users that match the parameter will be included.
+name              |  | If specified, users that match the parameter will be included. The first word is matched against the first name and the second word (if any) against the last name
 personNumber      |  | If specified, users that match the parameter will be included.
 department        |  | If specified, users that match the parameter will be included.
 userRole          |  | If specified, users that match the parameter will be included.
 isActive          |  | If specified, users that match the parameter will be included. This must be a boolean
 isActivated       |  | If specified, users that match the parameter will be included. This must be a boolean
-defaultSalaryType |  | If specified, users that match the parameter will be included.
+salaryType        |  | If specified, users with this default salary type id will be included.
 userSkills        |  | If specified, users that match the parameter will be included.
-sortBy            |  | If specified, a sort will be made on the specified parameter
+limit             | 100 | Number of users per page. Maximum 500
+page              | 1 | Page number
+sortBy            | firstName | If specified, a sort will be made on the specified parameter
 sortDirection     |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
@@ -138,43 +141,41 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "data":
-  {
-    "_id": "5f48eb3e65d7ee49469874512",
-    "firstName": "Anna",
-    "lastName": "Andersson",
-    "email": "email@company.com",
-    "personalNumber": "",
-    "employeeNumber": "2",
-    "userName": "Anna",
-    "workPhone": "1234-123456",
-    "cellPhone": "070-4580425",
-    "createdDate": "2013-02-06T16:18:40.588Z",
-    "modifiedDate": "2020-11-16T10:39:01.762Z",
-    "userRoleId": 30,
-    "isActive": true,
-    "isActivated": true,
-    "language": "EN",
-    "workSchedules": [
-      {
-        "_id": "5e9565f2103b932af29dff7d",
-        "startDate": "2020-03-01T00:00:00.000Z",
-        "endDate": "2020-05-30T00:00:00.000Z",
-        "workSchedule": "5e9565ew103b932af29dcc5f"
-      },
-      {
-        "_id": "62ff8cbf16a40777f0166e86",
-        "startDate": "2020-06-01T00:00:00.000Z",
-        "endDate": null,
-        "workSchedule": "512406dfiua296a124000003"
-      }
-    ],
-    "canHaveDynamicSchedule": false
-  }
+  "_id": "5f48eb3e65d7ee49469874512",
+  "firstName": "Anna",
+  "lastName": "Andersson",
+  "email": "email@company.com",
+  "personalNumber": "",
+  "employeeNumber": "2",
+  "userName": "Anna",
+  "workPhone": "1234-123456",
+  "cellPhone": "070-4580425",
+  "createdDate": "2013-02-06T16:18:40.588Z",
+  "modifiedDate": "2020-11-16T10:39:01.762Z",
+  "userRoleId": 30,
+  "isActive": true,
+  "isActivated": true,
+  "language": "EN",
+  "workSchedules": [
+    {
+      "_id": "5e9565f2103b932af29dff7d",
+      "startDate": "2020-03-01T00:00:00.000Z",
+      "endDate": "2020-05-30T00:00:00.000Z",
+      "workSchedule": "5e9565ew103b932af29dcc5f"
+    },
+    {
+      "_id": "62ff8cbf16a40777f0166e86",
+      "startDate": "2020-06-01T00:00:00.000Z",
+      "endDate": null,
+      "workSchedule": "512406dfiua296a124000003"
+    }
+  ],
+  "canHaveDynamicSchedule": false,
+  "department": null
 }
 ```
 
-This endpoint retrieves a specific user
+This endpoint retrieves a specific user. Note that the user is returned directly and not wrapped in a `data` attribute.
 
 
 
@@ -247,6 +248,7 @@ This endpoint retrieves user roles.
 
 Parameter | Default | Description
 --------- | ------- | -----------
+limit | 100 | Maximum number of items to return. Maximum 500
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -319,6 +321,7 @@ This endpoint retrieves user salary types.
 
 Parameter | Default | Description
 --------- | ------- | -----------
+limit | 100 | Maximum number of items to return. Maximum 500
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -382,6 +385,7 @@ This endpoint retrieves user skills.
 
 Parameter | Default | Description
 --------- | ------- | -----------
+limit | 100 | Maximum number of items to return. Maximum 500
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -433,17 +437,18 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves user roles.
+This endpoint retrieves user work types.
 
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/userRoles/`
+`GET https://app.seventime.se/api/2/userWorkTypes/`
 
 ### URL Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
+limit | 100 | Maximum number of items to return. Maximum 500
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -453,7 +458,7 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee49421258981","firstName":"Anna","lastName":"Andersson","email":"email@company.com","userName":"AnnaA","userRolesId":1"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee49421258981","firstName":"Anna","lastName":"Andersson","email":"email@company.com","userName":"AnnaA","userRoleId":1}'
 ```
 
 ```javascript
@@ -523,14 +528,18 @@ firstName          | String   | Yes | First name of the user
 lastName           | String   | Yes | Last name of the user
 email              | String   | Yes | Email of the user
 userName           | String   | Yes | Username
-userRoleId         | String   | Yes | User role id
+userRoleId         | Number   | Yes | User role id
+personalNumber     | String   | No  | Personal number of the user
 employeeNumber     | String   | No  | EmployeeNumber
 workPhone          | String   | No  | Work phone number
 cellPhone          | String   | No  | Cell phone number
 isActive           | Boolean  | No  | Should the user be active?
 isActivated        | Boolean  | No  | Should the user be activated?
-password           | String   | No  | Password of the user
-language           | String   | No  | Language of the user as a language code (e.g SV for Swedish). If not specified, this will we set to SV.
+password           | String   | No  | Password of the user. If specified, the user will be set as active and activated
+sendActivationEmail | Boolean | No  | If true and no password is specified, an activation email is sent to the user
+language           | String   | No  | Language of the user, 'SV' or 'EN'. If not specified, this will we set to SV.
+
+The userName must be unique, otherwise an error is returned.
 
 ## Update a User
 
@@ -582,7 +591,7 @@ request.put(options, function (error, response, body) {
   "userName": "AnnaA",
   "createdDate": "2020-11-17T14:42:31.533Z",
   "modifiedDate": "2020-12-11T13:25:07.332Z",
-  "userRoleId": 1,
+  "userType": 1,
   "isActive": true,
   "isActivated": false,
   "language": "SV"
@@ -590,7 +599,7 @@ request.put(options, function (error, response, body) {
 "User updated: Anna, _id: 5fb3e157f795553d0575597841"
 ```
 
-This endpoint updates a specific user.
+This endpoint updates a specific user. The response contains the updated user object with its internal attribute names (e.g. `userType` for the user role id and `personNumber` for the personal number).
 
 ### HTTP Request
 

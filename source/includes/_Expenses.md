@@ -37,8 +37,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 622,
+    "totalResourcesIsExact": true,
     "totalPages": 311,
-    "currentPage": 3
+    "currentPage": 1,
+    "hasMore": true,
+    "nextPage": 2
   },
   "data": [
     {
@@ -93,6 +96,10 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves expenses.
 
+At least one filter, e.g. a date range or a user, has to be specified. A request without any filter returns HTTP status 422 with the code `QUERY_TOO_BROAD`.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching expenses, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/expenses`
@@ -105,10 +112,14 @@ name               |  | If specified, expenses that match the parameter will be 
 articleNumber      |  | If specified, expenses that match the parameter will be included.
 customer           |  | If specified, expenses that match the parameter will be included.
 project            |  | If specified, expenses that match the parameter will be included.
+workOrder          |  | If specified, expenses for the work order with this id will be included.
+user               |  | If specified, expenses registered for the user with this id will be included.
 distributor        |  | If specified, expenses that match the parameter will be included.
 fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-lastModified       |  | If specified, expenses that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+lastModified       |  | If specified, expenses that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+limit              | 100 | Number of expenses per page. Maximum 500
+page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -286,7 +297,7 @@ This endpoint retrieves expense items.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/expenses`
+`GET https://app.seventime.se/api/2/expenseItems`
 
 ### Query Parameters
 
@@ -300,6 +311,9 @@ parentExpenseItemName   |  | If specified, expense items that match the paramete
 isInvoiceable           |  | If specified, expense items that match the parameter will be included.
 isActive                |  | If specified, expense items that match the parameter will be included.
 favorite                |  | If specified, expense items that match the parameter will be included.
+lastModified            |  | If specified, expense items that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+limit                   | 100 | Number of expense items per page. Maximum 500
+page                    | 1 | Page number
 sortBy                  |  | If specified, a sort will be made on the specified parameter
 sortDirection           |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -474,13 +488,13 @@ workOrder           | String | No  | Id of the work order
 customer            | String | No  | Id of the customer. If workOrder is specified, the customer from the work order will be used
 project             | String | No  | Id of the project. If workOrder is specified, the project from the work order will be used
 distributor         | String | No  | Id of the distributor
-numberOfItems       | String | No  | Number of items
+numberOfItems       | Number | No  | Number of items. If not specified, this will be set to 1
 unit                | String | No  | Unit of the number of items
 unitCost            | Number | No* | Cost per unit. If not specified, the cost on the expense item will be used. *Required if expenseItem is not specified
 unitPrice           | Number | No* | Price per unit. If not specified, the price from the price list set on the customer will be used. If no price list is set, the price will be calculated from the cost and the 'Mark up on purchase price' on the customer. If 'Mark up on purchase price' is 0, the price will be set to the expense item price. *Required if expenseItem is not specified
 discountPercent     | Number | No* | Discount percent on the unit price. *Required if expenseItem is not specified
-taxPercent          | Number | No* | Tax percent on the unit price. *Required if expenseItem is not specified
-timestamp           | String | No  | Time stamp of expense
+unitTaxPercent      | Number | No* | Tax percent on the unit price. If expenseItem is specified, the tax on the expense item will be used. *Required if expenseItem is not specified
+timestamp           | String | No  | Date of the expense in the format 'YYYY-MM-DD'. If not specified, the current date will be used
 description         | String | No  | Description of the expense
 isInvoiceable       | Boolean | No | Is the expense invoiceable?
 doReimburse         | Boolean | No | Is the expense an own expense?
@@ -614,12 +628,13 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fbe6844166256479138667"
+  "_id": "5fbe6844166256479138667",
+  "name": "10-pack Reaktionsbollar"
 }
 "Expense deleted: _id: 5fbe6844166256479138667"
 ```
 
-This endpoint deletes an expense
+This endpoint deletes an expense. Expenses that have been invoiced, attested or salary processed cannot be deleted.
 
 ### HTTP Request
 

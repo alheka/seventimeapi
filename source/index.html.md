@@ -11,9 +11,11 @@ toc_footers:
 
 includes:
 - errors
+- Analytics
 - CompanyInformation
 - ContactPersons
 - Customers
+- CustomFields
 - Departments
 - Distributors
 - Documents
@@ -30,12 +32,15 @@ includes:
 - Statuses
 - SupplementOrders
 - SupplierInvoices
+- Tasks
 - TimeLogs
+- Timer
 - Users
 - Vehicles
-- WorkOrders
 - WebhookSubscriptions
+- WorkOrders
 - WorkSchedules
+- Zapier
 
 search: true
 ---
@@ -97,7 +102,7 @@ In addition to the 'Client-Secret', a few fields are required in the Header:
 The Seven Time API supports four different actions:
 
 - get - used to retrieve data
-- push - used to create new items, e.g. new customers, users, etc.
+- post - used to create new items, e.g. new customers, users, etc.
 - put - used to update items, e.g. update an exisiting customer, user, etc.
 - delete - used to delete items e.g. delete a supplier invoice.
 
@@ -115,6 +120,15 @@ A search returns 490 results and the limit is set to 100. To get the first 100 r
 
 The data returned will be in the form of a JSON and contain a meta property where you will find information about the total number of results, number of pages and the current page.
 The data property contains the information requested.
+
+For time logs, expenses, invoices, machine time logs, driver journals, purchase orders and work orders, the count is capped at 2000 for performance reasons, and the meta property contains some additional fields:
+
+- totalResources - the number of matching results, but never more than 2000
+- totalResourcesIsExact - false if there are more than 2000 matching results. In that case totalPages is null
+- hasMore - true if there are more results after the current page
+- nextPage - the number of the next page, or null if there are no more results
+
+Some of these endpoints (driver journals, expenses, machine time logs and purchase orders) return HTTP 422 if no filter is given.
 
 
 ```json

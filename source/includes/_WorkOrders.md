@@ -10,7 +10,7 @@ curl "https://app.seventime.se/api/2/workOrders/?limit=10&page=1" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/workOrders/?limit=10&page1";
+let url = "https://app.seventime.se/api/2/workOrders/?limit=10&page=1";
 let options = {
   url: url,
   headers: {
@@ -36,8 +36,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 1772,
-    "totalPages": 355,
-    "currentPage": 34
+    "totalResourcesIsExact": true,
+    "totalPages": 178,
+    "currentPage": 1,
+    "hasMore": true,
+    "nextPage": 2
   },
   "data": [
     {
@@ -89,6 +92,8 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves work orders.
 
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching work orders, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
 ### HTTP Request
 
 `GET https://app.seventime.se/api/2/workOrders`
@@ -102,10 +107,13 @@ Parameter | Default | Description
 title           |  | If specified, work orders that match the parameter will be included.
 workOrderNumber |  | If specified, work orders that match the parameter will be included.
 project         |  | If specified, work orders that match the parameter will be included.
-user            |  | If specified, work orders that match the parameter will be included.
+user            |  | If specified, work orders where the user with this id is a full time or part time resource will be included.
 customer        |  | If specified, work orders that match the parameter will be included.
-lastModified    |  | If specified, work orders that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
-sortBy          |  | If specified, a sort will be made on the specified parameter
+statusRef       |  | If specified, work orders with this status id will be included. Can be given multiple times to include several statuses
+lastModified    |  | If specified, work orders that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP status 400
+limit           | 100 | Number of work orders per page. Maximum 500
+page            | 1 | Page number
+sortBy          | modifiedDate | If specified, a sort will be made on the specified parameter
 sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
@@ -326,10 +334,7 @@ This endpoint retrieves work order tags.
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy        |  | If specified, a sort will be made on the specified parameter
-sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters. The tags are sorted by tagName.
 
 ## Get Work order statuses
 
@@ -481,12 +486,12 @@ title               | String | Yes | Title of the work order
 customer            | String | Yes | Customer id for the customer who the work order should belong to
 createdByUser       | String | Yes | Id of the user who created the work order
 statusRef           | String | No | Id of the status of the work order.
-Project             | String | No | Project id for the project which the work order should belong to
+project             | String | No | Project id for the project which the work order should belong to
 startDate           | String | No | Start date for the work order. The format must be YYYY-MM-DD HH:MM
-endDate             | String | No | End date for the work order. The format must be YYYY-MM-DD HH:MM
+endDate             | String | No | End date for the work order. The format must be YYYY-MM-DD HH:MM. Must be after startDate
 currentOwner        | String | No | Id of the user who is the current owner of the work order
-users               | Array  | No | Array containing the ids of users who are working full time on the work order
-machines            | Array  | No | Array containing the ids of the machines which are working full time on the work order
+users               | Array  | No | Array containing the ids of users who are working full time on the work order. All users must exist
+machines            | Array  | No | Array containing the ids of the machines which are working full time on the work order. All machines must exist
 estimatedTime       | Number | No | Estimated time required to finish the work order
 contactPerson       | String | No | Id of the contact person
 workOrderType       | String | No | Id of the work order type
@@ -494,7 +499,7 @@ department          | String | No | Id of the department
 workLeader          | String | No | Id of the work leader
 description         | String | No | Description of the work order
 color               | String | No | Color of the work order, only used if "How to set color" is 'Manually' in settings. See below for available colors
-invoiceStatus       | Number | No | Invoice status of the work order. See below for available statuses
+invoiceStatus       | Number | No | Invoice status of the work order. See below for available statuses (only 5, 10, 20 and 30 can be set)
 billingMethod       | String | No | Billing method of work order. See below for available billing methods
 fixedPrice          | Number | No* | *Only if Billing method is set to FIXED_PRICE
 isSupplementOrder   | Boolean | No | Should the work order be set as supplement order?
@@ -504,7 +509,7 @@ allowRegistrationOfTimes     | Boolean | No | Should it be possible to register 
 allowRegistrationOfExpenses  | Boolean | No | Should it be possible to register expenses on the work order?
 marking             | String | No | Marking on the work order
 yourOrderNumber     | String | No | Your order number of the work order
-tags                | Array  | No | Array containing the ids of the tags
+tags                | Array  | No | Array containing the ids of the tags. Ids that do not match an existing work order tag are ignored
 
 
 **Colors for work orders**
@@ -564,13 +569,13 @@ ACCORDING_TO_QUOTE  | Price will be set according to quote
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 useOtherAddress             | Boolean | Yes | Should an alternative work address be used?
-name                        | String  | No  | Used if useSeparateBillingAddress is true
-address                     | String  | No  | Used if useSeparateBillingAddress is true
-address2                    | String  | No  | Used if useSeparateBillingAddress is true
-zipCode                     | String  | No  | Used if useSeparateBillingAddress is true
-city                        | String  | No  | Used if useSeparateBillingAddress is true
-country                     | String  | No  | Used if useSeparateBillingAddress is true, given as a country code (E.g. SE for Sweden)
-phone                       | String  | No  | Used if useSeparateBillingAddress is true
+name                        | String  | No  | Used if useOtherAddress is true
+address                     | String  | No  | Used if useOtherAddress is true
+address2                    | String  | No  | Used if useOtherAddress is true
+zipCode                     | String  | No  | Used if useOtherAddress is true
+city                        | String  | No  | Used if useOtherAddress is true
+country                     | String  | No  | Used if useOtherAddress is true, given as a country code (E.g. SE for Sweden)
+phone                       | String  | No  | Used if useOtherAddress is true
 
 ## Update a Work order
 
@@ -692,6 +697,8 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id               | String | Yes | Id of the work order
 modifiedByUser    | String | Yes | Id of the user who updated the work order
+
+The fields `createdByUser` and `workOrderNumber` cannot be changed and are ignored. The fields `documents`, `checkLists`, `comments`, `invoiceRows`, `todoItems`, `relations`, `quote` and `quoteNumber` are also ignored.
 
 <aside class="notice">
 DELETE Work Orders is not documented because this route is not currently implemented.

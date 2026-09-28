@@ -38,8 +38,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 1987,
+    "totalResourcesIsExact": true,
     "totalPages": 663,
-    "currentPage": 9
+    "currentPage": 9,
+    "hasMore": true,
+    "nextPage": 10
   },
   "data": [
     {
@@ -213,15 +216,17 @@ Parameter | Default | Description
 --------- | ------- | -----------
 invoiceNumber       |  | If specified, invoices that match the parameter will be included.
 OCRNumber           |  | If specified, invoices that match the parameter will be included.
-customerNumber      |  | If specified, invoices that match the parameter will be included.
+customerName        |  | If specified, invoices where the customer name exactly matches the parameter will be included.
 fromInvoiceDate     |  | If specified, invoices with invoice date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toInvoiceDate       |  | If specified, invoices with invoice date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 fromDueDate         |  | If specified, invoices with due date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDueDate           |  | If specified, invoices with due date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-sortBy              |  | If specified, a sort will be made on the specified parameter
-sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+sortBy              | invoiceDate | If specified, a sort will be made on the specified parameter
+sortDirection       | ascending | "ascending" or "descending". Applies to sortBy, or to invoiceDate if sortBy is not specified
+limit               | 100 | Number of results per page (1-500). See 'Pagination'
+page                | 1 | Page to retrieve. See 'Pagination'
 
-
+An invalid date in any of the date parameters returns HTTP 400 with the `errorMessage` "Invalid fromDate" or "Invalid toDate".
 
 
 ## Get a specific Invoice
@@ -493,7 +498,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves invoice tags.
+This endpoint retrieves invoice tags. The tags are sorted by tagName. If no invoice tags have been created for the account, an empty array (`[]`) is returned without the `data` wrapper.
 
 
 
@@ -503,22 +508,19 @@ This endpoint retrieves invoice tags.
 
 ### URL Parameters
 
-Parameter | Default | Description
---------- | ------- | -----------
-sortBy          |  | If specified, a sort will be made on the specified parameter
-sortDirection   |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+No parameters
 
 ## Create an Invoice
 ```shell
 curl -X POST "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"invoiceStatus":"2","customer":"571f21058d7f612467981357165","createdByUser":"51718241fdb7084835249227","language":"EN"}' 
+  -d '{"invoiceStatus":2,"customer":"571f21058d7f612467981357165","createdByUser":"51718241fdb7084835249227","language":"EN"}' 
 ```
 
 ```javascript
 let jsonData = {
-  invoiceStatus: 'Support',
+  invoiceStatus: 2,
   customer: '571f21058d7f612467981357165',
   createdByUser: '51718241fdb7084835249227',
   language: 'EN'
@@ -604,7 +606,9 @@ request.post(options, function (error, response, body) {
 "Invoice created: _id: 5fb64449b0cc951024822167"
 ```
 
-This endpoint creates an invoice
+This endpoint creates an invoice. The created invoice is returned directly (not wrapped in a `data` property).
+
+Missing `customer`, `createdByUser` or `language` returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are returned with HTTP 500 and a descriptive `errorMessage`.
 
 ### HTTP Request
 
@@ -616,26 +620,26 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 customer            | String | Yes | Customer id for the customer who the invoice should belong to
 createdByUser       | String | Yes | Id of the user who created the invoice
-language            | String | Yes | Language of the invoice given as a language code, e.g. SV for Swedish
+language            | String | Yes | Language of the invoice given as a language code. Must be SV (Swedish) or EN (English)
 name                | String | No | Name of the invoice. If not specified, this will be set to 'Invoice' translated to the selected language
 invoiceDate         | String | No | Invoice date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the current date
-dueDate             | String | No | Due date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the invoice date + the default payment terms
+dueDate             | String | No | Due date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the invoice date + the customer's payment days, or + the default payment terms if the customer has no payment days
 project             | String | No | Id of the project of the invoice
 marking             | String | No | Marking on the invoice
 yourOrderNumber     | String | No | Your order number
 invoiceStatus       | Number | No | Status of the invoice. 1 for 'Draft' and 2 for 'Sent'
-contactPerson       | String | No | Id of the contact person. This contact person has to belong to the selected customer
-ourReference        | Number | No | Id of the user that will be set as our reference.
+contactPerson       | String | No | Id of the contact person
+ourReference        | String | No | Id of the user that will be set as our reference.
 deliveryAddress     | Object | No | Contains attributes for delivery address. See below for details
-workOrder           | String | No | Id of the work order
+workOrder           | String | No | Id of the work order. The work order must belong to the specified customer, and to the specified project if project is specified
 resultUnit          | String | No | Id of the result unit
 invoiceType         | Number | No | Type of invoice. 0 for Normal, 1 for ROT, 2 for RUT and 3 for construction
 houseProperties     | Object | No* | *Required if invoiceType is set to 1 or 2. See below for details
 priceList           | String | No | Id of the price list to be used. If specified, prices from the price list will be used for invoice items
 multipleTaxesOnRows | Boolean | No | Should it be possible to set different taxes on invoice items? If set to false, all invoice items will use the same tax percent
-taxPercent          | Number | No | Tax percent which will be used if multipleTaxesOnRows is set to false. This must be 0, 6, 12 or 25% and if not specified will be set to 25%.
-currencyCode        | String | No | Currency code to be used on the invoice
-currencyRate        | Number | No | Currency rate between SEK and the selected currency
+taxPercent          | Number | No | Tax percent which will be used if multipleTaxesOnRows is set to false. Must be a number. If not specified, this will be set to 25.
+currencyCode        | String | No | Currency code to be used on the invoice. Must be SEK or EUR
+currencyRate        | Number | No | Currency rate between SEK and the selected currency. Only used if currencyCode is not SEK
 notes               | String | No | Notes on the invoice
 invoiceItems        | Array  | No | Array containing objects with invoice items. See below for details.
 tags                | Array  | No | Array of tag ids
@@ -683,7 +687,10 @@ The field invoiceItems should be an array containing objects with the attributes
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 itemType              | String | Yes | Item type of invoice row, see below for details
-expenseItem           | String | No* | Id of the expense. *Required if itemType is expense
+expenseItem           | String | No* | Id of the expense item. *For itemType expense, one of expenseItem, articleNumber or name is required. If no expense item is found, the row is created as a free-text (general) row using articleNumber/name
+articleNumber         | String | No  | Article number. Used for expense rows without an expenseItem
+name                  | String | No  | Name of the row. Used for expense and timelog rows. If not specified, the name of the expense item/time category is used
+description           | String | No  | Description of the row
 timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog
 machine               | String | No* | Id of the machine. *Required if itemType is machineTimeLog
 driverJournalItemType | String | No* | Id of the driver journal. *Required if itemType is driverJournal
@@ -694,7 +701,7 @@ unitPrice             | Number | No  | Unit price of the item
 pricePerHour          | Number | No  | Price per hour. Used for time log rows
 totalAmount           | Number | No  | Total amount. Used for onlyamount rows
 discountPercent       | Number | No  | Discount of the item
-taxPercent            | Number | No  | Tax percent of the item. Only used if multipleTaxesOnRows is true. This must be 0, 6, 12 or 25% and if not specified, this will be set to 25%.
+taxPercent            | Number | No  | Tax percent of the item. Only used if multipleTaxesOnRows is true. If not specified, this will be set to 25.
 houseWorkTypeOfWork   | Number | No  | Type of work for the row. Used if invoiceType is 1 or 2. See below for details
 
 **Item types**
@@ -704,7 +711,7 @@ This table contains the different item types used in the field invoiceItems.item
 Item type |  Description
 --------- |-----------
 expense        | Expense row
-timeLog        | Time log row
+timelog        | Time log row
 general        | Free-text row
 blank          | Blank row
 text           | Text row
@@ -835,7 +842,9 @@ request.put(options, function (error, response, body) {
 }
 ```
 
-This endpoint updates an invoice
+This endpoint updates an invoice. The updated invoice is returned directly (not wrapped in a `data` property). The fields createdByUser, createdByUserName and invoiceNumber are ignored. If invoiceItems is specified, it replaces all existing invoice items.
+
+Missing `_id` or `modifiedByUser` returns HTTP 400. Other validation errors are returned with HTTP 500 and a descriptive `errorMessage`.
 
 ### HTTP Request
 
@@ -849,9 +858,9 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                     | String | Yes | Id of the invoice
 modifiedByUser          | String | Yes | Id of the user who modified the invoice
-multipleTaxesOnRows     | Boolean| Yes | Should it be possible to use different tax rates on invoice rows?
-taxPercent              | Boolean| Yes*| Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
-invoiceItems            | Array  | Yes | Array containing the invoice items. See the section 'Create an Invoice' for more information about these items
+multipleTaxesOnRows     | Boolean| No  | Should it be possible to use different tax rates on invoice rows?
+taxPercent              | Number | No* | Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
+invoiceItems            | Array  | No  | Array containing the invoice items. Replaces the existing invoice items. See the section 'Create an Invoice' for more information about these items
 invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
 
 <aside class="notice">

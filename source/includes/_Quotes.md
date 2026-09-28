@@ -265,10 +265,12 @@ Parameter | Default | Description
 --------- | ------- | -----------
 quoteName                           |  | If specified, quotes that match the parameter will be included.
 quoteNumber                         |  | If specified, quotes that match the parameter will be included.
-fromQuoteDate                       |  | If specified, invoices with quote date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-toQuoteDate                         |  | If specified, invoices with quote date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-fromValidToDate                     |  | If specified, invoices with valid to date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-toValidToDate                       |  | If specified, invoices with valid to date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+fromQuoteDate                       |  | If specified, quotes with quote date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toQuoteDate                         |  | If specified, quotes with quote date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+fromValidToDate                     |  | If specified, quotes with valid to date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+toValidToDate                       |  | If specified, quotes with valid to date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+limit                               | 100 | Number of quotes per page. Maximum 500
+page                                | 1 | Page number
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -276,7 +278,7 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 
 ```shell
 curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561" \
-  -H "Client-Secret: thisismysecretkey" \ 
+  -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
 
