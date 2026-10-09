@@ -138,6 +138,7 @@ request(options, function(error, response, body) {
       "customer": "5cc05b6a4e595e68466411b",
       "customerName": "Company AB",
       "dueDate": "2020-12-04T23:00:00.000Z",
+      "actualDeliveryDate": "2020-11-02T23:00:00.000Z",
       "language": "EN",
       "project": "5b20cce1d59a902e28489125b",
       "projectName": "Blåsippan",
@@ -376,6 +377,7 @@ request(options, function(error, response, body) {
     "customer": "5cc05b6a4e595e6854976137451b",
     "customerName": "Company AB",
     "dueDate": "2020-12-04T23:00:00.000Z",
+    "actualDeliveryDate": "2020-11-02T23:00:00.000Z",
     "language": "EN",
     "project": "5b20cce1d59a979134679582",
     "projectName": "Blåsippan",
@@ -624,6 +626,7 @@ language            | String | Yes | Language of the invoice given as a language
 name                | String | No | Name of the invoice. If not specified, this will be set to 'Invoice' translated to the selected language
 invoiceDate         | String | No | Invoice date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the current date
 dueDate             | String | No | Due date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the invoice date + the customer's payment days, or + the default payment terms if the customer has no payment days
+actualDeliveryDate  | String | No | Delivery date ("Leveransdatum"), i.e. the date when the goods were delivered or the service was performed. Has to be in the format YYYY-MM-DD. Shown on the invoice if "Show delivery date" is enabled in the invoice settings, and included when the invoice is exported to an economy system
 project             | String | No | Id of the project of the invoice
 marking             | String | No | Marking on the invoice
 yourOrderNumber     | String | No | Your order number
@@ -861,6 +864,7 @@ modifiedByUser          | String | Yes | Id of the user who modified the invoice
 multipleTaxesOnRows     | Boolean| No  | Should it be possible to use different tax rates on invoice rows?
 taxPercent              | Number | No* | Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
 invoiceItems            | Array  | No  | Array containing the invoice items. Replaces the existing invoice items. See the section 'Create an Invoice' for more information about these items
+actualDeliveryDate      | String | No  | Delivery date in the format YYYY-MM-DD. Send null or an empty string to remove the delivery date. If the field is not sent, the existing delivery date is kept
 invoiceStatus           | Number | No  | Invoice status. 1 for 'Draft', 2 for 'Sent', 3 for 'Paid' and 4 for 'Obliterated'. Note that changing the status to 'Sent' will not send the invoice, this will mark the invoice as sent and give the invoice a number. It is only possible to set the status to 'Paid' or 'Obliterated' on a sent invoice.
 
 <aside class="notice">
