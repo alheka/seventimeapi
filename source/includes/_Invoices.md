@@ -634,7 +634,7 @@ invoiceStatus       | Number | No | Status of the invoice. 1 for 'Draft' and 2 f
 contactPerson       | String | No | Id of the contact person
 ourReference        | String | No | Id of the user that will be set as our reference.
 deliveryAddress     | Object | No | Contains attributes for delivery address. See below for details
-workOrder           | String | No | Id of the work order. The work order must belong to the specified customer, and to the specified project if project is specified
+workOrder           | String | No | Id of the work order. The work order must belong to the specified customer, and to the specified project if project is specified. If actualDeliveryDate is not specified and "Get the delivery date from the work order's completion date" is enabled in the invoice settings, the delivery date is set to the date the work order was completed
 resultUnit          | String | No | Id of the result unit
 invoiceType         | Number | No | Type of invoice. 0 for Normal, 1 for ROT, 2 for RUT and 3 for construction
 houseProperties     | Object | No* | *Required if invoiceType is set to 1 or 2. See below for details
