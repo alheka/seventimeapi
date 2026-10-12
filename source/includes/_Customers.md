@@ -82,7 +82,10 @@ request(options, function(error, response, body) {
           }
         ],
         "expenseDiscount": 0,
+        "expenseDiscountWholeSale": 0,
         "expenseCustomProfitMargin": 0,
+        "expenseWholeSaleProfitMargin": 0,
+        "expenseUseArticleNumberProfitMargin": false,
         "markupPercentSupplierInvoice": -1000,
         "priceList": null,
         "priceListName": ""
@@ -203,7 +206,10 @@ request(options, function(error, response, body) {
         }
       ],
       "expenseDiscount": 0,
+      "expenseDiscountWholeSale": 0,
       "expenseCustomProfitMargin": 0,
+      "expenseWholeSaleProfitMargin": 0,
+      "expenseUseArticleNumberProfitMargin": false,
       "markupPercentSupplierInvoice": -1000,
       "priceList": null,
       "priceListName": ""
@@ -361,6 +367,11 @@ housingSocietyNumber        | String | No | Swedish: Orgnr för bostadsrättsfö
 apartmentNumber             | String | No | Swedish: Lägenhetsnummer
 personalNumber              | String | No | Personal number
 deductionDistribution       | Array | No | Array of DeductionItem's. See below for details.
+expenseDiscount             | Number | No | Discount (negative number) or markup (positive number) in percent on the price of own articles
+expenseDiscountWholeSale    | Number | No | Discount (negative number) or markup (positive number) in percent on the price of wholesale articles
+expenseCustomProfitMargin   | Number | No | Markup on purchase price in percent for own articles. 0 = the price of the article is used
+expenseWholeSaleProfitMargin | Number | No | Markup on purchase price in percent for wholesale articles. 0 = the price of the article is used
+expenseUseArticleNumberProfitMargin | Boolean | No | If true, the markup on purchase price for wholesale articles is primarily taken from the rules for markup per article number (Settings - Articles - Markup per article number). If no rule matches the article number, expenseWholeSaleProfitMargin is used
 
 
 **Attributes for DeductionItem**
