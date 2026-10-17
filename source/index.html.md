@@ -24,6 +24,7 @@ includes:
 - Invoices
 - Machines
 - MachineTimeLogs
+- ObjectItems
 - PriceLists
 - Projects
 - PurchaseOrders

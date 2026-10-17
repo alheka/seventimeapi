@@ -105,6 +105,8 @@ folderId           | No | Folder id. Only used together with `documentListId`. D
 
 *Either `entityId` + `entityType` or `documentListId` is required. They cannot be combined.
 
+To be notified when documents are added to or changed on object items, use the webhook events `objectitem.document.created` and `objectitem.document.updated`, see [Webhook Subscriptions](#webhook-subscriptions).
+
 ## Get a specific Document
 
 ```shell

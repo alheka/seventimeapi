@@ -25,6 +25,10 @@ timelog.created   | A time log was created
 timelog.updated   | A time log was updated
 task.created      | A task was created
 task.updated      | A task was updated
+objectitem.created | An object item was created (also when an object item is copied)
+objectitem.updated | An object item was updated, moved, archived or restored
+objectitem.document.created | A document or folder was added to an object item, e.g. uploaded, created by converting a document or copied with the object item
+objectitem.document.updated | A document or folder on an object item was renamed, moved to another folder or replaced by a new version
 
 ### Webhook requests
 
@@ -66,7 +70,54 @@ Field | Description
 --------- | -----------
 event     | The event that occurred, e.g. `workorder.created`
 timestamp | Date and time when the request was sent, in ISO 8601 format
-data      | The object the event concerns. It has the same structure as when fetching the object from the corresponding endpoint, e.g. a work order for `workorder.*` events
+data      | The object the event concerns. It has the same structure as when fetching the object from the corresponding endpoint, e.g. a work order for `workorder.*` events. For `objectitem.document.*` events, see below
+
+> The data of an objectitem.document.created request looks like this:
+
+```json
+{
+  "event": "objectitem.document.created",
+  "timestamp": "2024-01-15T09:00:05.000Z",
+  "data": {
+    "_id": "6124daa00c1532914b92",
+    "name": "plan1.pdf",
+    "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
+    "realPath": "1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf",
+    "contentType": "application/pdf",
+    "size": 20548,
+    "user": "5113986056b831a917962158",
+    "userName": "Anna Andersson",
+    "isLink": false,
+    "isFolder": false,
+    "folderId": "6124d18c910273b259cf819",
+    "isPublic": false,
+    "createDate": "2024-01-15T09:00:00.000Z",
+    "modifiedDate": "2024-01-15T09:00:00.000Z",
+    "entityType": 1600,
+    "entityId": "6512a0c4e5b8a43c2f9d1a77",
+    "folderPath": "Drawings/Electrical",
+    "objectItem": {
+      "_id": "6512a0c4e5b8a43c2f9d1a77",
+      "name": "Building A",
+      "objectItemNumber": "1042",
+      "parent": "6512a09be5b8a43c2f9d1a55",
+      "path": "6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77",
+      "readablePath": "Area North#Building A"
+    }
+  }
+}
+```
+
+For `objectitem.document.*` events, `data` is the document (or folder, see `isFolder`) with the same structure as [Get a specific Document](#get-a-specific-document), plus:
+
+Field | Description
+--------- | -----------
+entityType | Always `1600` (object item). Use it with `entityId` in the [Documents API](#documents)
+entityId   | Id of the object item the document belongs to
+folderPath | Names of the folders the document is in, from the root of the object item, separated by `/`. Empty when the document is in the root
+objectItem | The object item: `_id`, `name`, `objectItemNumber`, `parent`, `path` and `readablePath` (the names of the object item and its ancestors separated by `#`)
+
+The `path` of a document is a download URL that is valid for one hour after the request was sent.
 
 Each request includes the header `X-SevenTime-Signature`. It is a hex encoded HMAC-SHA256 of the request body, signed with the `secret` of the subscription. Use it to verify that the request was sent by Seven Time.
 
