@@ -11,7 +11,7 @@ path         | Ids of the object item and its ancestors, from the top level, sep
 readablePath | Names of the object item and its ancestors, from the top level, separated by `#`
 hasChildren  | `true` if the object item has children
 
-Documents on object items are handled with the [Documents API](#documents), using entity type `1600`. The [webhook events](#available-events) `objectitem.created`, `objectitem.updated`, `objectitem.document.created` and `objectitem.document.updated` tell when object items and their documents are created or changed.
+Documents on object items are handled with the [Documents API](#documents), using entity type `1600`. [Get Object Item Documents](#get-object-item-documents) lists the documents on all object items, e.g. the latest ones. The [webhook events](#available-events) `objectitem.created`, `objectitem.updated`, `objectitem.document.created` and `objectitem.document.updated` tell when object items and their documents are created or changed.
 
 ## Get Object Items
 
@@ -49,8 +49,7 @@ request(options, function(error, response, body) {
   "meta": {
     "totalResources": 30,
     "totalPages": 3,
-    "currentPage": 1,
-    "hasMore": true
+    "currentPage": 1
   },
   "data": [
     {
@@ -277,6 +276,99 @@ This endpoint retrieves all object item types.
 
 `GET https://app.seventime.se/api/2/objectItemTypes`
 
+## Get Object Item Documents
+
+```shell
+curl "https://app.seventime.se/api/2/objectItemDocuments?sortBy=createDate&sortDirection=descending&limit=10" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/objectItemDocuments?sortBy=createDate&sortDirection=descending&limit=10";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey"
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // ...
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 42,
+    "totalPages": 5,
+    "currentPage": 1
+  },
+  "data": [
+    {
+      "_id": "6124daa00c1532914b92",
+      "name": "plan1.pdf",
+      "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
+      "realPath": "1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf",
+      "contentType": "application/pdf",
+      "size": 20548,
+      "user": "5113986056b831a917962158",
+      "userName": "Anna Andersson",
+      "isLink": false,
+      "isFolder": false,
+      "folderId": "6124d18c910273b259cf819",
+      "isPublic": false,
+      "createDate": "2024-01-15T09:00:00.000Z",
+      "modifiedDate": "2024-01-15T09:00:00.000Z",
+      "entityType": 1600,
+      "entityId": "6512a0c4e5b8a43c2f9d1a77",
+      "folderPath": "Drawings/Electrical",
+      "objectItem": {
+        "_id": "6512a0c4e5b8a43c2f9d1a77",
+        "name": "Building A",
+        "objectItemNumber": "1042",
+        "parent": "6512a09be5b8a43c2f9d1a55",
+        "path": "6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77",
+        "readablePath": "Area North#Building A"
+      }
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+This endpoint retrieves the documents and folders on all object items. Each document has the same structure as the data of the `objectitem.document.*` [webhook events](#webhook-requests): the document as in [Get a specific Document](#get-a-specific-document), plus where it is (`entityType`, `entityId` and `folderPath`) and the object item it belongs to (`objectItem`). The `path` of a document is a download URL that is valid for one hour.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/objectItemDocuments`
+
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/objectItemDocuments?lastModified=2024-01-15&isFolder=false`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+objectItem    |  | Id of an object item. If specified, only the documents on that object item will be included.
+isFolder      |  | "true" or "false". If specified, only folders or only documents will be included.
+lastModified  |  | If specified, documents that have been added or changed (renamed, moved to another folder or replaced by a new version) since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+sortBy        | createDate | "createDate", "modifiedDate" or "name"
+sortDirection | ascending | "ascending" or "descending". The sort order will be ascending or descending
+limit         | 100 | Number of documents per page. Maximum 500
+page          | 1 | Page number
+
 ## Create an Object Item
 
 ```shell
@@ -445,4 +537,4 @@ modifiedByUser | String | Yes | Id of the user who updated the object item
 
 ### Permissions
 
-With an API key connected to a user, the user's permissions for objects are used: viewing objects for the GET endpoints and editing objects for POST and PUT. Moving an object item (changing `parent`) also requires the permission to move objects.
+With an API key connected to a user, the user's permissions for objects are used: viewing objects for the GET endpoints and editing objects for POST and PUT. Moving an object item (changing `parent`) also requires the permission to move objects. Get Object Item Documents also requires the permission to view documents.

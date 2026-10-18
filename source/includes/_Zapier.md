@@ -16,6 +16,12 @@ Automation in Zapier is done with Triggers and Actions. Below are all triggers a
 - New Invoice
 - Updated Invoice
 
+### Objects
+- New Object
+- Updated Object
+- New Object Document
+- Updated Object Document
+
 ### Projects
 - New Project
 - Updated Project
