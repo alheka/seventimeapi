@@ -117,7 +117,7 @@ entityId   | Id of the object item the document belongs to
 folderPath | Names of the folders the document is in, from the root of the object item, separated by `/`. Empty when the document is in the root
 objectItem | The object item: `_id`, `name`, `objectItemNumber`, `parent`, `path` and `readablePath` (the names of the object item and its ancestors separated by `#`)
 
-The `path` of a document is a download URL that is valid for one hour after the request was sent.
+The `path` of a document is a download URL that is valid for one hour after the request was sent. Note that `realPath` is not a download URL and cannot be used to download the document directly.
 
 Each request includes the header `X-SevenTime-Signature`. It is a hex encoded HMAC-SHA256 of the request body, signed with the `secret` of the subscription. Use it to verify that the request was sent by Seven Time.
 

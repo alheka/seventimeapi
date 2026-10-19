@@ -208,7 +208,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves a specific object item, including its documents and folders. The `path` of a document is a download URL that is valid for one hour.
+This endpoint retrieves a specific object item, including its documents and folders. The `path` of a document is a download URL that is valid for one hour after the request was sent. Fetch the object item again to get a fresh `path` if the previous one has expired. Note that `realPath` is not a download URL and cannot be used to download the document directly.
 
 ### HTTP Request
 
@@ -349,7 +349,7 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves the documents and folders on all object items. Each document has the same structure as the data of the `objectitem.document.*` [webhook events](#webhook-requests): the document as in [Get a specific Document](#get-a-specific-document), plus where it is (`entityType`, `entityId` and `folderPath`) and the object item it belongs to (`objectItem`). The `path` of a document is a download URL that is valid for one hour.
+This endpoint retrieves the documents and folders on all object items. Each document has the same structure as the data of the `objectitem.document.*` [webhook events](#webhook-requests): the document as in [Get a specific Document](#get-a-specific-document), plus where it is (`entityType`, `entityId` and `folderPath`) and the object item it belongs to (`objectItem`). The `path` of a document is a download URL that is valid for one hour after the request was sent. Fetch it again to get a fresh `path` if the previous one has expired. Note that `realPath` is not a download URL and cannot be used to download the document directly.
 
 ### HTTP Request
 

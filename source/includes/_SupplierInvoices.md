@@ -1,4 +1,7 @@
 # Supplier Invoices
+
+The `documents` array on a supplier invoice contains document objects as described in [Documents](#documents). The `path` of a document is a download URL that is valid for one hour after the request was sent, so fetch the supplier invoice again to get a fresh `path` if the previous one has expired.
+
 ## Get supplier invoices
 
 ```shell

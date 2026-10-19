@@ -3,6 +3,8 @@
 
 Documents are included when fetching other objects, e.g. work orders or projects. They are found in an array named documents. The objects in the array contain a path which can be used to download the documents. Folders are also included and will have the flag isFolder as true.
 
+The `path` of a document is a download URL that is valid for one hour after the request was sent. Fetch the document again to get a fresh `path` if the previous one has expired. Note that `realPath` is not a download URL and cannot be used to download the document directly.
+
 Documents can also be fetched directly from the Documents API. A document belongs to either:
 
 - an entity, using `entityId` and `entityType`, e.g. a work order or project
