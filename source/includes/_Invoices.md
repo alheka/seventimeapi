@@ -610,7 +610,7 @@ request.post(options, function (error, response, body) {
 
 This endpoint creates an invoice. The created invoice is returned directly (not wrapped in a `data` property).
 
-Missing `customer`, `createdByUser` or `language` returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are returned with HTTP 500 and a descriptive `errorMessage`.
+Missing `customer`, `createdByUser` or `language` returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are also returned with HTTP 400 and a descriptive `errorMessage`. HTTP 500 is only returned for server errors.
 
 ### HTTP Request
 
@@ -847,7 +847,9 @@ request.put(options, function (error, response, body) {
 
 This endpoint updates an invoice. The updated invoice is returned directly (not wrapped in a `data` property). The fields createdByUser, createdByUserName and invoiceNumber are ignored. If invoiceItems is specified, it replaces all existing invoice items.
 
-Missing `_id` or `modifiedByUser` returns HTTP 400. Other validation errors are returned with HTTP 500 and a descriptive `errorMessage`.
+Missing `_id` or `modifiedByUser` returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are also returned with HTTP 400 and a descriptive `errorMessage`. HTTP 500 is only returned for server errors.
+
+If `__v` is specified and the invoice has been modified since it was fetched, the update is rejected with HTTP 409 and the `errorMessage` "Invoice has been modified by another user. Reload before saving." Fetch the invoice again and retry with the new `__v`.
 
 ### HTTP Request
 
@@ -861,6 +863,7 @@ Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
 _id                     | String | Yes | Id of the invoice
 modifiedByUser          | String | Yes | Id of the user who modified the invoice
+__v                     | Number | No  | Version of the invoice, as returned when the invoice was fetched. Increased by every update. If specified, the update is only made if the invoice has not been modified since (otherwise HTTP 409). If not specified, the invoice is updated regardless of other changes
 multipleTaxesOnRows     | Boolean| No  | Should it be possible to use different tax rates on invoice rows?
 taxPercent              | Number | No* | Tax rate on invoice rows *Required if 'multipleTaxesOnRows' is false.
 invoiceItems            | Array  | No  | Array containing the invoice items. Replaces the existing invoice items. See the section 'Create an Invoice' for more information about these items
