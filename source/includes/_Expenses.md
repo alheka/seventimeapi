@@ -85,7 +85,8 @@ request(options, function(error, response, body) {
       "distributor": null,
       "distributorName": "",
       "totalCost": 20,
-      "articleNumber": "208"
+      "articleNumber": "208",
+      "supplierInvoice": null
     },
     {
       // ...
@@ -95,6 +96,8 @@ request(options, function(error, response, body) {
 ```
 
 This endpoint retrieves expenses.
+
+An expense created from a row on a supplier invoice has the id of the supplier invoice in `supplierInvoice`. These expenses are created when the setting to create expenses from supplier invoice rows is activated, for rows that belong to a project or a work order. Together with the `project` filter this lists the articles bought for a project.
 
 At least one filter, e.g. a date range or a user, has to be specified. A request without any filter returns HTTP status 422 with the code `QUERY_TOO_BROAD`.
 

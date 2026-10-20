@@ -1,6 +1,8 @@
 # Supplier Invoices
 
-The `documents` array on a supplier invoice contains document objects as described in [Documents](#documents). The `path` of a document is a download URL that is valid for one hour after the request was sent, so fetch the supplier invoice again to get a fresh `path` if the previous one has expired.
+The rows of a supplier invoice, e.g. article numbers, quantities and amounts, are found in the `invoiceItemRows` array, see [Supplier invoice rows](#supplier-invoice-rows). The `invoiceItems` array is only used for self-billing invoices.
+
+The `documents` array on a supplier invoice contains document objects as described in [Documents](#documents). The `path` of a document is a download URL that is valid for one hour after the request was sent, so fetch the supplier invoice again to get a fresh `path` if the previous one has expired. The documents can also be fetched with `GET https://app.seventime.se/api/2/documents?entityId=<_id>&entityType=3300`.
 
 ## Get supplier invoices
 
@@ -80,6 +82,8 @@ request(options, function(error, response, body) {
           // ...
         }
       ],
+      "invoiceItemRows": [],
+      "distributeOnMultipleEntities": false,
       "documents": [],
       "distributor": "5f48eb7105b8ed6934398752",
       "distributorName": "20200828",
@@ -149,6 +153,7 @@ Parameter | Default | Description
 supplierInvoiceNumber    |  | If specified, supplier invoices that match the parameter will be included.
 supplierInvoiceStatus    |  | If specified, supplier invoices with this status will be included. Accepted values: 1, 5, 7, 10, 15, 35, 50. Other values are ignored
 project                  |  | If specified, supplier invoices that match the parameter will be included.
+includeDistributed       | false | If "true" and project is specified, supplier invoices distributed on several projects that have a row on the project are also included. The amounts on such a supplier invoice are for all of its rows, see [Supplier invoice rows](#supplier-invoice-rows)
 customer                 |  | If specified, supplier invoices that match the parameter will be included.
 workOrder                |  | If specified, supplier invoices that match the parameter will be included.
 workOrderNumber          |  | If specified, supplier invoices that match the parameter will be included.
@@ -240,6 +245,8 @@ request(options, function(error, response, body) {
         // ...
       }
     ],
+    "invoiceItemRows": [],
+    "distributeOnMultipleEntities": false,
     "documents": [],
     "distributor": "5f48eb7105b8ed6969875258",
     "distributorName": "20200828",
@@ -303,6 +310,137 @@ This endpoint retrieves a specific supplier invoice.
 Parameter | Description
 --------- | -----------
 _id | The _id of the supplier invoice to retrieve
+
+## Supplier invoice rows
+
+> Get supplier invoices returns a supplier invoice distributed on two projects like this:
+
+```json
+{
+  "data": [
+    {
+      "_id": "67e53d69a01b3b7348fef08a",
+      "supplierInvoiceNumber": "48863655",
+      "distributeOnMultipleEntities": true,
+      "project": null,
+      "workOrder": null,
+      "customer": null,
+      "invoiceItemRows": [
+        {
+          "_id": "67e53d69a01b3b7348fef08b",
+          "formulaString": "-{Total}",
+          "bookkeepingAccount": "619e32ee7e538b5b89e913e2",
+          "bookkeepingAccountNumber": 2440,
+          "project": null,
+          "invoiceItem": {
+            "_id": "67e53d69a01b3b7348fef08c",
+            "totalCost": -2817.5
+          }
+        },
+        {
+          "_id": "67e53d69a01b3b7348fef093",
+          "bookkeepingAccount": "619e32ef7e538b5b89e9145f",
+          "bookkeepingAccountNumber": 4010,
+          "project": "5f4df1793751c0916134687952",
+          "projectNumber": "1024",
+          "workOrder": null,
+          "expense": "67e53d69a01b3b7348fef0a2",
+          "isInvoiced": false,
+          "invoiceItem": {
+            "_id": "67e53d69a01b3b7348fef094",
+            "itemType": "expense",
+            "expenseItem": "5f48eb7105b8ed6934398752",
+            "articleNumber": "0445611",
+            "description": "EXQ Pure 3G2,5 R50",
+            "numberOfItems": 50,
+            "unit": "st",
+            "unitCost": 21.424,
+            "totalCost": 1071.2,
+            "unitPrice": 45.09,
+            "totalAmount": 2254.5,
+            "taxPercent": 25
+          }
+        },
+        {
+          "_id": "67e53d69a01b3b7348fef095",
+          "bookkeepingAccount": "619e32ef7e538b5b89e9145f",
+          "bookkeepingAccountNumber": 4010,
+          "project": "5f4df1793751c0916136489752",
+          "projectNumber": "1025",
+          "workOrder": null,
+          "invoiceItem": {
+            "_id": "67e53d69a01b3b7348fef096",
+            "itemType": "general",
+            "articleNumber": "1504169",
+            "description": "TCS-C3 8-12 SKRUVCLIPS VIT",
+            "numberOfItems": 1,
+            "unit": "FP",
+            "unitCost": 120.56,
+            "totalCost": 120.56,
+            "taxPercent": 25
+          }
+        },
+        {
+          // ...
+        }
+      ]
+    },
+    {
+      // ...
+    }
+  ]
+}
+```
+
+The `invoiceItemRows` array of a supplier invoice contains both article rows and accounting rows. It is included both when getting supplier invoices and when getting a specific supplier invoice. Only [Get supplier invoices](#get-supplier-invoices) adds `projectNumber`, `workOrderNumber`, `bookkeepingAccountNumber` and `resultUnitCode` to the rows. A specific supplier invoice only contains the ids.
+
+Article rows are included when the supplier invoice was received as an e-invoice (Peppol) and reading of article rows is activated on the supplier, or when the rows were imported with article numbers from the accounting system. A supplier invoice that was interpreted from a PDF has no article rows.
+
+Rows with a `formulaString`, e.g. `-{Total}`, `{Vat}` and `{Rounding}`, are created from a bookkeeping template and only contain `invoiceItem.totalCost`. Rows with a bookkeeping account below 4000, e.g. supplier debt and VAT, are balance sheet rows and do not belong to a project.
+
+**Projects**
+
+If `distributeOnMultipleEntities` is `true`, the supplier invoice is distributed on several projects or work orders. The fields `project`, `workOrder` and `customer` on the supplier invoice are then empty, and the project or work order is set on each row. Otherwise `project` and `workOrder` on the supplier invoice apply to all rows.
+
+To get all supplier invoices for a project, including the ones distributed on several projects, use `project` together with `includeDistributed=true` when getting supplier invoices. The amounts on a distributed supplier invoice, e.g. `totalAmount`, are for all of its rows, so use the rows with the project to get the amounts for the project.
+
+**Attributes for invoiceItemRows**
+
+Parameter | Description
+--------- | -----------
+_id                      | Id of the row
+invoiceItem              | Object with the article information, see below
+project                  | Id of the project the row is distributed on
+projectNumber            | Project number. Only included in Get supplier invoices, if `project` is set
+workOrder                | Id of the work order the row is distributed on
+workOrderNumber          | Work order number. Only included in Get supplier invoices, if `workOrder` is set
+customer                 | Id of the customer, for rows only connected to a customer
+bookkeepingAccount       | Id of the bookkeeping account
+bookkeepingAccountNumber | Account number of the bookkeeping account. Only included in Get supplier invoices
+resultUnit               | Id of the result unit
+resultUnitCode           | Code of the result unit. Only included in Get supplier invoices
+formulaString            | Set on rows created from a bookkeeping template
+expense                  | Id of the expense created from the row, see [Expenses](#expenses)
+isInvoiced               | Has the row been invoiced to the customer?
+invoice                  | Id of the invoice the row was invoiced on
+invoiceNumber            | Number of the invoice the row was invoiced on
+
+**Attributes for invoiceItemRows.invoiceItem**
+
+Parameter | Description
+--------- | -----------
+articleNumber   | Article number from the supplier
+description     | Name of the article on the supplier invoice
+numberOfItems   | Quantity
+unit            | Unit, e.g. st or m
+unitCost        | Purchase price per unit, excl. tax
+totalCost       | Purchase amount for the row, excl. tax
+unitPrice       | Sales price per unit
+totalAmount     | Sales amount for the row
+taxPercent      | Tax as a percentage
+itemType        | "expense" if the article was found in the article register, otherwise "general". Not set on accounting rows
+expenseItem     | Id of the article in the article register. Only set if `itemType` is "expense"
+expenseItemName | Name of the article in the article register
 
 ## Create a Supplier Invoice
 
