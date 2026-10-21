@@ -461,7 +461,7 @@ customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
 timeCategory        | String | No* | Id of the time category. *Required if isAbsence is true
 workOrder           | String | No  | Id of the work order
-pricePerHour        | Number | No  | price per hour of the time log. If not specified (or if the time log is not invoiceable), the price will be set according to the user, customer, project, time category or work order.
+pricePerHour        | Number | No  | price per hour of the time log. If not specified (or if the time log is not invoiceable), the price will be set according to the user, customer, project, time category or work order, as in Seven Time.
 description         | String | No  | Description/notes of the time log
 internalDescription | String | No  | Internal description/notes of the time log
 supplementOrder     | Boolean | No  | Is the time log a supplement order?
@@ -554,6 +554,8 @@ Parameter | Type | Required? | Description
 _id             | String | Yes | Id of the time log
 modifiedByUser  | String | Yes | Id of the user who made the change
 user            | String | No  | Id of the user on the time log. If not specified, the current user on the time log is kept
+
+Fields that are not specified keep their values. If pricePerHour is not specified, the price per hour is kept, unless the project, customer, time category, work order, user or isInvoiceable is changed: then it is set as when a time log is created.
 
 ## Delete a Time Log
 

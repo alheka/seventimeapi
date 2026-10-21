@@ -92,6 +92,8 @@ Seven Time expects the API key to be included in all API requests to the server 
 You must replace <code>thisismysecretkey</code> with your API key.
 </aside>
 
+Requests made with an OAuth access token (e.g. through the Seven Time MCP server) act as the connected user and follow the user's permissions in Seven Time. A user without the permission to see financial information doesn't get prices, costs, amounts, result units or cost accounts in the responses (quote costs follow the permission to see quote costs), these fields are ignored in POST and PUT requests, and analytics metrics for them return HTTP 403. API keys are not affected.
+
 # Header fields
 In addition to the 'Client-Secret', a few fields are required in the Header:
 
