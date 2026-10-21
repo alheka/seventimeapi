@@ -89,7 +89,7 @@ Seven Time expects the API key to be included in all API requests to the server 
 `Client-Secret: thisismysecretkey`
 
 <aside class="notice"> 
-You must replace <code>thisismysecretkey</code> with your personal API key.
+You must replace <code>thisismysecretkey</code> with your API key.
 </aside>
 
 # Header fields
