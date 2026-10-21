@@ -110,7 +110,7 @@ The Seven Time API supports four different actions:
 # Pagination
 Searches that returns a large number of results are paged due to performance reasons. 
 
-These searches are limited by the parameter 'limit'. This parameter limits the number of results that will be returned. By default (if not specified), this limit is set to 100 but can be set as low as 1 and as high as 500.
+These searches are limited by the parameter 'limit'. This parameter limits the number of results that will be returned. By default (if not specified, or if it isn't a number), this limit is set to 100 but can be set as low as 1 and as high as 500.
 
 When the number of results exceed the given limit, the 'page' parameter can be used to retrieve different intervals in the data. By default (if not specified),
 this value is set to 1.

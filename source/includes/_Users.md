@@ -528,7 +528,7 @@ firstName          | String   | Yes | First name of the user
 lastName           | String   | Yes | Last name of the user
 email              | String   | Yes | Email of the user
 userName           | String   | Yes | Username
-userRoleId         | Number   | Yes | User role id
+userRoleId         | Number   | Yes | User role id - one of the ids from [Get User Roles](#get-user-roles). Another value gives HTTP 400
 personalNumber     | String   | No  | Personal number of the user
 employeeNumber     | String   | No  | EmployeeNumber
 workPhone          | String   | No  | Work phone number

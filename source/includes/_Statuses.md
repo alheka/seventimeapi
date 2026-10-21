@@ -60,6 +60,6 @@ This endpoint retrieves the statuses configured for an entity type. Note that th
 
 Parameter | Default | Description
 --------- | ------- | -----------
-entityType    |  | **Required.** Number corresponding to the entity type to retrieve statuses for, e.g. 200 for work orders or 500 for projects. If omitted, HTTP 400 is returned with the `errorMessage` "Entity type required".
+entityType    |  | **Required.** Number corresponding to the entity type to retrieve statuses for: 200 (work orders), 300 (tasks), 500 (projects), 4200 (KMA events) or 4400 (KMA actions). If omitted, HTTP 400 is returned with the `errorMessage` "Entity type required", and another value also gives HTTP 400.
 
 The statuses are returned in the order they are configured. Sorting parameters are not supported.
