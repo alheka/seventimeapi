@@ -350,7 +350,7 @@ request.put(options, function (error, response, body) {
 
 This endpoint updates a machine time log. Only the fields included in the request are updated. The price is recalculated from the machine's price per hour.
 
-A machine time log that has been invoiced cannot be updated. The fields `isInvoiced`, `invoicedDate` and `invoice` are ignored.
+A machine time log that has been invoiced or attested (`status` 3) cannot be updated. The fields `isInvoiced`, `invoicedDate`, `invoice`, `attestedBy` and `attestItem` are ignored, and `status` can only be changed between 1 (new) and 2 (finished).
 
 ### HTTP Request
 
@@ -425,7 +425,7 @@ request.delete(options, function (error, response, body) {
 }
 ```
 
-This endpoint deletes a machine time log. A machine time log that has been invoiced cannot be deleted.
+This endpoint deletes a machine time log. A machine time log that has been invoiced or attested (`status` 3) cannot be deleted.
 
 ### HTTP Request
 

@@ -538,7 +538,9 @@ request.put(options, function (error, response, body) {
 "Time log updated: _id: 5fbcfe75ba9312280ef6523e"
 ```
 
-This endpoint updates a time log
+This endpoint updates a time log. Time logs that have been invoiced, salary processed or attested (`status` 3) cannot be updated - an attest has to be removed in Seven Time first.
+
+`status` can only be changed between 1 (new) and 2 (finished). Attest (3) and waiting for attest (10) are only set by the attest flow in Seven Time. `isAbsence` cannot be changed on an existing time log, and the fields `attestedBy` and `attestItem` are ignored.
 
 ### HTTP Request
 
@@ -598,7 +600,7 @@ request.delete(options, function (error, response, body) {
 "Time log deleted: _id: 51203146506d961c35798485"
 ```
 
-This endpoint deletes a time log. Time logs that have been invoiced or salary processed cannot be deleted.
+This endpoint deletes a time log. Time logs that have been invoiced, salary processed or attested (`status` 3) cannot be deleted.
 
 ### HTTP Request
 
