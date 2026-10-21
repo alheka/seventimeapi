@@ -121,7 +121,11 @@ The `path` of a document is a download URL that is valid for one hour after the 
 
 Each request includes the header `X-SevenTime-Signature`. It is a hex encoded HMAC-SHA256 of the request body, signed with the `secret` of the subscription. Use it to verify that the request was sent by Seven Time.
 
-Your endpoint should respond with a 2xx status code within 10 seconds. If the request fails, it is retried up to two more times: after 1 minute and after 5 more minutes. If your endpoint responds with `410 Gone`, the subscription is deactivated and no further requests are sent.
+Your endpoint should respond with a 2xx status code within 10 seconds. Only the status code is used - the response body is not read. If the request fails, it is retried up to two more times: after 1 minute and after 5 more minutes. If your endpoint responds with `410 Gone`, the subscription is deactivated and no further requests are sent.
+
+* Redirects (3xx) are not followed. A redirect counts as a failed request, so use the final URL as `targetUrl`.
+* Requests are only sent to public addresses. If the host name of `targetUrl` resolves to localhost or a private network address, no request is sent.
+* While the API key that created the subscription is deactivated or deleted, no requests are sent. They start again if the key is activated again. Subscriptions created before October 2026 are not connected to an API key.
 
 ## Get Webhook Subscriptions
 
@@ -291,6 +295,8 @@ request.post(options, function (error, response, body) {
 
 This endpoint creates a webhook subscription. The subscription is active directly.
 
+A company can have at most 100 active subscriptions. When the limit is reached, the endpoint returns `400` - delete subscriptions that are no longer used.
+
 The response contains the `secret` used to sign the webhook requests. The secret is only returned when the subscription is created, so store it in a safe place.
 
 ### HTTP Request
@@ -301,7 +307,7 @@ The response contains the `secret` used to sign the webhook requests. The secret
 
 Parameter | Type | Required? | Description
 --------- | ----------- | ----------- | -----------
-targetUrl | String | Yes | URL that will receive webhook requests. Must start with `http://` or `https://`
+targetUrl | String | Yes | URL that will receive webhook requests. Must start with `https://` and must not point to localhost or a private network address. Subscriptions created before October 2026 may use `http://`
 event     | String | Yes | Event to subscribe to. See [available events](#available-events)
 
 ## Delete a Webhook Subscription
