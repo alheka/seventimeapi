@@ -437,7 +437,7 @@ request.post(options, function (error, response, body) {
   "time": 5,
   "invoiceableTime": 5,
   "pricePerHour": 777,
-  "price": 777
+  "price": 3885
 }
 ```
 
@@ -456,16 +456,16 @@ user                | String | Yes | Id of the user on the time log
 timestamp           | String | Yes | Starting date and time for the time log. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 endTimestamp        | String | No* | Ending date and time for the time log. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. Cannot be before timestamp. *This is required if field 'time' is not specified
 time                | String | No* | Time of the time log in hours. *This is required if field 'endTimestamp' is not specified
-invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log
+invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log, rounded if Seven Time is set to round the invoiceable time. It is always 0 when the time log is not invoiceable
 customer            | String | No  | Id of the customer
 project             | String | No  | Id of the project
 timeCategory        | String | No* | Id of the time category. *Required if isAbsence is true
 workOrder           | String | No  | Id of the work order
-pricePerHour        | Number | No  | price per hour of the time log. If not specified (or if the time log is not invoiceable), the price will be set according to the user, customer, project, time category or work order, as in Seven Time.
+pricePerHour        | Number | No  | Price per hour of the time log. If not specified, it is set according to the user, customer, project, time category or work order, as in Seven Time. A specified price per hour is used as it is, also 0, and no customer discount is added to it. It must be a number, otherwise HTTP status 400 is returned. The price of the time log (`price`) is calculated from the price per hour and the time (or the invoiceable time, if invoiceable time is used in Seven Time), as in Seven Time. For a time log that is not invoiceable, the price per hour and the price are 0
 description         | String | No  | Description/notes of the time log
 internalDescription | String | No  | Internal description/notes of the time log
 supplementOrder     | Boolean | No  | Is the time log a supplement order?
-isInvoiceable       | Boolean | No  | Invoiceable or not
+isInvoiceable       | Boolean | No  | Invoiceable or not. Default true. A time log that is not invoiceable gets the invoiceable time 0 and the price 0
 isAbsence           | Boolean | No  | Should be set to true if it is an absence. For absences, the fields customer, workOrder, pricePerHour, invoiceableTime, supplementOrder and isInvoiceable are ignored and the absence is not invoiceable
 
 ## Update a Time Log
@@ -533,7 +533,7 @@ request.put(options, function (error, response, body) {
   "time": 8,
   "invoiceableTime": 8,
   "pricePerHour": 777,
-  "price": 777
+  "price": 6216
 }
 "Time log updated: _id: 5fbcfe75ba9312280ef6523e"
 ```
@@ -555,7 +555,9 @@ _id             | String | Yes | Id of the time log
 modifiedByUser  | String | Yes | Id of the user who made the change
 user            | String | No  | Id of the user on the time log. If not specified, the current user on the time log is kept
 
-Fields that are not specified keep their values. If pricePerHour is not specified, the price per hour is kept, unless the project, customer, time category, work order, user or isInvoiceable is changed: then it is set as when a time log is created.
+Fields that are not specified keep their values. If pricePerHour is not specified, the price per hour is kept, unless the project, customer, time category, work order, user or isInvoiceable is changed: then it is set as when a time log is created. The price (`price`) is calculated again from the price per hour and the time, as when a time log is created.
+
+If isInvoiceable is changed to true and invoiceableTime is not specified, the invoiceable time is set from the time of the time log, as when a time log is created.
 
 ## Delete a Time Log
 
