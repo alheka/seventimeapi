@@ -43,7 +43,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f924f4f533f102af754891365",
+      "_id": "5f924f4fa1b2c3d4e5001124",
       "permissions": {
         "permUsers": [],
         "permRoles": [],
@@ -53,7 +53,7 @@ request(options, function(error, response, body) {
       "name": "Från offert 20200811",
       "projectNumber": "3314",
       "projectStatus": 50,
-      "projectStatusRef": "5c8739d3205457b98b87952643",
+      "projectStatusRef": "5c8739d3a1b2c3d4e5001125",
       "projectType": null,
       "projectTypeName": null,
       "billingMethod": "FIXED_PRICE",
@@ -72,13 +72,13 @@ request(options, function(error, response, body) {
       },
       "resultUnit": null,
       "resultUnitName": "",
-      "customer": "5763e05bcddce98e379431679",
+      "customer": "5763e05ba1b2c3d4e5001126",
       "customerName": "Company",
       "contactPerson": null,
       "contactPersonName": null,
       "projectLeader": null,
       "projectLeaderName": null,
-      "quote": "5b110ea19b27f5ef3f79842658",
+      "quote": "5b110ea1a1b2c3d4e5001127",
       "quoteNumber": "1058",
       "department": null,
       "departmentName": "",
@@ -136,8 +136,8 @@ request(options, function(error, response, body) {
       "comments": [],
       "customFields": [
         {
-          "_id": "5f326f50433f102ff77995135845",
-          "fieldId": "5c0e7342ce9a6471798426587",
+          "_id": "5f326f50a1b2c3d4e5001128",
+          "fieldId": "5c0e7342a1b2c3d4e5001129",
           "value": "Prioritet"
         }
       ],
@@ -178,7 +178,7 @@ page            | 1 | Page to retrieve. See 'Pagination'
 ## Get a specific project
 
 ```shell
-curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af7879132584" \
+curl "https://app.seventime.se/api/2/projects/5f924f4fa1b2c3d4e5001130" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -186,7 +186,7 @@ curl "https://app.seventime.se/api/2/projects/5f924f4f533f102af7879132584" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/projects/5f924f4f533f102af7879132584";
+let url = "https://app.seventime.se/api/2/projects/5f924f4fa1b2c3d4e5001130";
 let options = {
   url: url,
   headers: {
@@ -254,11 +254,11 @@ request(options, function(error, response, body) {
       "notifyAtPercent": 0
     },
     "tags": [],
-    "_id": "5f924f4f533f102af7879132584",
+    "_id": "5f924f4fa1b2c3d4e5001130",
     "name": "Från offert 20200811",
     "projectNumber": "3314",
     "projectStatus": 50,
-    "projectStatusRef": "5c8639c3205457b88d64895287",
+    "projectStatusRef": "5c8639c3a1b2c3d4e5001131",
     "projectType": null,
     "projectTypeName": null,
     "billingMethod": "FIXED_PRICE",
@@ -272,13 +272,13 @@ request(options, function(error, response, body) {
     "recurringBudgetType": 10,
     "resultUnit": null,
     "resultUnitName": "",
-    "customer": "5763e05bcddce98e3648522971",
+    "customer": "5763e05ba1b2c3d4e5001132",
     "customerName": "Company",
     "contactPerson": null,
     "contactPersonName": null,
     "projectLeader": null,
     "projectLeaderName": null,
-    "quote": "5b110ea19b27f5ef3f364495217",
+    "quote": "5b110ea1a1b2c3d4e5001133",
     "quoteNumber": "1058",
     "department": null,
     "departmentName": "",
@@ -305,8 +305,8 @@ request(options, function(error, response, body) {
     "comments": [],
     "customFields": [
       {
-        "_id": "5f326f50433f102ff648795218",
-        "fieldId": "5c0e7342ce9a6477946287687",
+        "_id": "5f326f50a1b2c3d4e5001134",
+        "fieldId": "5c0e7342a1b2c3d4e5001135",
         "value": "Prioritet"
       }
     ],
@@ -431,7 +431,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5b276a908e0273b74648125987",
+      "_id": "5b276a90a1b2c3d4e5001136",
       "projectTypeName": "Dev",
       "isActive": true
     },
@@ -491,7 +491,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5fb2c736deb93b2713316795846",
+      "_id": "5fb2c736a1b2c3d4e5001137",
       "tagName": "Viktigt",
       "color": "673ab7"
     },
@@ -519,12 +519,12 @@ No parameters
 curl -X POST "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7e9781358587","name":"App development"}' 
+  -d '{"createdByUser":"5f48eb3ea1b2c3d4e5001138","name":"App development"}' 
 ```
 
 ```javascript
 const jsonData = {
-  createdByUser: '5f48eb3e65d7e9781358587',
+  createdByUser: '5f48eb3ea1b2c3d4e5001138',
   name: 'App development',
 };
 
@@ -556,7 +556,7 @@ request.post(options, function (error, response, body) {
     "budget": { "benefits": [], "costs": [] },
     "budgetCalculation": { "invoiceItems": [] },
     "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
-    "_id": "5fb3c92dd5472a24647985231",
+    "_id": "5fb3c92da1b2c3d4e5001139",
     "tags": [],
     "createdDate": "2020-11-17T12:59:25.109Z",
     "modifiedDate": "2020-11-17T12:59:25.109Z",
@@ -571,7 +571,7 @@ request.post(options, function (error, response, body) {
     "name": "App development",
     "projectNumber": "12345786" 
 }
-"Project created: App development, _id: 5fb3c92dd5472a24647985231"
+"Project created: App development, _id: 5fb3c92da1b2c3d4e5001139"
 ```
 
 This endpoint creates a project. The created project is returned directly (not wrapped in a `data` property).
@@ -651,15 +651,15 @@ phone                       | String | No | Phone number
 curl -X PUT "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a24647985231","name":"App development","customer":"571f61330c7f498a2d057941635","modifiedByUser":"51718241fdb708f3795364795"}' 
+  -d '{"_id":"5fb3c92da1b2c3d4e5001139","name":"App development","customer":"571f6133a1b2c3d4e5001140","modifiedByUser":"51718241a1b2c3d4e5001141"}' 
 ```
 
 ```javascript
 const jsonData = {
-  _id: '5fb3c92dd5472a24647985231',
-  modifiedByUser: '51718241fdb708f3795364795',
+  _id: '5fb3c92da1b2c3d4e5001139',
+  modifiedByUser: '51718241a1b2c3d4e5001141',
   name: 'App development',
-  customer: '571f61330c7f498a2d057941635'
+  customer: '571f6133a1b2c3d4e5001140'
 };
 
 const options = {
@@ -690,7 +690,7 @@ request.put(options, function (error, response, body) {
     "budget": { "benefits": [], "costs": [] },
     "budgetCalculation": { "invoiceItems": [] },
     "permissions": { "permUsers": [], "permRoles": [], "permDepartments": [] },
-    "_id": "5fb3c92dd5472a24647985231",
+    "_id": "5fb3c92da1b2c3d4e5001139",
     "tags": [],
     "createdDate": "2020-11-17T12:59:25.109Z",
     "modifiedDate": "2020-11-17T12:59:25.109Z",
@@ -704,10 +704,10 @@ request.put(options, function (error, response, body) {
     "customFields": [],
     "name": "App development",
     "projectNumber": "12345786",
-    "customer": "571f61330c7f498a2d057941635",
+    "customer": "571f6133a1b2c3d4e5001140",
     "customerName": "Company AB"
 }
-"Project updated: App development, _id: 5fb3c92dd5472a24647985231"
+"Project updated: App development, _id: 5fb3c92da1b2c3d4e5001139"
 ```
 
 This endpoint updates a project.
@@ -738,12 +738,12 @@ DELETE Projects is not documented because this route is not currently implemente
 curl -X DELETE "https://app.seventime.se/api/2/projects/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3c92dd5472a24647985231","deletedByUser":"51718241fdb708f3795364795"}' 
+  -d '{"_id":"5fb3c92da1b2c3d4e5001139","deletedByUser":"51718241a1b2c3d4e5001141"}' 
 ```
 
 ```javascript
 const jsonData = {
-  _id: '5fb3c92dd5472a24647985231',
+  _id: '5fb3c92da1b2c3d4e5001139',
   deletedByUser: '51718241fdb708f379596193'
 };
 
@@ -772,18 +772,18 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-    "_id": "5fb3c92dd5472a24647985231",
+    "_id": "5fb3c92da1b2c3d4e5001139",
     "name": "App development",
     "projectNumber": "12345786",
 }
-"Project deleted: App development, _id: 5fb3c92dd5472a24647985231"
+"Project deleted: App development, _id: 5fb3c92da1b2c3d4e5001139"
 ```
 
 This endpoint deletes a project.
 
 ### HTTP Request
 
-`DELETE https://app.seventime.se/api/2/projects/?_id=5fb3c92dd5472a24647985231`
+`DELETE https://app.seventime.se/api/2/projects/?_id=5fb3c92da1b2c3d4e5001139`
 
 ### DELETE Parameters
 

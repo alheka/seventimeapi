@@ -43,7 +43,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "571f61330c7f498a2d5812",
+      "_id": "571f6133a1b2c3d4e5001007",
       "customerNumber": "733352",
       "vatNumber": "SE555708197354",
       "organizationNumber": "555555-5555",
@@ -78,7 +78,7 @@ request(options, function(error, response, body) {
             "userName": "Anna Andersson",
             "personalNumber": "555555-5555",
             "distributionPercent": 100,
-            "_id": "5bb2683d3a0f154899"
+            "_id": "5bb2683da1b2c3d4e5001008"
           }
         ],
         "expenseDiscount": 0,
@@ -134,7 +134,7 @@ page                | 1 | Page number
 ## Get a specific Customer
 
 ```shell
-curl "https://app.seventime.se/api/2/customers/571f61330c7f4124592b" \
+curl "https://app.seventime.se/api/2/customers/571f6133a1b2c3d4e5001009" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -142,7 +142,7 @@ curl "https://app.seventime.se/api/2/customers/571f61330c7f4124592b" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/customers/571f61330c7f4124592b";
+let url = "https://app.seventime.se/api/2/customers/571f6133a1b2c3d4e5001009";
 let options = {
   url: url,
   headers: {
@@ -167,7 +167,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "571f61330c7f498a364892",
+    "_id": "571f6133a1b2c3d4e5001010",
     "customerNumber": "733352",
     "vatNumber": "SE555702476792",
     "organizationNumber": "555555-5555",
@@ -202,7 +202,7 @@ request(options, function(error, response, body) {
           "userName": "Anna Andersson",
           "personalNumber": "555555-5555",
           "distributionPercent": 100,
-          "_id": "5bb2683d3a0fdb85133"
+          "_id": "5bb2683da1b2c3d4e5001011"
         }
       ],
       "expenseDiscount": 0,
@@ -247,12 +247,12 @@ _id | The _id of the customer to retrieve
 curl -X POST "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee8984354b","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","phone":"1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
+  -d '{"createdByUser":"5f48eb3ea1b2c3d4e5001012","name":"Anna Andersson","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","phone":"1234-123456","email":"email@company.com","organizationNumber":"555555-5555"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee8984354b',
+  createdByUser: '5f48eb3ea1b2c3d4e5001012',
   name: 'Anna Andersson',
   address: 'Östra Gatan 129',
   zipCode: '123 45',
@@ -390,13 +390,13 @@ distributionPercent   | Number | Yes | 1-100
 curl -X PUT "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"571f61330c7f498a4712448b","modifiedByUser":"5f48eb3e65d7ee49649eeb","name":"Company AB","customerNumber":"733352"}' 
+  -d '{"_id":"571f61330c7f498a4712448b","modifiedByUser":"5f48eb3ea1b2c3d4e5001013","name":"Company AB","customerNumber":"733352"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: '571f61330c7f498a4712448b',
-  modifiedByUser: '5f48eb3e65d7ee49649eeb',
+  modifiedByUser: '5f48eb3ea1b2c3d4e5001013',
   name: 'Company AB',
   customerNumber: '733352'
 };
@@ -473,13 +473,13 @@ DELETE Customers is not documented because this route is not currently implement
 curl -X DELETE "https://app.seventime.se/api/2/customers/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"571f61330c7f498a4712448b","deletedByUser":"5f48eb3e65d7ee4942c446872"}' 
+  -d '{"_id":"571f61330c7f498a4712448b","deletedByUser":"5f48eb3ea1b2c3d4e5001014"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: '571f61330c7f498a4712448b',
-  deletedByUser: '5f48eb3e65d7ee4942c446872'
+  deletedByUser: '5f48eb3ea1b2c3d4e5001014'
 };
 
 let options = {

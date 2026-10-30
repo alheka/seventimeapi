@@ -39,7 +39,7 @@ objectitem.document.updated | A document or folder on an object item was renamed
   "event": "workorder.created",
   "timestamp": "2024-01-15T08:00:00.000Z",
   "data": {
-    "_id": "5bae34dca878b5497748",
+    "_id": "5bae34dca1b2c3d4e5001001",
     "title": "Service",
     "workOrderNumber": 1234
     // ...
@@ -79,7 +79,7 @@ data      | The object the event concerns. It has the same structure as when fet
   "event": "objectitem.document.created",
   "timestamp": "2024-01-15T09:00:05.000Z",
   "data": {
-    "_id": "6124daa00c1532914b92",
+    "_id": "6124daa0a1b2c3d4e5001023",
     "name": "plan1.pdf",
     "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
     "realPath": "1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf",
@@ -89,7 +89,7 @@ data      | The object the event concerns. It has the same structure as when fet
     "userName": "Anna Andersson",
     "isLink": false,
     "isFolder": false,
-    "folderId": "6124d18c910273b259cf819",
+    "folderId": "6124d18ca1b2c3d4e5001024",
     "isPublic": false,
     "createDate": "2024-01-15T09:00:00.000Z",
     "modifiedDate": "2024-01-15T09:00:00.000Z",

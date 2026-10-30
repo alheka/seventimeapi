@@ -45,7 +45,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "514959f8733259db75648975215",
+      "_id": "514959f8a1b2c3d4e5001222",
       "allDay": false,
       "cost": 10690.5824,
       "createDate": "2013-03-16T11:39:36.437Z",
@@ -58,7 +58,7 @@ request(options, function(error, response, body) {
       "time": 41.18577972222222,
       "timeCategory": null,
       "timestamp": "2013-03-14T18:28:26.193Z",
-      "user": "51203146506d961c030798526587",
+      "user": "51203146a1b2c3d4e5001223",
       "userName": "Anna Andersson",
       "invoiceableTime": 41.18577972222222,
       "customFields": [],
@@ -77,15 +77,15 @@ request(options, function(error, response, body) {
       },
       "unSocialHoursCosts": [
         {
-          "_id": "5f57385dbe6f05476e5923541",
-          "salaryType": "58cb7f24e9c363d0b0a1258984",
+          "_id": "5f57385da1b2c3d4e5001224",
+          "salaryType": "58cb7f24a1b2c3d4e5001225",
           "salaryTypeName": "OB kväll",
           "costPerHour": 150,
           "time": 6
         },
         {
           "_id": "5f57385dbe6f054764875216",
-          "salaryType": "58cb7f24e9c363d0b689847a",
+          "salaryType": "58cb7f24a1b2c3d4e5000503",
           "salaryTypeName": "OB kväll",
           "costPerHour": 150,
           "time": 10.5261325
@@ -135,7 +135,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a specific Time Log
 
 ```shell
-curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db45897213548" \
+curl "https://app.seventime.se/api/2/timeLogs/514959f8a1b2c3d4e5001226" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -143,7 +143,7 @@ curl "https://app.seventime.se/api/2/timeLogs/514959f8733259db45897213548" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/timeLogs/514959f8733259db45897213548";
+let url = "https://app.seventime.se/api/2/timeLogs/514959f8a1b2c3d4e5001226";
 let options = {
   url: url,
   headers: {
@@ -180,7 +180,7 @@ request(options, function(error, response, body) {
     "status": 1,
     "isInvoiceable": true,
     "isInvoiced": false,
-    "_id": "514959f8733259db45897213548",
+    "_id": "514959f8a1b2c3d4e5001226",
     "cost": 10690.5824,
     "createDate": "2013-03-16T11:39:36.437Z",
     "customer": null,
@@ -192,7 +192,7 @@ request(options, function(error, response, body) {
     "timeCategory": null,
     "isAbsence": false,
     "timestamp": "2013-03-14T18:28:26.193Z",
-    "user": "51203146506d961c030248975612",
+    "user": "51203146a1b2c3d4e5001227",
     "userName": "Anna Andersson",
     "invoiceableTime": 41.18577972222222,
     "customFields": [],
@@ -201,15 +201,15 @@ request(options, function(error, response, body) {
     "realTimestamp": "2020-08-27T07:52:57.685Z",
     "unSocialHoursCosts": [
       {
-        "_id": "5f57385dbe6f05368974521",
-        "salaryType": "58cb7f24e9c363d4589761258",
+        "_id": "5f57385da1b2c3d4e5001228",
+        "salaryType": "58cb7f24a1b2c3d4e5001229",
         "salaryTypeName": "OB kväll",
         "costPerHour": 150,
         "time": 6
       },
       {
         "_id": "5f57385dbe6f054765879125",
-        "salaryType": "58cb8f2e9c663d0e68482a",
+        "salaryType": "58cb8f2ea1b2c3d4e5001230",
         "salaryTypeName": "OB kväll",
         "costPerHour": 150,
         "time": 10.5261325
@@ -268,7 +268,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "58cd3c4771b8a3c34658974521",
+      "_id": "58cd3c47a1b2c3d4e5001231",
       "name": "Semester",
       "description": "",
       "isAbsenceType": true,
@@ -308,7 +308,7 @@ sortDirection      |  | "ascending" or "descending". If specified and sortBy is 
 ## Get a specific Time Category
 
 ```shell
-curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34658974521" \
+curl "https://app.seventime.se/api/2/timeCategories/58cd3c47a1b2c3d4e5001231" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -316,7 +316,7 @@ curl "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34658974521" 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/timeCategories/58cd3c4771b8a3c34658974521";
+let url = "https://app.seventime.se/api/2/timeCategories/58cd3c47a1b2c3d4e5001231";
 let options = {
   url: url,
   headers: {
@@ -341,7 +341,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "58cd3c4771b8a3c34658974521",
+    "_id": "58cd3c47a1b2c3d4e5001231",
     "name": "Semester",
     "description": "",
     "isAbsenceType": true,
@@ -381,13 +381,13 @@ _id | The _id of the time category to retrieve
 curl -X POST "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee4926574851","user":"51203146506d961c03036589741","timestamp":"2020-06-05 12:00","time":"5"}'
+  -d '{"createdByUser":"5f48eb3e65d7ee4926574851","user":"51203146a1b2c3d4e5001221","timestamp":"2020-06-05 12:00","time":"5"}'
 ```
 
 ```javascript
 let jsonData = {
   createdByUser: '5f48eb3e65d7ee4926574851',
-  user: '51203146506d961c03036589741',
+  user: '51203146a1b2c3d4e5001221',
   timestamp: '2020-06-05 12:00',
   time: '5'
 };
@@ -422,7 +422,7 @@ request.post(options, function (error, response, body) {
   "status": 1,
   "isInvoiceable": true,
   "isInvoiced": false,
-  "_id": "5fbcfe75ba9312280e2145897521",
+  "_id": "5fbcfe75a1b2c3d4e5001022",
   "timestamp": "2020-11-19T12:00:00.000Z",
   "realTimestamp": "2020-11-19T12:00:00.000Z",
   "createDate": "2020-11-24T12:37:09.258Z",
@@ -430,7 +430,7 @@ request.post(options, function (error, response, body) {
   "customFields": [],
   "machineTimePrices": [],
   "machineTimeSupplements": [],
-  "user": "51203146506d961c03036589741",
+  "user": "51203146a1b2c3d4e5001221",
   "userName": "Anna Andersson",
   "endTimestamp": "2020-11-19T17:00:00.000Z",
   "realEndTimestamp": "2020-11-19T17:00:00.000Z",
@@ -474,14 +474,14 @@ isAbsence           | Boolean | No  | Should be set to true if it is an absence.
 curl -X PUT "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fbcfe75ba9312280e2145897521","modifiedByUser":"51718241fdb708f3923268","user":"51203146506d961c03036589741","timestamp":"2020-10-7 07:00","endTimestamp":"2020-10-7 15:00"}'
+  -d '{"_id":"5fbcfe75a1b2c3d4e5001022","modifiedByUser":"51718241a1b2c3d4e5001232","user":"51203146a1b2c3d4e5001221","timestamp":"2020-10-7 07:00","endTimestamp":"2020-10-7 15:00"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbcfe75ba9312280e2145897521',
-  modifiedByUser: '51718241fdb708f3923268',
-  user: '51203146506d961c03036589741',
+  _id: '5fbcfe75a1b2c3d4e5001022',
+  modifiedByUser: '51718241a1b2c3d4e5001232',
+  user: '51203146a1b2c3d4e5001221',
   timestamp: '2020-10-07 07:00',
   endTimestamp: '2020-10-07 15:00',
 };
@@ -518,7 +518,7 @@ request.put(options, function (error, response, body) {
   "isInvoiceable": true,
   "isInvoiced": false,
   "isAbsence": false,
-  "_id": "5fbcfe75ba9312280e2145897521",
+  "_id": "5fbcfe75a1b2c3d4e5001022",
   "timestamp": "2020-10-07T06:00:00.000Z",
   "realTimestamp": "2020-10-07T06:00:00.000Z",
   "createDate": "2020-11-24T12:37:09.258Z",
@@ -526,7 +526,7 @@ request.put(options, function (error, response, body) {
   "customFields": [],
   "machineTimePrices": [],
   "machineTimeSupplements": [],
-  "user": "51203146506d961c03036589741",
+  "user": "51203146a1b2c3d4e5001221",
   "userName": "Anna Andersson",
   "endTimestamp": "2020-10-07T14:00:00.000Z",
   "realEndTimestamp": "2020-10-07T14:00:00.000Z",
@@ -535,7 +535,7 @@ request.put(options, function (error, response, body) {
   "pricePerHour": 777,
   "price": 6216
 }
-"Time log updated: _id: 5fbcfe75ba9312280ef6523e"
+"Time log updated: _id: 5fbcfe75a1b2c3d4e5000502"
 ```
 
 This endpoint updates a time log. Time logs that have been invoiced, salary processed or attested (`status` 3) cannot be updated - an attest has to be removed in Seven Time first.
@@ -567,13 +567,13 @@ If isInvoiceable is changed to true and invoiceableTime is not specified, the in
 curl -X DELETE "https://app.seventime.se/api/2/timeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"51203146506d961c35798485","deletedByUser":"51203146506d961c03036589741"}'
+  -d '{"_id":"51203146506d961c35798485","deletedByUser":"51203146a1b2c3d4e5001221"}'
 ```
 
 ```javascript
 let jsonData = {
   _id: '51203146506d961c35798485',
-  deletedByUser: '51203146506d961c03036589741'
+  deletedByUser: '51203146a1b2c3d4e5001221'
 };
 
 let options = {

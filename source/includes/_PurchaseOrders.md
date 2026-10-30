@@ -52,12 +52,12 @@ request(options, function(error, response, body) {
       "headerText": "Vi önskar att beställa följande.",
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
       "footerInfoText": "",
-      "createdByUser": "5f48eb3e65d7ee497945281",
+      "createdByUser": "5f48eb3ea1b2c3d4e5001142",
       "createdByUserName": "Anna Andersson",
-      "ourReference": "5f48eb3e65d7ee497945281",
+      "ourReference": "5f48eb3ea1b2c3d4e5001142",
       "ourReferenceName": "Anna Andersson",
       "approvedBy": null,
-      "distributor": "5f6b2e6af24d5df55b69277",
+      "distributor": "5f6b2e6aa1b2c3d4e5001143",
       "distributorName": "Company",
       "distributorAddress": "Östra Gatan 129<br>123 45 Stockholm",
       "distributorVAT": "",
@@ -111,10 +111,10 @@ request(options, function(error, response, body) {
       "documents": [],
       "purchaseOrderLogEntries": [
         {
-          "_id": "5f48eb3e65d7ee49546892",
+          "_id": "5f48eb3ea1b2c3d4e5001144",
           "logType": 5,
           "description": "",
-          "user": "59312765ad961c03113468",
+          "user": "59312765a1b2c3d4e5001145",
           "userName": "Anna Andersson",
           "logDate": "2017-09-11T13:31:08.972Z"
         },
@@ -226,12 +226,12 @@ request(options, function(error, response, body) {
     "headerText": "Vi önskar att beställa följande.",
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>FIRST</td><td style='vertical-align: top;'>SECOND</td></tr></table>",
     "footerInfoText": "",
-    "createdByUser": "5f48eb3e65d7ee494496723",
+    "createdByUser": "5f48eb3ea1b2c3d4e5001146",
     "createdByUserName": "Anna Andersson",
-    "ourReference": "5f48eb3e65d7ee494496723",
+    "ourReference": "5f48eb3ea1b2c3d4e5001146",
     "ourReferenceName": "Anna Andersson",
     "approvedBy": null,
-    "distributor": "5f6b2e6af24d5df5679485",
+    "distributor": "5f6b2e6aa1b2c3d4e5001147",
     "distributorName": "Company",
     "distributorAddress": "Östra Gatan 129<br>123 45 Stockholm",
     "distributorVAT": "",
@@ -268,10 +268,10 @@ request(options, function(error, response, body) {
     "purchaseOrderLogEntries": [
       {
         "logDate": "2017-09-11T13:31:08.972Z",
-        "_id": "59b6901c1598211831000063",
+        "_id": "59b6901ca1b2c3d4e5000505",
         "logType": 5,
         "description": "",
-        "user": "5f48eb3e65d7ee494649824",
+        "user": "5f48eb3ea1b2c3d4e5001148",
         "userName": "Anna Andersson"
       },
       {
@@ -308,13 +308,13 @@ _id | The _id of the purchase order to retrieve
 curl -X POST "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"51718241fdb708f384795682","distributor":"5f6b2e6af24d5df5548672"}' 
+  -d '{"createdByUser":"51718241fdb708f384795682","distributor":"5f6b2e6aa1b2c3d4e5001149"}' 
 ```
 
 ```javascript
 let jsonData = {
   createdByUser: '51718241fdb708f384795682',
-  distributor: '5f6b2e6af24d5df5548672',
+  distributor: '5f6b2e6aa1b2c3d4e5001149',
 };
 
 let options = {
@@ -359,12 +359,12 @@ request.post(options, function (error, response, body) {
       "country": "SE",
       "email": "email@company.com" 
     },
-  "_id": "5fca480e571eb873a548952",
+  "_id": "5fca480ea1b2c3d4e5001150",
   "createDate": "2020-12-04T14:30:38.164Z",
   "invoiceItems": [],
   "purchaseOrderLogEntries":
     [ 
-      { "_id": "5fca480e571eb8747951862",
+      { "_id": "5fca480ea1b2c3d4e5001151",
         "logType": 5,
         "description": "",
         "user": "51714655fbb708f364879528",
@@ -381,7 +381,7 @@ request.post(options, function (error, response, body) {
   "headerText": "header text",
   "footerText": "footer text",
   "footerInfoText": "footer info text",
-  "createdByUser": "51714655fbb708f3124687282",
+  "createdByUser": "51714655a1b2c3d4e5001152",
   "createdByUserName": "Anna Andersson",
   "distributor": "5f6b4b6ef26b5d6f5a687207",
   "distributorName": "UE lev 20200923",
@@ -389,15 +389,15 @@ request.post(options, function (error, response, body) {
   "distributorVAT": "",
   "ourCustomerNumber": "",
   "language": "EN",
-  "ourReference": "51714655fbb704997512356884",
+  "ourReference": "51714655a1b2c3d4e5001153",
   "ourReferenceName": "Anna Andersson",
   "purchaseOrderStatus": 10,
-  "contactPersonDistributor": "5fca0baf099b1c3a54789574286",
+  "contactPersonDistributor": "5fca0bafa1b2c3d4e5001154",
   "contactPersonDistributorName": "dwd21",
   "purchaseOrderDate": "2020-12-04T23:00:00.000Z",
-  "project": "5b20cce1d59a902e6548795248",
+  "project": "5b20cce1a1b2c3d4e5001155",
   "projectName": "Blåsippan",
-  "workOrder": "5fb3d3f6d2b1a732b11655248597",
+  "workOrder": "5fb3d3f6a1b2c3d4e5001156",
   "workOrderNumber": "4922",
   "workOrderName": "API",
   "desiredDeliveryDate": "2020-12-19T23:00:00.000Z",
@@ -406,7 +406,7 @@ request.post(options, function (error, response, body) {
   "sentDate": "2020-12-04T14:30:38.169Z",
   "purchaseOrderNumber": "1051",
 }
-"Purchase Order created: name: purchase Order 123, _id: 5fca480e571eb873a548952"
+"Purchase Order created: name: purchase Order 123, _id: 5fca480ea1b2c3d4e5001150"
 ```
 
 This endpoint creates a purchase order
@@ -503,13 +503,13 @@ onlyamount     | Text+amount row
 curl -X PUT "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fca480e571eb82548762156","modifiedByUser":"51718241fdb708f3764857952","paymentDays":"10"}' 
+  -d '{"_id":"5fca480e571eb82548762156","modifiedByUser":"51718241a1b2c3d4e5001157","paymentDays":"10"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fca480e571eb82548762156',
-  modifiedByUser: '51718241fdb708f3764857952',
+  modifiedByUser: '51718241a1b2c3d4e5001157',
   paymentDays: 10
 };
 
@@ -560,10 +560,10 @@ request.put(options, function (error, response, body) {
   "invoiceItems": [],
   "purchaseOrderLogEntries":
     [ 
-      { "_id": "5fca480e571eb873a64b97ed",
+      { "_id": "5fca480ea1b2c3d4e5000506",
         "logType": 5,
         "description": "",
-        "user": "51714655fbb708f3648975216875",
+        "user": "51714655a1b2c3d4e5001158",
         "userName": "Anna Andersson",
         "logDate": "2020-12-04T14:30:38.169Z" 
        } 
@@ -577,7 +577,7 @@ request.put(options, function (error, response, body) {
   "headerText": "header text",
   "footerText": "footer text",
   "footerInfoText": "footer info text",
-  "createdByUser": "51714655fbb76487951267",
+  "createdByUser": "51714655a1b2c3d4e5001159",
   "createdByUserName": "Anna Andersson",
   "distributor": "5f6b4b6ef26b5d6f5a687207",
   "distributorName": "UE lev 20200923",
@@ -585,15 +585,15 @@ request.put(options, function (error, response, body) {
   "distributorVAT": "",
   "ourCustomerNumber": "",
   "language": "EN",
-  "ourReference": "51714655fbb708f65498785135",
+  "ourReference": "51714655a1b2c3d4e5001160",
   "ourReferenceName": "Anna Andersson",
   "purchaseOrderStatus": 10,
   "contactPersonDistributor": "5fca0baf099b1c3167985428",
   "contactPersonDistributorName": "dwd21",
   "purchaseOrderDate": "2020-12-04T23:00:00.000Z",
-  "project": "5b20cce1d59a902e2658749821354",
+  "project": "5b20cce1a1b2c3d4e5001161",
   "projectName": "Blåsippan",
-  "workOrder": "5fb3d3f6d2b1a6789842157",
+  "workOrder": "5fb3d3f6a1b2c3d4e5001162",
   "workOrderNumber": "4922",
   "workOrderName": "API",
   "desiredDeliveryDate": "2020-12-19T23:00:00.000Z",
@@ -627,13 +627,13 @@ modifiedByUser             | String | Yes | Id of the user who modified the purc
 curl -X DELETE "https://app.seventime.se/api/2/purchaseOrders/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fca480e571eb8548271985c","deletedByUser":"51203146506d961c098751258"}' 
+  -d '{"_id":"5fca480e571eb8548271985c","deletedByUser":"51203146a1b2c3d4e5001163"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fca480e571eb8548271985c',
-  deletedByUser: '51203146506d961c098751258'
+  deletedByUser: '51203146a1b2c3d4e5001163'
 };
 
 let options = {

@@ -53,7 +53,7 @@ request.post(options, function (error, response, body) {
   "data": [
     {
       "group": {
-        "customer": "5bae34dca878b5497748",
+        "customer": "5bae34dca1b2c3d4e5001001",
         "customerName": "Kund AB",
         "year": 2024,
         "month": 2
@@ -63,7 +63,7 @@ request.post(options, function (error, response, body) {
     },
     {
       "group": {
-        "customer": "5bae34dca878b5497749",
+        "customer": "5bae34dca1b2c3d4e5001002",
         "customerName": "Bygg AB",
         "year": 2024,
         "month": 1

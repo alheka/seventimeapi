@@ -138,7 +138,7 @@ The array workScheduleDays holds the info for different days, monday to sunday. 
 ## Get a specific WorkSchedule
 
 ```shell
-curl "https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135" \
+curl "https://app.seventime.se/api/2/workSchedules/59d05abda1b2c3d4e5001015" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -146,7 +146,7 @@ curl "https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/workSchedules/59d05abdc471b72e4979135";
+let url = "https://app.seventime.se/api/2/workSchedules/59d05abda1b2c3d4e5001015";
 let options = {
   url: url,
   headers: {

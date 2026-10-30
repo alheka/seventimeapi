@@ -40,7 +40,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5a4bc02e40a13d71799764283",
+      "_id": "5a4bc02ea1b2c3d4e5001120",
       "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
       "hoursUsed": 5193,
       "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
@@ -120,7 +120,7 @@ page             | 1 | Page number
 ## Get a specific Machine
 
 ```shell
-curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d71799764283" \
+curl "https://app.seventime.se/api/2/machines/5a4bc02ea1b2c3d4e5001120" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -128,7 +128,7 @@ curl "https://app.seventime.se/api/2/machines/5a4bc02e40a13d71799764283" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machines/5a4bc02e40a13d71799764283";
+let url = "https://app.seventime.se/api/2/machines/5a4bc02ea1b2c3d4e5001120";
 let options = {
   url: url,
   headers: {
@@ -158,14 +158,14 @@ request(options, function(error, response, body) {
     },
     "machineLog": [],
     "isSupplementForMachines": [],
-    "_id": "5a4bc02e40a13d71799764283",
+    "_id": "5a4bc02ea1b2c3d4e5001120",
     "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
     "hoursUsed": 5193,
     "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
     "mileage": 10122.7,
     "isActive": true,
     "createdByUserName": "Anna Andersson",
-    "createdByUser": "5113986056b831a96489527",
+    "createdByUser": "51139860a1b2c3d4e5001121",
     "hoursCanBeRegistered": true,
     "canBePlanned": true,
     "isInvoiceable": true,
@@ -251,7 +251,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "57e89fbae191f8ba548916",
+      "_id": "57e89fbaa1b2c3d4e5001122",
       "name": "Fordon",
       "isActive": true,
       "createDate": "2017-10-19T12:50:50.361Z"

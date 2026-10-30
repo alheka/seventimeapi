@@ -41,7 +41,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5c33891321361d7d548782561",
+      "_id": "5c338913a1b2c3d4e5001164",
       "quoteNumber": "1054",
       "quoteType": 0,
       "quoteName": "Prisindikation",
@@ -53,13 +53,13 @@ request(options, function(error, response, body) {
       "headerText": null,
       "footerInfoText": null,
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
-      "createdByUser": "5f48eb3e65d7ee494247852",
+      "createdByUser": "5f48eb3ea1b2c3d4e5001165",
       "createdByUserName": "Anna Andersson",
-      "ourReference": "5f48eb3e65d7ee494247852",
+      "ourReference": "5f48eb3ea1b2c3d4e5001165",
       "ourReferenceName": "Anna Andersson",
-      "salesAgent": "5f48eb3e65d7ee494247852",
+      "salesAgent": "5f48eb3ea1b2c3d4e5001165",
       "salesAgentName": "Anna Andersson",
-      "customer": "5bb26376c42fb99275054892034",
+      "customer": "5bb26376a1b2c3d4e5001166",
       "customerName": "Company",
       "customerNumber": "44312",
       "customerAddress": "Östra Gatan 129 123 45 Stockholm",
@@ -117,11 +117,11 @@ request(options, function(error, response, body) {
       "quoteDeclineReasonName": null,
       "notes": "",
       "openNotificationSent": false,
-      "quoteTemplate": "5b7dd2ba41cb2a725547911",
+      "quoteTemplate": "5b7dd2baa1b2c3d4e5001167",
       "stockReservationIsDone": false,
       "quoteElements": [
         {
-          "_id": "5b7ada8548975216",
+          "_id": "5b7ada85a1b2c3d4e5001168",
           "content": {
             "text": "",
             "confirmationText": ""
@@ -137,7 +137,7 @@ request(options, function(error, response, body) {
           "content": {
             "invoiceItems": [
               {
-                "stockLocation": "5bbd3a49dda6579841241",
+                "stockLocation": "5bbd3a49a1b2c3d4e5001169",
                 "selectedFlag": false,
                 "houseWorkTypeOfWork": 0,
                 "houseWorkFlag": false,
@@ -193,7 +193,7 @@ request(options, function(error, response, body) {
           "itemId": "0.086780107201752"
         },
         {
-          "_id": "5b7a808bc65798521357",
+          "_id": "5b7a808ba1b2c3d4e5001170",
           "content": {
             "text": "",
             "confirmationText": ""
@@ -231,10 +231,10 @@ request(options, function(error, response, body) {
       "documents": [],
       "quoteLogEntries": [
         {
-          "_id": "5c33831c3512857dd314687592",
+          "_id": "5c33831ca1b2c3d4e5001171",
           "logDate": "2019-01-07T17:15:08.533Z",
           "userName": "Anna Andersson",
-          "user": "59312765ad961c6489415",
+          "user": "59312765a1b2c3d4e5001172",
           "description": "",
           "logType": 1,
           "entryId": "mZjaXWo2oRTr"
@@ -277,7 +277,7 @@ sortDirection                       |  | "ascending" or "descending". If specifi
 ## Get a specific Quote
 
 ```shell
-curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561" \
+curl "https://app.seventime.se/api/2/quotes/5c338913a1b2c3d4e5001164" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -285,7 +285,7 @@ curl "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/quotes/5c33891321361d7d548782561";
+let url = "https://app.seventime.se/api/2/quotes/5c338913a1b2c3d4e5001164";
 let options = {
   url: url,
   headers: {
@@ -310,7 +310,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5c33891321361d7d548782561",
+    "_id": "5c338913a1b2c3d4e5001164",
     "quoteNumber": "1054",
     "quoteType": 0,
     "quoteName": "Prisindikation",
@@ -322,13 +322,13 @@ request(options, function(error, response, body) {
     "headerText": null,
     "footerInfoText": null,
     "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>TESTerrt</td><td style='vertical-align: top;'>TEST2</td><td style='vertical-align: top;'>TEST3</td></tr></table>",
-    "createdByUser": "5f48eb3e65d7ee497412582",
+    "createdByUser": "5f48eb3ea1b2c3d4e5001173",
     "createdByUserName": "Anna Andersson",
-    "ourReference": "5f48eb3e65d7ee497412582",
+    "ourReference": "5f48eb3ea1b2c3d4e5001173",
     "ourReferenceName": "Anna Andersson",
-    "salesAgent": "5f48eb3e65d7ee497412582",
+    "salesAgent": "5f48eb3ea1b2c3d4e5001173",
     "salesAgentName": "Anna Andersson",
-    "customer": "5bb26376c42fb9965479852",
+    "customer": "5bb26376a1b2c3d4e5001174",
     "customerName": "Company",
     "customerNumber": "44312",
     "customerAddress": "Östra Gatan 129 123 45 Stockholm",
@@ -386,11 +386,11 @@ request(options, function(error, response, body) {
     "quoteDeclineReasonName": null,
     "notes": "",
     "openNotificationSent": false,
-    "quoteTemplate": "5b7dd2ba41cb2a725879452815",
+    "quoteTemplate": "5b7dd2baa1b2c3d4e5001175",
     "stockReservationIsDone": false,
     "quoteElements": [
       {
-        "_id": "5b7ada8bc41cb365284975",
+        "_id": "5b7ada8ba1b2c3d4e5001176",
         "content": {
           "text": "",
           "confirmationText": ""
@@ -429,7 +429,7 @@ request(options, function(error, response, body) {
               "driverJournalItemTypeName": "",
               "driverJournalItemType": null,
               "expenseItemName": "Company - 5 användare - #2",
-              "expenseItem": "5de78aed13327196587954283",
+              "expenseItem": "5de78aeda1b2c3d4e5001177",
               "categoryName": "",
               "timeCategory": null,
               "itemType": "expense",
@@ -462,7 +462,7 @@ request(options, function(error, response, body) {
         "itemId": "0.086780107201752"
       },
       {
-        "_id": "5b7a808bc413665478512",
+        "_id": "5b7a808ba1b2c3d4e5001178",
         "content": {
           "text": "",
           "confirmationText": ""
@@ -500,10 +500,10 @@ request(options, function(error, response, body) {
     "documents": [],
     "quoteLogEntries": [
       {
-        "_id": "5c33831c351285769857452542",
+        "_id": "5c33831ca1b2c3d4e5001179",
         "logDate": "2019-01-07T17:15:08.533Z",
         "userName": "Anna Andersson",
-        "user": "59312765ad961c036598758245",
+        "user": "59312765a1b2c3d4e5001180",
         "description": "",
         "logType": 1,
         "entryId": "mZjaXWo2oRTr"
@@ -568,20 +568,20 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5fb02816ed7ed72d965987485",
+      "_id": "5fb02816a1b2c3d4e5001181",
       "columnContents": [
         "This is a new footer!<br><br>"
       ],
       "templateName": "Standard utan sektioner",
       "quoteType": 0,
       "language": "",
-      "createdByUser": "5f48eb3e65d7ee49425485982",
+      "createdByUser": "5f48eb3ea1b2c3d4e5001182",
       "createdByUserName": "Anna Andersson",
       "createDate": "2020-11-09T13:31:10.929Z",
       "documents": [],
       "quoteElements": [
         {
-          "_id": "5b7a808bc41cb2a778985478541",
+          "_id": "5b7a808ba1b2c3d4e5001183",
           "itemId": "0.2991772478801382",
           "elementTypeId": 1400,
           "topMargin": 20,
@@ -596,13 +596,13 @@ request(options, function(error, response, body) {
       "overrideLogoAndAddress": false,
       "logo": [
         {
-          "_id": "5f6b5b15468263005f54793258",
+          "_id": "5f6b5b15a1b2c3d4e5001184",
           "createDate": "2020-09-23T14:26:29.655Z",
           "modifiedDate": "2020-09-23T14:26:29.655Z",
           "name": "logo.png",
           "contentType": "image/png",
           "size": 6765,
-          "user": "5f48eb3e65d7ee468748512546",
+          "user": "5f48eb3ea1b2c3d4e5001185",
           "userName": "Anna Andersson"
         }
       ],

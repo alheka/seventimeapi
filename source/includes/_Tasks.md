@@ -41,16 +41,16 @@ request(options, function(error, response, body) {
     "currentPage": 1 },
   "data": [
     {
-      "_id": "5dd0i31j238019132k328321k",
+      "_id": "5dd00310a1b2c3d4e5001216",
       "title": "API task",
       "tags": [],
       "dependsOn": [],
       "dependents": [],
       "reminders": [],
       "createDate": "2019-11-22T14:51:42.224Z",
-      "createdByUser": "5112891383213mk0002",
+      "createdByUser": "51128913a1b2c3d4e5001217",
       "__v": 0,
-      "taskStatusRef": "5e8d2137213h312a2034d",
+      "taskStatusRef": "5e8d2137a1b2c3d4e5001218",
       "rank": "0|i000yv:"
     },
     {
@@ -98,7 +98,7 @@ A date parameter in an invalid format returns HTTP status 400 with `{"errorMessa
 ## Get a specific Task
 
 ```shell
-curl "https://app.seventime.se/api/2/tasks/5dd0i31j238019132k328321k" \
+curl "https://app.seventime.se/api/2/tasks/5dd00310a1b2c3d4e5001216" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -106,7 +106,7 @@ curl "https://app.seventime.se/api/2/tasks/5dd0i31j238019132k328321k" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/tasks/5dd0i31j238019132k328321k";
+let url = "https://app.seventime.se/api/2/tasks/5dd00310a1b2c3d4e5001216";
 let options = {
   url: url,
   headers: {
@@ -131,16 +131,16 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5dd0i31j238019132k328321k",
+    "_id": "5dd00310a1b2c3d4e5001216",
     "title": "API task",
     "tags": [],
     "dependsOn": [],
     "dependents": [],
     "reminders": [],
     "createDate": "2019-11-22T14:51:42.224Z",
-    "createdByUser": "5112891383213mk0002",
+    "createdByUser": "51128913a1b2c3d4e5001217",
     "__v": 0,
-    "taskStatusRef": "5e8d2137213h312a2034d",
+    "taskStatusRef": "5e8d2137a1b2c3d4e5001218",
     "rank": "0|i000yv:"
   }
 }
@@ -202,14 +202,14 @@ request.post(options, function (error, response, body) {
   "tags": [],
   "dependsOn": [],
   "dependents": [],
-  "_id": "6705973h3j1733m33j3382",
+  "_id": "67059730a1b2c3d4e5001219",
   "reminders": [],
   "todoItems": [],
   "documents": [],
   "notes": [],
   "createDate": "2024-10-08T11:01:36.674Z",
   "title": "API uppgift",
-  "taskStatusRef": "5e8dea9332u23123ff34d",
+  "taskStatusRef": "5e8dea93a1b2c3d4e5001220",
   "rank": "0|i001pf:",
   "createdByUser": "5f48eb3e65d7ee4926574851",
   "project": null,
@@ -249,12 +249,12 @@ completed            | Boolean | No        | Set if the task is completed or not
 curl -X PUT "https://app.seventime.se/api/2/tasks/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"6705973h3j1733m33j3382","modifiedByUser":"5f48eb3e65d7ee4926574851","title":"Updated API task"}'
+  -d '{"_id":"67059730a1b2c3d4e5001219","modifiedByUser":"5f48eb3e65d7ee4926574851","title":"Updated API task"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '6705973h3j1733m33j3382',
+  _id: '67059730a1b2c3d4e5001219',
   modifiedByUser: '5f48eb3e65d7ee4926574851',
   title: 'Updated API task'
 };
@@ -286,14 +286,14 @@ request.put(options, function (error, response, body) {
   "tags": [],
   "dependsOn": [],
   "dependents": [],
-  "_id": "6705973h3j1733m33j3382",
+  "_id": "67059730a1b2c3d4e5001219",
   "reminders": [],
   "todoItems": [],
   "documents": [],
   "notes": [],
   "createDate": "2024-10-08T11:01:36.674Z",
   "title": "Updated API task",
-  "taskStatusRef": "5e8dea9332u23123ff34d",
+  "taskStatusRef": "5e8dea93a1b2c3d4e5001220",
   "rank": "0|i001pf:",
   "createdByUser": "5f48eb3e65d7ee4926574851",
   "project": null,
@@ -302,7 +302,7 @@ request.put(options, function (error, response, body) {
   "workOrderTitle": null,
   "workOrderNumber": null
 }
-Task updated: _id: 6705973h3j1733m33j3382"
+Task updated: _id: 67059730a1b2c3d4e5001219"
 ```
 
 This endpoint updates a task
@@ -325,13 +325,13 @@ modifiedByUser  | String | Yes | Id of the user who made the change
 curl -X DELETE "https://app.seventime.se/api/2/tasks/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"6705973h3j1733m33j3382","deletedByUser":"5f48eb3e65d7ee4926574851"}'
+  -d '{"_id":"67059730a1b2c3d4e5001219","deletedByUser":"5f48eb3e65d7ee4926574851"}'
 ```
 
 ```javascript
 let jsonData = {
   _id: '51203146506d961c35798485',
-  deletedByUser: '51203146506d961c03036589741'
+  deletedByUser: '51203146a1b2c3d4e5001221'
 };
 
 let options = {

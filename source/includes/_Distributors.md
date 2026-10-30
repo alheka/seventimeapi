@@ -41,7 +41,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f6b2e6af24d5df526848",
+      "_id": "5f6b2e6aa1b2c3d4e5001016",
       "name": "UE lev 20200923",
       "distributorNumber": "20",
       "address": "",
@@ -58,7 +58,7 @@ request(options, function(error, response, body) {
       "hasSelfBilling": true,
       "selfBillingSettings": {
         "invoiceDeduction": 5,
-        "deductionExpenseItem": "5e74bf0917ae9b91662484d",
+        "deductionExpenseItem": "5e74bf09a1b2c3d4e5001017",
         "invoiceNumberSeries": "UELEV23",
         "invoiceCounter": 1,
         "emailForSelfBilling": "email@company.com"
@@ -95,7 +95,7 @@ page                        | 1 | Page number
 ## Get a specific Distributor
 
 ```shell
-curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5d7121b" \
+curl "https://app.seventime.se/api/2/distributors/5f6b2e6aa1b2c3d4e5001018" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -103,7 +103,7 @@ curl "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5d7121b" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/distributors/5f6b2e6af24d5d7121b";
+let url = "https://app.seventime.se/api/2/distributors/5f6b2e6aa1b2c3d4e5001018";
 let options = {
   url: url,
   headers: {
@@ -130,12 +130,12 @@ request(options, function(error, response, body) {
   "data": {
     "selfBillingSettings": {
       "invoiceDeduction": 5,
-      "deductionExpenseItem": "5e74bf0917ae9b9166154952d",
+      "deductionExpenseItem": "5e74bf09a1b2c3d4e5001019",
       "invoiceNumberSeries": "UELEV23",
       "invoiceCounter": 1,
       "emailForSelfBilling": "email@company.com"
     },
-    "_id": "5f6b2e6af24d5d7121b",
+    "_id": "5f6b2e6aa1b2c3d4e5001018",
     "name": "UE lev 20200923",
     "distributorNumber": "20",
     "address": "",
@@ -175,7 +175,7 @@ _id | The _id of the distributor to retrieve
 ## Get Distributor Contact Persons
 
 ```shell
-curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b" \
+curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6aa1b2c3d4e5001018" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -183,7 +183,7 @@ curl "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b";
+let url = "https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6aa1b2c3d4e5001018";
 let options = {
   url: url,
   headers: {
@@ -209,13 +209,13 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5fca23df0317c151d15459",
+      "_id": "5fca23dfa1b2c3d4e5001020",
       "name": "Kontaktperson 1",
       "title": "",
       "workPhone": "",
       "cellPhone": "",
       "email": "",
-      "distributor": "5f6b2e6af24d5d7121b",
+      "distributor": "5f6b2e6aa1b2c3d4e5001018",
       "distributorName": "UE lev 20200923",
       "mainContact": false,
       "isActive": true,
@@ -233,7 +233,7 @@ This endpoint retrieves distributor contact persons.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6af24d5d7121b`
+`GET https://app.seventime.se/api/2/distributorContactPersons/?distributor=5f6b2e6aa1b2c3d4e5001018`
 
 ### Query Parameters
 
@@ -282,7 +282,7 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "62f3a242ca38bbsce075249",
+  "_id": "62f3a242a1b2c3d4e5001021",
   "name": "Distributor Test",
   "distributorNumber": "123456",
   "address": "test 1",
@@ -367,12 +367,12 @@ emailForSelfBilling       | String | No | Email for self billing
 curl -X PUT "https://app.seventime.se/api/2/distributors/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"62f3a242ca38bbsce075249","name":"New distributor name"}'
+  -d '{"_id":"62f3a242a1b2c3d4e5001021","name":"New distributor name"}'
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fbcfe75ba9312280e2145897521',
+  _id: '5fbcfe75a1b2c3d4e5001022',
   name: 'New distributor name'
 };
 
@@ -401,7 +401,7 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "62f3a242ca38bbsce075249",
+  "_id": "62f3a242a1b2c3d4e5001021",
   "name": "New distributor name",
   "distributorNumber": "123456",
   "address": "test 1",
@@ -432,7 +432,7 @@ request.put(options, function (error, response, body) {
   "documents": [],
   "__v": 0
 }
-"Distributor updated: _id: 62f3a242ca38bbsce075249"
+"Distributor updated: _id: 62f3a242a1b2c3d4e5001021"
 ```
 
 This endpoint updates a distributor

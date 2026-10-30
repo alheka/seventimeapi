@@ -65,7 +65,7 @@ request(options, function(error, response, body) {
         "personalNumber": "",
         "deductionDistribution": [
           {
-            "_id": "5fae99b072aa334cb533648",
+            "_id": "5fae99b0a1b2c3d4e5001077",
             "userName": "testUser",
             "personalNumber": "12345",
             "distributionPercent": 40
@@ -76,7 +76,7 @@ request(options, function(error, response, body) {
         ]
       },
       "workOrderIds": [
-        "5fa2b550c289ea61785952",
+        "5fa2b550a1b2c3d4e5001078",
         // ...
       ],
       "tags": [
@@ -86,12 +86,12 @@ request(options, function(error, response, body) {
       "createDate": "2020-11-13T14:35:28.797Z",
       "invoiceItems": [
         {
-          "_id": "5fae99b072aa334cb52449682",
+          "_id": "5fae99b0a1b2c3d4e5001079",
           "createDate": "2020-11-13T14:35:28.795Z",
           "houseWorkTypeOfWork": 1,
           "name": "**Skivhantel i Gummi 10 Kg****",
           "description": "Skivhantel av järn",
-          "expenseItem": "5de78ae9bb1356246889512",
+          "expenseItem": "5de78ae9a1b2c3d4e5001080",
           "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
           "itemType": "expense",
           "numberOfItems": 1,
@@ -114,11 +114,11 @@ request(options, function(error, response, body) {
       ],
       "invoiceLogEntries": [
         {
-          "_id": "5fae99b072aa3667942258",
+          "_id": "5fae99b0a1b2c3d4e5001081",
           "logDate": "2020-11-13T14:35:28.797Z",
           "logType": 1,
           "description": "",
-          "user": "51714655fbb708f54975368",
+          "user": "51714655a1b2c3d4e5001082",
           "userName": "Anna Andersson",
           "additionalData": ""
         },
@@ -133,25 +133,25 @@ request(options, function(error, response, body) {
       "taxPercent": 12,
       "invoiceStatus": 2,
       "invoiceDate": "2020-11-04T23:00:00.000Z",
-      "createdByUser": "51714655fbb708f37966632571",
+      "createdByUser": "51714655a1b2c3d4e5001083",
       "createdByUserName": "Anna Andersson",
-      "customer": "5cc05b6a4e595e68466411b",
+      "customer": "5cc05b6aa1b2c3d4e5001084",
       "customerName": "Company AB",
       "dueDate": "2020-12-04T23:00:00.000Z",
       "actualDeliveryDate": "2020-11-02T23:00:00.000Z",
       "language": "EN",
-      "project": "5b20cce1d59a902e28489125b",
+      "project": "5b20cce1a1b2c3d4e5001085",
       "projectName": "Blåsippan",
-      "contactPerson": "5af95e6b1e557892234",
+      "contactPerson": "5af95e6ba1b2c3d4e5001086",
       "contactPersonName": "Anna Andersson",
-      "ourReference": "518ff209d5a658451412",
+      "ourReference": "518ff209a1b2c3d4e5001087",
       "ourReferenceName": "Anna Andersson",
-      "workOrder": "5fa2b550c289ea96544921",
+      "workOrder": "5fa2b550a1b2c3d4e5001088",
       "workOrderNumber": "4843",
       "invoiceType": 1,
-      "resultUnit": "5784ff52fc71ce243b889d22482",
+      "resultUnit": "5784ff52a1b2c3d4e5001089",
       "resultUnitName": "Kontor Nord",
-      "priceList": "57bc187159a73f31230b5186472d25",
+      "priceList": "57bc1871a1b2c3d4e5001090",
       "priceListName": "Kundlista Inkl moms",
       "multipleTaxesOnRows": true,
       "currencyCode": "SEK",
@@ -233,7 +233,7 @@ An invalid date in any of the date parameters returns HTTP 400 with the `errorMe
 ## Get a specific Invoice
 
 ```shell
-curl "https://app.seventime.se/api/2/invoices/5fab29b038b7789542665" \
+curl "https://app.seventime.se/api/2/invoices/5fab29b0a1b2c3d4e5001091" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -241,7 +241,7 @@ curl "https://app.seventime.se/api/2/invoices/5fab29b038b7789542665" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/invoices/5fab29b038b7789542665";
+let url = "https://app.seventime.se/api/2/invoices/5fab29b0a1b2c3d4e5001091";
 let options = {
   url: url,
   headers: {
@@ -284,7 +284,7 @@ request(options, function(error, response, body) {
       "personalNumber": "",
       "deductionDistribution": [
         {
-          "_id": "5fae99b072aa3548648942372",
+          "_id": "5fae99b0a1b2c3d4e5001092",
           "userName": "testUser",
           "personalNumber": "12345",
           "distributionPercent": 40
@@ -300,23 +300,23 @@ request(options, function(error, response, body) {
     "machineTimeLogIds": [],
     "supplierInvoiceIds": [],
     "workOrderIds": [
-      "5fa2b550c289ea55486219"
+      "5fa2b550a1b2c3d4e5001093"
     ],
     "externalSystemExport": [],
     "tags": [
-      "5f742440d608b22078942bd66",
-      "5f74243ad608b25489256488b"
+      "5f742440a1b2c3d4e5001094",
+      "5f74243aa1b2c3d4e5001095"
     ],
-    "_id": "5fae99b072aa334cb5a5979425d",
+    "_id": "5fae99b0a1b2c3d4e5001096",
     "createDate": "2020-11-13T14:35:28.797Z",
     "invoiceItems": [
       {
         "createDate": "2020-11-13T14:35:28.795Z",
-        "_id": "5fae99b072aa334cb5399723547b",
+        "_id": "5fae99b0a1b2c3d4e5001097",
         "houseWorkTypeOfWork": 1,
         "name": "**Skivhantel i Gummi 10 Kg****",
         "description": "Skivhantel av järn",
-        "expenseItem": "5de78ae9bb1356594897615",
+        "expenseItem": "5de78ae9a1b2c3d4e5001098",
         "expenseItemName": "**Skivhantel i Gummi 10 Kg****",
         "itemType": "expense",
         "numberOfItems": 1,
@@ -344,7 +344,7 @@ request(options, function(error, response, body) {
         "_id": "5fae99b072aa334c64897216",
         "logType": 1,
         "description": "",
-        "user": "51714655fbb708f3647823159",
+        "user": "51714655a1b2c3d4e5001099",
         "userName": "Anna Andersson",
         "additionalData": ""
       },
@@ -357,7 +357,7 @@ request(options, function(error, response, body) {
     "supplementOrders": [],
     "customFields": [
       {
-        "_id": "5fb5217e4ea82f6477123584dd",
+        "_id": "5fb5217ea1b2c3d4e5001100",
         "fieldId": "5f67af2796bce97845216892",
         "value": {
           "distributorId": null,
@@ -372,25 +372,25 @@ request(options, function(error, response, body) {
     "taxPercent": 12,
     "invoiceStatus": 2,
     "invoiceDate": "2020-11-04T23:00:00.000Z",
-    "createdByUser": "51714655fbb708f3754578228",
+    "createdByUser": "51714655a1b2c3d4e5001101",
     "createdByUserName": "Anna Andersson",
-    "customer": "5cc05b6a4e595e6854976137451b",
+    "customer": "5cc05b6aa1b2c3d4e5001102",
     "customerName": "Company AB",
     "dueDate": "2020-12-04T23:00:00.000Z",
     "actualDeliveryDate": "2020-11-02T23:00:00.000Z",
     "language": "EN",
     "project": "5b20cce1d59a979134679582",
     "projectName": "Blåsippan",
-    "contactPerson": "5af95e6b1e56d12235489761954",
+    "contactPerson": "5af95e6ba1b2c3d4e5001103",
     "contactPersonName": "Anna Andersson",
-    "ourReference": "518ff209d5af91647923578",
+    "ourReference": "518ff209a1b2c3d4e5001104",
     "ourReferenceName": "Anna Andersson",
-    "workOrder": "5fa2b550c289ea64845842b",
+    "workOrder": "5fa2b550a1b2c3d4e5001105",
     "workOrderNumber": "4843",
     "invoiceType": 1,
-    "resultUnit": "5784ff52fc71ce243d1354892",
+    "resultUnit": "5784ff52a1b2c3d4e5001106",
     "resultUnitName": "Kontor Nord",
-    "priceList": "57bc187159a73f3164915be",
+    "priceList": "57bc1871a1b2c3d4e5001107",
     "priceListName": "Kundlista Inkl moms",
     "multipleTaxesOnRows": true,
     "currencyCode": "SEK",
@@ -517,13 +517,13 @@ No parameters
 curl -X POST "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"invoiceStatus":2,"customer":"571f21058d7f612467981357165","createdByUser":"51718241fdb7084835249227","language":"EN"}' 
+  -d '{"invoiceStatus":2,"customer":"571f2105a1b2c3d4e5001108","createdByUser":"51718241fdb7084835249227","language":"EN"}' 
 ```
 
 ```javascript
 let jsonData = {
   invoiceStatus: 2,
-  customer: '571f21058d7f612467981357165',
+  customer: '571f2105a1b2c3d4e5001108',
   createdByUser: '51718241fdb7084835249227',
   language: 'EN'
 };
@@ -567,10 +567,10 @@ request.post(options, function (error, response, body) {
   "documents": [],
   "invoiceLogEntries":
    [ 
-    { "_id": "5fb64449b0cc95679815",
+    { "_id": "5fb64449a1b2c3d4e5001109",
        "logType": 1,
        "description": "",
-       "user": "5f48eb3e65d7479134682",
+       "user": "5f48eb3ea1b2c3d4e5001110",
        "userName": "Anna Andersson",
        "additionalData": "",
        "logDate": "2020-11-19T10:09:13.039Z" },
@@ -591,7 +591,7 @@ request.post(options, function (error, response, body) {
   "invoiceDate": "2020-11-19T10:09:13.033Z",
   "createdByUser": "51718241fdb7084835249227",
   "createdByUserName": "Anna Andersson",
-  "customer": "571f21058d7f612467981357165",
+  "customer": "571f2105a1b2c3d4e5001108",
   "customerName": "Company",
   "dueDate": "2020-12-09T22:59:59.999Z",
   "language": "EN",
@@ -752,13 +752,13 @@ Code |  Invoice type | Description
 curl -X PUT "https://app.seventime.se/api/2/invoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb64449b0cc951024822167","customer":"571f21058d7f616498213765","modifiedByUser":"51718241fdb7894158127","language":"EN"}' 
+  -d '{"_id":"5fb64449b0cc951024822167","customer":"571f21058d7f616498213765","modifiedByUser":"51718241a1b2c3d4e5001111","language":"EN"}' 
 ```
 
 ```javascript
 let jsonData = {
   _id: '5fb64449b0cc951024822167',
-  modifiedByUser: '51718241fdb7894158127',
+  modifiedByUser: '51718241a1b2c3d4e5001111',
   invoiceName: 'Invoice 2020-12',
   customer: '571f21058d7f616498213765',
   multipleTaxesOnRows: 'true',
@@ -805,10 +805,10 @@ request.put(options, function (error, response, body) {
   "documents": [],
   "invoiceLogEntries":
    [ 
-    { "_id": "5fb64449b0cc9510a561dfe0",
+    { "_id": "5fb64449a1b2c3d4e5000501",
        "logType": 1,
        "description": "",
-       "user": "5f48eb3e65d7e976825602",
+       "user": "5f48eb3ea1b2c3d4e5001112",
        "userName": "Anna Andersson",
        "additionalData": "",
        "logDate": "2020-11-19T10:09:13.039Z" },
@@ -829,7 +829,7 @@ request.put(options, function (error, response, body) {
   "invoiceDate": "2020-11-19T10:09:13.033Z",
   "createdByUser": "5f48eb3e65d7ee494b523978",
   "createdByUserName": "Anna Andersson",
-  "customer": "571f21058d7f618a264217895",
+  "customer": "571f2105a1b2c3d4e5001113",
   "customerName": "Company AB",
   "dueDate": "2020-12-09T22:59:59.999Z",
   "language": "EN",
