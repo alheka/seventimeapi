@@ -451,11 +451,11 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong, or the user connected to a personal API key is no longer active.</td>
+<td>Unauthorized -- Your API key is wrong, or the OAuth access token has expired or its user is no longer active. Personal API keys (keys connected to a user) are no longer supported: connect with OAuth instead.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The API key (or the user connected to a personal API key) does not have permission to access the resource.</td>
+<td>Forbidden -- The API key does not have permission to access the resource, e.g. the user of an OAuth access token lacks the permission, or the token lacks the scope for it.</td>
 </tr>
 <tr>
 <td>404</td>

@@ -491,6 +491,29 @@
               </ul>
           </li>
           <li>
+            <a href="#object-items" class="toc-h1 toc-link" data-title="Object Items">Object Items</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-object-items" class="toc-h2 toc-link" data-title="Get Object Items">Get Object Items</a>
+                  </li>
+                  <li>
+                    <a href="#get-a-specific-object-item" class="toc-h2 toc-link" data-title="Get a specific Object Item">Get a specific Object Item</a>
+                  </li>
+                  <li>
+                    <a href="#get-object-item-types" class="toc-h2 toc-link" data-title="Get Object Item Types">Get Object Item Types</a>
+                  </li>
+                  <li>
+                    <a href="#get-object-item-documents" class="toc-h2 toc-link" data-title="Get Object Item Documents">Get Object Item Documents</a>
+                  </li>
+                  <li>
+                    <a href="#create-an-object-item" class="toc-h2 toc-link" data-title="Create an Object Item">Create an Object Item</a>
+                  </li>
+                  <li>
+                    <a href="#update-an-object-item" class="toc-h2 toc-link" data-title="Update an Object Item">Update an Object Item</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#price-lists" class="toc-h1 toc-link" data-title="Price Lists">Price Lists</a>
               <ul class="toc-list-h2">
                   <li>
@@ -602,6 +625,9 @@
                   </li>
                   <li>
                     <a href="#get-a-specific-supplier-invoice" class="toc-h2 toc-link" data-title="Get a specific Supplier Invoice">Get a specific Supplier Invoice</a>
+                  </li>
+                  <li>
+                    <a href="#supplier-invoice-rows" class="toc-h2 toc-link" data-title="Supplier invoice rows">Supplier invoice rows</a>
                   </li>
                   <li>
                     <a href="#create-a-supplier-invoice" class="toc-h2 toc-link" data-title="Create a Supplier Invoice">Create a Supplier Invoice</a>
@@ -831,8 +857,10 @@ curl <span class="s2">"api_endpoint_here"</span> <span class="se">\</span>
 <p><code>Client-Secret: thisismysecretkey</code></p>
 
 <aside class="notice"> 
-You must replace <code>thisismysecretkey</code> with your personal API key.
+You must replace <code>thisismysecretkey</code> with your API key.
 </aside>
+
+<p>Requests made with an OAuth access token (e.g. through the Seven Time MCP server) act as the connected user and follow the user&#39;s permissions in Seven Time. A user without the permission to see financial information doesn&#39;t get prices, costs, amounts, result units or cost accounts in the responses (quote costs follow the permission to see quote costs), these fields are ignored in POST and PUT requests, and analytics metrics for them return HTTP 403. API keys are not affected.</p>
 <h1 id='header-fields'>Header fields</h1>
 <p>In addition to the &#39;Client-Secret&#39;, a few fields are required in the Header:</p>
 
@@ -853,7 +881,7 @@ You must replace <code>thisismysecretkey</code> with your personal API key.
 <h1 id='pagination'>Pagination</h1>
 <p>Searches that returns a large number of results are paged due to performance reasons. </p>
 
-<p>These searches are limited by the parameter &#39;limit&#39;. This parameter limits the number of results that will be returned. By default (if not specified), this limit is set to 100 but can be set as low as 1 and as high as 500.</p>
+<p>These searches are limited by the parameter &#39;limit&#39;. This parameter limits the number of results that will be returned. By default (if not specified, or if it isn&#39;t a number), this limit is set to 100 but can be set as low as 1 and as high as 500.</p>
 
 <p>When the number of results exceed the given limit, the &#39;page&#39; parameter can be used to retrieve different intervals in the data. By default (if not specified),
 this value is set to 1.</p>
@@ -912,11 +940,11 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 </tr>
 <tr>
 <td>401</td>
-<td>Unauthorized -- Your API key is wrong, or the user connected to a personal API key is no longer active.</td>
+<td>Unauthorized -- Your API key is wrong, or the OAuth access token has expired or its user is no longer active. Personal API keys (keys connected to a user) are no longer supported: connect with OAuth instead.</td>
 </tr>
 <tr>
 <td>403</td>
-<td>Forbidden -- The API key (or the user connected to a personal API key) does not have permission to access the resource.</td>
+<td>Forbidden -- The API key does not have permission to access the resource, e.g. the user of an OAuth access token lacks the permission, or the token lacks the scope for it.</td>
 </tr>
 <tr>
 <td>404</td>
@@ -2152,7 +2180,10 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
           </span><span class="p">}</span><span class="w">
         </span><span class="p">],</span><span class="w">
         </span><span class="s2">"expenseDiscount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"expenseDiscountWholeSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="s2">"expenseCustomProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"expenseWholeSaleProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"expenseUseArticleNumberProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="s2">"markupPercentSupplierInvoice"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
         </span><span class="s2">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"priceListName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -2305,7 +2336,10 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
       </span><span class="s2">"expenseDiscount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expenseDiscountWholeSale"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="s2">"expenseCustomProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expenseWholeSaleProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"expenseUseArticleNumberProfitMargin"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"markupPercentSupplierInvoice"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1000</span><span class="p">,</span><span class="w">
       </span><span class="s2">"priceList"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"priceListName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
@@ -2680,6 +2714,36 @@ This error section is stored in a separate file in <code>includes/_errors.md</co
 <td>Array</td>
 <td>No</td>
 <td>Array of DeductionItem&#39;s. See below for details.</td>
+</tr>
+<tr>
+<td>expenseDiscount</td>
+<td>Number</td>
+<td>No</td>
+<td>Discount (negative number) or markup (positive number) in percent on the price of own articles</td>
+</tr>
+<tr>
+<td>expenseDiscountWholeSale</td>
+<td>Number</td>
+<td>No</td>
+<td>Discount (negative number) or markup (positive number) in percent on the price of wholesale articles</td>
+</tr>
+<tr>
+<td>expenseCustomProfitMargin</td>
+<td>Number</td>
+<td>No</td>
+<td>Markup on purchase price in percent for own articles. 0 = the price of the article is used</td>
+</tr>
+<tr>
+<td>expenseWholeSaleProfitMargin</td>
+<td>Number</td>
+<td>No</td>
+<td>Markup on purchase price in percent for wholesale articles. 0 = the price of the article is used</td>
+</tr>
+<tr>
+<td>expenseUseArticleNumberProfitMargin</td>
+<td>Boolean</td>
+<td>No</td>
+<td>If true, the markup on purchase price for wholesale articles is primarily taken from the rules for markup per article number (Settings - Articles - Markup per article number). If no rule matches the article number, expenseWholeSaleProfitMargin is used</td>
 </tr>
 </tbody></table>
 
@@ -3760,6 +3824,8 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <h1 id='documents'>Documents</h1><h2 id='get-documents'>Get Documents</h2>
 <p>Documents are included when fetching other objects, e.g. work orders or projects. They are found in an array named documents. The objects in the array contain a path which can be used to download the documents. Folders are also included and will have the flag isFolder as true.</p>
 
+<p>The <code>path</code> of a document is a download URL that is valid for one hour after the request was sent. Fetch the document again to get a fresh <code>path</code> if the previous one has expired. Note that <code>realPath</code> is not a download URL and cannot be used to download the document directly.</p>
+
 <p>Documents can also be fetched directly from the Documents API. A document belongs to either:</p>
 
 <ul>
@@ -3873,6 +3939,8 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 </tbody></table>
 
 <p>*Either <code>entityId</code> + <code>entityType</code> or <code>documentListId</code> is required. They cannot be combined.</p>
+
+<p>To be notified when documents are added to or changed on object items, use the webhook events <code>objectitem.document.created</code> and <code>objectitem.document.updated</code>, see <a href="#webhook-subscriptions">Webhook Subscriptions</a>.</p>
 <h2 id='get-a-specific-document'>Get a specific Document</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&amp;entityType=200"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-type: application/json"</span>
@@ -5159,7 +5227,8 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
       </span><span class="s2">"distributor"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"distributorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
       </span><span class="s2">"totalCost"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"articleNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"208"</span><span class="w">
+      </span><span class="s2">"articleNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"208"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"supplierInvoice"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
@@ -5168,6 +5237,8 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves expenses.</p>
+
+<p>An expense created from a row on a supplier invoice has the id of the supplier invoice in <code>supplierInvoice</code>. These expenses are created when the setting to create expenses from supplier invoice rows is activated, for rows that belong to a project or a work order. Together with the <code>project</code> filter this lists the articles bought for a project.</p>
 
 <p>At least one filter, e.g. a date range or a user, has to be specified. A request without any filter returns HTTP status 422 with the code <code>QUERY_TOO_BROAD</code>.</p>
 
@@ -6028,6 +6099,7 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
       </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5cc05b6a4e595e68466411b"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Company AB"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"dueDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-12-04T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"actualDeliveryDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-11-02T23:00:00.000Z"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b20cce1d59a902e28489125b"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"projectName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Blåsippan"</span><span class="p">,</span><span class="w">
@@ -6302,6 +6374,7 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
     </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5cc05b6a4e595e6854976137451b"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Company AB"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"dueDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-12-04T23:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"actualDeliveryDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2020-11-02T23:00:00.000Z"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EN"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5b20cce1d59a979134679582"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"projectName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Blåsippan"</span><span class="p">,</span><span class="w">
@@ -6512,7 +6585,7 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 </span></code></pre>
 <p>This endpoint creates an invoice. The created invoice is returned directly (not wrapped in a <code>data</code> property).</p>
 
-<p>Missing <code>customer</code>, <code>createdByUser</code> or <code>language</code> returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are returned with HTTP 500 and a descriptive <code>errorMessage</code>.</p>
+<p>Missing <code>customer</code>, <code>createdByUser</code> or <code>language</code> returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are also returned with HTTP 400 and a descriptive <code>errorMessage</code>. HTTP 500 is only returned for server errors.</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>POST https://app.seventime.se/api/2/invoices/</code></p>
 <h3 id='post-parameters'>POST Parameters</h3>
@@ -6561,6 +6634,12 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <td>Due date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the invoice date + the customer&#39;s payment days, or + the default payment terms if the customer has no payment days</td>
 </tr>
 <tr>
+<td>actualDeliveryDate</td>
+<td>String</td>
+<td>No</td>
+<td>Delivery date (&quot;Leveransdatum&quot;), i.e. the date when the goods were delivered or the service was performed. Has to be in the format YYYY-MM-DD. Shown on the invoice if &quot;Show delivery date&quot; is enabled in the invoice settings, and included when the invoice is exported to an economy system</td>
+</tr>
+<tr>
 <td>project</td>
 <td>String</td>
 <td>No</td>
@@ -6606,7 +6685,7 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <td>workOrder</td>
 <td>String</td>
 <td>No</td>
-<td>Id of the work order. The work order must belong to the specified customer, and to the specified project if project is specified</td>
+<td>Id of the work order. The work order must belong to the specified customer, and to the specified project if project is specified. If actualDeliveryDate is not specified and &quot;Get the delivery date from the work order&#39;s completion date&quot; is enabled in the invoice settings, the delivery date is set to the date the work order was completed</td>
 </tr>
 <tr>
 <td>resultUnit</td>
@@ -7174,7 +7253,9 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 </span></code></pre>
 <p>This endpoint updates an invoice. The updated invoice is returned directly (not wrapped in a <code>data</code> property). The fields createdByUser, createdByUserName and invoiceNumber are ignored. If invoiceItems is specified, it replaces all existing invoice items.</p>
 
-<p>Missing <code>_id</code> or <code>modifiedByUser</code> returns HTTP 400. Other validation errors are returned with HTTP 500 and a descriptive <code>errorMessage</code>.</p>
+<p>Missing <code>_id</code> or <code>modifiedByUser</code> returns HTTP 400. Other validation errors (e.g. an id that is not found or an invalid value) are also returned with HTTP 400 and a descriptive <code>errorMessage</code>. HTTP 500 is only returned for server errors.</p>
+
+<p>If <code>__v</code> is specified and the invoice has been modified since it was fetched, the update is rejected with HTTP 409 and the <code>errorMessage</code> &quot;Invoice has been modified by another user. Reload before saving.&quot; Fetch the invoice again and retry with the new <code>__v</code>.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>PUT https://app.seventime.se/api/2/invoices/</code></p>
 <h3 id='put-parameters'>PUT Parameters</h3>
@@ -7201,6 +7282,12 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <td>Id of the user who modified the invoice</td>
 </tr>
 <tr>
+<td>__v</td>
+<td>Number</td>
+<td>No</td>
+<td>Version of the invoice, as returned when the invoice was fetched. Increased by every update. If specified, the update is only made if the invoice has not been modified since (otherwise HTTP 409). If not specified, the invoice is updated regardless of other changes</td>
+</tr>
+<tr>
 <td>multipleTaxesOnRows</td>
 <td>Boolean</td>
 <td>No</td>
@@ -7217,6 +7304,12 @@ deletedByUser       | String | Yes | Id of the user who deleted the customer
 <td>Array</td>
 <td>No</td>
 <td>Array containing the invoice items. Replaces the existing invoice items. See the section &#39;Create an Invoice&#39; for more information about these items</td>
+</tr>
+<tr>
+<td>actualDeliveryDate</td>
+<td>String</td>
+<td>No</td>
+<td>Delivery date in the format YYYY-MM-DD. Send null or an empty string to remove the delivery date. If the field is not sent, the existing delivery date is kept</td>
 </tr>
 <tr>
 <td>invoiceStatus</td>
@@ -8049,7 +8142,7 @@ The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The p
 </span></code></pre>
 <p>This endpoint updates a machine time log. Only the fields included in the request are updated. The price is recalculated from the machine&#39;s price per hour.</p>
 
-<p>A machine time log that has been invoiced cannot be updated. The fields <code>isInvoiced</code>, <code>invoicedDate</code> and <code>invoice</code> are ignored.</p>
+<p>A machine time log that has been invoiced or attested (<code>status</code> 3) cannot be updated. The fields <code>isInvoiced</code>, <code>invoicedDate</code>, <code>invoice</code>, <code>attestedBy</code> and <code>attestItem</code> are ignored, and <code>status</code> can only be changed between 1 (new) and 2 (finished).</p>
 <h3 id='http-request-4'>HTTP Request</h3>
 <p><code>PUT https://app.seventime.se/api/2/machineTimeLogs/</code></p>
 <h3 id='put-parameters'>PUT Parameters</h3>
@@ -8203,7 +8296,7 @@ The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The p
   </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"65a50f80d1e44854f9c12345"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a machine time log. A machine time log that has been invoiced cannot be deleted.</p>
+<p>This endpoint deletes a machine time log. A machine time log that has been invoiced or attested (<code>status</code> 3) cannot be deleted.</p>
 <h3 id='http-request-5'>HTTP Request</h3>
 <p><code>DELETE https://app.seventime.se/api/2/machineTimeLogs/</code></p>
 <h3 id='delete-parameters'>DELETE Parameters</h3>
@@ -8228,6 +8321,713 @@ The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The p
 <td>Id of the user who deleted the machine time log</td>
 </tr>
 </tbody></table>
+<h1 id='object-items'>Object Items</h1>
+<p>Object items (objects) are e.g. buildings, apartments, facilities or installations. They are organized in a tree: an object item can have a <code>parent</code> object item and children of its own.</p>
+
+<p>The tree is described by these fields:</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>parent</td>
+<td>Id of the parent object item. <code>null</code> for object items on the top level</td>
+</tr>
+<tr>
+<td>path</td>
+<td>Ids of the object item and its ancestors, from the top level, separated by <code>#</code></td>
+</tr>
+<tr>
+<td>readablePath</td>
+<td>Names of the object item and its ancestors, from the top level, separated by <code>#</code></td>
+</tr>
+<tr>
+<td>hasChildren</td>
+<td><code>true</code> if the object item has children</td>
+</tr>
+</tbody></table>
+
+<p>Documents on object items are handled with the <a href="#documents">Documents API</a>, using entity type <code>1600</code>. <a href="#get-object-item-documents">Get Object Item Documents</a> lists the documents on all object items, e.g. the latest ones. The <a href="#available-events">webhook events</a> <code>objectitem.created</code>, <code>objectitem.updated</code>, <code>objectitem.document.created</code> and <code>objectitem.document.updated</code> tell when object items and their documents are created or changed.</p>
+<h2 id='get-object-items'>Get Object Items</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/objectItems/?limit=10&amp;page=1"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/objectItems/?limit=10&amp;page=1"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"totalResources"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currentPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectItemNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1042"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectItemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a01fe5b8a43c2f9d1a10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectItemTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Östra Gatan 129"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"address2"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 45"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stockholm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"locationCoordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">18.0686</span><span class="p">,</span><span class="w"> </span><span class="mf">59.3293</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"locationIsUserSpecified"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"571f61330c7f498a4712448b"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contactPerson"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contactPersonName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"notes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"purchaseDate"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"distributor"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"distributorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customFields"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"readablePath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Area North#Building A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"hasChildren"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T08:00:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdByUser"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createdByUserName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-02-01T10:00:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedByUser"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedByUserName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves object items. Documents are not included in the list, use <a href="#get-a-specific-object-item">Get a specific Object Item</a> or the <a href="#documents">Documents API</a> to get them.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/objectItems</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<p>E.g. <code>https://app.seventime.se/api/2/objectItems/?parent=null</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>name</td>
+<td></td>
+<td>If specified, object items that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>objectItemNumber</td>
+<td></td>
+<td>If specified, object items that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>objectItemType</td>
+<td></td>
+<td>Id of an object item type. If specified, object items of that type will be included.</td>
+</tr>
+<tr>
+<td>objectItemTypeName</td>
+<td></td>
+<td>If specified, object items that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>city</td>
+<td></td>
+<td>If specified, object items that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>customer</td>
+<td></td>
+<td>Id of a customer. If specified, object items connected to the customer will be included.</td>
+</tr>
+<tr>
+<td>parent</td>
+<td></td>
+<td>Id of an object item. If specified, the children of that object item will be included. Use <code>null</code> to get the object items on the top level.</td>
+</tr>
+<tr>
+<td>isActive</td>
+<td></td>
+<td>&quot;true&quot; or &quot;false&quot;. If specified, active or archived object items will be included.</td>
+</tr>
+<tr>
+<td>lastModified</td>
+<td></td>
+<td>If specified, object items that have been modified since the specified timestamp will be included. Accepted formats: &#39;YYYY-MM-DD&#39;, &#39;YYYY-MM-DD HH:MM&#39;, &#39;YYYY-MM-DD HH:MM:SS&#39;, &#39;YYYY-MM-DDTHH:MM&#39;, &#39;YYYY-MM-DDTHH:MM:SS&#39;</td>
+</tr>
+<tr>
+<td>sortBy</td>
+<td>name</td>
+<td>If specified, a sort will be made on the specified parameter</td>
+</tr>
+<tr>
+<td>sortDirection</td>
+<td>ascending</td>
+<td>&quot;ascending&quot; or &quot;descending&quot;. The sort order will be ascending or descending</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>100</td>
+<td>Number of object items per page. Maximum 500</td>
+</tr>
+<tr>
+<td>page</td>
+<td>1</td>
+<td>Page number</td>
+</tr>
+</tbody></table>
+<h2 id='get-a-specific-object-item'>Get a specific Object Item</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/objectItems/6512a0c4e5b8a43c2f9d1a77"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/objectItems/6512a0c4e5b8a43c2f9d1a77"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectItemNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1042"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectItemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a01fe5b8a43c2f9d1a10"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectItemTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building A"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Östra Gatan 129"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 45"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stockholm"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"571f61330c7f498a4712448b"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"readablePath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Area North#Building A"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hasChildren"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"customFields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a78"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"fieldId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a011e5b8a43c2f9d1a01"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6124daa00c1532914b92"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plan1.pdf"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://seventimedev.s3-eu-west-1.amazonaws.com/..."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"realPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">20548</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isLink"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isFolder"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"folderId"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"isPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"createDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T08:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdByUser"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdByUserName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-02-01T10:00:00.000Z"</span><span class="w">
+    </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves a specific object item, including its documents and folders. The <code>path</code> of a document is a download URL that is valid for one hour after the request was sent. Fetch the object item again to get a fresh <code>path</code> if the previous one has expired. Note that <code>realPath</code> is not a download URL and cannot be used to download the document directly.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/objectItems/&lt;_id&gt;</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>The _id of the object item to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='get-object-item-types'>Get Object Item Types</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/objectItemTypes"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/objectItemTypes"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a01fe5b8a43c2f9d1a10"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iconClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"icon-building"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a01fe5b8a43c2f9d1a11"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apartment"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"iconClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"icon-home"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all object item types.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/objectItemTypes</code></p>
+<h2 id='get-object-item-documents'>Get Object Item Documents</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/objectItemDocuments?sortBy=createDate&amp;sortDirection=descending&amp;limit=10"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-type: application/json"</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
+
+<span class="kd">let</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">"https://app.seventime.se/api/2/objectItemDocuments?sortBy=createDate&amp;sortDirection=descending&amp;limit=10"</span><span class="p">;</span>
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">==</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">info</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="c1">// ...</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"Error when calling API! HTTP Code: "</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">+</span> <span class="s2">", Error message: "</span> <span class="o">+</span> <span class="nx">body</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"totalResources"</span><span class="p">:</span><span class="w"> </span><span class="mi">42</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"totalPages"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"currentPage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6124daa00c1532914b92"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plan1.pdf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://seventimedev.s3-eu-west-1.amazonaws.com/..."</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"realPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">20548</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isLink"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isFolder"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"folderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6124d18c910273b259cf819"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"isPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"createDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"entityType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1600</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"entityId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"folderPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Drawings/Electrical"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectItem"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building A"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"objectItemNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1042"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"readablePath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Area North#Building A"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves the documents and folders on all object items. Each document has the same structure as the data of the <code>objectitem.document.*</code> <a href="#webhook-requests">webhook events</a>: the document as in <a href="#get-a-specific-document">Get a specific Document</a>, plus where it is (<code>entityType</code>, <code>entityId</code> and <code>folderPath</code>) and the object item it belongs to (<code>objectItem</code>). The <code>path</code> of a document is a download URL that is valid for one hour after the request was sent. Fetch it again to get a fresh <code>path</code> if the previous one has expired. Note that <code>realPath</code> is not a download URL and cannot be used to download the document directly.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://app.seventime.se/api/2/objectItemDocuments</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<p>E.g. <code>https://app.seventime.se/api/2/objectItemDocuments?lastModified=2024-01-15&amp;isFolder=false</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>objectItem</td>
+<td></td>
+<td>Id of an object item. If specified, only the documents on that object item will be included.</td>
+</tr>
+<tr>
+<td>isFolder</td>
+<td></td>
+<td>&quot;true&quot; or &quot;false&quot;. If specified, only folders or only documents will be included.</td>
+</tr>
+<tr>
+<td>lastModified</td>
+<td></td>
+<td>If specified, documents that have been added or changed (renamed, moved to another folder or replaced by a new version) since the specified timestamp will be included. Accepted formats: &#39;YYYY-MM-DD&#39;, &#39;YYYY-MM-DD HH:MM&#39;, &#39;YYYY-MM-DD HH:MM:SS&#39;, &#39;YYYY-MM-DDTHH:MM&#39;, &#39;YYYY-MM-DDTHH:MM:SS&#39;</td>
+</tr>
+<tr>
+<td>sortBy</td>
+<td>createDate</td>
+<td>&quot;createDate&quot;, &quot;modifiedDate&quot; or &quot;name&quot;</td>
+</tr>
+<tr>
+<td>sortDirection</td>
+<td>ascending</td>
+<td>&quot;ascending&quot; or &quot;descending&quot;. The sort order will be ascending or descending</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>100</td>
+<td>Number of documents per page. Maximum 500</td>
+</tr>
+<tr>
+<td>page</td>
+<td>1</td>
+<td>Page number</td>
+</tr>
+</tbody></table>
+<h2 id='create-an-object-item'>Create an Object Item</h2><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s2">"https://app.seventime.se/api/2/objectItems/"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -d <span class="s1">'{"createdByUser":"5113986056b831a917962158","name":"Building A","parent":"6512a09be5b8a43c2f9d1a55","objectItemType":"6512a01fe5b8a43c2f9d1a10","address":"Östra Gatan 129","zipCode":"123 45","city":"Stockholm","customer":"571f61330c7f498a4712448b"}'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">jsonData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">createdByUser</span><span class="p">:</span> <span class="s1">'5113986056b831a917962158'</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Building A'</span><span class="p">,</span>
+  <span class="na">parent</span><span class="p">:</span> <span class="s1">'6512a09be5b8a43c2f9d1a55'</span><span class="p">,</span>
+  <span class="na">objectItemType</span><span class="p">:</span> <span class="s1">'6512a01fe5b8a43c2f9d1a10'</span><span class="p">,</span>
+  <span class="na">address</span><span class="p">:</span> <span class="s1">'Östra Gatan 129'</span><span class="p">,</span>
+  <span class="na">zipCode</span><span class="p">:</span> <span class="s1">'123 45'</span><span class="p">,</span>
+  <span class="na">city</span><span class="p">:</span> <span class="s1">'Stockholm'</span><span class="p">,</span>
+  <span class="na">customer</span><span class="p">:</span> <span class="s1">'571f61330c7f498a4712448b'</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.seventime.se/api/2/objectItems'</span><span class="p">,</span>
+  <span class="na">json</span><span class="p">:</span> <span class="nx">jsonData</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"ERROR! Unable to create object item: "</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns the created object item, structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"objectItemNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1042"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"objectItemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a01fe5b8a43c2f9d1a10"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"objectItemTypeName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building A"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Östra Gatan 129"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 45"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Stockholm"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"locationCoordinates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">18.0686</span><span class="p">,</span><span class="w"> </span><span class="mf">59.3293</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"571f61330c7f498a4712448b"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customerName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customerNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"733352"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"isActive"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"readablePath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Area North#Building A"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"customFields"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="s2">"createdDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T08:00:00.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdByUser"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"createdByUserName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T08:00:00.000Z"</span><span class="w">
+  </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates an object item. If the address is specified and <code>locationCoordinates</code> is not, the position on the map is looked up from the address.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>POST https://app.seventime.se/api/2/objectItems/</code></p>
+<h3 id='post-parameters'>POST Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>createdByUser</td>
+<td>String</td>
+<td>Yes</td>
+<td>Id of the user who created the object item</td>
+</tr>
+<tr>
+<td>name</td>
+<td>String</td>
+<td>Yes</td>
+<td>Name of the object item</td>
+</tr>
+<tr>
+<td>objectItemNumber</td>
+<td>String</td>
+<td>No</td>
+<td>Object number. Ignored when automatic object numbering is turned on in the object settings, the next number is then used.</td>
+</tr>
+<tr>
+<td>parent</td>
+<td>String</td>
+<td>No</td>
+<td>Id of the parent object item. Not specified or <code>null</code> creates the object item on the top level</td>
+</tr>
+<tr>
+<td>objectItemType</td>
+<td>String</td>
+<td>No</td>
+<td>Id of the object item type. See <a href="#get-object-item-types">Get Object Item Types</a></td>
+</tr>
+<tr>
+<td>customer</td>
+<td>String</td>
+<td>No</td>
+<td>Id of the customer</td>
+</tr>
+<tr>
+<td>contactPerson</td>
+<td>String</td>
+<td>No</td>
+<td>Id of a contact person. The contact person must belong to the customer of the object item</td>
+</tr>
+<tr>
+<td>distributor</td>
+<td>String</td>
+<td>No</td>
+<td>Id of the distributor</td>
+</tr>
+<tr>
+<td>address</td>
+<td>String</td>
+<td>No</td>
+<td>Address</td>
+</tr>
+<tr>
+<td>address2</td>
+<td>String</td>
+<td>No</td>
+<td>Address 2</td>
+</tr>
+<tr>
+<td>zipCode</td>
+<td>String</td>
+<td>No</td>
+<td>Zip code</td>
+</tr>
+<tr>
+<td>city</td>
+<td>String</td>
+<td>No</td>
+<td>City</td>
+</tr>
+<tr>
+<td>country</td>
+<td>String</td>
+<td>No</td>
+<td>Country</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>String</td>
+<td>No</td>
+<td>Phone</td>
+</tr>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>No</td>
+<td>Email</td>
+</tr>
+<tr>
+<td>notes</td>
+<td>String</td>
+<td>No</td>
+<td>Notes</td>
+</tr>
+<tr>
+<td>purchaseDate</td>
+<td>String</td>
+<td>No</td>
+<td>Purchase date, &#39;YYYY-MM-DD&#39;</td>
+</tr>
+<tr>
+<td>locationCoordinates</td>
+<td>Array</td>
+<td>No</td>
+<td>Position on the map, <code>[longitude, latitude]</code>. When specified, the position is not looked up from the address</td>
+</tr>
+<tr>
+<td>customFields</td>
+<td>Array</td>
+<td>No</td>
+<td>Custom field values, <code>[{&quot;fieldId&quot;: &quot;...&quot;, &quot;value&quot;: &quot;...&quot;}]</code>. <code>fieldId</code> is the <code>_id</code> of a custom field for entity type <code>1600</code>, see <a href="#custom-fields">Custom Fields</a></td>
+</tr>
+<tr>
+<td>isActive</td>
+<td>Boolean</td>
+<td>No</td>
+<td><code>false</code> creates an archived object item. Default <code>true</code></td>
+</tr>
+</tbody></table>
+
+<p>The names (<code>customerName</code>, <code>objectItemTypeName</code> etc.) are set from the ids and cannot be set directly.</p>
+<h2 id='update-an-object-item'>Update an Object Item</h2><pre class="highlight shell tab-shell"><code>curl -X PUT <span class="s2">"https://app.seventime.se/api/2/objectItems/"</span> <span class="se">\</span>
+  -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
+  -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  -d <span class="s1">'{"_id":"6512a0c4e5b8a43c2f9d1a77","modifiedByUser":"5113986056b831a917962158","name":"Building B","notes":"Key in the box by the door"}'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">jsonData</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">_id</span><span class="p">:</span> <span class="s1">'6512a0c4e5b8a43c2f9d1a77'</span><span class="p">,</span>
+  <span class="na">modifiedByUser</span><span class="p">:</span> <span class="s1">'5113986056b831a917962158'</span><span class="p">,</span>
+  <span class="na">name</span><span class="p">:</span> <span class="s1">'Building B'</span><span class="p">,</span>
+  <span class="na">notes</span><span class="p">:</span> <span class="s1">'Key in the box by the door'</span>
+<span class="p">};</span>
+
+<span class="kd">let</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.seventime.se/api/2/objectItems'</span><span class="p">,</span>
+  <span class="na">json</span><span class="p">:</span> <span class="nx">jsonData</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"Client-Secret"</span><span class="p">:</span> <span class="s2">"thisismysecretkey"</span><span class="p">,</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Accept"</span><span class="p">:</span> <span class="s1">'application/json'</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="nx">response</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">===</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s2">"ERROR! Unable to update object item: "</span> <span class="o">+</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns the updated object item, structured like <a href="#create-an-object-item">Create an Object Item</a>.</p>
+</blockquote>
+
+<p>This endpoint updates an object item. Only the specified fields are changed. Use <code>null</code> or <code>&quot;&quot;</code> to clear <code>customer</code>, <code>contactPerson</code>, <code>objectItemType</code>, <code>distributor</code>, <code>purchaseDate</code> and <code>locationCoordinates</code>.</p>
+
+<ul>
+<li>Changing <code>parent</code> moves the object item, including its children, in the tree. <code>null</code> moves it to the top level. An object item cannot be moved below itself.</li>
+<li>When <code>customer</code> is changed and <code>contactPerson</code> is not specified, the contact person is removed.</li>
+<li><code>customFields</code> only changes the specified custom fields, the other values are kept.</li>
+<li><code>isActive: false</code> archives the object item and <code>isActive: true</code> restores it.</li>
+<li>Setting <code>locationCoordinates</code> to <code>null</code> makes the position be looked up from the address again.</li>
+</ul>
+
+<p>Object items cannot be deleted with the API.</p>
+<h3 id='http-request-6'>HTTP Request</h3>
+<p><code>PUT https://app.seventime.se/api/2/objectItems/</code></p>
+<h3 id='put-parameters'>PUT Parameters</h3>
+<p>All POST parameters except <code>createdByUser</code>, plus:</p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Required?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>String</td>
+<td>Yes</td>
+<td>Id of the object item to update</td>
+</tr>
+<tr>
+<td>modifiedByUser</td>
+<td>String</td>
+<td>Yes</td>
+<td>Id of the user who updated the object item</td>
+</tr>
+</tbody></table>
+<h3 id='permissions'>Permissions</h3>
+<p>With an API key connected to a user, the user&#39;s permissions for objects are used: viewing objects for the GET endpoints and editing objects for POST and PUT. Moving an object item (changing <code>parent</code>) also requires the permission to move objects. Get Object Item Documents also requires the permission to view documents.</p>
 <h1 id='price-lists'>Price Lists</h1><h2 id='get-price-lists'>Get price lists</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/priceLists/?limit=10&amp;page=1"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-type: application/json"</span>
@@ -11180,7 +11980,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <tr>
 <td>entityType</td>
 <td></td>
-<td><strong>Required.</strong> Number corresponding to the entity type to retrieve statuses for, e.g. 200 for work orders or 500 for projects. If omitted, HTTP 400 is returned with the <code>errorMessage</code> &quot;Entity type required&quot;.</td>
+<td><strong>Required.</strong> Number corresponding to the entity type to retrieve statuses for: 200 (work orders), 300 (tasks), 500 (projects), 4200 (KMA events) or 4400 (KMA actions). If omitted, HTTP 400 is returned with the <code>errorMessage</code> &quot;Entity type required&quot;, and another value also gives HTTP 400.</td>
 </tr>
 </tbody></table>
 
@@ -11496,7 +12296,11 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>The _id of the supplement order to retrieve</td>
 </tr>
 </tbody></table>
-<h1 id='supplier-invoices'>Supplier Invoices</h1><h2 id='get-supplier-invoices'>Get supplier invoices</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/supplierInvoices/?limit=5&amp;page=1"</span> <span class="se">\</span>
+<h1 id='supplier-invoices'>Supplier Invoices</h1>
+<p>The rows of a supplier invoice, e.g. article numbers, quantities and amounts, are found in the <code>invoiceItemRows</code> array, see <a href="#supplier-invoice-rows">Supplier invoice rows</a>. The <code>invoiceItems</code> array is only used for self-billing invoices.</p>
+
+<p>The <code>documents</code> array on a supplier invoice contains document objects as described in <a href="#documents">Documents</a>. The <code>path</code> of a document is a download URL that is valid for one hour after the request was sent, so fetch the supplier invoice again to get a fresh <code>path</code> if the previous one has expired. The documents can also be fetched with <code>GET https://app.seventime.se/api/2/documents?entityId=&lt;_id&gt;&amp;entityType=3300</code>.</p>
+<h2 id='get-supplier-invoices'>Get supplier invoices</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/supplierInvoices/?limit=5&amp;page=1"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-type: application/json"</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="cm">/* Sample with the request library */</span>
@@ -11567,6 +12371,8 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
           </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">],</span><span class="w">
+      </span><span class="s2">"invoiceItemRows"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="s2">"distributeOnMultipleEntities"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
       </span><span class="s2">"distributor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f48eb7105b8ed6934398752"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"distributorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20200828"</span><span class="p">,</span><span class="w">
@@ -11647,6 +12453,11 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>project</td>
 <td></td>
 <td>If specified, supplier invoices that match the parameter will be included.</td>
+</tr>
+<tr>
+<td>includeDistributed</td>
+<td>false</td>
+<td>If &quot;true&quot; and project is specified, supplier invoices distributed on several projects that have a row on the project are also included. The amounts on such a supplier invoice are for all of its rows, see <a href="#supplier-invoice-rows">Supplier invoice rows</a></td>
 </tr>
 <tr>
 <td>customer</td>
@@ -11794,6 +12605,8 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
         </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"invoiceItemRows"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="s2">"distributeOnMultipleEntities"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"documents"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
     </span><span class="s2">"distributor"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f48eb7105b8ed6969875258"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"distributorName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20200828"</span><span class="p">,</span><span class="w">
@@ -11856,6 +12669,228 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <tr>
 <td>_id</td>
 <td>The _id of the supplier invoice to retrieve</td>
+</tr>
+</tbody></table>
+<h2 id='supplier-invoice-rows'>Supplier invoice rows</h2>
+<blockquote>
+<p>Get supplier invoices returns a supplier invoice distributed on two projects like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef08a"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"supplierInvoiceNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48863655"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"distributeOnMultipleEntities"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"workOrder"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"customer"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"invoiceItemRows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef08b"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"formulaString"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-{Total}"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"619e32ee7e538b5b89e913e2"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccountNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">2440</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"invoiceItem"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef08c"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"totalCost"</span><span class="p">:</span><span class="w"> </span><span class="mf">-2817.5</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef093"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"619e32ef7e538b5b89e9145f"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccountNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">4010</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f4df1793751c0916134687952"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"projectNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1024"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"workOrder"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"expense"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef0a2"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"isInvoiced"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"invoiceItem"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef094"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"expense"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"expenseItem"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f48eb7105b8ed6934398752"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"articleNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0445611"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EXQ Pure 3G2,5 R50"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"numberOfItems"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"st"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unitCost"</span><span class="p">:</span><span class="w"> </span><span class="mf">21.424</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"totalCost"</span><span class="p">:</span><span class="w"> </span><span class="mf">1071.2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unitPrice"</span><span class="p">:</span><span class="w"> </span><span class="mf">45.09</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"totalAmount"</span><span class="p">:</span><span class="w"> </span><span class="mf">2254.5</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"taxPercent"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef095"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"619e32ef7e538b5b89e9145f"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"bookkeepingAccountNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">4010</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"project"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5f4df1793751c0916136489752"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"projectNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1025"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"workOrder"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"invoiceItem"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67e53d69a01b3b7348fef096"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"itemType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"general"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"articleNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1504169"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TCS-C3 8-12 SKRUVCLIPS VIT"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"numberOfItems"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FP"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"unitCost"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.56</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"totalCost"</span><span class="p">:</span><span class="w"> </span><span class="mf">120.56</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"taxPercent"</span><span class="p">:</span><span class="w"> </span><span class="mi">25</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="err">//</span><span class="w"> </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>The <code>invoiceItemRows</code> array of a supplier invoice contains both article rows and accounting rows. It is included both when getting supplier invoices and when getting a specific supplier invoice. Only <a href="#get-supplier-invoices">Get supplier invoices</a> adds <code>projectNumber</code>, <code>workOrderNumber</code>, <code>bookkeepingAccountNumber</code> and <code>resultUnitCode</code> to the rows. A specific supplier invoice only contains the ids.</p>
+
+<p>Article rows are included when the supplier invoice was received as an e-invoice (Peppol) and reading of article rows is activated on the supplier, or when the rows were imported with article numbers from the accounting system. A supplier invoice that was interpreted from a PDF has no article rows.</p>
+
+<p>Rows with a <code>formulaString</code>, e.g. <code>-{Total}</code>, <code>{Vat}</code> and <code>{Rounding}</code>, are created from a bookkeeping template and only contain <code>invoiceItem.totalCost</code>. Rows with a bookkeeping account below 4000, e.g. supplier debt and VAT, are balance sheet rows and do not belong to a project.</p>
+
+<p><strong>Projects</strong></p>
+
+<p>If <code>distributeOnMultipleEntities</code> is <code>true</code>, the supplier invoice is distributed on several projects or work orders. The fields <code>project</code>, <code>workOrder</code> and <code>customer</code> on the supplier invoice are then empty, and the project or work order is set on each row. Otherwise <code>project</code> and <code>workOrder</code> on the supplier invoice apply to all rows.</p>
+
+<p>To get all supplier invoices for a project, including the ones distributed on several projects, use <code>project</code> together with <code>includeDistributed=true</code> when getting supplier invoices. The amounts on a distributed supplier invoice, e.g. <code>totalAmount</code>, are for all of its rows, so use the rows with the project to get the amounts for the project.</p>
+
+<p><strong>Attributes for invoiceItemRows</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>_id</td>
+<td>Id of the row</td>
+</tr>
+<tr>
+<td>invoiceItem</td>
+<td>Object with the article information, see below</td>
+</tr>
+<tr>
+<td>project</td>
+<td>Id of the project the row is distributed on</td>
+</tr>
+<tr>
+<td>projectNumber</td>
+<td>Project number. Only included in Get supplier invoices, if <code>project</code> is set</td>
+</tr>
+<tr>
+<td>workOrder</td>
+<td>Id of the work order the row is distributed on</td>
+</tr>
+<tr>
+<td>workOrderNumber</td>
+<td>Work order number. Only included in Get supplier invoices, if <code>workOrder</code> is set</td>
+</tr>
+<tr>
+<td>customer</td>
+<td>Id of the customer, for rows only connected to a customer</td>
+</tr>
+<tr>
+<td>bookkeepingAccount</td>
+<td>Id of the bookkeeping account</td>
+</tr>
+<tr>
+<td>bookkeepingAccountNumber</td>
+<td>Account number of the bookkeeping account. Only included in Get supplier invoices</td>
+</tr>
+<tr>
+<td>resultUnit</td>
+<td>Id of the result unit</td>
+</tr>
+<tr>
+<td>resultUnitCode</td>
+<td>Code of the result unit. Only included in Get supplier invoices</td>
+</tr>
+<tr>
+<td>formulaString</td>
+<td>Set on rows created from a bookkeeping template</td>
+</tr>
+<tr>
+<td>expense</td>
+<td>Id of the expense created from the row, see <a href="#expenses">Expenses</a></td>
+</tr>
+<tr>
+<td>isInvoiced</td>
+<td>Has the row been invoiced to the customer?</td>
+</tr>
+<tr>
+<td>invoice</td>
+<td>Id of the invoice the row was invoiced on</td>
+</tr>
+<tr>
+<td>invoiceNumber</td>
+<td>Number of the invoice the row was invoiced on</td>
+</tr>
+</tbody></table>
+
+<p><strong>Attributes for invoiceItemRows.invoiceItem</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>articleNumber</td>
+<td>Article number from the supplier</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Name of the article on the supplier invoice</td>
+</tr>
+<tr>
+<td>numberOfItems</td>
+<td>Quantity</td>
+</tr>
+<tr>
+<td>unit</td>
+<td>Unit, e.g. st or m</td>
+</tr>
+<tr>
+<td>unitCost</td>
+<td>Purchase price per unit, excl. tax</td>
+</tr>
+<tr>
+<td>totalCost</td>
+<td>Purchase amount for the row, excl. tax</td>
+</tr>
+<tr>
+<td>unitPrice</td>
+<td>Sales price per unit</td>
+</tr>
+<tr>
+<td>totalAmount</td>
+<td>Sales amount for the row</td>
+</tr>
+<tr>
+<td>taxPercent</td>
+<td>Tax as a percentage</td>
+</tr>
+<tr>
+<td>itemType</td>
+<td>&quot;expense&quot; if the article was found in the article register, otherwise &quot;general&quot;. Not set on accounting rows</td>
+</tr>
+<tr>
+<td>expenseItem</td>
+<td>Id of the article in the article register. Only set if <code>itemType</code> is &quot;expense&quot;</td>
+</tr>
+<tr>
+<td>expenseItemName</td>
+<td>Name of the article in the article register</td>
 </tr>
 </tbody></table>
 <h2 id='create-a-supplier-invoice'>Create a Supplier Invoice</h2><pre class="highlight shell tab-shell"><code>curl -X POST <span class="s2">"https://app.seventime.se/api/2/supplierInvoices/"</span> <span class="se">\</span>
@@ -13396,7 +14431,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
   </span><span class="s2">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
   </span><span class="s2">"invoiceableTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pricePerHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">777</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">777</span><span class="w">
+  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">3885</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint creates a time log</p>
@@ -13445,13 +14480,13 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>invoiceableTime</td>
 <td>String</td>
 <td>No</td>
-<td>Invoiceable time. If not specified, this will be set to the time of the time log</td>
+<td>Invoiceable time. If not specified, this will be set to the time of the time log, rounded if Seven Time is set to round the invoiceable time. It is always 0 when the time log is not invoiceable</td>
 </tr>
 <tr>
 <td>customer</td>
 <td>String</td>
 <td>No</td>
-<td>Id of the customer</td>
+<td>Id of the customer. If not specified and the project has a customer, the time log gets the customer of the project when Seven Time is set to have a dependency between customer and project (as when the project is selected in Seven Time)</td>
 </tr>
 <tr>
 <td>project</td>
@@ -13475,7 +14510,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>pricePerHour</td>
 <td>Number</td>
 <td>No</td>
-<td>price per hour of the time log. If not specified (or if the time log is not invoiceable), the price will be set according to the user, customer, project, time category or work order.</td>
+<td>Price per hour of the time log. If not specified, it is set according to the user, customer, project, time category or work order, as in Seven Time. A specified price per hour is used as it is, also 0, and no customer discount is added to it. It must be a number, otherwise HTTP status 400 is returned. The price of the time log (<code>price</code>) is calculated from the price per hour and the time (or the invoiceable time, if invoiceable time is used in Seven Time), as in Seven Time. For a time log that is not invoiceable, the price per hour and the price are 0</td>
 </tr>
 <tr>
 <td>description</td>
@@ -13499,7 +14534,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>isInvoiceable</td>
 <td>Boolean</td>
 <td>No</td>
-<td>Invoiceable or not</td>
+<td>Invoiceable or not. Default true. A time log that is not invoiceable gets the invoiceable time 0 and the price 0</td>
 </tr>
 <tr>
 <td>isAbsence</td>
@@ -13566,11 +14601,13 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
   </span><span class="s2">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
   </span><span class="s2">"invoiceableTime"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w">
   </span><span class="s2">"pricePerHour"</span><span class="p">:</span><span class="w"> </span><span class="mi">777</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">777</span><span class="w">
+  </span><span class="s2">"price"</span><span class="p">:</span><span class="w"> </span><span class="mi">6216</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="s2">"Time log updated: _id: 5fbcfe75ba9312280ef6523e"</span><span class="w">
 </span></code></pre>
-<p>This endpoint updates a time log</p>
+<p>This endpoint updates a time log. Time logs that have been invoiced, salary processed or attested (<code>status</code> 3) cannot be updated - an attest has to be removed in Seven Time first.</p>
+
+<p><code>status</code> can only be changed between 1 (new) and 2 (finished). Attest (3) and waiting for attest (10) are only set by the attest flow in Seven Time. <code>isAbsence</code> cannot be changed on an existing time log, and the fields <code>attestedBy</code> and <code>attestItem</code> are ignored.</p>
 <h3 id='http-request-6'>HTTP Request</h3>
 <p><code>PUT https://app.seventime.se/api/2/timeLogs/</code></p>
 <h3 id='put-parameters'>PUT Parameters</h3>
@@ -13603,6 +14640,12 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>Id of the user on the time log. If not specified, the current user on the time log is kept</td>
 </tr>
 </tbody></table>
+
+<p>Fields that are not specified keep their values. If pricePerHour is not specified, the price per hour is kept, unless the project, customer, time category, work order, user or isInvoiceable is changed: then it is set as when a time log is created. The price (<code>price</code>) is calculated again from the price per hour and the time, as when a time log is created.</p>
+
+<p>If project is changed and customer is not specified, the time log gets the customer of the new project, as when a time log is created. If the project is not changed, the customer is kept.</p>
+
+<p>If isInvoiceable is changed to true and invoiceableTime is not specified, the invoiceable time is set from the time of the time log, as when a time log is created.</p>
 <h2 id='delete-a-time-log'>Delete a Time Log</h2><pre class="highlight shell tab-shell"><code>curl -X DELETE <span class="s2">"https://app.seventime.se/api/2/timeLogs/"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
@@ -13640,7 +14683,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 </span><span class="p">}</span><span class="w">
 </span><span class="s2">"Time log deleted: _id: 51203146506d961c35798485"</span><span class="w">
 </span></code></pre>
-<p>This endpoint deletes a time log. Time logs that have been invoiced or salary processed cannot be deleted.</p>
+<p>This endpoint deletes a time log. Time logs that have been invoiced, salary processed or attested (<code>status</code> 3) cannot be deleted.</p>
 <h3 id='http-request-7'>HTTP Request</h3>
 <p><code>DELETE https://app.seventime.se/api/2/timeLogs/</code></p>
 <h3 id='delete-parameters'>DELETE Parameters</h3>
@@ -14553,7 +15596,7 @@ deletedByUser           | String | Yes | Id of the user who deleted the project
 <td>userRoleId</td>
 <td>Number</td>
 <td>Yes</td>
-<td>User role id</td>
+<td>User role id - one of the ids from <a href="#get-user-roles">Get User Roles</a>. Another value gives HTTP 400</td>
 </tr>
 <tr>
 <td>personalNumber</td>
@@ -14972,6 +16015,22 @@ deletedByUser      | String   | Yes | Id of the user who made the delete
 <td>task.updated</td>
 <td>A task was updated</td>
 </tr>
+<tr>
+<td>objectitem.created</td>
+<td>An object item was created (also when an object item is copied)</td>
+</tr>
+<tr>
+<td>objectitem.updated</td>
+<td>An object item was updated, moved, archived or restored</td>
+</tr>
+<tr>
+<td>objectitem.document.created</td>
+<td>A document or folder was added to an object item, e.g. uploaded, created by converting a document or copied with the object item</td>
+</tr>
+<tr>
+<td>objectitem.document.updated</td>
+<td>A document or folder on an object item was renamed, moved to another folder or replaced by a new version</td>
+</tr>
 </tbody></table>
 <h3 id='webhook-requests'>Webhook requests</h3>
 <blockquote>
@@ -15022,13 +16081,82 @@ deletedByUser      | String   | Yes | Id of the user who made the delete
 </tr>
 <tr>
 <td>data</td>
-<td>The object the event concerns. It has the same structure as when fetching the object from the corresponding endpoint, e.g. a work order for <code>workorder.*</code> events</td>
+<td>The object the event concerns. It has the same structure as when fetching the object from the corresponding endpoint, e.g. a work order for <code>workorder.*</code> events. For <code>objectitem.document.*</code> events, see below</td>
 </tr>
 </tbody></table>
 
+<blockquote>
+<p>The data of an objectitem.document.created request looks like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"event"</span><span class="p">:</span><span class="w"> </span><span class="s2">"objectitem.document.created"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:05.000Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6124daa00c1532914b92"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plan1.pdf"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://seventimedev.s3-eu-west-1.amazonaws.com/..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"realPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234/objectItems/6512a0c4e5b8a43c2f9d1a77/plan1_20240115090000.pdf"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contentType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"application/pdf"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"size"</span><span class="p">:</span><span class="w"> </span><span class="mi">20548</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"user"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5113986056b831a917962158"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Anna Andersson"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isLink"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isFolder"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"folderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6124d18c910273b259cf819"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"isPublic"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"modifiedDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-01-15T09:00:00.000Z"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"entityType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1600</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"entityId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"folderPath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Drawings/Electrical"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"objectItem"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Building A"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"objectItemNumber"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1042"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"parent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6512a09be5b8a43c2f9d1a55#6512a0c4e5b8a43c2f9d1a77"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"readablePath"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Area North#Building A"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>For <code>objectitem.document.*</code> events, <code>data</code> is the document (or folder, see <code>isFolder</code>) with the same structure as <a href="#get-a-specific-document">Get a specific Document</a>, plus:</p>
+
+<table><thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>entityType</td>
+<td>Always <code>1600</code> (object item). Use it with <code>entityId</code> in the <a href="#documents">Documents API</a></td>
+</tr>
+<tr>
+<td>entityId</td>
+<td>Id of the object item the document belongs to</td>
+</tr>
+<tr>
+<td>folderPath</td>
+<td>Names of the folders the document is in, from the root of the object item, separated by <code>/</code>. Empty when the document is in the root</td>
+</tr>
+<tr>
+<td>objectItem</td>
+<td>The object item: <code>_id</code>, <code>name</code>, <code>objectItemNumber</code>, <code>parent</code>, <code>path</code> and <code>readablePath</code> (the names of the object item and its ancestors separated by <code>#</code>)</td>
+</tr>
+</tbody></table>
+
+<p>The <code>path</code> of a document is a download URL that is valid for one hour after the request was sent. Note that <code>realPath</code> is not a download URL and cannot be used to download the document directly.</p>
+
 <p>Each request includes the header <code>X-SevenTime-Signature</code>. It is a hex encoded HMAC-SHA256 of the request body, signed with the <code>secret</code> of the subscription. Use it to verify that the request was sent by Seven Time.</p>
 
-<p>Your endpoint should respond with a 2xx status code within 10 seconds. If the request fails, it is retried up to two more times: after 1 minute and after 5 more minutes. If your endpoint responds with <code>410 Gone</code>, the subscription is deactivated and no further requests are sent.</p>
+<p>Your endpoint should respond with a 2xx status code within 10 seconds. Only the status code is used - the response body is not read. If the request fails, it is retried up to two more times: after 1 minute and after 5 more minutes. If your endpoint responds with <code>410 Gone</code>, the subscription is deactivated and no further requests are sent.</p>
+
+<ul>
+<li>Redirects (3xx) are not followed. A redirect counts as a failed request, so use the final URL as <code>targetUrl</code>.</li>
+<li>Requests are only sent to public addresses. If the host name of <code>targetUrl</code> resolves to localhost or a private network address, no request is sent.</li>
+<li>While the API key that created the subscription is deactivated or deleted, no requests are sent. They start again if the key is activated again. Subscriptions created before October 2026 are not connected to an API key.</li>
+</ul>
 <h2 id='get-webhook-subscriptions'>Get Webhook Subscriptions</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://app.seventime.se/api/2/webhookSubscriptions/"</span> <span class="se">\</span>
   -H <span class="s2">"Client-Secret: thisismysecretkey"</span> <span class="se">\</span>
   -H <span class="s2">"Content-type: application/json"</span>
@@ -15173,6 +16301,8 @@ deletedByUser      | String   | Yes | Id of the user who made the delete
 </span></code></pre>
 <p>This endpoint creates a webhook subscription. The subscription is active directly.</p>
 
+<p>A company can have at most 100 active subscriptions. When the limit is reached, the endpoint returns <code>400</code> - delete subscriptions that are no longer used.</p>
+
 <p>The response contains the <code>secret</code> used to sign the webhook requests. The secret is only returned when the subscription is created, so store it in a safe place.</p>
 <h3 id='http-request-3'>HTTP Request</h3>
 <p><code>POST https://app.seventime.se/api/2/webhookSubscriptions/</code></p>
@@ -15189,7 +16319,7 @@ deletedByUser      | String   | Yes | Id of the user who made the delete
 <td>targetUrl</td>
 <td>String</td>
 <td>Yes</td>
-<td>URL that will receive webhook requests. Must start with <code>http://</code> or <code>https://</code></td>
+<td>URL that will receive webhook requests. Must start with <code>https://</code> and must not point to localhost or a private network address. Subscriptions created before October 2026 may use <code>http://</code></td>
 </tr>
 <tr>
 <td>event</td>
@@ -16482,6 +17612,13 @@ deletedByUser    | String | Yes | Id of the user who deleted the work order
 <ul>
 <li>New Invoice</li>
 <li>Updated Invoice</li>
+</ul>
+<h3 id='objects'>Objects</h3>
+<ul>
+<li>New Object</li>
+<li>Updated Object</li>
+<li>New Object Document</li>
+<li>Updated Object Document</li>
 </ul>
 <h3 id='projects'>Projects</h3>
 <ul>
