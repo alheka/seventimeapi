@@ -457,7 +457,7 @@ timestamp           | String | Yes | Starting date and time for the time log. Ac
 endTimestamp        | String | No* | Ending date and time for the time log. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. Cannot be before timestamp. *This is required if field 'time' is not specified
 time                | String | No* | Time of the time log in hours. *This is required if field 'endTimestamp' is not specified
 invoiceableTime     | String | No  | Invoiceable time. If not specified, this will be set to the time of the time log, rounded if Seven Time is set to round the invoiceable time. It is always 0 when the time log is not invoiceable
-customer            | String | No  | Id of the customer
+customer            | String | No  | Id of the customer. If not specified and the project has a customer, the time log gets the customer of the project when Seven Time is set to have a dependency between customer and project (as when the project is selected in Seven Time)
 project             | String | No  | Id of the project
 timeCategory        | String | No* | Id of the time category. *Required if isAbsence is true
 workOrder           | String | No  | Id of the work order
@@ -556,6 +556,8 @@ modifiedByUser  | String | Yes | Id of the user who made the change
 user            | String | No  | Id of the user on the time log. If not specified, the current user on the time log is kept
 
 Fields that are not specified keep their values. If pricePerHour is not specified, the price per hour is kept, unless the project, customer, time category, work order, user or isInvoiceable is changed: then it is set as when a time log is created. The price (`price`) is calculated again from the price per hour and the time, as when a time log is created.
+
+If project is changed and customer is not specified, the time log gets the customer of the new project, as when a time log is created. If the project is not changed, the customer is kept.
 
 If isInvoiceable is changed to true and invoiceableTime is not specified, the invoiceable time is set from the time of the time log, as when a time log is created.
 
