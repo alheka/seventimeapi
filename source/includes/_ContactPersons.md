@@ -43,13 +43,13 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5fb7bcd0ab7bb01d4d54832",
+      "_id": "5fb7bcd0a1b2c3d4e5001003",
       "name": "Anna",
       "title": "Utvecklare",
       "workPhone": "",
       "cellPhone": "",
       "email": "email@company.com",
-      "customer": "5bb26376c4nj551167",
+      "customer": "5bb26376a1b2c3d4e5001004",
       "customerName": "Anna Andersson",
       "mainContact": true,
       "isActive": true,
@@ -72,7 +72,7 @@ This endpoint retrieves contact persons.
 
 ### Query Parameters
 
-E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376c4nj551167`
+E.g. `https://app.seventime.se/api/2/contactPersons/?customerId=5bb26376a1b2c3d4e5001004`
 
 Parameter | Default | Description
 --------- |---------| -----------
@@ -118,13 +118,13 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "5fb7bcd0ab7bb01d4d54832",
+  "_id": "5fb7bcd0a1b2c3d4e5001003",
   "name": "Anna",
   "title": "Utvecklare",
   "workPhone": "",
   "cellPhone": "",
   "email": "email@company.com",
-  "customer": "5bb26376c4nj551167",
+  "customer": "5bb26376a1b2c3d4e5001004",
   "customerName": "Anna Andersson",
   "mainContact": true,
   "isActive": true,
@@ -150,12 +150,12 @@ _id | The _id of the contact person to retrieve
 curl -X POST "https://app.seventime.se/api/2/contactPersons/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"customer":"5f48eb712ebe7ebe6eb37b","name":"Anna Andersson","title":"Chef","workPhone":"","cellPhone":"","email":"email@company.com","isActive":"true","mainContact":"false"}'
+  -d '{"customer":"5f48eb71a1b2c3d4e5001005","name":"Anna Andersson","title":"Chef","workPhone":"","cellPhone":"","email":"email@company.com","isActive":"true","mainContact":"false"}'
 ```
 
 ```javascript
 let jsonData = {
-  customer: '5f48eb712ebe7ebe6eb37b',
+  customer: '5f48eb71a1b2c3d4e5001005',
   name: 'Anna Andersson',
   title: 'Utvecklare',
   workPhone: '',
@@ -189,13 +189,13 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb7bcd0ab7bb01d4d54832",
+  "_id": "5fb7bcd0a1b2c3d4e5001003",
   "name": "Anna",
   "title": "Utvecklare",
   "workPhone": "",
   "cellPhone": "",
   "email": "email@company.com",
-  "customer": "5bb26376c4nj551167",
+  "customer": "5bb26376a1b2c3d4e5001004",
   "customerName": "Anna Andersson",
   "mainContact": true,
   "isActive": true,
@@ -264,20 +264,20 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb7bcd0ab7bb01d4d54832",
+  "_id": "5fb7bcd0a1b2c3d4e5001003",
   "name": "Anna",
   "title": "Utvecklare",
   "workPhone": "",
   "cellPhone": "",
   "email": "email@company.com",
-  "customer": "5bb26376c4nj551167",
+  "customer": "5bb26376a1b2c3d4e5001004",
   "customerName": "Anna Andersson",
   "mainContact": true,
   "isActive": true,
   "createdDate": "2020-11-17T12:06:24.281Z",
   "modifiedDate": "2020-11-17T12:06:24.281Z"
 }
-"Contact person updated: Anna, _id: 5fb7bcd0ab7bb01d4d54832"
+"Contact person updated: Anna, _id: 5fb7bcd0a1b2c3d4e5001003"
 ```
 
 This endpoint updates a contact person.

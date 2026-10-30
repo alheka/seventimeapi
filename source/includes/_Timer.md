@@ -46,7 +46,7 @@ request(options, function(error, response, body) {
         "type": "Point",
         "coordinates": []
       },
-      "_id": "670813733j31273j321j2",
+      "_id": "67081373a1b2c3d4e5001233",
       "startTimestamp": "2024-10-15T14:21:02.720Z",
       "realStartTimestamp": "2024-10-15T14:21:02.720Z",
       "machineTimeSupplements": [],
@@ -93,7 +93,7 @@ curl -X POST "https://app.seventime.se/api/2/startTimer/" \
 
 ```javascript
 let jsonData = {
-  user: '51203146506d961c03036589741',
+  user: '51203146a1b2c3d4e5001221',
 };
 
 let options = {
@@ -124,7 +124,7 @@ request.post(options, function (error, response, body) {
     "type": "Point",
     "coordinates": []
   },
-  "_id": "670813733j31273j321j2",
+  "_id": "67081373a1b2c3d4e5001233",
   "startTimestamp": "2024-10-15T14:21:02.720Z",
   "realStartTimestamp": "2024-10-15T14:21:02.720Z",
   "machineTimeSupplements": [],
@@ -195,7 +195,7 @@ request.post(options, function (error, response, body) {
   "status": 1,
   "isInvoiceable": true,
   "isInvoiced": false,
-  "_id": "5fbcfe75ba9312280e2145897521",
+  "_id": "5fbcfe75a1b2c3d4e5001022",
   "timestamp": "2020-11-19T12:00:00.000Z",
   "realTimestamp": "2020-11-19T12:00:00.000Z",
   "createDate": "2020-11-24T12:37:09.258Z",
@@ -203,7 +203,7 @@ request.post(options, function (error, response, body) {
   "customFields": [],
   "machineTimePrices": [],
   "machineTimeSupplements": [],
-  "user": "51203146506d961c03036589741",
+  "user": "51203146a1b2c3d4e5001221",
   "userName": "Anna Andersson",
   "endTimestamp": "2020-11-19T17:00:00.000Z",
   "realEndTimestamp": "2020-11-19T17:00:00.000Z",

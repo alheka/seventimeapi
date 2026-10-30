@@ -42,7 +42,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "58c1504a658fb5911d6489528",
+      "_id": "58c1504aa1b2c3d4e5001123",
       "name": "Grosslistan",
       "isActive": true
     },
@@ -72,7 +72,7 @@ page | 1 | Page number
 ## Get a specific Price List
 
 ```shell
-curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d6489528" \
+curl "https://app.seventime.se/api/2/priceLists/58c1504aa1b2c3d4e5001123" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -80,7 +80,7 @@ curl "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d6489528" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/priceLists/58c1504a658fb5911d6489528";
+let url = "https://app.seventime.se/api/2/priceLists/58c1504aa1b2c3d4e5001123";
 let options = {
   url: url,
   headers: {
@@ -105,7 +105,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "58c1504a658fb5911d6489528",
+    "_id": "58c1504aa1b2c3d4e5001123",
     "isActive": true,
     "name": "ÅF-prislista"
   }

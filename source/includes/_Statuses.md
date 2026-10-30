@@ -36,7 +36,7 @@ request(options, function(error, response, body) {
 ```json
 [
   {
-    "_id": "582f7cabd16fdb974185235",
+    "_id": "582f7caba1b2c3d4e5001187",
     "statusName": "Ej planerad",
     "color": "FF5722",
     "plannedStatus": false,

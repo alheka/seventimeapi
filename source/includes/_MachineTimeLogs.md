@@ -45,7 +45,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "59ef428433092a453647952813",
+      "_id": "59ef4284a1b2c3d4e5001114",
       "time": 12,
       "invoiceableTime": 12,
       "description": "12",
@@ -54,7 +54,7 @@ request(options, function(error, response, body) {
       "invoice": null,
       "machine": "59e75917ae561db737946137",
       "machineName": "Grävare",
-      "user": "51203146506d966481937",
+      "user": "51203146a1b2c3d4e5001115",
       "userName": "Anna Andersson",
       "department": "58b30abde244b75d15648293",
       "departmentName": "Utveckling",
@@ -113,7 +113,7 @@ sortDirection    |  | "ascending" or "descending". If specified and sortBy is sp
 ## Get a specific Machine Time Log
 
 ```shell
-curl "https://app.seventime.se/api/2/machineTimeLogs/5a4bc02e40a13d77915827619" \
+curl "https://app.seventime.se/api/2/machineTimeLogs/5a4bc02ea1b2c3d4e5001116" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -121,7 +121,7 @@ curl "https://app.seventime.se/api/2/machineTimeLogs/5a4bc02e40a13d77915827619" 
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/machineTimeLogs/5a4bc02e40a13d77915827619";
+let url = "https://app.seventime.se/api/2/machineTimeLogs/5a4bc02ea1b2c3d4e5001116";
 let options = {
   url: url,
   headers: {
@@ -149,18 +149,18 @@ request(options, function(error, response, body) {
     "status": 1,
     "isInvoiceable": true,
     "isInvoiced": false,
-    "_id": "5a4bc02e40a13d77915827619",
+    "_id": "5a4bc02ea1b2c3d4e5001116",
     "time": 12,
     "invoiceableTime": 12,
     "description": "12",
     "internalDescription": "",
     "attestedBy": null,
     "invoice": null,
-    "machine": "59e75917ae561db7364829167",
+    "machine": "59e75917a1b2c3d4e5001117",
     "machineName": "Grävare",
-    "user": "51203146506d97461389557821",
+    "user": "51203146a1b2c3d4e5001118",
     "userName": "Anna Andersson",
-    "department": "58b30abde244b75d464826137958",
+    "department": "58b30abda1b2c3d4e5001119",
     "departmentName": "Utveckling",
     "customer": null,
     "customerName": null,
@@ -198,14 +198,14 @@ _id | The _id of the machine time log to retrieve
 curl -X POST "https://app.seventime.se/api/2/machineTimeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"51203146506d97461389557821","user":"51203146506d97461389557821","machine":"59e75917ae561db7364829167","time":2,"timestamp":"2024-01-15T08:00:00.000Z","description":"Excavation"}'
+  -d '{"createdByUser":"51203146a1b2c3d4e5001118","user":"51203146a1b2c3d4e5001118","machine":"59e75917a1b2c3d4e5001117","time":2,"timestamp":"2024-01-15T08:00:00.000Z","description":"Excavation"}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '51203146506d97461389557821',
-  user: '51203146506d97461389557821',
-  machine: '59e75917ae561db7364829167',
+  createdByUser: '51203146a1b2c3d4e5001118',
+  user: '51203146a1b2c3d4e5001118',
+  machine: '59e75917a1b2c3d4e5001117',
   time: 2,
   timestamp: '2024-01-15T08:00:00.000Z',
   description: 'Excavation'
@@ -239,9 +239,9 @@ request.post(options, function (error, response, body) {
   "time": 2,
   "description": "Excavation",
   "internalDescription": "",
-  "machine": "59e75917ae561db7364829167",
+  "machine": "59e75917a1b2c3d4e5001117",
   "machineName": "Grävare",
-  "user": "51203146506d97461389557821",
+  "user": "51203146a1b2c3d4e5001118",
   "userName": "Anna Andersson",
   "pricePerHour": 850,
   "price": 1700,
@@ -296,13 +296,13 @@ The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The p
 curl -X PUT "https://app.seventime.se/api/2/machineTimeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"65a50f80d1e44854f9c12345","modifiedByUser":"51203146506d97461389557821","time":3}'
+  -d '{"_id":"65a50f80d1e44854f9c12345","modifiedByUser":"51203146a1b2c3d4e5001118","time":3}'
 ```
 
 ```javascript
 let jsonData = {
   _id: '65a50f80d1e44854f9c12345',
-  modifiedByUser: '51203146506d97461389557821',
+  modifiedByUser: '51203146a1b2c3d4e5001118',
   time: 3
 };
 
@@ -334,9 +334,9 @@ request.put(options, function (error, response, body) {
   "time": 3,
   "description": "Excavation",
   "internalDescription": "",
-  "machine": "59e75917ae561db7364829167",
+  "machine": "59e75917a1b2c3d4e5001117",
   "machineName": "Grävare",
-  "user": "51203146506d97461389557821",
+  "user": "51203146a1b2c3d4e5001118",
   "userName": "Anna Andersson",
   "pricePerHour": 850,
   "price": 2550,
@@ -388,13 +388,13 @@ The fields <code>price</code> and <code>pricePerHour</code> cannot be set. The p
 curl -X DELETE "https://app.seventime.se/api/2/machineTimeLogs/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"65a50f80d1e44854f9c12345","deletedByUser":"51203146506d97461389557821"}'
+  -d '{"_id":"65a50f80d1e44854f9c12345","deletedByUser":"51203146a1b2c3d4e5001118"}'
 ```
 
 ```javascript
 let jsonData = {
   _id: '65a50f80d1e44854f9c12345',
-  deletedByUser: '51203146506d97461389557821'
+  deletedByUser: '51203146a1b2c3d4e5001118'
 };
 
 let options = {

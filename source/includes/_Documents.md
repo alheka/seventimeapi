@@ -19,16 +19,16 @@ Documents can also be fetched directly from the Documents API. A document belong
       {
         "createDate": "2021-08-24T11:40:16.285Z",
         "modifiedDate": "2021-08-24T11:40:16.285Z",
-        "_id": "6124daa00c1532914b92",
+        "_id": "6124daa0a1b2c3d4e5001023",
         "name": "plan1.pdf",
         "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
         "contentType": "application/pdf",
         "size": 20548,
-        "user": "571f61330c7f498a2d5812",
+        "user": "571f6133a1b2c3d4e5001007",
         "userName": "Anna Andersson",
         "isLink": false,
         "isFolder": false,
-        "folderId": "6124d18c910273b259cf819",
+        "folderId": "6124d18ca1b2c3d4e5001024",
         "isPublic": false
       }
     ]
@@ -37,7 +37,7 @@ Documents can also be fetched directly from the Documents API. A document belong
 ```
 
 ```shell
-curl "https://app.seventime.se/api/2/documents?entityId=5bae34dca878b5497748&entityType=200" \
+curl "https://app.seventime.se/api/2/documents?entityId=5bae34dca1b2c3d4e5001001&entityType=200" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -45,7 +45,7 @@ curl "https://app.seventime.se/api/2/documents?entityId=5bae34dca878b5497748&ent
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/documents?entityId=5bae34dca878b5497748&entityType=200";
+let url = "https://app.seventime.se/api/2/documents?entityId=5bae34dca1b2c3d4e5001001&entityType=200";
 let options = {
   url: url,
   headers: {
@@ -73,13 +73,13 @@ request(options, function(error, response, body) {
     {
       "createDate": "2021-08-24T11:40:16.285Z",
       "modifiedDate": "2021-08-24T11:40:16.285Z",
-      "_id": "6124daa00c1532914b92",
+      "_id": "6124daa0a1b2c3d4e5001023",
       "name": "plan1.pdf",
       "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
-      "realPath": "1234/workOrders/5bae34dca878b5497748/20210824134016/plan1.pdf",
+      "realPath": "1234/workOrders/5bae34dca1b2c3d4e5001001/20210824134016/plan1.pdf",
       "contentType": "application/pdf",
       "size": 20548,
-      "user": "571f61330c7f498a2d5812",
+      "user": "571f6133a1b2c3d4e5001007",
       "userName": "Anna Andersson",
       "isLink": false,
       "isFolder": false,
@@ -112,7 +112,7 @@ To be notified when documents are added to or changed on object items, use the w
 ## Get a specific Document
 
 ```shell
-curl "https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200" \
+curl "https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -120,7 +120,7 @@ curl "https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5ba
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200";
+let url = "https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200";
 let options = {
   url: url,
   headers: {
@@ -147,13 +147,13 @@ request(options, function(error, response, body) {
   "data": {
     "createDate": "2021-08-24T11:40:16.285Z",
     "modifiedDate": "2021-08-24T11:40:16.285Z",
-    "_id": "6124daa00c1532914b92",
+    "_id": "6124daa0a1b2c3d4e5001023",
     "name": "plan1.pdf",
     "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
-    "realPath": "1234/workOrders/5bae34dca878b5497748/20210824134016/plan1.pdf",
+    "realPath": "1234/workOrders/5bae34dca1b2c3d4e5001001/20210824134016/plan1.pdf",
     "contentType": "application/pdf",
     "size": 20548,
-    "user": "571f61330c7f498a2d5812",
+    "user": "571f6133a1b2c3d4e5001007",
     "userName": "Anna Andersson",
     "isLink": false,
     "isFolder": false,
@@ -221,11 +221,11 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "64f1daa00c1532914b92",
+      "_id": "64f1daa0a1b2c3d4e5001025",
       "title": "Project files",
-      "createdByUser": "571f61330c7f498a2d5812",
+      "createdByUser": "571f6133a1b2c3d4e5001007",
       "createDate": "2021-08-24T11:40:16.285Z",
-      "modifiedByUser": "571f61330c7f498a2d5812",
+      "modifiedByUser": "571f6133a1b2c3d4e5001007",
       "modifiedDate": "2021-08-24T11:40:16.285Z",
       "archived": false
     }
@@ -246,13 +246,13 @@ This endpoint retrieves document lists. Use the returned `_id` as `documentListI
 curl -X POST "https://app.seventime.se/api/2/documents/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"uploadedBy":"571f61330c7f498a2d5812","entityId":"5bae34dca878b5497748","entityType":"200","file":{"fileContent":"base64-encoded-file-content","options":{"fileName":"plan2.pdf","contentType":"application/pdf"}},"folderId":null}'
+  -d '{"uploadedBy":"571f6133a1b2c3d4e5001007","entityId":"5bae34dca1b2c3d4e5001001","entityType":"200","file":{"fileContent":"base64-encoded-file-content","options":{"fileName":"plan2.pdf","contentType":"application/pdf"}},"folderId":null}'
 ```
 
 ```javascript
 let jsonData = {
-  uploadedBy: '571f61330c7f498a2d5812',
-  entityId: "5bae34dca878b5497748",
+  uploadedBy: '571f6133a1b2c3d4e5001007',
+  entityId: "5bae34dca1b2c3d4e5001001",
   entityType: 200,
   file: {
       fileContent: data,
@@ -292,13 +292,13 @@ request.post(options, function (error, response, body) {
   "data": {
     "createDate": "2021-08-24T11:40:16.285Z",
     "modifiedDate": "2021-08-24T11:40:16.285Z",
-    "_id": "6124daa00c1532914b92",
+    "_id": "6124daa0a1b2c3d4e5001023",
     "name": "plan2.pdf",
     "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
-    "realPath": "1234/workOrders/5bae34dca878b5497748/20210824134016/plan2.pdf",
+    "realPath": "1234/workOrders/5bae34dca1b2c3d4e5001001/20210824134016/plan2.pdf",
     "contentType": "application/pdf",
     "size": 20548,
-    "user": "571f61330c7f498a2d5812",
+    "user": "571f6133a1b2c3d4e5001007",
     "userName": "Anna Andersson",
     "isLink": false,
     "isFolder": false,
@@ -366,7 +366,7 @@ contentType         | String   | Yes* | Content or MIME type of the file.
 ## Update a document
 
 ```shell
-curl -X PUT "https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200" \
+curl -X PUT "https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
   -d '{"name":"updated-plan.pdf","folderId":null,"isPublic":true}'
@@ -380,7 +380,7 @@ let jsonData = {
 };
 
 let options = {
-  url: 'https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200',
+  url: 'https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200',
   json: jsonData,
   headers: {
     "Client-Secret": "thisismysecretkey",
@@ -407,13 +407,13 @@ request.put(options, function (error, response, body) {
   "data": {
     "createDate": "2021-08-24T11:40:16.285Z",
     "modifiedDate": "2021-08-25T09:20:40.126Z",
-    "_id": "6124daa00c1532914b92",
+    "_id": "6124daa0a1b2c3d4e5001023",
     "name": "updated-plan.pdf",
     "path": "https://seventimedev.s3-eu-west-1.amazonaws.com/...",
-    "realPath": "1234/workOrders/5bae34dca878b5497748/20210824134016/plan2.pdf",
+    "realPath": "1234/workOrders/5bae34dca1b2c3d4e5001001/20210824134016/plan2.pdf",
     "contentType": "application/pdf",
     "size": 20548,
-    "user": "571f61330c7f498a2d5812",
+    "user": "571f6133a1b2c3d4e5001007",
     "userName": "Anna Andersson",
     "isLink": false,
     "isFolder": false,
@@ -459,14 +459,14 @@ entityType         | Number   | No* | Entity type of the parent for documents at
 ## Delete a document
 
 ```shell
-curl -X DELETE "https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200" \
+curl -X DELETE "https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json"
 ```
 
 ```javascript
 let options = {
-  url: 'https://app.seventime.se/api/2/documents/6124daa00c1532914b92?entityId=5bae34dca878b5497748&entityType=200',
+  url: 'https://app.seventime.se/api/2/documents/6124daa0a1b2c3d4e5001023?entityId=5bae34dca1b2c3d4e5001001&entityType=200',
   headers: {
     "Client-Secret": "thisismysecretkey",
     "Content-Type": "application/json",

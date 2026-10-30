@@ -46,7 +46,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f62c5281715836a472254821",
+      "_id": "5f62c528a1b2c3d4e5001198",
       "isInvoiceable": false,
       "isInvoiced": false,
       "selfBillingTimeLogIds": [
@@ -75,7 +75,7 @@ request(options, function(error, response, body) {
           "totalTaxAmount": 550,
           "totalCost": 2090,
           "itemType": "time",
-          "timeCategory": "5e81d33db3f1cb30a16489572",
+          "timeCategory": "5e81d33da1b2c3d4e5001199",
           "categoryName": "Beredskap normal"
         },
         {
@@ -109,14 +109,14 @@ request(options, function(error, response, body) {
       "economySystemRef": "",
       "importedFrom": "",
       "supplierInvoiceStatus": 5,
-      "workOrder": "5f4df1793751c0916136489752",
+      "workOrder": "5f4df179a1b2c3d4e5001200",
       "workOrderTitle": "Återkommande 20200116 - 234556565656",
       "workOrderNumber": 4737,
       "project": null,
       "projectName": null,
       "supplementOrderId": null,
       "supplementOrderNumber": null,
-      "customer": "5bb26376c42fb992716598742",
+      "customer": "5bb26376a1b2c3d4e5001201",
       "customerName": "Company",
       "department": null,
       "departmentName": "",
@@ -126,7 +126,7 @@ request(options, function(error, response, body) {
       "isSelfBillingInvoice": true,
       "selfBillingInvoiceStatus": 1,
       "exportedToEconomy": false,
-      "selfBillingInvoice": "5f5f23fd716176146859257",
+      "selfBillingInvoice": "5f5f23fda1b2c3d4e5001202",
       "selfBillingInvoiceNumber": "24272",
       "footerText": "<table width=\"100%\"><tr><td style='vertical-align: top;'>Första</td><td style='vertical-align: top;'>Andra</td><td style='vertical-align: top;'>Tredje</td></tr></table>",
       "footerInfoText": "Text under..."
@@ -176,7 +176,7 @@ page                     | 1 | Page number
 ## Get a specific Supplier Invoice
 
 ```shell
-curl "https://app.seventime.se/api/2/supplierInvoices/5f62c528171548657d215a785" \
+curl "https://app.seventime.se/api/2/supplierInvoices/5f62c528a1b2c3d4e5001203" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -184,7 +184,7 @@ curl "https://app.seventime.se/api/2/supplierInvoices/5f62c528171548657d215a785"
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c528171548657d215a785";
+let url = "https://app.seventime.se/api/2/supplierInvoices/5f62c528a1b2c3d4e5001203";
 let options = {
   url: url,
   headers: {
@@ -209,7 +209,7 @@ request(options, function(error, response, body) {
 ```json
 {
   "data": {
-    "_id": "5f62c528171548657d215a785",
+    "_id": "5f62c528a1b2c3d4e5001203",
     "isInvoiceable": false,
     "isInvoiced": false,
     "selfBillingTimeLogIds": [
@@ -217,12 +217,12 @@ request(options, function(error, response, body) {
       "5f5f6881241b6f02a6364619"
     ],
     "selfBillingExpenseIds": [
-      "5f5f8c6a5b2317286eb65482b",
-      "5f5f8c6a5b2317286eb8d76b1"
+      "5f5f8c6aa1b2c3d4e5001204",
+      "5f5f8c6aa1b2c3d4e5001205"
     ],
     "invoiceItems": [
       {
-        "_id": "5f60c501271935b9165897451",
+        "_id": "5f60c501a1b2c3d4e5001206",
         "createDate": "2020-09-15T13:44:06.569Z",
         "articleNumber": "",
         "description": "Beredskap normal",
@@ -272,7 +272,7 @@ request(options, function(error, response, body) {
     "economySystemRef": "",
     "importedFrom": "",
     "supplierInvoiceStatus": 5,
-    "workOrder": "5f4df1793751c0916134687952",
+    "workOrder": "5f4df179a1b2c3d4e5001207",
     "workOrderTitle": "Återkommande 20200116 - 234556565656",
     "workOrderNumber": 4737,
     "project": null,
@@ -319,7 +319,7 @@ _id | The _id of the supplier invoice to retrieve
 {
   "data": [
     {
-      "_id": "67e53d69a01b3b7348fef08a",
+      "_id": "67e53d69a1b2c3d4e5000101",
       "supplierInvoiceNumber": "48863655",
       "distributeOnMultipleEntities": true,
       "project": null,
@@ -327,27 +327,27 @@ _id | The _id of the supplier invoice to retrieve
       "customer": null,
       "invoiceItemRows": [
         {
-          "_id": "67e53d69a01b3b7348fef08b",
+          "_id": "67e53d69a1b2c3d4e5000102",
           "formulaString": "-{Total}",
-          "bookkeepingAccount": "619e32ee7e538b5b89e913e2",
+          "bookkeepingAccount": "619e32eea1b2c3d4e5000201",
           "bookkeepingAccountNumber": 2440,
           "project": null,
           "invoiceItem": {
-            "_id": "67e53d69a01b3b7348fef08c",
+            "_id": "67e53d69a1b2c3d4e5000103",
             "totalCost": -2817.5
           }
         },
         {
-          "_id": "67e53d69a01b3b7348fef093",
-          "bookkeepingAccount": "619e32ef7e538b5b89e9145f",
+          "_id": "67e53d69a1b2c3d4e5000104",
+          "bookkeepingAccount": "619e32efa1b2c3d4e5000202",
           "bookkeepingAccountNumber": 4010,
-          "project": "5f4df1793751c0916134687952",
+          "project": "5f4df179a1b2c3d4e5001207",
           "projectNumber": "1024",
           "workOrder": null,
-          "expense": "67e53d69a01b3b7348fef0a2",
+          "expense": "67e53d69a1b2c3d4e5000108",
           "isInvoiced": false,
           "invoiceItem": {
-            "_id": "67e53d69a01b3b7348fef094",
+            "_id": "67e53d69a1b2c3d4e5000105",
             "itemType": "expense",
             "expenseItem": "5f48eb7105b8ed6934398752",
             "articleNumber": "0445611",
@@ -362,14 +362,14 @@ _id | The _id of the supplier invoice to retrieve
           }
         },
         {
-          "_id": "67e53d69a01b3b7348fef095",
-          "bookkeepingAccount": "619e32ef7e538b5b89e9145f",
+          "_id": "67e53d69a1b2c3d4e5000106",
+          "bookkeepingAccount": "619e32efa1b2c3d4e5000202",
           "bookkeepingAccountNumber": 4010,
-          "project": "5f4df1793751c0916136489752",
+          "project": "5f4df179a1b2c3d4e5001200",
           "projectNumber": "1025",
           "workOrder": null,
           "invoiceItem": {
-            "_id": "67e53d69a01b3b7348fef096",
+            "_id": "67e53d69a1b2c3d4e5000107",
             "itemType": "general",
             "articleNumber": "1504169",
             "description": "TCS-C3 8-12 SKRUVCLIPS VIT",
@@ -448,14 +448,14 @@ expenseItemName | Name of the article in the article register
 curl -X POST "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"supplierInvoiceNumber":"9162","createdByUser":"5f48eb3e65d7e12574952d685","distributor":"5f6b2e6af24d5d69784521","totalAmountInclTax":"100000"}' 
+  -d '{"supplierInvoiceNumber":"9162","createdByUser":"5f48eb3ea1b2c3d4e5001208","distributor":"5f6b2e6aa1b2c3d4e5001209","totalAmountInclTax":"100000"}' 
 ```
 
 ```javascript
 let jsonData = {
   supplierInvoiceNumber: 9162,
-  createdByUser: '5f48eb3e65d7e12574952d685',
-  distributor: '5f6b2e6af24d5d69784521',
+  createdByUser: '5f48eb3ea1b2c3d4e5001208',
+  distributor: '5f6b2e6aa1b2c3d4e5001209',
   totalAmountInclTax: 100000
 };
 
@@ -486,21 +486,21 @@ request.post(options, function (error, response, body) {
   "isInvoiceable": true,
   "selfBillingTimeLogIds": [],
   "selfBillingExpenseIds": [],
-  "_id": "5fd0619c739154975825",
+  "_id": "5fd0619ca1b2c3d4e5001210",
   "invoiceItems": [],
   "documents": [],
   "supplierInvoiceLogEntries": [ 
     { 
-      "_id": "5fdd142c621b21a10129",
+      "_id": "5fdd142ca1b2c3d4e5001211",
       "logType": 1,
       "description": "",
-      "user": "5f48eb3e65d7e12574952d685",
+      "user": "5f48eb3ea1b2c3d4e5001208",
       "userName": "Anna Andersson",
       "logDate": "2020-12-09T12:43:51.516Z" 
     } 
   ],
   "markupPercent": 0,
-  "distributor": "5f6b2e6af24d5d69784521",
+  "distributor": "5f6b2e6aa1b2c3d4e5001209",
   "distributorName": "Company AB",
   "supplierInvoiceNumber": "9162",
   "invoiceDate": "2020-12-09T12:43:51.515Z",
@@ -599,13 +599,13 @@ driverJournal  | Driver journal row
 curl -X PUT "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c739154975825","modifiedByUser":"5f48eb3e65d7ee4942c6859741","notes":"Updated notes"}' 
+  -d '{"_id":"5fd0619ca1b2c3d4e5001210","modifiedByUser":"5f48eb3ea1b2c3d4e5001212","notes":"Updated notes"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fd0619c739154975825",
-  modifiedByUser: '5f48eb3e65d7ee4942c6859741',
+  _id: "5fd0619ca1b2c3d4e5001210",
+  modifiedByUser: '5f48eb3ea1b2c3d4e5001212',
   notes: 'Updated notes'
 };
 
@@ -638,15 +638,15 @@ request.put(options, function (error, response, body) {
   "isInvoiceable": true,
   "selfBillingTimeLogIds": [],
   "selfBillingExpenseIds": [],
-  "_id": "5fd0619c739154975825",
+  "_id": "5fd0619ca1b2c3d4e5001210",
   "invoiceItems": [],
   "documents": [],
   "supplierInvoiceLogEntries": [ 
     { 
-      "_id": "5fdd142c621b649785231",
+      "_id": "5fdd142ca1b2c3d4e5001213",
       "logType": 1,
       "description": "",
-      "user": "5f48eb3e65d7ee897425862",
+      "user": "5f48eb3ea1b2c3d4e5001214",
       "userName": "Anna Andersson",
       "logDate": "2020-12-09T12:43:51.516Z" 
     } 
@@ -666,7 +666,7 @@ request.put(options, function (error, response, body) {
   "notes": "Updated notes",
   "createDate": "2020-12-09T12:43:51.515Z"
 }
-"Supplier invoice updated: _id: 5fd0619c739154975825"
+"Supplier invoice updated: _id: 5fd0619ca1b2c3d4e5001210"
 ```
 
 This endpoint updates a supplier invoice
@@ -692,13 +692,13 @@ modifiedByUser      | String      | Yes | Id of the user who made the change
 curl -X DELETE "https://app.seventime.se/api/2/supplierInvoices/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fd0619c739154975825","deletedByUser":"51203146506d961c03649852317"}' 
+  -d '{"_id":"5fd0619ca1b2c3d4e5001210","deletedByUser":"51203146a1b2c3d4e5001215"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: "5fd0619c739154975825",
-  deletedByUser: "51203146506d961c03649852317"
+  _id: "5fd0619ca1b2c3d4e5001210",
+  deletedByUser: "51203146a1b2c3d4e5001215"
 };
 
 let options = {
@@ -727,10 +727,10 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 { 
-  "_id": "5fd0619c739154975825",
+  "_id": "5fd0619ca1b2c3d4e5001210",
   "supplierInvoiceNumber": "9162"
 }
-"Supplier invoice deleted: _id: 5fd0619c739154975825, number: 9162"
+"Supplier invoice deleted: _id: 5fd0619ca1b2c3d4e5001210, number: 9162"
 ```
 
 This endpoint deletes a supplier invoice. A supplier invoice that has been invoiced cannot be deleted.

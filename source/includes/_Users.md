@@ -41,7 +41,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "5f48eb3e65d7ee49469874512",
+      "_id": "5f48eb3ea1b2c3d4e5001234",
       "firstName": "Anna",
       "lastName": "Andersson",
       "email": "email@company.com",
@@ -58,16 +58,16 @@ request(options, function(error, response, body) {
       "language": "SV",
       "workSchedules": [
         {
-          "_id": "5e9565f2103b932af29dff7d",
+          "_id": "5e9565f2a1b2c3d4e5000301",
           "startDate": "2020-03-01T00:00:00.000Z",
           "endDate": "2020-05-30T00:00:00.000Z",
-          "workSchedule": "5e9565ew103b932af29dcc5f"
+          "workSchedule": "5e9565f2a1b2c3d4e5000303"
         },
         {
-          "_id": "62ff8cbf16a40777f0166e86",
+          "_id": "62ff8cbfa1b2c3d4e5000302",
           "startDate": "2020-06-01T00:00:00.000Z",
           "endDate": null,
-          "workSchedule": "512406dfiua296a124000003"
+          "workSchedule": "512406dfa1b2c3d4e5000304"
         }
       ],
       "canHaveDynamicSchedule": false,
@@ -109,7 +109,7 @@ sortDirection     |  | "ascending" or "descending". If specified and sortBy is s
 ## Get a specific User
 
 ```shell
-curl "https://app.seventime.se/api/2/users/5f48eb3e65d7ee49469874512" \
+curl "https://app.seventime.se/api/2/users/5f48eb3ea1b2c3d4e5001234" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -117,7 +117,7 @@ curl "https://app.seventime.se/api/2/users/5f48eb3e65d7ee49469874512" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/users/5f48eb3e65d7ee49469874512";
+let url = "https://app.seventime.se/api/2/users/5f48eb3ea1b2c3d4e5001234";
 let options = {
   url: url,
   headers: {
@@ -141,7 +141,7 @@ request(options, function(error, response, body) {
 
 ```json
 {
-  "_id": "5f48eb3e65d7ee49469874512",
+  "_id": "5f48eb3ea1b2c3d4e5001234",
   "firstName": "Anna",
   "lastName": "Andersson",
   "email": "email@company.com",
@@ -158,16 +158,16 @@ request(options, function(error, response, body) {
   "language": "EN",
   "workSchedules": [
     {
-      "_id": "5e9565f2103b932af29dff7d",
+      "_id": "5e9565f2a1b2c3d4e5000301",
       "startDate": "2020-03-01T00:00:00.000Z",
       "endDate": "2020-05-30T00:00:00.000Z",
-      "workSchedule": "5e9565ew103b932af29dcc5f"
+      "workSchedule": "5e9565f2a1b2c3d4e5000303"
     },
     {
-      "_id": "62ff8cbf16a40777f0166e86",
+      "_id": "62ff8cbfa1b2c3d4e5000302",
       "startDate": "2020-06-01T00:00:00.000Z",
       "endDate": null,
-      "workSchedule": "512406dfiua296a124000003"
+      "workSchedule": "512406dfa1b2c3d4e5000304"
     }
   ],
   "canHaveDynamicSchedule": false,
@@ -289,7 +289,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5834419c7a27db69365897412",
+      "_id": "5834419ca1b2c3d4e5001235",
       "name": "Övertid",
       "description": "",
       "code": "123",
@@ -362,10 +362,10 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "59f9d1c53ffd5f93226978451",
+      "_id": "59f9d1c5a1b2c3d4e5001236",
       "skillTitle": "Höga arbeten",
       "requireEducations": [
-        "5a54ea1f7a7fe3c212569874852"
+        "5a54ea1fa1b2c3d4e5001237"
       ]
     },
     {
@@ -426,7 +426,7 @@ request(options, function(error, response, body) {
 {
   "data": [
     {
-      "_id": "5f442181e62efdb4a3126597412",
+      "_id": "5f442181a1b2c3d4e5001238",
       "name": "Programmerare",
       "pricePerHour": 555,
     },
@@ -458,12 +458,12 @@ sortDirection |  | "ascending" or "descending". If specified and sortBy is speci
 curl -X POST "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"createdByUser":"5f48eb3e65d7ee49421258981","firstName":"Anna","lastName":"Andersson","email":"email@company.com","userName":"AnnaA","userRoleId":1}'
+  -d '{"createdByUser":"5f48eb3ea1b2c3d4e5001239","firstName":"Anna","lastName":"Andersson","email":"email@company.com","userName":"AnnaA","userRoleId":1}'
 ```
 
 ```javascript
 let jsonData = {
-  createdByUser: '5f48eb3e65d7ee49421258981',
+  createdByUser: '5f48eb3ea1b2c3d4e5001239',
   firstName: 'Anna',
   lastName: 'Andersson',
   email: 'email@company.com',
@@ -495,7 +495,7 @@ request.post(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5f48eb3e65d7ee49421258981",
+  "_id": "5f48eb3ea1b2c3d4e5001239",
   "firstName": "Anna",
   "lastName": "Andersson",
   "email": "email@company.com",
@@ -547,12 +547,12 @@ The userName must be unique, otherwise an error is returned.
 curl -X PUT "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d0575597841","modifiedByUser":"5f48eb3e65d7ee4942645d21","firstName":"Anna","lastName":"Andersson","userName":"AnnaA"}' 
+  -d '{"_id":"5fb3e157a1b2c3d4e5001240","modifiedByUser":"5f48eb3e65d7ee4942645d21","firstName":"Anna","lastName":"Andersson","userName":"AnnaA"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb3e157f795553d0575597841',
+  _id: '5fb3e157a1b2c3d4e5001240',
   modifiedByUser: '5f48eb3e65d7ee4942645d21',
   firstName: 'Anna',
   lastName: 'Andersson',
@@ -584,7 +584,7 @@ request.put(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb3e157f795553d0575597841",
+  "_id": "5fb3e157a1b2c3d4e5001240",
   "firstName": "Anna",
   "lastName": "Andersson",
   "email": "email@company.com",
@@ -596,7 +596,7 @@ request.put(options, function (error, response, body) {
   "isActivated": false,
   "language": "SV"
 }
-"User updated: Anna, _id: 5fb3e157f795553d0575597841"
+"User updated: Anna, _id: 5fb3e157a1b2c3d4e5001240"
 ```
 
 This endpoint updates a specific user. The response contains the updated user object with its internal attribute names (e.g. `userType` for the user role id and `personNumber` for the personal number).
@@ -625,12 +625,12 @@ DELETE Users is not documented because this route is not currently implemented.
 curl -X DELETE "https://app.seventime.se/api/2/users/" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-Type: application/json" \
-  -d '{"_id":"5fb3e157f795553d0575597841","deletedByUser":"5f48eb3e65d7ee4942645d21"}' 
+  -d '{"_id":"5fb3e157a1b2c3d4e5001240","deletedByUser":"5f48eb3e65d7ee4942645d21"}' 
 ```
 
 ```javascript
 let jsonData = {
-  _id: '5fb3e157f795553d0575597841',
+  _id: '5fb3e157a1b2c3d4e5001240',
   deletedByUser: '5f48eb3e65d7ee4942645d21'
 };
 
@@ -659,11 +659,11 @@ request.delete(options, function (error, response, body) {
 
 ```json 
 {
-  "_id": "5fb3e157f795553d0575597841",
+  "_id": "5fb3e157a1b2c3d4e5001240",
   "firstName": "Anna",
   "lastName": "Andersson",
 }
-"User deleted: Anna, _id: 5fb3e157f795553d0575597841"
+"User deleted: Anna, _id: 5fb3e157a1b2c3d4e5001240"
 ```
 
 This endpoint deletes a specific user.

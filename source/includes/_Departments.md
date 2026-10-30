@@ -43,7 +43,7 @@ request(options, function(error, response, body) {
   },
   "data": [
     {
-      "_id": "59d05abdc471b72e4979135",
+      "_id": "59d05abda1b2c3d4e5001015",
       "name": "Utveckling",
       "departmentNumber": "2",
       "isActive": true,
@@ -76,7 +76,7 @@ page | 1 | Page number
 ## Get a specific Department
 
 ```shell
-curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135" \
+curl "https://app.seventime.se/api/2/departments/59d05abda1b2c3d4e5001015" \
   -H "Client-Secret: thisismysecretkey" \
   -H "Content-type: application/json"
 ```
@@ -84,7 +84,7 @@ curl "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135" \
 ```javascript
 /* Sample with the request library */
 
-let url = "https://app.seventime.se/api/2/departments/59d05abdc471b72e4979135";
+let url = "https://app.seventime.se/api/2/departments/59d05abda1b2c3d4e5001015";
 let options = {
   url: url,
   headers: {
@@ -110,7 +110,7 @@ request(options, function(error, response, body) {
 {
   "data": {
     "managerIds": [],
-    "_id": "59d05abdc471b72e4979135",
+    "_id": "59d05abda1b2c3d4e5001015",
     "name": "Utveckling",
     "departmentNumber": "2",
     "isActive": true
