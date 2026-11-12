@@ -36,8 +36,11 @@ request(options, function(error, response, body) {
 {
   "meta": {
     "totalResources": 1,
+    "totalResourcesIsExact": true,
     "totalPages": 1,
-    "currentPage": 1
+    "currentPage": 1,
+    "hasMore": false,
+    "nextPage": null
   },
   "data": [
     {
@@ -139,23 +142,25 @@ request(options, function(error, response, body) {
 }
 ```
 
-This endpoint retrieves supplement orders.
+This endpoint retrieves supplement orders. Without `project`, all supplement orders of the account are listed.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more matching supplement orders, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
 
 ### HTTP Request
 
-`GET https://app.seventime.se/api/2/supplementOrders/?project=5f924f4fa1b2c3d4e5001188`
+`GET https://app.seventime.se/api/2/supplementOrders`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-project       |  | Required. Id of the project that supplement orders will be retrieved from. The list endpoint requires this query parameter.
+project       |  | If specified, only supplement orders of the project will be included.
 sortBy        | createDate | If specified, a sort will be made on the specified parameter
 sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit         | 100 | Number of supplement orders per page. Maximum 500
 page          | 1 | Page number
 
-A request without `project` returns HTTP status 400 with `{"errorMessage": "Field 'project' required"}`.
+An empty `project` (`?project=`) returns HTTP status 400 with `{"errorMessage": "Field 'project' required"}`.
 
 ## Get a specific Supplement Order
 
