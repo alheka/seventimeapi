@@ -365,6 +365,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "5c8639c4704957d884791328",
@@ -429,6 +434,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "5b276a90a1b2c3d4e5001136",
@@ -489,6 +499,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "5fb2c736a1b2c3d4e5001137",

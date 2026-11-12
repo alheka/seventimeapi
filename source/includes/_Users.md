@@ -224,6 +224,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "userRoleId": 1,
@@ -248,7 +253,8 @@ This endpoint retrieves user roles.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-limit | 100 | Maximum number of items to return. Maximum 500
+limit | 100 | Number of items per page. Maximum 500
+page  | 1 | Page number. See 'Pagination'
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -287,6 +293,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "5834419ca1b2c3d4e5001235",
@@ -321,7 +332,8 @@ This endpoint retrieves user salary types.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-limit | 100 | Maximum number of items to return. Maximum 500
+limit | 100 | Number of items per page. Maximum 500
+page  | 1 | Page number. See 'Pagination'
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -360,6 +372,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "59f9d1c5a1b2c3d4e5001236",
@@ -385,7 +402,8 @@ This endpoint retrieves user skills.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-limit | 100 | Maximum number of items to return. Maximum 500
+limit | 100 | Number of items per page. Maximum 500
+page  | 1 | Page number. See 'Pagination'
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
@@ -424,6 +442,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "5f442181a1b2c3d4e5001238",
@@ -448,7 +471,8 @@ This endpoint retrieves user work types.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-limit | 100 | Maximum number of items to return. Maximum 500
+limit | 100 | Number of items per page. Maximum 500
+page  | 1 | Page number. See 'Pagination'
 sortBy |  | If specified, a sort will be made on the specified parameter
 sortDirection |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 

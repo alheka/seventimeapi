@@ -14,6 +14,11 @@ Documents can also be fetched directly from the Documents API. A document belong
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": {
     "documents": [
       {
@@ -219,6 +224,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "64f1daa0a1b2c3d4e5001025",

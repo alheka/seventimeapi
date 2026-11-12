@@ -266,6 +266,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "58cd3c47a1b2c3d4e5001231",
@@ -301,7 +306,8 @@ This endpoint retrieves time categories.
 
 Parameter | Default | Description
 --------- | ------- | -----------
-limit              | 100 | Maximum number of time categories to return. Maximum 500
+limit              | 100 | Number of time categories per page. Maximum 500
+page               | 1 | Page number. See 'Pagination'
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
