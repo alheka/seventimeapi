@@ -97,7 +97,7 @@ Requests made with an OAuth access token (e.g. through the Seven Time MCP server
 # Header fields
 In addition to the 'Client-Secret', a few fields are required in the Header:
 
-- Client-Secret - Required for all requests. An invalid key returns HTTP 401. Due to the current implementation, omitting this header can return HTTP 500 instead of HTTP 401.
+- Client-Secret - Required for all requests. A missing or invalid key returns HTTP 401.
 - Content-type - Must be "application/json". This is enforced for all non-GET requests.
 - Accept - Must be "application/json"
 
