@@ -135,7 +135,7 @@ Some of these endpoints (driver journals, expenses, machine time logs and purcha
 
 User roles, user salary types, user skills, user work types and time categories are paged with 'limit' and 'page' like the lists above.
 
-The other lists of types, tags and settings (project statuses, types and tags, work order types, tags and statuses, quote templates and categories, invoice tags, machine types, object item types, driver journal types, result units, distributor contact persons, documents and document lists) are not limited. All results are returned on page 1, and 'limit' is ignored. A higher page returns an empty data array, so a client that pages until it gets no results stops after page 2. They contain the same meta property, with totalPages 1 (0 if there are no results).
+The other lists of types, tags and settings (project statuses, types and tags, work order types, tags and statuses, quote templates and categories, invoice tags, machine types, object item types, driver journal types, result units, distributor contact persons, documents, document lists, custom fields, work schedules and webhook subscriptions) are not limited. All results are returned on page 1, and 'limit' is ignored. A higher page returns an empty data array, so a client that pages until it gets no results stops after page 2. They contain the same meta property, with totalPages 1 (0 if there are no results).
 
 
 ```json

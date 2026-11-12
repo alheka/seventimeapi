@@ -162,6 +162,11 @@ request(options, function(error, response, body) {
 
 ```json
 {
+  "meta": {
+    "totalResources": 8,
+    "totalPages": 1,
+    "currentPage": 1
+  },
   "data": [
     {
       "_id": "65a50f80d1e44854f9c54321",
