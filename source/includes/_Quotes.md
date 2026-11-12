@@ -244,7 +244,8 @@ request(options, function(error, response, body) {
         }
       ],
       "invoiceItems": [],
-      "createDate": "2019-01-07T17:15:08.532Z"
+      "createDate": "2019-01-07T17:15:08.532Z",
+      "updatedAt": "2019-01-09T08:21:44.120Z"
     },
     {
       // ...
@@ -254,6 +255,10 @@ request(options, function(error, response, body) {
 ```
 
 This endpoint retrieves quotes.
+
+<aside class="notice">
+To keep the responses small, use <code>include</code> to only get the quote head and the parts you need, and <code>lastModified</code> to only get the quotes that have changed since your last call. The full quote is always available with <a href="#get-a-specific-quote">Get a specific Quote</a>.
+</aside>
 
 ### HTTP Request
 
@@ -269,6 +274,8 @@ fromQuoteDate                       |  | If specified, quotes with quote date af
 toQuoteDate                         |  | If specified, quotes with quote date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 fromValidToDate                     |  | If specified, quotes with valid to date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toValidToDate                       |  | If specified, quotes with valid to date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+lastModified                        |  | If specified, quotes that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+include                             |  | If specified, only the quote head is returned plus the parts listed, comma separated: `invoiceItems`, `quoteElements`, `quoteConditionsContent`, `quoteLogEntries`, `budgetCalculation`, `documents`. Use `include=none` for the quote head only. If not specified, the full quotes are returned. Example: `include=invoiceItems,quoteLogEntries`
 limit                               | 100 | Number of quotes per page. Maximum 500
 page                                | 1 | Page number
 sortBy                              |  | If specified, a sort will be made on the specified parameter
@@ -513,7 +520,8 @@ request(options, function(error, response, body) {
       }
     ],
     "invoiceItems": [],
-    "createDate": "2019-01-07T17:15:08.532Z"
+    "createDate": "2019-01-07T17:15:08.532Z",
+    "updatedAt": "2019-01-09T08:21:44.120Z"
   }
 }
 ```
