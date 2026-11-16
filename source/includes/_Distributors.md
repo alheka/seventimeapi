@@ -86,6 +86,7 @@ This endpoint retrieves distributors.
 Parameter | Default | Description
 --------- | ------- | -----------
 name                        |  | If specified, distributors that match the parameter will be included.
+lastModified                |  | If specified, distributors that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit                       | 100 | Number of distributors per page. Maximum 500

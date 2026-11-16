@@ -109,6 +109,7 @@ machineTypeName  |  | If specified, machines that match the parameter will be in
 machineModel     |  | If specified, machines that match the parameter will be included.
 serialNumber     |  | If specified, machines that match the parameter will be included.
 serviceable      |  | "true" or "false". If specified, machines that match the parameter will be included.
+lastModified     |  | If specified, machines that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 sortBy           | machineName | If specified, a sort will be made on the specified parameter
 sortDirection    | ascending | "ascending" or "descending". The sort order will be ascending or descending
 limit            | 100 | Number of machines per page. Maximum 500

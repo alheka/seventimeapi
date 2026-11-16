@@ -78,6 +78,7 @@ Parameter | Default | Description
 --------- |---------| -----------
 customerId      |         | The id of the customer which the contact persons belong to. If not specified, all contact persons will be retrivied, regardless of which customer they belong to
 name            |         | The name of the contact persons
+lastModified    |  | If specified, contact persons that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 sortBy          | name    | If specified, a sort will be made on the specified parameter
 sortDirection   | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit           | 100     | Number of contact persons per page. Maximum 500
