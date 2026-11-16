@@ -100,6 +100,7 @@ isActive          |  | If specified, users that match the parameter will be incl
 isActivated       |  | If specified, users that match the parameter will be included. This must be a boolean
 salaryType        |  | If specified, users with this default salary type id will be included.
 userSkills        |  | If specified, users that match the parameter will be included.
+lastModified      |  | If specified, users that have been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 limit             | 100 | Number of users per page. Maximum 500
 page              | 1 | Page number
 sortBy            | firstName | If specified, a sort will be made on the specified parameter

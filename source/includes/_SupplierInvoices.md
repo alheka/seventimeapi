@@ -165,7 +165,7 @@ isSelfBillingInvoice     |  | If specified, supplier invoices that match the par
 exportedToEconomy        |  | If specified, supplier invoices that match the parameter will be included.
 attestFlag               |  | "ONLY_ATTESTED" or "ONLY_NON_ATTESTED". If specified, only attested or only non-attested supplier invoices will be included
 obliterateFlag           |  | "ONLY_OBLITERATED" or "ONLY_NON_OBLITERATED". If specified, only obliterated (status 35) or only non-obliterated supplier invoices will be included. Overrides supplierInvoiceStatus
-lastModified             |  | If specified, supplier invoices that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+lastModified             |  | If specified, supplier invoices that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 sortBy                   |  | If specified, a sort will be made on the specified parameter
 sortDirection            |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit                    | 100 | Number of supplier invoices per page. Maximum 500
