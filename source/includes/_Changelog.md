@@ -24,6 +24,8 @@ This section lists the changes in the API that can affect an integration, newest
 ### Fixed
 
 * Time logs and expenses that are created in Seven Time by copying or distributing existing rows (e.g. copying the previous day) get the time they were created as `updatedAt`. Earlier, they could keep the `updatedAt` of the original row, and were then missing when [time logs](#get-time-logs) or [expenses](#get-expenses) were fetched with `lastModified`.
+* Articles (expense items) that are copied in Seven Time get the time they were copied as `updatedAt`. Earlier, a copy kept the `updatedAt` of the original article, and was then missing when [expense items](#get-expenses-items) were fetched with `lastModified`.
+* [Update an Invoice](#update-an-invoice) and [Update a Supplier Invoice](#update-a-supplier-invoice): `createdAt` and `updatedAt` in the request are ignored, and `updatedAt` is set by the server. Earlier, `createdAt` set to `null` or an empty string returned HTTP 500.
 
 ## October 2026
 
