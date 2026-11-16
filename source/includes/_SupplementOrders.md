@@ -155,6 +155,7 @@ The result is paginated. `meta.totalResources` is capped at 2000; if there are m
 Parameter | Default | Description
 --------- | ------- | -----------
 project       |  | If specified, only supplement orders of the project will be included.
+lastModified  |  | If specified, supplement orders that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 sortBy        | createDate | If specified, a sort will be made on the specified parameter
 sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit         | 100 | Number of supplement orders per page. Maximum 500
