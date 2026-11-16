@@ -45,6 +45,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5ba5619aa1b2c3d4e5001189",
+      "createdAt": "2018-09-25T07:12:46.369Z",
+      "updatedAt": "2018-09-26T09:29:49.463Z",
       "title": "Discount",
       "description": "",
       "headerText": "",
@@ -200,6 +202,8 @@ request(options, function(error, response, body) {
 {
   "data": {
       "_id": "5ba5619aa1b2c3d4e5001194",
+      "createdAt": "2018-09-25T07:12:46.369Z",
+      "updatedAt": "2018-09-26T09:29:49.463Z",
       "title": "Discount",
       "description": "",
       "headerText": "",

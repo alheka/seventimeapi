@@ -41,6 +41,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5a4bc02ea1b2c3d4e5001120",
+      "createdAt": "2018-01-02T17:37:02.629Z",
+      "updatedAt": "2020-09-27T12:06:19.240Z",
       "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
       "hoursUsed": 5193,
       "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
@@ -160,6 +162,8 @@ request(options, function(error, response, body) {
     "machineLog": [],
     "isSupplementForMachines": [],
     "_id": "5a4bc02ea1b2c3d4e5001120",
+    "createdAt": "2018-01-02T17:37:02.629Z",
+    "updatedAt": "2020-09-27T12:06:19.240Z",
     "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
     "hoursUsed": 5193,
     "lastMileageRegDate": "2020-09-27T12:06:19.225Z",

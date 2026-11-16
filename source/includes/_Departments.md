@@ -44,6 +44,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "59d05abda1b2c3d4e5001015",
+      "createdAt": "2017-10-01T03:02:21.120Z",
+      "updatedAt": "2017-10-02T05:19:24.214Z",
       "name": "Utveckling",
       "departmentNumber": "2",
       "isActive": true,
@@ -112,6 +114,8 @@ request(options, function(error, response, body) {
   "data": {
     "managerIds": [],
     "_id": "59d05abda1b2c3d4e5001015",
+    "createdAt": "2017-10-01T03:02:21.120Z",
+    "updatedAt": "2017-10-02T05:19:24.214Z",
     "name": "Utveckling",
     "departmentNumber": "2",
     "isActive": true

@@ -46,6 +46,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "53ad2918a1b2c3d4e5001061",
+      "createdAt": "2014-06-27T08:11:15.954Z",
+      "updatedAt": "2014-06-28T10:28:19.048Z",
       "attestedBy": null,
       "createDate": "2014-06-27T08:11:15.954Z",
       "customer": null,
@@ -120,7 +122,7 @@ user               |  | If specified, expenses registered for the user with this
 distributor        |  | If specified, expenses that match the parameter will be included.
 fromDate           |  | If specified, expenses registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate             |  | If specified, expenses registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
-lastModified       |  | If specified, expenses that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+lastModified       |  | If specified, expenses that has been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 limit              | 100 | Number of expenses per page. Maximum 500
 page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
@@ -166,6 +168,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "53ad2918a1b2c3d4e5001065",
+    "createdAt": "2014-06-27T08:11:15.954Z",
+    "updatedAt": "2014-06-28T10:28:19.048Z",
     "attestedBy": null,
     "createDate": "2014-06-27T08:11:15.954Z",
     "customer": null,
@@ -267,6 +271,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5de78aeda1b2c3d4e5001068",
+      "createdAt": "2019-12-04T10:31:06.603Z",
+      "updatedAt": "2019-12-05T12:48:09.697Z",
       "description": "",
       "tax": 25,
       "articleNumber": "601310",
@@ -314,7 +320,7 @@ parentExpenseItemName   |  | If specified, expense items that match the paramete
 isInvoiceable           |  | If specified, expense items that match the parameter will be included.
 isActive                |  | If specified, expense items that match the parameter will be included.
 favorite                |  | If specified, expense items that match the parameter will be included.
-lastModified            |  | If specified, expense items that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+lastModified            |  | If specified, expense items that has been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 limit                   | 100 | Number of expense items per page. Maximum 500
 page                    | 1 | Page number
 sortBy                  |  | If specified, a sort will be made on the specified parameter
@@ -360,6 +366,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "5de78aed1332719192366458",
+    "createdAt": "2019-12-04T10:31:06.603Z",
+    "updatedAt": "2019-12-05T12:48:09.697Z",
     "description": "",
     "tax": 25,
     "articleNumber": "601310",

@@ -10,6 +10,8 @@ Documents can also be fetched directly from the Documents API. A document belong
 - an entity, using `entityId` and `entityType`, e.g. a work order or project
 - a document list, using `documentListId`, e.g. the general document archive
 
+Documents and folders in a document list also contain `createdAt` and `updatedAt`, set by the server. Documents of an entity do not.
+
 > Fetching a work order returns a documents array like this:
 
 ```json

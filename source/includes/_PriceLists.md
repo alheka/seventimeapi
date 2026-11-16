@@ -43,6 +43,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "58c1504aa1b2c3d4e5001123",
+      "createdAt": "2017-03-09T12:53:30.120Z",
+      "updatedAt": "2017-03-10T15:10:33.214Z",
       "name": "Grosslistan",
       "isActive": true
     },
@@ -107,6 +109,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "58c1504aa1b2c3d4e5001123",
+    "createdAt": "2017-03-09T12:53:30.120Z",
+    "updatedAt": "2017-03-10T15:10:33.214Z",
     "isActive": true,
     "name": "ÅF-prislista"
   }

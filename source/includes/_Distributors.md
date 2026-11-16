@@ -42,6 +42,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5f6b2e6aa1b2c3d4e5001016",
+      "createdAt": "2020-09-23T13:19:42.450Z",
+      "updatedAt": "2020-09-24T15:36:45.544Z",
       "name": "UE lev 20200923",
       "distributorNumber": "20",
       "address": "",
@@ -137,6 +139,8 @@ request(options, function(error, response, body) {
       "emailForSelfBilling": "email@company.com"
     },
     "_id": "5f6b2e6aa1b2c3d4e5001018",
+    "createdAt": "2020-09-23T13:19:42.450Z",
+    "updatedAt": "2020-09-24T15:36:45.544Z",
     "name": "UE lev 20200923",
     "distributorNumber": "20",
     "address": "",

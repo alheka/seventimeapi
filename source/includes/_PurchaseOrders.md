@@ -45,6 +45,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "59d6041d5551819581097514",
+      "createdAt": "2017-09-11T13:31:08.963Z",
+      "updatedAt": "2017-09-12T15:48:12.057Z",
       "purchaseOrderNumber": "1009",
       "purchaseOrderName": "Beställning",
       "purchaseOrderInfoName": "ererer",
@@ -220,6 +222,8 @@ request(options, function(error, response, body) {
       "name": "Company"
     },
     "_id": "59d6041d5551819581097514",
+    "createdAt": "2017-09-11T13:31:08.963Z",
+    "updatedAt": "2017-09-12T15:48:12.057Z",
     "purchaseOrderNumber": "1009",
     "purchaseOrderName": "Beställning",
     "purchaseOrderInfoName": "ererer",

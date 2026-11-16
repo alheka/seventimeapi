@@ -42,6 +42,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "55782f0382da2f8544689751",
+      "createdAt": "2016-06-08T14:45:42.546Z",
+      "updatedAt": "2016-06-09T17:02:45.640Z",
       "name": "Audi Q8",
       "registrationNumber": "ABC123",
       "isActive": true,
@@ -108,6 +110,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "55782f0382da2f8544689751",
+    "createdAt": "2016-06-07T13:20:04.346Z",
+    "updatedAt": "2016-06-08T15:37:07.440Z",
     "name": "Audi Q8",
     "registrationNumber": "ABC123",
     "isActive": true,

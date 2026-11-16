@@ -45,6 +45,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5613c0eaa1b2c3d4e5001026",
+      "createdAt": "2016-06-17T09:20:46.845Z",
+      "updatedAt": "2016-06-18T11:37:49.939Z",
       "name": "",
       "driverJournalItemType": "574ed842a1b2c3d4e5001027",
       "driverJournalItemTypeName": "4 kr/km",
@@ -155,6 +157,8 @@ request(options, function(error, response, body) {
   "data": {
     "isInvoiceable": true,
     "_id": "5613c0eaa1b2c3d4e5001033",
+    "createdAt": "2016-06-17T09:20:46.845Z",
+    "updatedAt": "2016-06-18T11:37:49.939Z",
     "name": "",
     "driverJournalItemType": "574ed842a1b2c3d4e5001034",
     "driverJournalItemTypeName": "4 kr/km",

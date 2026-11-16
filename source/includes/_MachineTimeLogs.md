@@ -46,6 +46,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "59ef4284a1b2c3d4e5001114",
+      "createdAt": "2017-10-24T13:39:16.764Z",
+      "updatedAt": "2017-10-25T15:56:19.858Z",
       "time": 12,
       "invoiceableTime": 12,
       "description": "12",
@@ -151,6 +153,8 @@ request(options, function(error, response, body) {
     "isInvoiceable": true,
     "isInvoiced": false,
     "_id": "5a4bc02ea1b2c3d4e5001116",
+    "createdAt": "2017-10-24T13:39:16.764Z",
+    "updatedAt": "2017-10-25T15:56:19.858Z",
     "time": 12,
     "invoiceableTime": 12,
     "description": "12",

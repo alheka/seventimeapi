@@ -42,6 +42,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5dd00310a1b2c3d4e5001216",
+      "createdAt": "2019-11-22T14:51:42.224Z",
+      "updatedAt": "2019-11-23T17:08:45.318Z",
       "title": "API task",
       "tags": [],
       "dependsOn": [],
@@ -133,6 +135,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "5dd00310a1b2c3d4e5001216",
+    "createdAt": "2019-11-22T14:51:42.224Z",
+    "updatedAt": "2019-11-23T17:08:45.318Z",
     "title": "API task",
     "tags": [],
     "dependsOn": [],

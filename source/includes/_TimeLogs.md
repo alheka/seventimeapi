@@ -46,6 +46,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "514959f8a1b2c3d4e5001222",
+      "createdAt": "2013-03-16T11:39:36.437Z",
+      "updatedAt": "2013-03-17T13:56:39.531Z",
       "allDay": false,
       "cost": 10690.5824,
       "createDate": "2013-03-16T11:39:36.437Z",
@@ -122,7 +124,7 @@ timestamp          |  | If specified, time logs that start after the given date 
 endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 invoicedDate       |  | If specified, time logs invoiced on the specified date will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 isAbsence          |  | If set to "true", only time logs that are of "absence type" will be included.
-lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 limit              | 100 | Number of time logs per page. Maximum 500
 page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
@@ -181,6 +183,8 @@ request(options, function(error, response, body) {
     "isInvoiceable": true,
     "isInvoiced": false,
     "_id": "514959f8a1b2c3d4e5001226",
+    "createdAt": "2013-03-16T11:39:36.437Z",
+    "updatedAt": "2013-03-17T13:56:39.531Z",
     "cost": 10690.5824,
     "createDate": "2013-03-16T11:39:36.437Z",
     "customer": null,

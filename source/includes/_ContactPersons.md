@@ -44,6 +44,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5fb7bcd0a1b2c3d4e5001003",
+      "createdAt": "2020-11-17T12:06:24.281Z",
+      "updatedAt": "2020-11-18T14:23:27.375Z",
       "name": "Anna",
       "title": "Utvecklare",
       "workPhone": "",
@@ -120,6 +122,8 @@ request(options, function(error, response, body) {
 ```json
 {
   "_id": "5fb7bcd0a1b2c3d4e5001003",
+  "createdAt": "2020-11-17T12:06:24.281Z",
+  "updatedAt": "2020-11-18T14:23:27.375Z",
   "name": "Anna",
   "title": "Utvecklare",
   "workPhone": "",

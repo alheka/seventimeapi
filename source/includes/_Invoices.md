@@ -47,6 +47,7 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5fab29b038bd334ab5402446",
+      "createdAt": "2020-11-13T14:35:28.797Z",
       "deliveryAddress": {
         "name": "Kontoret",
         "address": "Östra Gatan 129",
@@ -310,6 +311,7 @@ request(options, function(error, response, body) {
       "5f74243aa1b2c3d4e5001095"
     ],
     "_id": "5fae99b0a1b2c3d4e5001096",
+    "createdAt": "2020-11-13T14:35:28.797Z",
     "createDate": "2020-11-13T14:35:28.797Z",
     "updatedAt": "2020-11-16T09:12:44.120Z",
     "invoiceItems": [

@@ -47,6 +47,8 @@ request(options, function(error, response, body) {
         "coordinates": []
       },
       "_id": "67081373a1b2c3d4e5001233",
+      "createdAt": "2024-10-15T14:21:02.731Z",
+      "updatedAt": "2024-10-15T14:21:02.731Z",
       "startTimestamp": "2024-10-15T14:21:02.720Z",
       "realStartTimestamp": "2024-10-15T14:21:02.720Z",
       "machineTimeSupplements": [],
