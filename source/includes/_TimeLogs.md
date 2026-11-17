@@ -192,7 +192,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves the ids of the time logs that have been deleted since a point in time, oldest first. Together with `lastModified` on [Get Time Logs](#get-time-logs), an integration can sync time logs without fetching all of them: fetch the time logs modified since your last call, and remove the ids that this endpoint returns. Deleted absences are included.
 
-Only `_id` and the time of the deletion (`deletedAt`) are returned. An id that exists again, e.g. after a restore, is not included. The same id can be included more than once if it has been deleted more than once.
+Only `_id` and the time of the deletion (`deletedAt`) are returned. An id that exists again, e.g. after a restore, is not included, but it is counted in `meta.totalResources`. The same id can be included more than once if it has been deleted more than once.
 
 Deletions made before the November 2026 release may be missing. To get in sync once, compare the ids of all time logs with your copy.
 

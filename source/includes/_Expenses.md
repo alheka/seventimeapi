@@ -189,7 +189,7 @@ request(options, function(error, response, body) {
 
 This endpoint retrieves the ids of the expenses that have been deleted since a point in time, oldest first. Together with `lastModified` on [Get Expenses](#get-expenses), an integration can sync expenses without fetching all of them: fetch the expenses modified since your last call, and remove the ids that this endpoint returns.
 
-Only `_id` and the time of the deletion (`deletedAt`) are returned. An id that exists again, e.g. after a restore, is not included. The same id can be included more than once if it has been deleted more than once.
+Only `_id` and the time of the deletion (`deletedAt`) are returned. An id that exists again, e.g. after a restore, is not included, but it is counted in `meta.totalResources`. The same id can be included more than once if it has been deleted more than once.
 
 Deletions made before the November 2026 release may be missing. To get in sync once, compare the ids of all expenses with your copy.
 
