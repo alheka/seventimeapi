@@ -225,6 +225,7 @@ toInvoiceDate       |  | If specified, invoices with invoice date before or on t
 fromDueDate         |  | If specified, invoices with due date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDueDate           |  | If specified, invoices with due date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 lastModified        |  | If specified, invoices that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy              | invoiceDate | If specified, a sort will be made on the specified parameter
 sortDirection       | ascending | "ascending" or "descending". Applies to sortBy, or to invoiceDate if sortBy is not specified
 limit               | 100 | Number of results per page (1-500). See 'Pagination'

@@ -117,6 +117,7 @@ customer           |  | Id of a customer. If specified, object items connected t
 parent             |  | Id of an object item. If specified, the children of that object item will be included. Use `null` to get the object items on the top level.
 isActive           |  | "true" or "false". If specified, active or archived object items will be included.
 lastModified       |  | If specified, object items that have been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy             | name | If specified, a sort will be made on the specified parameter
 sortDirection      | ascending | "ascending" or "descending". The sort order will be ascending or descending
 limit              | 100 | Number of object items per page. Maximum 500

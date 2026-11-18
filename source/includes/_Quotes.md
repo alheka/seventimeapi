@@ -275,6 +275,7 @@ toQuoteDate                         |  | If specified, quotes with quote date be
 fromValidToDate                     |  | If specified, quotes with valid to date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toValidToDate                       |  | If specified, quotes with valid to date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 lastModified                        |  | If specified, quotes that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 include                             |  | If specified, only the quote head is returned plus the parts listed, comma separated: `invoiceItems`, `quoteElements`, `quoteConditionsContent`, `quoteLogEntries`, `budgetCalculation`, `documents`. Use `include=none` for the quote head only. If not specified, the full quotes are returned. Example: `include=invoiceItems,quoteLogEntries`
 limit                               | 100 | Number of quotes per page. Maximum 500
 page                                | 1 | Page number

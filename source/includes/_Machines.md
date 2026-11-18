@@ -112,6 +112,7 @@ machineModel     |  | If specified, machines that match the parameter will be in
 serialNumber     |  | If specified, machines that match the parameter will be included.
 serviceable      |  | "true" or "false". If specified, machines that match the parameter will be included.
 lastModified     |  | If specified, machines that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy           | machineName | If specified, a sort will be made on the specified parameter
 sortDirection    | ascending | "ascending" or "descending". The sort order will be ascending or descending
 limit            | 100 | Number of machines per page. Maximum 500

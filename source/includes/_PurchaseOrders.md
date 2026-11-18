@@ -162,6 +162,7 @@ project                             |  | If specified, purchase orders that matc
 workOrder                           |  | If specified, purchase orders that match the parameter will be included.
 workOrderNumber                     |  | If specified, purchase orders that match the parameter will be included.
 lastModified                        |  | If specified, purchase orders that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 limit                               | 100 | Number of purchase orders per page. Maximum 500
 page                                | 1 | Page number
 sortBy                              |  | If specified, a sort will be made on the specified parameter
