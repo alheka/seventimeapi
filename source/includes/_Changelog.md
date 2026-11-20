@@ -6,6 +6,7 @@ This section lists the changes in the API that can affect an integration, newest
 
 ### Added
 
+* [Create an Expense](#create-an-expense), [Update an Expense](#update-an-expense) and the rows of [invoices](#create-an-invoice): wholesale articles from the shared catalog are accepted as `expenseItem`. Earlier, an expense returned HTTP 400 `Expense item: <id> not found`.
 * [Create a Quote](#create-a-quote): create a quote or an opportunity from a quote template, with rows in the template's first price table. The rows get their prices, and the quote its totals, as when the quote is created in Seven Time.
 * Paging with a cursor on the lists of contact persons, customers, departments, distributors, driver journals, expense items, expenses, invoices, machine time logs, machines, object items, price lists, projects, purchase orders, quotes, supplement orders, supplier invoices, tasks, time logs, timers, users, vehicles and work orders: the parameter `cursor` and `meta.nextCursor`, to fetch all records, or all records changed since `lastModified`, without slow deep pages. See [Paging with a cursor](#paging-with-a-cursor).
 * [Get Deleted Time Logs](#get-deleted-time-logs) and [Get Deleted Expenses](#get-deleted-expenses): the ids of time logs and expenses deleted since a point in time, so that an integration can sync without fetching all records. Deletions made before the November 2026 release may be missing.
@@ -17,6 +18,23 @@ This section lists the changes in the API that can affect an integration, newest
 
 ### Changed
 
+* **Breaking:** [Create a Time Log](#create-a-time-log), [Create an Expense](#create-an-expense), [Create a Machine Time Log](#create-a-machine-time-log), [Create a Driver Journal](#create-a-driver-journal), [Create an Invoice](#create-an-invoice), [Create a Work order](#create-a-work-order) and their update endpoints: every id that refers to another record must belong to the account. This applies e.g. to the customer, project, user, time category, result unit, department, the ids on invoice rows, the time logs to invoice, and the users, machines, tags and portal users of a work order. An id that is not found, including a deleted record or an invalid value, returns HTTP 400, and nothing is saved.
+  * Earlier, only some fields were checked and the others were saved as sent.
+  * The fields that were checked before keep their messages, e.g. `Customer not found`, and now always return HTTP 400 (some time log errors returned HTTP 500).
+  * The other fields return `The <field> is not found`, e.g. `The resultUnit is not found` or `The invoiceItems.expenseItem is not found`.
+  * A server error returns HTTP 500.
+* [Update a Time Log](#update-a-time-log), [Update an Expense](#update-an-expense), [Update a Machine Time Log](#update-a-machine-time-log), [Update a Driver Journal](#update-a-driver-journal), [Update an Invoice](#update-an-invoice) and [Update a Work order](#update-a-work-order): only ids that are new or changed are checked. A record whose customer, project, user, vehicle or article has been deleted can still be updated, as long as that id is unchanged or not sent. Earlier, such an update returned HTTP 400, e.g. `Customer not found`.
+  * [Update an Invoice](#update-an-invoice) with `creditForInvoice` or `copiedFrom`: ids that are the same as on that invoice count as unchanged.
+  * [Update a Time Log](#update-a-time-log): if the user of the time log has been deleted, a changed time changes `cost` with the time log's stored cost per hour.
+* [Create a Driver Journal](#create-a-driver-journal) and [Update a Driver Journal](#update-a-driver-journal): `createdByUser` and `modifiedByUser` must be users of the account. Another id returns HTTP 400 `The createdByUser is not found` or `The modifiedByUser is not found`.
+* [Update a Machine Time Log](#update-a-machine-time-log): a reference sent as `null` or `""` (e.g. `customer` or `project`) clears it and its name. Earlier, it returned HTTP 400 (`Customer: null not found`). `machine` and `user` cannot be cleared.
+* Fields set by Seven Time are ignored in updates, or keep their stored values:
+  * [Update a Time Log](#update-a-time-log) ignores the customer signature fields, `selfBillingInvoice`, `hasBeenDistributed` and `salaryProcessedFlag`.
+  * [Update an Expense](#update-an-expense) ignores the signature fields, `selfBillingInvoice` and `hasBeenDistributed`.
+  * [Update a Machine Time Log](#update-a-machine-time-log) ignores `attestItem` and the signature fields.
+  * [Update an Invoice](#update-an-invoice) keeps the stored signatures and the users on the rows.
+  * [Update a Work order](#update-a-work-order) keeps the stored `completedByUser`, `inProgressByUser` and the users on the budget rows.
+* `systemAccount` in the request is ignored when time logs, expenses, machine time logs, driver journals, invoices and work orders are created or updated. The record is always saved in the account of the API key.
 * **Breaking:** The lists of types, tags and settings that are not limited (e.g. project statuses, work order types, result units, documents, custom fields and webhook subscriptions) return all results on page 1 and an empty `data` array on page 2 and later. Earlier, every page returned all results, so a client that paged until it got no results never stopped. See [Pagination](#pagination).
 * **Breaking:** Project tags, invoice tags and work order tags return `{"data": [], "meta": {...}}` when the account has no tags. Earlier, project tags and invoice tags returned an empty array, and work order tags an empty tag object.
 * `sortBy` on user roles, user salary types, user skills, user work types and time categories replaces the default sort, as on the other lists. Earlier, it only decided the order between results with the same name. User roles are sorted by name by default, and can also be sorted on `userRoleId` and `userRoleName`. User skills are sorted by name by default. Earlier, they were returned in the order they were created.
