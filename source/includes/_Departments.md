@@ -44,6 +44,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "59d05abda1b2c3d4e5001015",
+      "createdAt": "2017-10-01T03:02:21.120Z",
+      "updatedAt": "2017-10-02T05:19:24.214Z",
       "name": "Utveckling",
       "departmentNumber": "2",
       "isActive": true,
@@ -68,6 +70,8 @@ E.g. `https://app.seventime.se/api/2/departments/?sortBy=departmentNumber&sortDi
 
 Parameter | Default | Description
 --------- | ------- | -----------
+lastModified |  | If specified, departments that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy | name | If specified, a sort will be made on the specified parameter
 sortDirection | ascending | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit | 100 | Number of departments per page. Maximum 500
@@ -111,6 +115,8 @@ request(options, function(error, response, body) {
   "data": {
     "managerIds": [],
     "_id": "59d05abda1b2c3d4e5001015",
+    "createdAt": "2017-10-01T03:02:21.120Z",
+    "updatedAt": "2017-10-02T05:19:24.214Z",
     "name": "Utveckling",
     "departmentNumber": "2",
     "isActive": true

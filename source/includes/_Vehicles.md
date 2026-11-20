@@ -42,6 +42,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "55782f0382da2f8544689751",
+      "createdAt": "2016-06-08T14:45:42.546Z",
+      "updatedAt": "2016-06-09T17:02:45.640Z",
       "name": "Audi Q8",
       "registrationNumber": "ABC123",
       "isActive": true,
@@ -64,6 +66,8 @@ This endpoint retrieves vehicles.
 
 Parameter | Default | Description
 --------- | ------- | -----------
+lastModified                |  | If specified, vehicles that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit                       | 100 | Number of vehicles per page. Maximum 500
@@ -107,6 +111,8 @@ request(options, function(error, response, body) {
 {
   "data": {
     "_id": "55782f0382da2f8544689751",
+    "createdAt": "2016-06-07T13:20:04.346Z",
+    "updatedAt": "2016-06-08T15:37:07.440Z",
     "name": "Audi Q8",
     "registrationNumber": "ABC123",
     "isActive": true,

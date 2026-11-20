@@ -124,7 +124,8 @@ customerNumber      |  | If specified, customers that match the parameter will b
 organizationNumber  |  | If specified, customers that match the parameter will be included.
 city                |  | If specified, customers that match the parameter will be included.
 email               |  | If specified, customers that match the parameter will be included.
-lastModified        |  | If specified, customers that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-HH HH:MM', 'YYYY-MM-HH HH:MM:SS', 'YYYY-MM-HHTHH:MM', 'YYYY-MM-HHTHH:MM:SS'
+lastModified        |  | If specified, customers that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy              |  | If specified, a sort will be made on the specified parameter
 sortDirection       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit               | 100 | Number of customers per page. Maximum 500

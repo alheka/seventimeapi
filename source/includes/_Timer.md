@@ -47,6 +47,8 @@ request(options, function(error, response, body) {
         "coordinates": []
       },
       "_id": "67081373a1b2c3d4e5001233",
+      "createdAt": "2024-10-15T14:21:02.731Z",
+      "updatedAt": "2024-10-15T14:21:02.731Z",
       "startTimestamp": "2024-10-15T14:21:02.720Z",
       "realStartTimestamp": "2024-10-15T14:21:02.720Z",
       "machineTimeSupplements": [],
@@ -76,6 +78,8 @@ project            |  | If specified, timers that match the parameter will be in
 task               |  | If specified, timers that match the parameter will be included.
 timeCategory       |  | If specified, timers that match the parameter will be included.
 workOrder          |  | If specified, timers that match the parameter will be included.
+lastModified       |  | If specified, timers that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 limit              | 100 | Number of timers per page. Maximum 500
 page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter

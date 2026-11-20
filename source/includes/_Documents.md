@@ -10,6 +10,8 @@ Documents can also be fetched directly from the Documents API. A document belong
 - an entity, using `entityId` and `entityType`, e.g. a work order or project
 - a document list, using `documentListId`, e.g. the general document archive
 
+Documents and folders in a document list also contain `createdAt` and `updatedAt`, set by the server. Documents of an entity do not.
+
 > Fetching a work order returns a documents array like this:
 
 ```json
@@ -109,6 +111,7 @@ entityId           | Yes* | Id of the parent object, e.g. id of a work order.
 entityType         | Yes* | Entity type of the parent. See table below for available types and corresponding code.
 documentListId     | Yes* | Id of the document list. Used for documents in the general document archive.
 folderId           | No | Folder id. Only used together with `documentListId`. Defaults to `null`, which returns documents and folders in the root of the document list.
+lastModified       | No | If specified, documents and folders that have been modified since the specified timestamp will be included (compared with `updatedAt`). Only used together with `documentListId`; ignored for documents of an entity (`entityId` + `entityType`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
 
 *Either `entityId` + `entityType` or `documentListId` is required. They cannot be combined.
 

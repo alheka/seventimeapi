@@ -159,6 +159,36 @@ The other lists of types, tags and settings (project statuses, types and tags, w
 }
 ```
 
+## Paging with a cursor
+
+Deep pages are slow, because the server still reads every result before the page. To fetch all records of a list, or all records changed since a point in time, use a cursor instead of `page`:
+
+1. Call the list with `cursor=first` (and `limit`, `lastModified` and any other filters).
+2. While `meta.hasMore` is true, call the list again with the same filters and `cursor` set to `meta.nextCursor` from the previous response.
+
+With a cursor, the results are sorted on the time they were last changed (`updatedAt`, or `modifiedDate` for customers, projects, work orders and object items), oldest first, then on `_id`. A record that is changed while you page gets a later time and comes again on a later page; it is never missed. Records without that time are not included.
+
+The cursor is an opaque string: don't build or change it, only send back the value you got. `cursor` can't be combined with `page`, `sortBy` or `sortDirection` (HTTP 400), and an invalid cursor returns HTTP 400 with `Invalid cursor`. `limit` works as without a cursor (at most 500).
+
+With a cursor, the meta property only contains `limit`, `hasMore` and `nextCursor` (null on the last page), without counts.
+
+The cursor works on the lists of contact persons, customers, departments, distributors, driver journals, expense items, expenses, invoices, machine time logs, machines, object items, price lists, projects, purchase orders, quotes, supplement orders, supplier invoices, tasks, time logs, timers, users, vehicles and work orders.
+
+```json
+{
+  "meta": {
+    "limit": 100,
+    "hasMore": true,
+    "nextCursor": "eyJ2IjoxLCJmIjoidXBkYXRlZEF0IiwidCI6IjIwMjYtMTEtMThUMTA6MTU6MDAuMTIzWiIsImlkIjoiNjQ1YTFiMmMzZDRlNWY2YTdiOGM5ZDBlIn0"
+  },
+  "data": [
+    {
+      // ...
+    }
+  ]
+}
+```
+
 # Rate-limit
 When the number of requests reach the rate limit the HTTP 429 (Too Many Requests) is returned.
 The production limit is **4 requests per second**. This equals to a bit more than 200 requests per minute.

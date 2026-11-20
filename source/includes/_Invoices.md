@@ -47,6 +47,7 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5fab29b038bd334ab5402446",
+      "createdAt": "2020-11-13T14:35:28.797Z",
       "deliveryAddress": {
         "name": "Kontoret",
         "address": "Östra Gatan 129",
@@ -84,6 +85,7 @@ request(options, function(error, response, body) {
         "5f74243ad608b22058126b12"
       ],
       "createDate": "2020-11-13T14:35:28.797Z",
+      "updatedAt": "2020-11-16T09:12:44.120Z",
       "invoiceItems": [
         {
           "_id": "5fae99b0a1b2c3d4e5001079",
@@ -222,6 +224,8 @@ fromInvoiceDate     |  | If specified, invoices with invoice date after or on th
 toInvoiceDate       |  | If specified, invoices with invoice date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 fromDueDate         |  | If specified, invoices with due date after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDueDate           |  | If specified, invoices with due date before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+lastModified        |  | If specified, invoices that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy              | invoiceDate | If specified, a sort will be made on the specified parameter
 sortDirection       | ascending | "ascending" or "descending". Applies to sortBy, or to invoiceDate if sortBy is not specified
 limit               | 100 | Number of results per page (1-500). See 'Pagination'
@@ -308,7 +312,9 @@ request(options, function(error, response, body) {
       "5f74243aa1b2c3d4e5001095"
     ],
     "_id": "5fae99b0a1b2c3d4e5001096",
+    "createdAt": "2020-11-13T14:35:28.797Z",
     "createDate": "2020-11-13T14:35:28.797Z",
+    "updatedAt": "2020-11-16T09:12:44.120Z",
     "invoiceItems": [
       {
         "createDate": "2020-11-13T14:35:28.795Z",

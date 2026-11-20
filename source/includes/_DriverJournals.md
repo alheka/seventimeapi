@@ -45,6 +45,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5613c0eaa1b2c3d4e5001026",
+      "createdAt": "2016-06-17T09:20:46.845Z",
+      "updatedAt": "2016-06-18T11:37:49.939Z",
       "name": "",
       "driverJournalItemType": "574ed842a1b2c3d4e5001027",
       "driverJournalItemTypeName": "4 kr/km",
@@ -108,6 +110,8 @@ startAddress                |  | If specified, driver journals that match the pa
 endAddress                  |  | If specified, driver journals that match the parameter will be included.
 fromDate                    |  | If specified, driver journals registered after or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
 toDate                      |  | If specified, driver journals registered before or on this date will be included. The date has to be in the format 'YYYY-MM-DD'
+lastModified                |  | If specified, driver journals that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy                      | timestamp | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". The sort order will be ascending or descending
 limit                       | 100 | Number of driver journals per page. Maximum 500
@@ -154,6 +158,8 @@ request(options, function(error, response, body) {
   "data": {
     "isInvoiceable": true,
     "_id": "5613c0eaa1b2c3d4e5001033",
+    "createdAt": "2016-06-17T09:20:46.845Z",
+    "updatedAt": "2016-06-18T11:37:49.939Z",
     "name": "",
     "driverJournalItemType": "574ed842a1b2c3d4e5001034",
     "driverJournalItemTypeName": "4 kr/km",

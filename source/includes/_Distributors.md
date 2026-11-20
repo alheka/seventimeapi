@@ -42,6 +42,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5f6b2e6aa1b2c3d4e5001016",
+      "createdAt": "2020-09-23T13:19:42.450Z",
+      "updatedAt": "2020-09-24T15:36:45.544Z",
       "name": "UE lev 20200923",
       "distributorNumber": "20",
       "address": "",
@@ -86,6 +88,8 @@ This endpoint retrieves distributors.
 Parameter | Default | Description
 --------- | ------- | -----------
 name                        |  | If specified, distributors that match the parameter will be included.
+lastModified                |  | If specified, distributors that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy                      |  | If specified, a sort will be made on the specified parameter
 sortDirection               |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 limit                       | 100 | Number of distributors per page. Maximum 500
@@ -136,6 +140,8 @@ request(options, function(error, response, body) {
       "emailForSelfBilling": "email@company.com"
     },
     "_id": "5f6b2e6aa1b2c3d4e5001018",
+    "createdAt": "2020-09-23T13:19:42.450Z",
+    "updatedAt": "2020-09-24T15:36:45.544Z",
     "name": "UE lev 20200923",
     "distributorNumber": "20",
     "address": "",

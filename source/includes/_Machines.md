@@ -41,6 +41,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "5a4bc02ea1b2c3d4e5001120",
+      "createdAt": "2018-01-02T17:37:02.629Z",
+      "updatedAt": "2020-09-27T12:06:19.240Z",
       "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
       "hoursUsed": 5193,
       "lastMileageRegDate": "2020-09-27T12:06:19.225Z",
@@ -109,6 +111,8 @@ machineTypeName  |  | If specified, machines that match the parameter will be in
 machineModel     |  | If specified, machines that match the parameter will be included.
 serialNumber     |  | If specified, machines that match the parameter will be included.
 serviceable      |  | "true" or "false". If specified, machines that match the parameter will be included.
+lastModified     |  | If specified, machines that have been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 sortBy           | machineName | If specified, a sort will be made on the specified parameter
 sortDirection    | ascending | "ascending" or "descending". The sort order will be ascending or descending
 limit            | 100 | Number of machines per page. Maximum 500
@@ -159,6 +163,8 @@ request(options, function(error, response, body) {
     "machineLog": [],
     "isSupplementForMachines": [],
     "_id": "5a4bc02ea1b2c3d4e5001120",
+    "createdAt": "2018-01-02T17:37:02.629Z",
+    "updatedAt": "2020-09-27T12:06:19.240Z",
     "lastHoursUsedRegDate": "2020-09-27T12:06:19.225Z",
     "hoursUsed": 5193,
     "lastMileageRegDate": "2020-09-27T12:06:19.225Z",

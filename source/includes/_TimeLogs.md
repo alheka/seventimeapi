@@ -46,6 +46,8 @@ request(options, function(error, response, body) {
   "data": [
     {
       "_id": "514959f8a1b2c3d4e5001222",
+      "createdAt": "2013-03-16T11:39:36.437Z",
+      "updatedAt": "2013-03-17T13:56:39.531Z",
       "allDay": false,
       "cost": 10690.5824,
       "createDate": "2013-03-16T11:39:36.437Z",
@@ -122,13 +124,95 @@ timestamp          |  | If specified, time logs that start after the given date 
 endTimestamp       |  | If specified, time logs that end before the given date and time will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 invoicedDate       |  | If specified, time logs invoiced on the specified date will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
 isAbsence          |  | If set to "true", only time logs that are of "absence type" will be included.
-lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+lastModified       |  | If specified, time logs that has been modified since the specified timestamp will be included (compared with `updatedAt`). Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 limit              | 100 | Number of time logs per page. Maximum 500
 page               | 1 | Page number
 sortBy             |  | If specified, a sort will be made on the specified parameter
 sortDirection      |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
 
 
+
+
+
+## Get Deleted Time Logs
+
+```shell
+curl "https://app.seventime.se/api/2/timeLogs/deleted?since=2026-11-20T08:00:00&limit=100&page=1" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-type: application/json"
+```
+
+```javascript
+/* Sample with the request library */
+
+let url = "https://app.seventime.se/api/2/timeLogs/deleted?since=2026-11-20T08:00:00&limit=100&page=1";
+let options = {
+  url: url,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request(options, function(error, response, body) {
+  if (!error && response.statusCode == 200) {
+    let info = JSON.parse(body);
+    // Remove info.data[i]._id from your copy
+  } else {
+    console.error("Error when calling API! HTTP Code: " + response.statusCode + ", Error message: " + body.errorMessage);
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "meta": {
+    "totalResources": 2,
+    "totalResourcesIsExact": true,
+    "totalPages": 1,
+    "currentPage": 1,
+    "hasMore": false,
+    "nextPage": null
+  },
+  "data": [
+    {
+      "_id": "51203146506d961c35798485",
+      "deletedAt": "2026-11-20T08:12:45.120Z"
+    },
+    {
+      "_id": "51203146506d961c35798492",
+      "deletedAt": "2026-11-20T09:03:10.517Z"
+    }
+  ]
+}
+```
+
+This endpoint retrieves the ids of the time logs that have been deleted since a point in time, oldest first. Together with `lastModified` on [Get Time Logs](#get-time-logs), an integration can sync time logs without fetching all of them: fetch the time logs modified since your last call, and remove the ids that this endpoint returns. Deleted absences are included.
+
+Only `_id` and the time of the deletion (`deletedAt`) are returned. An id that exists again, e.g. after a restore, is not included, but it is counted in `meta.totalResources`. The same id can be included more than once if it has been deleted more than once.
+
+Deletions made before the November 2026 release may be missing. To get in sync once, compare the ids of all time logs with your copy.
+
+With an OAuth access token, only time logs that the user can see in [Get Time Logs](#get-time-logs) are included.
+
+The result is paginated. `meta.totalResources` is capped at 2000; if there are more deleted time logs, `meta.totalResourcesIsExact` is false and `meta.totalPages` is null. Use `meta.hasMore` and `meta.nextPage` to fetch the next page.
+
+### HTTP Request
+
+`GET https://app.seventime.se/api/2/timeLogs/deleted`
+
+### Query Parameters
+
+Parameter | Default | Description
+--------- | ------- | -----------
+since              |  | Required. Time logs deleted at or after the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'
+user               |  | If specified, only time logs of this user will be included.
+limit              | 100 | Number of ids per page. Maximum 500
+page               | 1 | Page number
 
 
 
@@ -181,6 +265,8 @@ request(options, function(error, response, body) {
     "isInvoiceable": true,
     "isInvoiced": false,
     "_id": "514959f8a1b2c3d4e5001226",
+    "createdAt": "2013-03-16T11:39:36.437Z",
+    "updatedAt": "2013-03-17T13:56:39.531Z",
     "cost": 10690.5824,
     "createDate": "2013-03-16T11:39:36.437Z",
     "customer": null,

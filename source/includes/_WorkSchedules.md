@@ -135,6 +135,14 @@ This endpoint retrieves work schedules.
 
 `GET https://app.seventime.se/api/2/workSchedules`
 
+### Query Parameters
+
+E.g. `https://app.seventime.se/api/2/workSchedules?lastModified=2026-11-01`
+
+Parameter | Default | Description
+--------- | ------- | -----------
+lastModified |  | If specified, work schedules that have been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP 400
+
 <hr>  
                 
 The array workScheduleDays holds the info for different days, monday to sunday. I.e. workScheduleDays[0] is monday and workScheduleDays[6] is sunday. 

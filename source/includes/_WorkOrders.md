@@ -111,6 +111,7 @@ user            |  | If specified, work orders where the user with this id is a 
 customer        |  | If specified, work orders that match the parameter will be included.
 statusRef       |  | If specified, work orders with this status id will be included. Can be given multiple times to include several statuses
 lastModified    |  | If specified, work orders that has been modified since the specified timestamp will be included. Accepted formats: 'YYYY-MM-DD', 'YYYY-MM-DD HH:MM', 'YYYY-MM-DD HH:MM:SS', 'YYYY-MM-DDTHH:MM', 'YYYY-MM-DDTHH:MM:SS'. An invalid value returns HTTP status 400
+cursor       |  | `first` to page with a cursor instead of `page`, then `meta.nextCursor` from the previous response. Can't be combined with `page`, `sortBy` or `sortDirection`. See [Paging with a cursor](#paging-with-a-cursor)
 limit           | 100 | Number of work orders per page. Maximum 500
 page            | 1 | Page number
 sortBy          | modifiedDate | If specified, a sort will be made on the specified parameter
