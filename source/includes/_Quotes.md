@@ -710,3 +710,249 @@ Parameter | Default | Description
 quoteCategoryName                   |  | If specified, quote categories that match the parameter will be included.
 sortBy                              |  | If specified, a sort will be made on the specified parameter
 sortDirection                       |  | "ascending" or "descending". If specified and sortBy is specified the sort order will be ascending or descending
+
+## Create a Quote
+
+```shell
+curl -X POST "https://app.seventime.se/api/2/quotes" \
+  -H "Client-Secret: thisismysecretkey" \
+  -H "Content-Type: application/json" \
+  -d '{"quoteTemplate":"5fb02816a1b2c3d4e5001181","customer":"571f2105a1b2c3d4e5001108","createdByUser":"51718241fdb7084835249227","invoiceItems":[{"itemType":"expense","articleNumber":"203","numberOfItems":5},{"itemType":"timelog","timeCategory":"5f48eb3ea1b2c3d4e5001190","numberOfItems":8}]}'
+```
+
+```javascript
+let jsonData = {
+  quoteTemplate: '5fb02816a1b2c3d4e5001181',
+  customer: '571f2105a1b2c3d4e5001108',
+  createdByUser: '51718241fdb7084835249227',
+  invoiceItems: [
+    { itemType: 'expense', articleNumber: '203', numberOfItems: 5 },
+    { itemType: 'timelog', timeCategory: '5f48eb3ea1b2c3d4e5001190', numberOfItems: 8 }
+  ]
+};
+
+let options = {
+  url: 'https://app.seventime.se/api/2/quotes',
+  json: jsonData,
+  headers: {
+    "Client-Secret": "thisismysecretkey",
+    "Content-Type": "application/json",
+    "Accept": 'application/json'
+  }
+};
+
+request.post(options, function (error, response, body) {
+  if (!error && response.statusCode === 200) {
+    console.log("Quote created: _id: " + body._id);
+  } else {
+    console.error("ERROR! Unable to create quote: " + (body && body.errorMessage));
+  }
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "_id": "6930a1f2a1b2c3d4e5001201",
+  "quoteType": 0,
+  "quoteStatus": 1,
+  "quoteName": "Offert",
+  "quoteInfoName": "",
+  "quoteTemplate": "5fb02816a1b2c3d4e5001181",
+  "quoteCategory": null,
+  "quoteCategoryName": null,
+  "language": "SV",
+  "createdByUser": "51718241fdb7084835249227",
+  "createdByUserName": "Anna Andersson",
+  "ourReference": "51718241fdb7084835249227",
+  "ourReferenceName": "Anna Andersson",
+  "customer": "571f2105a1b2c3d4e5001108",
+  "customerName": "Company",
+  "customerNumber": "44312",
+  "customerAddress": "Östra Gatan 129<br>123 45 Stockholm",
+  "customerVAT": "",
+  "quoteDate": "2026-11-19T23:00:00.000Z",
+  "validToDate": "2026-12-19T23:00:00.000Z",
+  "createDate": "2026-11-20T14:12:31.207Z",
+  "totalAmount": 5700,
+  "totalTaxAmount": 1425,
+  "totalAmountInclTax": 7125,
+  "taxPercent": 25,
+  "totalCost": 3100,
+  "currencyCode": "SEK",
+  "currencyRate": 1,
+  "marking": "",
+  "yourOrderNumber": "",
+  "notes": "",
+  "enableQuoteConditions": true,
+  "quoteConditionsContent": "<p>Villkor</p>",
+  "multipleTaxesOnRows": false,
+  "showPriceInclTaxesOnRows": false,
+  "publicLink": "ObLBZZ0wDWcjlxzUbYtLL",
+  "quoteElements": [
+    {
+      "itemId": "0.1735729354019433",
+      "elementTypeId": 1000,
+      "content": {
+        "text": "Tack för er förfrågan!"
+      }
+    },
+    {
+      "itemId": "0.086780107201752",
+      "elementTypeId": 1200,
+      "content": {
+        "invoiceItems": [
+          {
+            "itemId": "0.4196323818927584",
+            "itemOrder": 1024,
+            "itemType": "expense",
+            "expenseItem": "5de78aeda1b2c3d4e5001177",
+            "expenseItemName": "Kabel",
+            "articleNumber": "203",
+            "description": "",
+            "numberOfItems": 5,
+            "unit": "m",
+            "unitPrice": 100,
+            "unitCost": 60,
+            "discountPercent": 0,
+            "taxPercent": 25,
+            "totalAmount": 500,
+            "totalTaxAmount": 125,
+            "totalAmountInclTax": 625,
+            "totalCost": 300
+          },
+          {
+            "itemId": "0.7710563215462096",
+            "itemOrder": 2048,
+            "itemType": "time",
+            "timeCategory": "5f48eb3ea1b2c3d4e5001190",
+            "categoryName": "Montör",
+            "articleNumber": "",
+            "description": "",
+            "numberOfItems": 8,
+            "unit": "tim",
+            "unitPrice": 650,
+            "unitCost": 350,
+            "discountPercent": 0,
+            "taxPercent": 25,
+            "totalAmount": 5200,
+            "totalTaxAmount": 1300,
+            "totalAmountInclTax": 6500,
+            "totalCost": 2800
+          }
+        ],
+        "taxPercent": 25,
+        "totalAmount": 5700,
+        "totalTaxAmount": 1425,
+        "totalAmountInclTax": 7125,
+        "totalCost": 3100
+      }
+    },
+    {
+      // ...
+    }
+  ],
+  "deliveryAddress": {
+    "name": "",
+    "address": "",
+    "address2": "",
+    "zipCode": "",
+    "city": "",
+    "country": "",
+    "phone": ""
+  },
+  "documents": [],
+  "tags": [],
+  "quoteLogEntries": [
+    {
+      "_id": "6930a1f2a1b2c3d4e5001202",
+      "logType": 1,
+      "description": "",
+      "user": "51718241fdb7084835249227",
+      "userName": "Anna Andersson",
+      "logDate": "2026-11-20T14:12:31.207Z"
+    }
+  ]
+  // ...
+}
+"Quote created: _id: 6930a1f2a1b2c3d4e5001201"
+```
+
+This endpoint creates a quote or an opportunity from a quote template, as when a quote is created from the template in Seven Time:
+
+* The quote gets the template's sections, texts in the quote's language, documents, category and VAT settings, and the defaults of the quote settings (e.g. the number of days the quote is valid, the terms and the footer).
+* The quote gets the customer's name, number, address, VAT number, delivery address and price lists.
+* The rows in `invoiceItems` are added to the template's first price table, after any rows the template already has. A row gets the same name, unit, VAT rate, cost and price as when the article, time category or machine is chosen on a new row in Seven Time, from the customer's price lists, the project's prices, discounts and markups. Values specified on the row replace the calculated ones.
+* If the article is a bundle, its articles are added as rows after it, as in Seven Time. They are hidden on the quote if the bundle is set to not show its articles.
+* The totals of the price tables and the quote are calculated.
+
+The webhook event `quote.created` is sent, and the seller (`salesAgent`) is notified as in Seven Time. The created quote is returned directly (not wrapped in a `data` property), with the same fields as [Get a specific Quote](#get-a-specific-quote).
+
+Only drafts, opportunities and normal quotes can be created. ROT, RUT and green deduction quotes can't be created through the API yet.
+
+Validation errors (e.g. a missing required field, an id that is not found or an invalid value) return HTTP 400 with a descriptive `errorMessage`, and nothing is created. HTTP 500 is only returned for server errors.
+
+With an OAuth access token, the user needs the permission to work with quotes. Without the permission to see costs on quotes, `unitCost` is ignored and the costs are calculated by Seven Time.
+
+### HTTP Request
+
+`POST https://app.seventime.se/api/2/quotes`
+
+### POST Parameters
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+quoteTemplate       | String | Yes | Id of the quote template. See [Get Quote Templates](#get-quote-templates). The template must be active
+customer            | String | Yes | Id of the customer
+createdByUser       | String | Yes | Id of the user who created the quote. The user is also set as our reference if `ourReference` is not specified
+quoteStatus         | Number | No | 1 for 'Draft' and 10 for 'Opportunity'. If not specified, this will be set to 1. A quote can't be created as sent
+quoteType           | Number | No | Type of quote. Only 0 (Normal) can be created
+language            | String | No | Language of the quote given as a language code, e.g. SV or EN. Must be one of the languages in the quote settings. If not specified, this will be set to the only language in the quote settings, else SV
+quoteName           | String | No | Name of the quote. If not specified, this will be set to the quote name in the quote settings for the language, and for an opportunity to 'Opportunity' translated to the language
+quoteDate           | String | No | Quote date. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the current date
+validToDate         | String | No* | Date the quote is valid to. Has to be in the format YYYY-MM-DD. If not specified, this will be set to the quote date + the number of days a quote is valid in the quote settings. *Required for a quote (not an opportunity) if the quote settings have no number of days
+ourReference        | String | No | Id of the user that will be set as our reference
+salesAgent          | String | No | Id of the user that will be set as the seller
+contactPerson       | String | No | Id of the contact person. Must be a contact person of the customer. If `marking` is not specified, the contact person's marking is used
+project             | String | No | Id of the project of the quote. If the project has a delivery address, it is used instead of the customer's
+objectItem          | String | No | Id of the object item
+quoteCategory       | String | No | Id of the quote category. See [Get Quote Categories](#get-quote-categories). If not specified, the template's category is used
+marking             | String | No | Marking on the quote
+yourOrderNumber     | String | No | Your order number
+notes               | String | No | Notes on the quote
+deliveryAddress     | Object | No | Delivery address. Replaces the delivery address of the customer and the project. Same attributes as `deliveryAddress` in [Create an Invoice](#create-an-invoice)
+tags                | Array  | No | Array of quote tag ids
+invoiceItems        | Array  | No | Array containing objects with the rows of the quote. See below for details. If the template has no price table, rows can't be specified
+
+**Attributes for invoiceItems**
+
+The field invoiceItems should be an array containing objects with the attributes shown below
+
+Parameter | Type | Required? | Description
+--------- | ----------- | ----------- | -----------
+itemType              | String | Yes | Item type of the row, see below for details
+expenseItem           | String | No* | Id of the expense item. *For itemType expense, expenseItem or articleNumber is required
+articleNumber         | String | No* | For itemType expense without expenseItem: the expense item is looked up by its article number, first among the account's active expense items and then among the expense items of the account's wholesalers. The article number must match exactly one expense item. For itemType general: the article number shown on the row
+timeCategory          | String | No* | Id of the time category. *Required if itemType is timelog. Must be invoiceable and not an absence type
+machine               | String | No* | Id of the machine. *Required if itemType is machineTimeLog
+description           | String | No  | Description of the row, or the text of a text row. If not specified, the description of the expense item is used
+name                  | String | No  | For itemType general: used as the description if `description` is not specified
+numberOfItems         | Number | No  | Quantity of the item. If not specified, this will be set to 1
+unit                  | String | No  | Unit of the item. If not specified, the unit of the expense item is used, 'tim' for time and machine rows and 'st' for general rows
+unitPrice             | Number | No  | Unit price of the item. If not specified, the price is calculated as in Seven Time
+pricePerHour          | Number | No  | Price per hour for timelog rows. Same as unitPrice
+unitCost              | Number | No  | Purchase price of the item. If not specified, the cost is calculated as in Seven Time
+discountPercent       | Number | No  | Discount of the item. Can only be specified if "Discount on rows" is enabled in the quote settings. If not specified, the customer's discount is used when the setting is enabled
+taxPercent            | Number | No  | Tax percent of the item, between 0 and 100. Only used if the template has different taxes on the rows. If not specified, the tax percent of the expense item or the price table is used
+
+**Item types**
+
+Item type |  Description
+--------- |-----------
+expense        | Expense row
+timelog        | Time log row
+machineTimeLog | Machine time log row
+general        | Free-text row
+text           | Text row
+blank          | Blank row

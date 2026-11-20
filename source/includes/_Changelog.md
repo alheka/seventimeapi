@@ -6,6 +6,7 @@ This section lists the changes in the API that can affect an integration, newest
 
 ### Added
 
+* [Create a Quote](#create-a-quote): create a quote or an opportunity from a quote template, with rows in the template's first price table. The rows get their prices, and the quote its totals, as when the quote is created in Seven Time.
 * [Get Quotes](#get-quotes): the parameters `lastModified` and `include`, and the field `updatedAt` on quotes. Use `include` to only get the quote head and the parts you need, and `lastModified` to only get the quotes that have changed since your last call.
 * [Get Supplement Orders](#get-supplement-orders): `project` is no longer required. Without it, all supplement orders of the account are listed. The `meta` property also contains `totalResourcesIsExact`, `hasMore` and `nextPage`, and `totalResources` is capped at 2000, as for the other large lists.
 * User roles, user salary types, user skills, user work types and [time categories](#get-time-categories) are paged with `limit` and `page`, like the other lists. Earlier, `page` was ignored and every page returned the same results. See [Pagination](#pagination).
